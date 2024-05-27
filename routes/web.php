@@ -12,27 +12,26 @@ use App\Http\Controllers\Frontend\CheckoutController;
 
 
 
-use App\Http\Controllers\Backend\AdminController;
-use App\Http\Controllers\Backend\MenuController;
-use App\Http\Controllers\Backend\ServicesController;
-use App\Http\Controllers\Backend\ServicePageController;
-use App\Http\Controllers\Backend\InnerServiceController;
-use App\Http\Controllers\Backend\ProductController;
-use App\Http\Controllers\Backend\PortfolioController;
-use App\Http\Controllers\Backend\BlogController;
-use App\Http\Controllers\Backend\ClientController;
-use App\Http\Controllers\Backend\AboutController;
-use App\Http\Controllers\Backend\ContactController;
-use App\Http\Controllers\Backend\SocialController;
-use App\Http\Controllers\Backend\SliderController;
-use App\Http\Controllers\Backend\SettingController;
-use App\Http\Controllers\Backend\InnerPageSettingController;
-use App\Http\Controllers\Backend\HeaderController;
-use App\Http\Controllers\Backend\FeatureController;
-use App\Http\Controllers\Backend\RatingController;
-use App\Http\Controllers\Backend\GeneralConfigurationController;
-use App\Http\Controllers\Backend\ProductClassController;
-use App\Http\Controllers\Backend\ServiceDetailController;
+
+
+
+
+use App\Http\Controllers\Admin\FrontMenuController;
+use App\Http\Controllers\Admin\HomeSliderController;
+use App\Http\Controllers\Admin\HomeVideoController;
+use App\Http\Controllers\Admin\MenusController;
+use App\Http\Controllers\Admin\PackagesController;
+use App\Http\Controllers\Admin\ProductController as AdminProductController;
+use App\Http\Controllers\Admin\PortfolioController as AdminPortfolioController;
+use App\Http\Controllers\Admin\ClientController as AdminClientController;
+use App\Http\Controllers\Admin\AboutController as AdminAboutController;
+use App\Http\Controllers\Admin\ContactController as AdminContactController;
+use App\Http\Controllers\Admin\SlideritemController as AdminSlideritemController;
+use App\Http\Controllers\Admin\SocialController;
+use App\Http\Controllers\Admin\UserMenuAccessController;
+use App\Http\Controllers\Admin\EmailController;
+use App\Http\Controllers\Admin\PopUpController;
+use App\Http\Controllers\Admin\HomeSideMenuController;
 
 use Illuminate\Support\Facades\Route;
 // use Illuminate\Support\Facades\DB;
@@ -78,200 +77,169 @@ Route::post('/submitcheckout',[CheckOutController::class, 'store']);
 //     Route::get($item->link,[FrontServiceController::class, 'index']);
 // }
 
+Route::prefix('admin')->group(function () {
+    Route::get('/','Admin\AuthController@showLoginForm')->name('admin.login');
+    Route::post('/login','Admin\AuthController@login')->name('admin.login.post')->middleware('guest:admin');
 
-// routes for login
-Route::get('admin',[AdminController::class, 'index']);
-Route::post('admin/auth',[AdminController::class, 'auth'])->name('admin.auth');
-//Route::get('admin/encryptpassword',[AdminController::class, 'encryptpassword']);
-Route::group(['middleware'=>'admin_auth'], function(){
-    Route::get('admin/dashboard',[AdminController::class, 'dashboard']);
-    Route::get('admin/logout', function () {
-        session()->forget('ADMIN_LOGIN');
-        session()->forget('ADMIN_ID');
-        session()->flash('msg', 'Logout Successfully');
-        return redirect('admin');
-    });
+    Route::middleware('auth:admin')->group(function () {
+    Route::post('/passwordchange','Admin\AuthController@changePassword')->name('admin.change.password');
+    Route::get('/dashboard','Admin\HomeController@dashboard')->name('admin.dashboard');
+    Route::post('/logout','Admin\AuthController@logout')->name('admin.logout');
+    Route::resource('allowedip','Admin\AllowedIpController');
+    Route::get('maintenance','Admin\MaintenanceController@index')->name('maintenance.index');
+    Route::post('maintenance/store','Admin\MaintenanceController@store')->name('maintenance.store');
+    Route::get('maintenance/deactivate','Admin\MaintenanceController@deactivate')->name('maintenance.deactivate');
+    Route::get('front-faqs/sort','Admin\FrontFaqController@sort')->name('faqs.sort');
+    Route::post('front-faqs/sort','Admin\FrontFaqController@sortPost')->name('faqs.sort');
+    Route::post('front-faqs/destroy/{id?}','Admin\FrontFaqController@destroy')->name('faq.destroy');
+    Route::resource('front-faqs','Admin\FrontFaqController');
+    Route::resource('employee','Admin\EmployeeController');
+    Route::get('front-contact','Admin\FrontContactController@index')->name('contact.index');
+    Route::delete('front-contact/{id}','Admin\FrontContactController@destroy')->name('contact.delete');
+    Route::get('front-emails/edit','Admin\FrontContactController@editEmail');
+    Route::post('front-emails/edit','Admin\FrontContactController@updateEmail');
+    Route::resource('homeslider','Admin\HomeSliderController');
+    Route::get("slider/edit/{id?}" , [HomeSliderController::class , 'edit'])->name('edit.slider');
+    Route::Post("slider/delete/{id?}" , [HomeSliderController::class , 'destroy'])->name('destroy.slider');
+    Route::resource('reseller','Admin\ResellerController');
+    Route::resource('whychoose','Admin\WhyChooseusController');
+    Route::resource('logo','Admin\FrontLogoController');
 
-    // routes for menu
-    Route::get('admin/menu',[MenuController::class, 'index']);
-    Route::get('admin/menu/manage_menu',[MenuController::class, 'manage_menu']);
-    Route::get('admin/menu/manage_menu/{id}',[MenuController::class, 'manage_menu']);
-    Route::post('admin/menu/manage_menu_process',[MenuController::class, 'manage_menu_process'])->name('menu.manage_menu_process');
-    Route::get('admin/menu/status/{status}/{id}',[MenuController::class, 'status']);
-    Route::get('admin/menu/delete/{id}',[MenuController::class, 'delete']);
+    Route::resource('aboutus','Admin\AboutUsController');
+    Route::resource('message','Admin\MessageController');
+    Route::resource('frontmenu','Admin\FrontMenuController');
+    Route::get('frontmenu/edit/{id?}', [FrontMenuController::class , 'edit'])->name('front.edit');
 
-    // routes for General Configuration
-    Route::get('admin/general_configuration',[GeneralConfigurationController::class, 'index']);
-    Route::get('admin/general_configuration/manage_general_configuration',[GeneralConfigurationController::class, 'manage_general_configuration']);
-    Route::get('admin/general_configuration/manage_general_configuration/{id}',[GeneralConfigurationController::class, 'manage_general_configuration']);
-    Route::post('admin/general_configuration/manage_general_configuration_process',[GeneralConfigurationController::class, 'manage_general_configuration_process'])->name('general_configuration.manage_general_configuration_process');
-    Route::get('admin/general_configuration/status/{status}/{id}',[GeneralConfigurationController::class, 'status']);
-    Route::get('admin/general_configuration/delete/{id}',[GeneralConfigurationController::class, 'delete']);
 
-    // routes for services page
-    Route::get('admin/services',[ServicesController::class, 'index']);
-    Route::get('admin/services/manage_services',[ServicesController::class, 'manage_services']);
-    Route::get('admin/services/manage_services/{id}',[ServicesController::class, 'manage_services']);
-    Route::post('admin/services/manage_menu_services',[ServicesController::class, 'manage_services_process'])->name('services.manage_services_process');
-    Route::get('admin/services/status/{status}/{id}',[ServicesController::class, 'status']);
-    Route::get('admin/services/delete/{id}',[ServicesController::class, 'delete']);
+    Route::resource('cities','Admin\CitiesController');
+    Route::resource('coreareas','Admin\CoreAreaController');
+    Route::resource('zoneareas','Admin\ZoneAreaController');
 
-    // routes for servicepage
-    Route::get('admin/servicepage',[ServicePageController::class, 'index']);
-    Route::get('admin/servicepage/manage_servicepage',[ServicePageController::class, 'manage_servicepage']);
-    Route::get('admin/servicepage/manage_servicepage/{id}',[ServicePageController::class, 'manage_servicepage']);
-    Route::post('admin/servicepage/manage_servicepage_process',[ServicePageController::class, 'manage_servicepage_process'])->name('servicepage.manage_servicepage_process');
-    Route::get('admin/servicepage/status/{status}/{id}',[ServicePageController::class, 'status']);
-    Route::get('admin/servicepage/delete/{id}',[ServicePageController::class, 'delete']);
+    Route::get('partner-emails/{flag}','Admin\CitiesController@partnerEmail');
+    Route::post('partner-emails','Admin\CitiesController@updateEmail');
+    Route::get('coveragerequest', 'Admin\CoverageRequestController@index')->name('coveragerequest.index');
+    Route::get('/coveragerequest/{id}', 'Admin\CoverageRequestController@showUserDetails')->name('coveragerequest.show');
+    Route::get('coverage/destroy/{id?}', 'Admin\CoverageRequestController@destroy')->name('coveragerequest.destroy');
 
-    // routes for innerservice
-    Route::get('admin/innerservice',[InnerServiceController::class, 'index']);
-    Route::get('admin/innerservice/manage_innerservice',[InnerServiceController::class, 'manage_innerservice']);
-    Route::get('admin/innerservice/manage_innerservice/{id}',[InnerServiceController::class, 'manage_innerservice']);
-    Route::post('admin/innerservice/manage_innerservice_process',[InnerServiceController::class, 'manage_innerservice_process'])->name('innerservice.manage_innerservice_process');
-    Route::get('admin/innerservice/status/{status}/{id}',[InnerServiceController::class, 'status']);
-    Route::get('admin/innerservice/delete/{id}',[InnerServiceController::class, 'delete']);
+    //Menus and Sub Menus Route -- Only Admin Access
+    Route::get('menus/create', 'Admin\MenusController@create')->name('menus.create');
+    Route::post('menus/create', 'Admin\MenusController@store')->name('menus.store');
+    Route::get('menus/index', 'Admin\MenusController@index')->name('menus.index');
+    Route::get('menus/sort', 'Admin\MenusController@sort')->name('menus.sort');
+    Route::post('menus/sort', 'Admin\MenusController@sortPost')->name('menus.sortpost');
+    Route::get('menu/edit/{id?}', [MenusController::class , 'edit'])->name('menu.edit');
 
-    // routes for product
-    Route::get('admin/product',[ProductController::class, 'index']);
-    Route:: get('admin/product/manage_product',[ProductController::class, 'manage_product']);
-    Route::get('admin/product/manage_product/{id}',[ProductController::class, 'manage_product']);
-    Route::post('admin/product/manage_product_process',[ProductController::class, 'manage_product_process'])->name('product.manage_product_process');
-    Route::get('admin/product/status/{status}/{id}',[ProductController::class, 'status']);
-    Route::get('admin/product/delete/{id}',[ProductController::class, 'delete']);
+    // Route::get('menus/show/{id}', 'Admin\MenusController@show')->name('menus.show');
+    Route::get('menus/update/{id}', 'Admin\MenusController@edit')->name('menus.edit');
+    Route::post('menus/update/{id}', 'Admin\MenusController@update')->name('menus.update');
+    Route::post('menus/delete/{id}', 'Admin\MenusController@destroy')->name('menus.delete');
+    Route::post('menus/checkroute', 'Admin\MenusController@checkroute')->name('menus.checkroute');
+    Route::post('submenus/delete', 'Admin\MenusController@subMenuDelete')->name('submenus.delete');
 
-    // routes for portfolio
-    Route::get('admin/portfolio',[PortfolioController::class, 'index']);
-    Route:: get('admin/portfolio/manage_portfolio',[PortfolioController::class, 'manage_portfolio']);
-    Route::get('admin/portfolio/manage_portfolio/{id}',[PortfolioController::class, 'manage_portfolio']);
-    Route::post('admin/portfolio/manage_portfolio_process',[PortfolioController::class, 'manage_portfolio_process'])->name('portfolio.manage_portfolio_process');
-    Route::get('admin/portfolio/status/{status}/{id}',[PortfolioController::class, 'status']);
-    Route::get('admin/portfolio/delete/{id}',[PortfolioController::class, 'delete']);
+    //User Menu Access
+    // Route::get('useraccess/index', 'Admin\UserMenuAccessController@index')->name('useraccess.index');
+    Route::get('useraccess/show/{id}', 'Admin\EmployeeController@showAccess')->name('useraccess.show');
+    Route::post('useraccess/update/{id}', 'Admin\EmployeeController@updateAccess')->name('useraccess.update');
 
-    // routes for blog
-    Route::get('admin/blog',[BlogController::class, 'index']);
-    Route:: get('admin/blog/manage_blog',[BlogController::class, 'manage_blog']);
-    Route::get('admin/blog/manage_blog/{id}',[BlogController::class, 'manage_blog']);
-    Route::post('admin/blog/manage_blog_process',[BlogController::class, 'manage_blog_process'])->name('blog.manage_blog_process');
-    Route::get('admin/blog/status/{status}/{id}',[BlogController::class, 'status']);
-    Route::get('admin/blog/delete/{id}',[BlogController::class, 'delete']);
+    //Packages
+    Route::resource('packages','Admin\PackagesController');
+    Route::get("/packages/destroy/{id?}" , [PackagesController::class ,"destroy"])->name("package.destroy");
+    // Sorting Table Routes
 
-    // routes for client
-    Route::get('admin/client',[ClientController::class, 'index']);
-    Route:: get('admin/client/manage_client',[ClientController::class, 'manage_client']);
-    Route::get('admin/client/manage_client/{id}',[ClientController::class, 'manage_client']);
-    Route::post('admin/client/manage_client_process',[ClientController::class, 'manage_client_process'])->name('client.manage_client_process');
-    Route::get('admin/client/status/{status}/{id}',[ClientController::class, 'status']);
-    Route::get('admin/client/delete/{id}',[ClientController::class, 'delete']);
+    Route::post("sortFrontMenu" , [FrontMenuController::class , 'updateSorting'])->name("sort.front.menu");
+    Route::post("sortMenu" , [MenusController::class , 'sortMenu'])->name("sort.menu");
+    Route::post("sortSlider" , [HomeSliderController::class , 'sortSlider'])->name("sort.slider.image");
+    // Social Links Routes
+    Route::get('/social/' , [SocialController::class , 'index'])->name('social.index');
+    Route::get('/social/create' , [SocialController::class , 'create'])->name('social.create');
+    Route::get('/social/edit/{id?}' , [SocialController::class , 'edit'])->name('social.edit');
+    Route::post('/social/store' , [SocialController::class , 'store'])->name('social.store');
+    Route::post('/social/update/{id?}' , [SocialController::class , 'update'])->name('social.update');
+    Route::get('/social/destroy/{id?}' , [SocialController::class , 'destroy'])->name('social.destroy');
+    // Contact Section Data Started
+    Route::get('/contact/' , [ContactController::class ,'index'])->name('contact.index');
+    Route::get('/contactrequest/{id}', [ContactController::class,'showFrontContact'])->name('frontcontactrequest.show');
 
-    // routes for about
-    Route::get('admin/about',[AboutController::class, 'index']);
-    Route:: get('admin/about/manage_about',[AboutController::class, 'manage_about']);
-    Route::get('admin/about/manage_about/{id}',[AboutController::class, 'manage_about']);
-    Route::post('admin/about/manage_about_process',[AboutController::class, 'manage_about_process'])->name('about.manage_about_process');
-    Route::get('admin/about/status/{status}/{id}',[AboutController::class, 'status']);
-    Route::get('admin/about/delete/{id}',[AboutController::class, 'delete']);
+    // User Managment Section
+    Route::get('/user/' , [UserMenuAccessController::class ,'index'])->name('user.index');
+    Route::get('/user/create' , [UserMenuAccessController::class ,'create'])->name('user.create');
+    Route::get('/user/edit/{id?}' , [UserMenuAccessController::class ,'edit'])->name('user.edit');
+    Route::get('/user/menu_access' , [UserMenuAccessController::class ,'menu_access'])->name('user.access');
+    Route::post('/user/store' , [UserMenuAccessController::class ,'store'])->name('user.store');
+    Route::post('/user/update/{id?}' , [UserMenuAccessController::class ,'update'])->name('user.update');
+    Route::post('/user/change/status' , [UserMenuAccessController::class , 'change_status'])->name("user.status.change");
+    Route::get('/user/destroy/{id?}' , [UserMenuAccessController::class , 'destroy'])->name("user.destroy");
+    // Access Managing System
+    Route::get('/user/access/{id?}' , [UserMenuAccessController::class ,'menuAccess'])->name('user.menu.access');
+    Route::post('/user/giveaccess/{id?}' , [UserMenuAccessController::class ,'giveAccess'])->name('menu.give.access');
 
-    // routes for contact
-    Route::get('admin/contact',[ContactController::class, 'index']);
-    Route:: get('admin/contact/manage_contact',[ContactController::class, 'manage_contact']);
-    Route::get('admin/contact/manage_contact/{id}',[ContactController::class, 'manage_contact']);
-    Route::post('admin/contact/manage_contact_process',[ContactController::class, 'manage_contact_process'])->name('contact.manage_contact_process');
-    Route::get('admin/contact/status/{status}/{id}',[ContactController::class, 'status']);
-    Route::get('admin/contact/delete/{id}',[ContactController::class, 'delete']);
+    // Pop up
+    Route::get("popup" , [PopUpController::class, 'index'])->name("popup.index");
+    Route::get("popup/create" , [PopUpController::class, 'create'])->name("popup.create");
+    Route::get('/popup/edit/{id?}' , [PopUpController::class ,'edit'])->name('popup.edit');
+    Route::post('/popup/store' , [PopUpController::class ,'store'])->name('popup.store');
+    Route::post('/popup/update/{id?}' , [PopUpController::class ,'update'])->name('popup.update');
+    Route::get('/popup/delete/{id?}' , [PopUpController::class ,'destroy'])->name('popup.destroy');
+    Route::post('/popup/change_status/{id?}' , [PopUpController::class ,'change_status'])->name('popup.status');
+    // Home Side Menu
+    Route::get("homeside" , [HomeSideMenuController::class, 'index'])->name("homeside.index");
+    Route::get("homeside/create" , [HomeSideMenuController::class, 'create'])->name("homeside.create");
+    Route::get('/homeside/edit/{id?}' , [HomeSideMenuController::class ,'edit'])->name('homeside.edit');
+    Route::post('/homeside/store' , [HomeSideMenuController::class ,'store'])->name('homeside.store');
+    Route::post('/homeside/update/{id?}' , [HomeSideMenuController::class ,'update'])->name('homeside.update');
+    Route::get('/homeside/delete/{id?}' , [HomeSideMenuController::class ,'destroy'])->name('homeside.destroy');
+    Route::post('/homeside/change_status/{id?}' , [HomeSideMenuController::class ,'change_status'])->name('homeside.status');
+    // Email Routes
+    Route::get('/email/' , [EmailController::class ,'index'])->name('email.index');
+    Route::get('/email/create' , [EmailController::class ,'create'])->name('email.create');
+    Route::get('/email/edit/{id?}' , [EmailController::class ,'edit'])->name('email.edit');
+    Route::post('/email/store' , [EmailController::class ,'store'])->name('email.store');
+    Route::post('/email/update/{id?}' , [EmailController::class ,'update'])->name('email.update');
+    Route::get('/email/delete/{id?}' , [EmailController::class ,'destroy'])->name('email.destroy');
+    Route::post('/email/change_status/{id?}' , [EmailController::class ,'change_status'])->name('email.status');
 
-    // routes for social
-    Route::get('admin/social',[SocialController::class, 'index']);
-    Route:: get('admin/social/manage_social',[SocialController::class, 'manage_social']);
-    Route::get('admin/social/manage_social/{id}',[SocialController::class, 'manage_social']);
-    Route::post('admin/social/manage_social_process',[SocialController::class, 'manage_social_process'])->name('social.manage_social_process');
-    Route::get('admin/social/status/{status}/{id}',[SocialController::class, 'status']);
-    Route::get('admin/social/delete/{id}',[SocialController::class, 'delete']);
 
-    // routes for slider
-    Route::get('admin/slider',[SliderController::class, 'index']);
-    Route:: get('admin/slider/manage_slider',[SliderController::class, 'manage_slider']);
-    Route::get('admin/slider/manage_slider/{id}',[SliderController::class, 'manage_slider']);
-    Route::post('admin/slider/manage_slider_process',[SliderController::class, 'manage_slider_process'])->name('slider.manage_slider_process');
-    Route::get('admin/slider/status/{status}/{id}',[SliderController::class, 'status']);
-    Route::get('admin/slider/delete/{id}',[SliderController::class, 'delete']);
+     //Header Video
+     Route::get('/videoheader' , [HomeVideoController::class ,'index'])->name('video.index');
 
-    // routes for setting
-    Route::get('admin/setting',[SettingController::class, 'index']);
-    Route:: get('admin/setting/manage_setting',[SettingController::class, 'manage_setting'])->name('manage_setting');
-    Route::get('admin/setting/manage_setting/{id}',[SettingController::class, 'manage_setting']);
-    Route::post('admin/setting/manage_setting_process',[SettingController::class, 'manage_setting_process'])->name('setting.manage_setting_process');
-    Route::get('admin/setting/status/{status}/{id}',[SettingController::class, 'status']);
-    Route::get('admin/setting/delete/{id}',[SettingController::class, 'delete']);
-    
-    // routes for inner page setting
-    Route::get('admin/innerpage_setting',[InnerPageSettingController::class, 'index']);
-    Route:: get('admin/innerpage_setting/manage_innerpage_setting',[InnerPageSettingController::class, 'manage_innerpage_setting']);
-    Route::get('admin/innerpage_setting/manage_innerpage_setting/{id}',[InnerPageSettingController::class, 'manage_innerpage_setting']);
-    Route::post('admin/innerpage_setting/manage_innerpage_setting_process',[InnerPageSettingController::class, 'manage_innerpage_setting_process'])->name('setting.manage_innerpage_setting_process');
-    Route::get('admin/innerpage_setting/status/{status}/{id}',[InnerPageSettingController::class, 'status']);
-    Route::get('admin/innerpage_setting/delete/{id}',[InnerPageSettingController::class, 'delete']);
+     Route::get('/videoheader/create' , [HomeVideoController::class ,'create'])->name('homevideo.create');
+     Route::post('/videoheader/create' , [HomeVideoController::class ,'store'])->name('homevideo.store');
 
-// routes for Header
-    Route::get('admin/header',[HeaderController::class, 'index']);
-    Route:: get('admin/header/manage_header',[HeaderController::class, 'manage_header']);
-    Route::get('admin/header/manage_header/{id}',[HeaderController::class, 'manage_header']);
-    Route::post('admin/header/manage_header_process',[HeaderController::class, 'manage_header_process'])->name('setting.manage_header_process');
-    Route::get('admin/header/status/{status}/{id}',[HeaderController::class, 'status']);
-    Route::get('admin/header/delete/{id}',[HeaderController::class, 'delete']);
+     Route::get('/videoheader/{id}', [HomeVideoController::class, 'edit'])->name('homevideo.edit');
+     Route::post('/videoheader/update', [HomeVideoController::class, 'update'])->name('homevideo.update');
 
-    // routes for Features
-    Route::get('admin/feature',[FeatureController::class, 'index']);
-    Route:: get('admin/feature/manage_feature',[FeatureController::class, 'manage_feature']);
-    Route::get('admin/feature/manage_feature/{id}',[FeatureController::class, 'manage_feature']);
-    Route::post('admin/feature/manage_feature_process',[FeatureController::class, 'manage_feature_process'])->name('setting.manage_feature_process');
-    Route::get('admin/feature/status/{status}/{id}',[FeatureController::class, 'status']);
-    Route::get('admin/feature/delete/{id}',[FeatureController::class, 'delete']);
-
-    // routes for Rating
-    Route::get('admin/rating',[RatingController::class, 'index']);
-    Route:: get('admin/rating/manage_rating',[RatingController::class, 'manage_rating']);
-    Route::get('admin/rating/manage_rating/{id}',[RatingController::class, 'manage_rating']);
-    Route::post('admin/rating/manage_rating_process',[RatingController::class, 'manage_rating_process'])->name('setting.manage_rating_process');
-    Route::get('admin/rating/status/{status}/{id}',[RatingController::class, 'status']);
-    Route::get('admin/rating/delete/{id}',[RatingController::class, 'delete']);
-
-    // routes for Product Class
-    Route::get('admin/product_class',[ProductClassController::class, 'index']);
-    Route:: get('admin/product_class/manage_product_class',[ProductClassController::class, 'manage_product_class']);
-    Route::get('admin/product_class/manage_product_class/{id}',[ProductClassController::class, 'manage_product_class']);
-    Route::post('admin/product_class/manage_product_class_process',[ProductClassController::class, 'manage_product_class_process'])->name('setting.manage_product_class_process');
-    Route::get('admin/product_class/status/{status}/{id}',[ProductClassController::class, 'status']);
-    Route::get('admin/product_class/delete/{id}',[ProductClassController::class, 'delete']);
-
-    // routes for Service Detail
-    Route::get('admin/service_detail',[ServiceDetailController::class, 'index']);
-    Route:: get('admin/service_detail/manage_service_detail',[ServiceDetailController::class, 'manage_service_detail']);
-    Route::get('admin/service_detail/manage_service_detail/{id}',[ServiceDetailController::class, 'manage_service_detail']);
-    Route::post('admin/service_detail/manage_service_detail_process',[ServiceDetailController::class, 'manage_service_detail_process'])->name('setting.manage_service_detail_process');
-    Route::get('admin/service_detail/status/{status}/{id}',[ServiceDetailController::class, 'status']);
-    Route::get('admin/service_detail/delete/{id}',[ServiceDetailController::class, 'delete']);
-
-        // FrontendController
-    // **************************************************************
-
-    // routes for contact
-    Route::get('frontend/contact',[ContactUsController::class, 'index']);
-    Route::get('admin/contact_forms',[ContactUsController::class, 'admin_index']);
-    Route::get('admin/contact_forms/manage_contact_forms',[ContactUsController::class, 'manage_contact_forms']);
-    Route::post('admin/contact_forms/manage_contact_forms_process',[ContactUsController::class, 'manage_contact_forms_process'])->name('contact.manage_contact_forms_process');
-    Route::get('admin/contact_forms/delete/{id}',[ContactUsController::class, 'admin_delete']);
-    Route::get('admin/contact_forms/status/{status}/{id}',[ContactUsController::class, 'status']);
-    Route::get('admin/contact_forms/show/{id}',[ContactUsController::class, 'view_contact_forms']);
+     Route::Post('/videoheader/delete/{id?}', [HomeVideoController::class, 'destroy'])->name('homevideo.destroy');
 
 
 
-    //route of checkout 
 
-    Route::get('admin/checkout',[CheckOutController::class, 'admin_index']);
-    Route::get('admin/checkout/delete/{id}',[CheckOutController::class, 'checkout_delete']);
-    Route::get('admin/checkout/status/{status}/{id}',[CheckOutController::class, 'status']);
-    Route::get('admin/checkout/show/{id}',[CheckOutController::class, 'show']);
+    //  Services Routes
+    Route::get('/services',[AdminServiceController::class, 'index'])->name('admin.services');
+    Route::get('/service/create',[AdminServiceController::class, 'showCreateServiceForm'])->name('service.create');
+    Route::post('/service/create',[AdminServiceController::class, 'createService'])->name('service.create.post');
+    Route::get("/service/destroy/{id?}" , [AdminServiceController::class ,"deleteService"])->name("service.destroy");
+    Route::get('/services/{id}/edit',[AdminServiceController::class, 'showEditServiceForm'])->name('service.edit');
+    Route::post('/service/edit',[AdminServiceController::class, 'editService'])->name('service.edit.post');
 
 
+    Route::resource('portfolios','Admin\PortfolioController');
+    Route::get("/portfolios/destroy/{id?}" , [AdminPortfolioController::class ,"destroy"])->name("portfolio.destroy");
+
+    Route::resource('products','Admin\ProductController');
+    Route::get("/products/destroy/{id?}" , [AdminProductController::class ,"destroy"])->name("product.destroy");
+
+    Route::resource('clients','Admin\ClientController');
+    Route::get("/clients/destroy/{id?}" , [AdminClientController::class ,"destroy"])->name("client.destroy");
+
+    Route::resource('abouts','Admin\AboutController');
+    Route::get("/abouts/destroy/{id?}" , [AdminAboutController::class ,"destroy"])->name("about.destroy");
+
+    Route::resource('contacts','Admin\ContactController');
+    Route::get("/contact/destroy/{id?}" , [AdminContactController::class ,"destroy"])->name("contact.destroy");
+    Route::get("/contact/message-requests" , [AdminContactController::class ,"messageRequest"])->name("contacts.message_request");
+
+    Route::resource('slideritems','Admin\SlideritemController');
+    Route::get("/slideritem/destroy/{id?}" , [AdminSlideritemController::class ,"destroy"])->name("slideritem.destroy");
+
+});
 });

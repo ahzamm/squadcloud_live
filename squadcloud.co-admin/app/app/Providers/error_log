@@ -1,1 +1,0 @@
-[19-May-2021 11:25:51 UTC] PHP Fatal error:  Namespace declaration statement has to be the very first statement or after any declare call in the script in /home/lbinet/public_html/sparkbroadband.pk/app/Providers/copy_RouteServiceProvider.php on line 4

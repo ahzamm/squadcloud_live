@@ -1,4 +1,0 @@
-[30-May-2023 03:26:15 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/lbinet/public_html/sparkbroadband.pk/config/cache.php:21
-Stack trace:
-#0 {main}
-  thrown in /home/lbinet/public_html/sparkbroadband.pk/config/cache.php on line 21
