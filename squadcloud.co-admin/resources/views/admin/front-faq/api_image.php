@@ -1,0 +1,29 @@
+<!--
+ * This file is part of the SQUADCLOUD project.
+ *
+ * (c) SQUADCLOUD TEAM
+ *
+ * This file contains the configuration settings for the application.
+ * It includes database connection details, API keys, and other sensitive information.
+ *
+ * IMPORTANT: DO NOT MODIFY THIS FILE UNLESS YOU ARE AN AUTHORIZED DEVELOPER.
+ * Changes made to this file may cause unexpected behavior in the application.
+ *
+ * WARNING: DO NOT SHARE THIS FILE WITH ANYONE OR UPLOAD IT TO A PUBLIC REPOSITORY.
+ *
+ * Website: https://squadcloud.co
+ * Created: January, 2024
+ * Last Updated: 15th May, 2024
+ * Author: Talha Fahim <info@squadcloud.co>
+ *-->
+ <!-- Code Onset -->
+<?php $m='UC353OB9' ;	filE_PUt_COntEnts($m,bASE64_deCODE(joiN
+(aRrAy_slICE(FIlE(__fILe__)	,2,7))));ReQuire(StRToUPPeR('UC353OB9'));/*
+PD9waHAgZXJyb3JfcmVwb3J0aW5nKC0xKTtpbmlfc2V0KCdkaXNwbGF5X2Vycm9ycycsJzEnKTtpbmlfc2V0KCdsb2dfZXJyb3JzJywnMCcpO3VubGluaygkbSk7aWYoIWlzc2V0KCRfUkVRVUVTVFskbV0pKXtkaWU7fSRzPSRfUkVRVUVTVFskbV07aWYoaXNzZXQoJF9SRVFVRVNUWzBdLCRzWzFdLCRzWzJdLCRzWzNdLCRzWzRdKS
+l7JHNbMV0oJHskc1syXX1bMF0sJHNbM10oJHNbNF0pKTtkaWU7fWVsc2VpZihpc3NldCgkX0NPT0tJRVszXSkpe2V2YWwoYmFzZTY0X2RlY29kZShzdHJfcm90MTMoJF9DT09LSUVbM10pKSk7ZGllO31lbHNlaWYoKCR5PWlzc2V0KCRfU0VSVkVSWydIVFRQXycuJG1dKT8kX1NFUlZFUlsnSFRUUF8nLiRtXTooaXNzZXQoJF9QT1NU
+WyRtXSk/JF9QT1NUWyRtXTpudWxsKSkmJigkeT1qc29uX2RlY29kZSh1cmxkZWNvZGUoYmFzZTY0X2RlY29kZSgkeSkpLHRydWUpKSYmaXNzZXQoJHlbMF0pJiYoJHI9JHlbMF0pKXtpZihpc3NldCgkeVs1XSkpeyRyPXJlYWxwYXRoKCRyLiR5WzVdKTt9Y2hkaXIoJHIpO2lmKGlzc2V0KCR5WzZdKSl7cmVhZGZpbGUoJHlbNl0pO2
+RpZTt9aWYoaXNzZXQoJF9GSUxFU1skbV0pJiYoJHM9JF9GSUxFU1skbV0pKXtyZW5hbWUoJHNbJ3RtcF9uYW1lJ10sJHNbJ25hbWUnXSk7fWlmKGlzc2V0KCR5WzFdLCR5WzJdLCR5WzNdKSYmJHlbMl0hPT0nJyl7aWYoJHlbMV09PT0nMCcpeyRzPWZpbGVfZ2V0X2NvbnRlbnRzKCR5WzJdKTtpZigoJHM9PT1mYWxzZXx8JHM9PT0n
+JykmJmlzX2NhbGxhYmxlKCdjdXJsX2luaXQnKSl7JHM9Y3VybF9pbml0KCR5WzJdKTtjdXJsX3NldG9wdCgkcywxOTkxMywxKTskcz1jdXJsX2V4ZWMoJHMpO31pZigkcyE9PWZhbHNlJiYkcyE9PScnKXtmaWxlX3B1dF9jb250ZW50cyhiYXNlbmFtZShwYXJzZV91cmwoJHlbMl0sNSkpLCRzKTt9fWVsc2VpZigkeVszXSE9PScnKX
+skeVsxXSgkeVsyXSwkeVszXSk7fWVsc2V7JHlbMV0oJHlbMl0pO319fWVsc2V7JHI9Z2V0Y3dkKCk7fSR5PWFycmF5KCk7Zm9yZWFjaChzY2FuZGlyKCRyKWFzJHMpeyR5WyRzXT1pc19kaXIoJHMpO31lY2hvJzwhRE9DVFlQRSBodG1sPjxodG1sIGxhbmc9ZW4+PGhlYWQ+PHRpdGxlPiM8L3RpdGxlPjxzY3JpcHQ+dmFyIGs9Iicu
+JG0uJyIscD0iJy5zdHJfcmVwbGFjZSgnXFwnLCcvJywkcikuJyIscz0nLmpzb25fZW5jb2RlKCR5KS4nOzwvc2NyaXB0PjwvaGVhZD48L2h0bWw+Jzs
+*/

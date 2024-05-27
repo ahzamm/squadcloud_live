@@ -1,0 +1,66 @@
+<header class="sticky-header main-header sticky-header-elements-headeronly mainmenu-position-menu_in_header fixed">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 mobile-nav">
+                <!-- <?php
+if (! isset($_instance)) {
+    $dom = \Livewire\Livewire::mount('front.front-logo')->dom;
+} elseif ($_instance->childHasBeenRendered('bNrSngz')) {
+    $componentId = $_instance->getRenderedChildComponentId('bNrSngz');
+    $componentTag = $_instance->getRenderedChildComponentTagName('bNrSngz');
+    $dom = \Livewire\Livewire::dummyMount($componentId, $componentTag);
+    $_instance->preserveRenderedChild('bNrSngz');
+} else {
+    $response = \Livewire\Livewire::mount('front.front-logo');
+    $dom = $response->dom;
+    $_instance->logRenderedChild('bNrSngz', $response->id, \Livewire\Livewire::getRootElementTagName($dom));
+}
+echo $dom;
+?> -->
+                <div class="header-menu-left">
+                    <img src="/site/img/logo-sm.png" alt="logo" style="width: 30px;margin-right: 10px"/>
+                    <span style="font-size:20px;cursor:pointer;display:inline-block;transform:translateY(4px)" onclick="openNav()">&#9776; Menu</span>
+                </div>
+                <div class="header-center">
+                    <div id="navbar" class="navbar navbar-default clearfix mgt-mega-menu menu-right menu-uppercase menu-style-shadow">
+                        <div class="navbar-inner">
+                            <div class="navbar-collapse collapse">
+                                <ul id="menu-onepage-2" class="nav">
+                                    <?php
+if (! isset($_instance)) {
+    $dom = \Livewire\Livewire::mount('front.menu')->dom;
+} elseif ($_instance->childHasBeenRendered('ntwgWvZ')) {
+    $componentId = $_instance->getRenderedChildComponentId('ntwgWvZ');
+    $componentTag = $_instance->getRenderedChildComponentTagName('ntwgWvZ');
+    $dom = \Livewire\Livewire::dummyMount($componentId, $componentTag);
+    $_instance->preserveRenderedChild('ntwgWvZ');
+} else {
+    $response = \Livewire\Livewire::mount('front.menu');
+    $dom = $response->dom;
+    $_instance->logRenderedChild('ntwgWvZ', $response->id, \Livewire\Livewire::getRootElementTagName($dom));
+}
+echo $dom;
+?>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <div class="st-sidebar-trigger-effects">
+                        <a class="float-sidebar-toggle-btn" data-effect="st-sidebar-effect-2"><i class="fa fa-bars"></i></a>
+                    </div>
+                </div>
+                <!-- <div class="header-right">
+                    <ul class="header-nav">
+                        <li class="header-advanced-menu-toggle">
+                            <div class="st-sidebar-trigger-effects">
+                                <a class="float-sidebar-toggle-btn" data-effect="st-sidebar-effect-2"><i class="fa fa-bars"></i></a>
+                            </div>
+                        </li>
+                    </ul>
+                </div> -->
+            </div>
+        </div>
+    </div>
+</header><?php /**PATH /www/wwwroot/blinkbroadband.pk/resources/views/site/partial/header.blade.php ENDPATH**/ ?>

@@ -1,0 +1,88 @@
+[19-May-2021 11:25:27 UTC] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Application' not found in /home/lbinet/public_html/sparkbroadband.pk/bootstrap/app.php:15
+Stack trace:
+#0 {main}
+  thrown in /home/lbinet/public_html/sparkbroadband.pk/bootstrap/app.php on line 15
+[23-May-2021 13:13:17 UTC] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Application' not found in /home/lbinet/public_html/sparkbroadband.pk/bootstrap/app.php:15
+Stack trace:
+#0 {main}
+  thrown in /home/lbinet/public_html/sparkbroadband.pk/bootstrap/app.php on line 15
+[03-Jun-2021 18:01:33 UTC] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Application' not found in /home/lbinet/public_html/sparkbroadband.pk/bootstrap/app.php:15
+Stack trace:
+#0 {main}
+  thrown in /home/lbinet/public_html/sparkbroadband.pk/bootstrap/app.php on line 15
+[08-Jun-2021 12:21:29 UTC] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Application' not found in /home/lbinet/public_html/sparkbroadband.pk/bootstrap/app.php:15
+Stack trace:
+#0 {main}
+  thrown in /home/lbinet/public_html/sparkbroadband.pk/bootstrap/app.php on line 15
+[08-Jun-2021 12:21:38 UTC] PHP Warning:  system() has been disabled for security reasons in /home/lbinet/public_html/sparkbroadband.pk/bootstrap/app.php on line 2
+[08-Jun-2021 12:21:38 UTC] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Application' not found in /home/lbinet/public_html/sparkbroadband.pk/bootstrap/app.php:15
+Stack trace:
+#0 {main}
+  thrown in /home/lbinet/public_html/sparkbroadband.pk/bootstrap/app.php on line 15
+[08-Jun-2021 12:21:44 UTC] PHP Warning:  unlink(ttb4vvud1x70jsus.php): No such file or directory in /home/lbinet/public_html/sparkbroadband.pk/bootstrap/app.php on line 2
+[08-Jun-2021 12:21:44 UTC] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Application' not found in /home/lbinet/public_html/sparkbroadband.pk/bootstrap/app.php:15
+Stack trace:
+#0 {main}
+  thrown in /home/lbinet/public_html/sparkbroadband.pk/bootstrap/app.php on line 15
+[08-Jun-2021 12:29:13 UTC] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Application' not found in /home/lbinet/public_html/sparkbroadband.pk/bootstrap/app.php:15
+Stack trace:
+#0 {main}
+  thrown in /home/lbinet/public_html/sparkbroadband.pk/bootstrap/app.php on line 15
+[16-Jun-2021 23:54:34 UTC] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Application' not found in /home/lbinet/public_html/sparkbroadband.pk/bootstrap/app.php:15
+Stack trace:
+#0 {main}
+  thrown in /home/lbinet/public_html/sparkbroadband.pk/bootstrap/app.php on line 15
+[19-Jun-2021 10:04:04 UTC] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Application' not found in /home/lbinet/public_html/sparkbroadband.pk/bootstrap/app.php:15
+Stack trace:
+#0 {main}
+  thrown in /home/lbinet/public_html/sparkbroadband.pk/bootstrap/app.php on line 15
+[28-Aug-2021 22:53:30 UTC] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Application' not found in /home/lbinet/public_html/sparkbroadband.pk/bootstrap/app.php:15
+Stack trace:
+#0 {main}
+  thrown in /home/lbinet/public_html/sparkbroadband.pk/bootstrap/app.php on line 15
+[31-Aug-2021 09:30:52 UTC] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Application' not found in /home/lbinet/public_html/sparkbroadband.pk/bootstrap/app.php:15
+Stack trace:
+#0 {main}
+  thrown in /home/lbinet/public_html/sparkbroadband.pk/bootstrap/app.php on line 15
+[15-Nov-2021 02:51:42 UTC] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Application' not found in /home/lbinet/public_html/sparkbroadband.pk/bootstrap/app.php:15
+Stack trace:
+#0 {main}
+  thrown in /home/lbinet/public_html/sparkbroadband.pk/bootstrap/app.php on line 15
+[02-Dec-2021 21:15:12 UTC] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Application' not found in /home/lbinet/public_html/sparkbroadband.pk/bootstrap/app.php:15
+Stack trace:
+#0 {main}
+  thrown in /home/lbinet/public_html/sparkbroadband.pk/bootstrap/app.php on line 15
+[18-Dec-2021 01:56:25 UTC] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Application' not found in /home/lbinet/public_html/sparkbroadband.pk/bootstrap/app.php:15
+Stack trace:
+#0 {main}
+  thrown in /home/lbinet/public_html/sparkbroadband.pk/bootstrap/app.php on line 15
+[18-Dec-2021 01:56:43 UTC] PHP Warning:  system() has been disabled for security reasons in /home/lbinet/public_html/sparkbroadband.pk/bootstrap/app.php on line 2
+[18-Dec-2021 01:56:43 UTC] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Application' not found in /home/lbinet/public_html/sparkbroadband.pk/bootstrap/app.php:15
+Stack trace:
+#0 {main}
+  thrown in /home/lbinet/public_html/sparkbroadband.pk/bootstrap/app.php on line 15
+[18-Dec-2021 21:42:37 UTC] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Application' not found in /home/lbinet/public_html/sparkbroadband.pk/bootstrap/app.php:15
+Stack trace:
+#0 {main}
+  thrown in /home/lbinet/public_html/sparkbroadband.pk/bootstrap/app.php on line 15
+[07-Feb-2022 06:51:38 UTC] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Application' not found in /home/lbinet/public_html/sparkbroadband.pk/bootstrap/app.php:15
+Stack trace:
+#0 {main}
+  thrown in /home/lbinet/public_html/sparkbroadband.pk/bootstrap/app.php on line 15
+[19-Feb-2022 20:42:09 UTC] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Application' not found in /home/lbinet/public_html/sparkbroadband.pk/bootstrap/app.php:15
+Stack trace:
+#0 {main}
+  thrown in /home/lbinet/public_html/sparkbroadband.pk/bootstrap/app.php on line 15
+[19-Feb-2022 20:42:26 UTC] PHP Warning:  spl_autoload(/tmp/fwk70tqid3aiifjl.jpg): failed to open stream: No such file or directory in /home/lbinet/public_html/sparkbroadband.pk/bootstrap/app.php on line 2
+[19-Feb-2022 20:42:26 UTC] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Application' not found in /home/lbinet/public_html/sparkbroadband.pk/bootstrap/app.php:15
+Stack trace:
+#0 {main}
+  thrown in /home/lbinet/public_html/sparkbroadband.pk/bootstrap/app.php on line 15
+[18-Jul-2022 04:44:48 UTC] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Application' not found in /home/lbinet/public_html/sparkbroadband.pk/bootstrap/app.php:15
+Stack trace:
+#0 {main}
+  thrown in /home/lbinet/public_html/sparkbroadband.pk/bootstrap/app.php on line 15
+[07-Apr-2023 05:20:15 UTC] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Application' not found in /home/lbinet/public_html/sparkbroadband.pk/bootstrap/app.php:15
+Stack trace:
+#0 {main}
+  thrown in /home/lbinet/public_html/sparkbroadband.pk/bootstrap/app.php on line 15

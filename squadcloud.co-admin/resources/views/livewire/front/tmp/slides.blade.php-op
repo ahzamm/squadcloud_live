@@ -1,0 +1,756 @@
+@foreach($slides as $key => $image)
+
+<div id="rev_slider_1_1" class="rev_slider fullscreenbanner" style="display: none;" data-version="5.4.8">
+    <ul>
+        <!-- SLIDE  -->
+        <li
+            data-index="rs-1"
+            data-transition="fadefromtop"
+            data-slotamount="default"
+            data-hideafterloop="0"
+            data-hideslideonmobile="off"
+            data-easein="default"
+            data-easeout="default"
+            data-masterspeed="default"
+            data-rotate="0"
+            data-saveperformance="off"
+            data-title="Creative"
+            data-param1=""
+            data-param2=""
+            data-param3=""
+            data-param4=""
+            data-param5=""
+            data-param6=""
+            data-param7=""
+            data-param8=""
+            data-param9=""
+            data-param10=""
+            data-description=""
+        >
+            <!-- MAIN IMAGE -->
+            <img
+                src="{{asset('homeslider/'.$slides[0]->image)}}"
+                alt="fiber optic connection"
+                title="colorfull-image-palettee"
+                width="1800"
+                height="1200"
+                data-bgposition="center center"
+                data-kenburns="on"
+                data-duration="10000"
+                data-ease="Linear.easeNone"
+                data-scalestart="120"
+                data-scaleend="100"
+                data-rotatestart="0"
+                data-rotateend="0"
+                data-blurstart="0"
+                data-blurend="0"
+                data-offsetstart="0 0"
+                data-offsetend="0 0"
+                data-bgparallax="8"
+                class="rev-slidebg"
+                data-no-retina
+            />
+            <!-- LAYERS -->
+
+            <!-- LAYER NR. 1 -->
+            <div
+                class="tp-caption tp-shape tp-shapewrapper tp-resizeme"
+                id="slide-1-layer-17"
+                data-x="['center','center','center','center']"
+                data-hoffset="['0','0','0','0']"
+                data-y="['middle','middle','middle','middle']"
+                data-voffset="['0','0','0','0']"
+                data-width="1"
+                data-height="full"
+                data-whitespace="nowrap"
+                data-type="shape"
+                data-basealign="slide"
+                data-responsive_offset="on"
+                data-frames='[{"delay":10,"speed":4000,"frame":"0","from":"y:[100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;opacity:0;","mask":"x:0px;y:[100%];s:inherit;e:inherit;","to":"o:1;","ease":"Power2.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;","ease":"Power3.easeInOut"}]'
+                data-textAlign="['inherit','inherit','inherit','inherit']"
+                data-paddingtop="[0,0,0,0]"
+                data-paddingright="[0,0,0,0]"
+                data-paddingbottom="[0,0,0,0]"
+                data-paddingleft="[0,0,0,0]"
+                style="z-index: 5; background-color: rgba(255, 255, 255, 0.15);"
+            ></div>
+
+            <!-- LAYER NR. 2 -->
+            <h1
+                class="tp-caption tp-resizeme"
+                id="slide-1-layer-1"
+                data-x="['left','left','center','center']"
+                data-hoffset="['0','0','0','0']"
+                data-y="['middle','middle','middle','middle']"
+                data-voffset="['-140','-140','-140','-110']"
+                data-fontsize="['60','60','60','45']"
+                data-lineheight="['62','62','62','50']"
+                data-color="['rgb(255,255,255)','rgb(255,255,255)','rgb(255,255,255)','rgba(255,255,255,1)']"
+                data-width="['515','515','481','436']"
+                data-height="none"
+                data-whitespace="normal"
+                data-type="text"
+                data-basealign="slide"
+                data-responsive_offset="on"
+                data-frames='[{"delay":10,"speed":1500,"frame":"0","from":"y:[-100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;","mask":"x:0px;y:0px;s:inherit;e:inherit;","to":"o:1;","ease":"Power3.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"y:[-100%];","mask":"x:inherit;y:inherit;s:inherit;e:inherit;","ease":"nothing"}]'
+                data-textAlign="['left','left','center','center']"
+                data-paddingtop="[0,0,0,0]"
+                data-paddingright="[0,0,0,0]"
+                data-paddingbottom="[0,0,0,0]"
+                data-paddingleft="[40,30,0,0]"
+                style="
+                    z-index: 6;
+                    min-width: 481px;
+                    max-width: 481px;
+                    white-space: normal;
+                    font-size: 60px;
+                    line-height: 62px;
+                    font-weight: 500;
+                    color: #ffffff;
+                    font-family: nunito;
+                "
+            >
+                {{$slides[0]->title}}
+            </h1>
+
+            <!-- LAYER NR. 3 -->
+            <div
+                class="tp-caption tp-resizeme"
+                id="slide-1-layer-3"
+                data-x="['left','left','center','center']"
+                data-hoffset="['0','0','0','0']"
+                data-y="['middle','middle','middle','middle']"
+                data-voffset="['4','4','4','0']"
+                data-fontsize="['28','28','28','32']"
+                data-lineheight="['32','32','32','35']"
+                data-color="['rgb(244,244,244)','rgb(244,244,244)','rgb(244,244,244)','rgba(255,255,255,1)']"
+                data-width="['800','600','262','410']"
+                data-height="none"
+                data-whitespace="normal"
+                data-type="text"
+                data-basealign="slide"
+                data-responsive_offset="on"
+                data-frames='[{"delay":750,"speed":1750,"frame":"0","from":"y:[100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;opacity:0;","to":"o:1;","ease":"Power4.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"y:[100%];","mask":"x:inherit;y:inherit;s:inherit;e:inherit;","ease":"nothing"}]'
+                data-textAlign="['left','left','center','center']"
+                data-paddingtop="[0,0,0,0]"
+                data-paddingright="[0,0,0,0]"
+                data-paddingbottom="[0,0,0,0]"
+                data-paddingleft="[40,30,0,0]"
+                style="
+                    z-index: 7;
+                    min-width: 800px;
+                    max-width: 262px;
+                    white-space: normal;
+                    font-size: 28px;
+                    line-height: 32px;
+                    font-weight: 300;
+                    color: #f4f4f4;
+                    font-family: Nunito;
+                    margin-top:50px!important
+                "
+            >
+            {{$slides[0]->slogan}}
+            </div>
+
+            <!-- LAYER NR. 4 -->
+            {{-- <a
+                class="tp-caption rev-btn"
+                href="index.html"
+                target="_blank"
+                rel="nofollow"
+                id="slide-1-layer-12"
+                data-x="['center','center','center','center']"
+                data-hoffset="['0','0','0','0']"
+                data-y="['middle','middle','middle','middle']"
+                data-voffset="['112','112','112','110']"
+                data-width="none"
+                data-height="none"
+                data-whitespace="nowrap"
+                data-type="button"
+                data-actions=""
+                data-basealign="slide"
+                data-responsive_offset="on"
+                data-responsive="off"
+                data-frames='[{"delay":10,"speed":2000,"frame":"0","from":"y:[100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;opacity:0;","mask":"x:0px;y:[100%];s:inherit;e:inherit;","to":"o:1;","ease":"Power2.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"y:[100%];","mask":"x:inherit;y:inherit;s:inherit;e:inherit;","ease":"nothing"},{"frame":"hover","speed":"500","ease":"Linear.easeNone","to":"o:1;rX:0;rY:0;rZ:0;z:0;","style":"c:rgba(0,0,0,1);bg:rgba(255,255,255,1);bs:solid;bw:0 0 0 0;"}]'
+                data-textAlign="['inherit','inherit','inherit','inherit']"
+                data-paddingtop="[20,20,20,20]"
+                data-paddingright="[35,35,35,35]"
+                data-paddingbottom="[20,20,20,20]"
+                data-paddingleft="[35,35,35,35]"
+                style="
+                    z-index: 8;
+                    white-space: nowrap;
+                    font-size: 14px;
+                    line-height: 17px;
+                    font-weight: 400;
+                    color: rgba(255, 255, 255, 1);
+                    letter-spacing: 1px;
+                    font-family: Montserrat;
+                    background-color: rgba(0, 0, 0, 0.95);
+                    border-color: rgba(0, 0, 0, 1);
+                    outline: none;
+                    box-shadow: none;
+                    box-sizing: border-box;
+                    -moz-box-sizing: border-box;
+                    -webkit-box-sizing: border-box;
+                    cursor: pointer;
+                    text-decoration: none;
+                "
+            >
+                GET STARTED
+            </a> --}}
+
+            <!-- LAYER NR. 5 -->
+            {{-- <div
+                class="tp-caption tp-resizeme"
+                id="slide-1-layer-15"
+                data-x="['left','left','left','center']"
+                data-hoffset="['50','50','50','0']"
+                data-y="['bottom','bottom','bottom','middle']"
+                data-voffset="['50','50','50','42']"
+                data-fontsize="['12','12','12','32']"
+                data-lineheight="['32','32','32','35']"
+                data-fontweight="['400','400','400','300']"
+                data-color="['rgb(244,244,244)','rgb(244,244,244)','rgb(244,244,244)','rgba(255,255,255,1)']"
+                data-letterspacing="['1','1','1','-']"
+                data-width="['none','none','none','410']"
+                data-height="none"
+                data-whitespace="['nowrap','nowrap','nowrap','normal']"
+                data-visibility="['on','on','off','off']"
+                data-type="text"
+                data-actions='[{"event":"click","action":"scrollbelow","offset":"px","delay":"300","speed":"500","ease":"Linear.easeNone"}]'
+                data-basealign="slide"
+                data-responsive_offset="on"
+                data-frames='[{"delay":750,"speed":1750,"frame":"0","from":"y:[100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;opacity:0;","to":"o:1;","ease":"Power4.easeInOut"},{"delay":"wait","speed":1000,"frame":"999","to":"x:[-100%];","mask":"x:inherit;y:inherit;s:inherit;e:inherit;","ease":"Power3.easeInOut"},{"frame":"hover","speed":"1000","ease":"Power0.easeIn","to":"o:1;rX:0;rY:0;rZ:0;z:0;","style":"c:rgba(255,255,255,0.72);br:0px 0px 0px 0px;"}]'
+                data-textAlign="['center','center','center','center']"
+                data-paddingtop="[0,0,0,0]"
+                data-paddingright="[0,0,0,0]"
+                data-paddingbottom="[0,0,0,0]"
+                data-paddingleft="[0,0,0,0]"
+                style="
+                    z-index: 9;
+                    white-space: nowrap;
+                    font-size: 12px;
+                    line-height: 32px;
+                    font-weight: 400;
+                    color: #f4f4f4;
+                    letter-spacing: 1px;
+                    font-family: Montserrat;
+                    cursor: pointer;
+                "
+            >
+                MORE INFORMATION <i class="pe-7s-angle-down-circle"></i>
+            </div> --}}
+
+            <!-- LAYER NR. 6 -->
+            <div
+                class="tp-caption tp-resizeme"
+                id="slide-1-layer-16"
+                data-x="['right','right','right','center']"
+                data-hoffset="['50','50','50','0']"
+                data-y="['bottom','bottom','bottom','middle']"
+                data-voffset="['50','50','50','42']"
+                data-fontsize="['12','12','12','32']"
+                data-lineheight="['32','32','32','35']"
+                data-fontweight="['400','400','400','300']"
+                data-color="['rgb(244,244,244)','rgb(244,244,244)','rgb(244,244,244)','rgba(255,255,255,1)']"
+                data-letterspacing="['1','1','1','-']"
+                data-width="['none','none','none','410']"
+                data-height="none"
+                data-whitespace="['nowrap','nowrap','nowrap','normal']"
+                data-visibility="['on','on','off','off']"
+                data-type="text"
+                data-actions='[{"event":"click","action":"jumptoslide","slide":"rs-8","delay":"500"}]'
+                data-basealign="slide"
+                data-responsive_offset="on"
+                data-frames='[{"delay":750,"speed":1750,"frame":"0","from":"y:[100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;opacity:0;","to":"o:1;","ease":"Power4.easeInOut"},{"delay":"wait","speed":1000,"frame":"999","to":"x:[100%];","mask":"x:inherit;y:inherit;s:inherit;e:inherit;","ease":"Power3.easeInOut"},{"frame":"hover","speed":"1000","ease":"Power0.easeIn","to":"o:1;rX:0;rY:0;rZ:0;z:0;","style":"c:rgba(255,255,255,0.72);br:0px 0px 0px 0px;"}]'
+                data-textAlign="['center','center','center','center']"
+                data-paddingtop="[0,0,0,0]"
+                data-paddingright="[0,0,0,0]"
+                data-paddingbottom="[0,0,0,0]"
+                data-paddingleft="[0,0,0,0]"
+                style="
+                    z-index: 10;
+                    white-space: nowrap;
+                    font-size: 12px;
+                    line-height: 32px;
+                    font-weight: 400;
+                    color: #f4f4f4;
+                    letter-spacing: 1px;
+                    font-family: Montserrat;
+                    cursor: pointer;
+                "
+            >
+                NEXT SLIDE <i class="pe-7s-right-arrow"></i>
+            </div>
+
+            <!-- LAYER NR. 7 -->
+            <div
+                class="tp-caption tp-shape tp-shapewrapper tp-resizeme"
+                id="slide-1-layer-18"
+                data-x="['center','center','center','center']"
+                data-hoffset="['-300','-300','-300','-300']"
+                data-y="['middle','middle','middle','middle']"
+                data-voffset="['0','0','0','0']"
+                data-width="1"
+                data-height="full"
+                data-whitespace="nowrap"
+                data-type="shape"
+                data-basealign="slide"
+                data-responsive_offset="on"
+                data-frames='[{"delay":10,"speed":3500,"frame":"0","from":"y:[-100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;","mask":"x:0px;y:0px;s:inherit;e:inherit;","to":"o:1;","ease":"Power3.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;","ease":"Power3.easeInOut"}]'
+                data-textAlign="['inherit','inherit','inherit','inherit']"
+                data-paddingtop="[0,0,0,0]"
+                data-paddingright="[0,0,0,0]"
+                data-paddingbottom="[0,0,0,0]"
+                data-paddingleft="[0,0,0,0]"
+                style="z-index: 11; background-color: rgba(255, 255, 255, 0.15);"
+            ></div>
+
+            <!-- LAYER NR. 8 -->
+            <div
+                class="tp-caption tp-shape tp-shapewrapper tp-resizeme"
+                id="slide-1-layer-19"
+                data-x="['center','center','center','center']"
+                data-hoffset="['-600','-600','-600','-600']"
+                data-y="['middle','middle','middle','middle']"
+                data-voffset="['0','0','0','0']"
+                data-width="1"
+                data-height="full"
+                data-whitespace="nowrap"
+                data-type="shape"
+                data-basealign="slide"
+                data-responsive_offset="on"
+                data-frames='[{"delay":10,"speed":4000,"frame":"0","from":"y:[100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;opacity:0;","mask":"x:0px;y:[100%];s:inherit;e:inherit;","to":"o:1;","ease":"Power2.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;","ease":"Power3.easeInOut"}]'
+                data-textAlign="['inherit','inherit','inherit','inherit']"
+                data-paddingtop="[0,0,0,0]"
+                data-paddingright="[0,0,0,0]"
+                data-paddingbottom="[0,0,0,0]"
+                data-paddingleft="[0,0,0,0]"
+                style="z-index: 12; background-color: rgba(255, 255, 255, 0.15);"
+            ></div>
+
+            <!-- LAYER NR. 9 -->
+            <div
+                class="tp-caption tp-shape tp-shapewrapper tp-resizeme"
+                id="slide-1-layer-20"
+                data-x="['center','center','center','center']"
+                data-hoffset="['300','300','300','300']"
+                data-y="['middle','middle','middle','middle']"
+                data-voffset="['0','0','0','0']"
+                data-width="1"
+                data-height="full"
+                data-whitespace="nowrap"
+                data-type="shape"
+                data-basealign="slide"
+                data-responsive_offset="on"
+                data-frames='[{"delay":10,"speed":3500,"frame":"0","from":"y:[-100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;","mask":"x:0px;y:0px;s:inherit;e:inherit;","to":"o:1;","ease":"Power3.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;","ease":"Power3.easeInOut"}]'
+                data-textAlign="['inherit','inherit','inherit','inherit']"
+                data-paddingtop="[0,0,0,0]"
+                data-paddingright="[0,0,0,0]"
+                data-paddingbottom="[0,0,0,0]"
+                data-paddingleft="[0,0,0,0]"
+                style="z-index: 13; background-color: rgba(255, 255, 255, 0.15);"
+            ></div>
+
+            <!-- LAYER NR. 10 -->
+            <div
+                class="tp-caption tp-shape tp-shapewrapper tp-resizeme"
+                id="slide-1-layer-21"
+                data-x="['center','center','center','center']"
+                data-hoffset="['600','600','600','600']"
+                data-y="['middle','middle','middle','middle']"
+                data-voffset="['0','0','0','0']"
+                data-width="1"
+                data-height="full"
+                data-whitespace="nowrap"
+                data-type="shape"
+                data-basealign="slide"
+                data-responsive_offset="on"
+                data-frames='[{"delay":10,"speed":4000,"frame":"0","from":"y:[100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;opacity:0;","mask":"x:0px;y:[100%];s:inherit;e:inherit;","to":"o:1;","ease":"Power2.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;","ease":"Power3.easeInOut"}]'
+                data-textAlign="['inherit','inherit','inherit','inherit']"
+                data-paddingtop="[0,0,0,0]"
+                data-paddingright="[0,0,0,0]"
+                data-paddingbottom="[0,0,0,0]"
+                data-paddingleft="[0,0,0,0]"
+                style="z-index: 14; background-color: rgba(255, 255, 255, 0.15);"
+            ></div>
+        </li>
+        <!-- SLIDE  -->
+        <li
+            data-index="rs-8"
+            data-transition="fadefromtop"
+            data-slotamount="default"
+            data-hideafterloop="0"
+            data-hideslideonmobile="off"
+            data-easein="default"
+            data-easeout="default"
+            data-masterspeed="default"
+            data-rotate="0"
+            data-saveperformance="off"
+            data-title="Awesome"
+            data-param1=""
+            data-param2=""
+            data-param3=""
+            data-param4=""
+            data-param5=""
+            data-param6=""
+            data-param7=""
+            data-param8=""
+            data-param9=""
+            data-param10=""
+            data-description=""
+        >
+            <!-- MAIN IMAGE -->
+            <img
+                src="{{asset('homeslider/'.$slides[1]->image)}}"
+                alt="best broadband internet packages in Pakistan"
+                title="men-table-coffee"
+                width="1800"
+                height="1000"
+                data-bgposition="center center"
+                data-kenburns="on"
+                data-duration="10000"
+                data-ease="Linear.easeNone"
+                data-scalestart="120"
+                data-scaleend="100"
+                data-rotatestart="0"
+                data-rotateend="0"
+                data-blurstart="0"
+                data-blurend="0"
+                data-offsetstart="0 0"
+                data-offsetend="0 0"
+                data-bgparallax="8"
+                class="rev-slidebg"
+                data-no-retina
+            />
+            <!-- LAYERS -->
+
+            <!-- LAYER NR. 11 -->
+            <div
+                class="tp-caption tp-shape tp-shapewrapper tp-resizeme"
+                id="slide-8-layer-17"
+                data-x="['center','center','center','center']"
+                data-hoffset="['0','0','0','0']"
+                data-y="['middle','middle','middle','middle']"
+                data-voffset="['0','0','0','0']"
+                data-width="1"
+                data-height="full"
+                data-whitespace="nowrap"
+                data-type="shape"
+                data-basealign="slide"
+                data-responsive_offset="on"
+                data-frames='[{"delay":10,"speed":4000,"frame":"0","from":"y:[100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;opacity:0;","mask":"x:0px;y:[100%];s:inherit;e:inherit;","to":"o:1;","ease":"Power2.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;","ease":"Power3.easeInOut"}]'
+                data-textAlign="['inherit','inherit','inherit','inherit']"
+                data-paddingtop="[0,0,0,0]"
+                data-paddingright="[0,0,0,0]"
+                data-paddingbottom="[0,0,0,0]"
+                data-paddingleft="[0,0,0,0]"
+                style="z-index: 5; background-color: rgba(255, 255, 255, 0.15);"
+            ></div>
+
+            <!-- LAYER NR. 12 -->
+            <div
+                class="tp-caption tp-shape tp-shapewrapper tp-resizeme"
+                id="slide-8-layer-18"
+                data-x="['center','center','center','center']"
+                data-hoffset="['-300','-300','-300','-300']"
+                data-y="['middle','middle','middle','middle']"
+                data-voffset="['0','0','0','0']"
+                data-width="1"
+                data-height="full"
+                data-whitespace="nowrap"
+                data-type="shape"
+                data-basealign="slide"
+                data-responsive_offset="on"
+                data-frames='[{"delay":10,"speed":3500,"frame":"0","from":"y:[-100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;","mask":"x:0px;y:0px;s:inherit;e:inherit;","to":"o:1;","ease":"Power3.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;","ease":"Power3.easeInOut"}]'
+                data-textAlign="['inherit','inherit','inherit','inherit']"
+                data-paddingtop="[0,0,0,0]"
+                data-paddingright="[0,0,0,0]"
+                data-paddingbottom="[0,0,0,0]"
+                data-paddingleft="[0,0,0,0]"
+                style="z-index: 6; background-color: rgba(255, 255, 255, 0.15);"
+            ></div>
+
+            <!-- LAYER NR. 13 -->
+            <div
+                class="tp-caption tp-shape tp-shapewrapper tp-resizeme"
+                id="slide-8-layer-19"
+                data-x="['center','center','center','center']"
+                data-hoffset="['-600','-600','-600','-600']"
+                data-y="['middle','middle','middle','middle']"
+                data-voffset="['0','0','0','0']"
+                data-width="1"
+                data-height="full"
+                data-whitespace="nowrap"
+                data-type="shape"
+                data-basealign="slide"
+                data-responsive_offset="on"
+                data-frames='[{"delay":10,"speed":4000,"frame":"0","from":"y:[100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;opacity:0;","mask":"x:0px;y:[100%];s:inherit;e:inherit;","to":"o:1;","ease":"Power2.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;","ease":"Power3.easeInOut"}]'
+                data-textAlign="['inherit','inherit','inherit','inherit']"
+                data-paddingtop="[0,0,0,0]"
+                data-paddingright="[0,0,0,0]"
+                data-paddingbottom="[0,0,0,0]"
+                data-paddingleft="[0,0,0,0]"
+                style="z-index: 7; background-color: rgba(255, 255, 255, 0.15);"
+            ></div>
+
+            <!-- LAYER NR. 14 -->
+            <div
+                class="tp-caption tp-shape tp-shapewrapper tp-resizeme"
+                id="slide-8-layer-20"
+                data-x="['center','center','center','center']"
+                data-hoffset="['300','300','300','300']"
+                data-y="['middle','middle','middle','middle']"
+                data-voffset="['0','0','0','0']"
+                data-width="1"
+                data-height="full"
+                data-whitespace="nowrap"
+                data-type="shape"
+                data-basealign="slide"
+                data-responsive_offset="on"
+                data-frames='[{"delay":10,"speed":3500,"frame":"0","from":"y:[-100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;","mask":"x:0px;y:0px;s:inherit;e:inherit;","to":"o:1;","ease":"Power3.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;","ease":"Power3.easeInOut"}]'
+                data-textAlign="['inherit','inherit','inherit','inherit']"
+                data-paddingtop="[0,0,0,0]"
+                data-paddingright="[0,0,0,0]"
+                data-paddingbottom="[0,0,0,0]"
+                data-paddingleft="[0,0,0,0]"
+                style="z-index: 8; background-color: rgba(255, 255, 255, 0.15);"
+            ></div>
+
+            <!-- LAYER NR. 15 -->
+            <div
+                class="tp-caption tp-shape tp-shapewrapper tp-resizeme"
+                id="slide-8-layer-21"
+                data-x="['center','center','center','center']"
+                data-hoffset="['600','600','600','600']"
+                data-y="['middle','middle','middle','middle']"
+                data-voffset="['0','0','0','0']"
+                data-width="1"
+                data-height="full"
+                data-whitespace="nowrap"
+                data-type="shape"
+                data-basealign="slide"
+                data-responsive_offset="on"
+                data-frames='[{"delay":10,"speed":4000,"frame":"0","from":"y:[100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;opacity:0;","mask":"x:0px;y:[100%];s:inherit;e:inherit;","to":"o:1;","ease":"Power2.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;","ease":"Power3.easeInOut"}]'
+                data-textAlign="['inherit','inherit','inherit','inherit']"
+                data-paddingtop="[0,0,0,0]"
+                data-paddingright="[0,0,0,0]"
+                data-paddingbottom="[0,0,0,0]"
+                data-paddingleft="[0,0,0,0]"
+                style="z-index: 9; background-color: rgba(255, 255, 255, 0.15);"
+            ></div>
+
+            <!-- LAYER NR. 16 -->
+            <h1
+                class="tp-caption tp-resizeme"
+                id="slide-8-layer-1"
+                data-x="['left','left','center','center']"
+                data-hoffset="['0','0','0','0']"
+                data-y="['middle','middle','middle','middle']"
+                data-voffset="['-140','-140','-140','-100']"
+                data-fontsize="['60','60','60','45']"
+                data-lineheight="['62','62','62','50']"
+                data-color="['rgb(255,255,255)','rgb(255,255,255)','rgb(255,255,255)','rgba(255,255,255,1)']"
+                data-width="['515','515','481','436']"
+                data-height="['125','125','125','none']"
+                data-whitespace="normal"
+                data-type="text"
+                data-basealign="slide"
+                data-responsive_offset="on"
+                data-frames='[{"delay":10,"speed":1500,"frame":"0","from":"y:[-100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;","mask":"x:0px;y:0px;s:inherit;e:inherit;","to":"o:1;","ease":"Power3.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"y:[-100%];","mask":"x:inherit;y:inherit;s:inherit;e:inherit;","ease":"nothing"}]'
+                data-textAlign="['left','left','center','center']"
+                data-paddingtop="[0,0,0,0]"
+                data-paddingright="[0,0,0,0]"
+                data-paddingbottom="[0,0,0,0]"
+                data-paddingleft="[40,30,0,0]"
+                style="
+                    z-index: 10;
+                    min-width: 481px;
+                    max-width: 481px;
+                    white-space: normal;
+                    font-size: 60px;
+                    line-height: 62px;
+                    font-weight: 500;
+                    color: #ffffff;
+                    
+                    font-family: nunito;
+                "
+            >
+            {{$slides[1]->title}}
+            </h1>
+
+            <!-- LAYER NR. 17 -->
+            <div
+                class="tp-caption tp-resizeme"
+                id="slide-8-layer-3"
+                data-x="['left','left','center','center']"
+                data-hoffset="['0','0','0','0']"
+                data-y="['middle','middle','middle','middle']"
+                data-voffset="['4','4','4','0']"
+                data-fontsize="['28','28','28','32']"
+                data-lineheight="['32','32','32','35']"
+                data-color="['rgb(244,244,244)','rgb(244,244,244)','rgb(244,244,244)','rgba(255,255,255,1)']"
+                data-width="['800','600','262','410']"
+                data-height="none"
+                data-whitespace="normal"
+                data-type="text"
+                data-basealign="slide"
+                data-responsive_offset="on"
+                data-frames='[{"delay":750,"speed":1750,"frame":"0","from":"y:[100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;opacity:0;","to":"o:1;","ease":"Power4.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"y:[100%];","mask":"x:inherit;y:inherit;s:inherit;e:inherit;","ease":"nothing"}]'
+                data-textAlign="['left','left','center','center']"
+                data-paddingtop="[0,0,0,20]"
+                data-paddingright="[0,0,0,0]"
+                data-paddingbottom="[0,0,0,0]"
+                data-paddingleft="[40,30,0,0]"
+                style="
+                    z-index: 11;
+                    min-width: 500px;
+                    max-width: 262px;
+                    white-space: normal;
+                    font-size: 28px;
+                    line-height: 32px;
+                    font-weight: 300;
+                    color: #f4f4f4;
+                    font-family: Nunito;
+                    margin-top:50px!important;
+                "
+            >
+            {{$slides[1]->slogan}}
+            </div>
+
+            <!-- LAYER NR. 18 -->
+            {{-- <a
+                class="tp-caption rev-btn"
+                href="index.html"
+                target="_self"
+                rel="nofollow"
+                id="slide-8-layer-12"
+                data-x="['center','center','center','center']"
+                data-hoffset="['0','0','0','0']"
+                data-y="['middle','middle','middle','middle']"
+                data-voffset="['112','112','112','110']"
+                data-width="none"
+                data-height="none"
+                data-whitespace="nowrap"
+                data-type="button"
+                data-actions=""
+                data-basealign="slide"
+                data-responsive_offset="on"
+                data-responsive="off"
+                data-frames='[{"delay":10,"speed":2000,"frame":"0","from":"y:[100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;opacity:0;","mask":"x:0px;y:[100%];s:inherit;e:inherit;","to":"o:1;","ease":"Power2.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"y:[100%];","mask":"x:inherit;y:inherit;s:inherit;e:inherit;","ease":"nothing"},{"frame":"hover","speed":"500","ease":"Linear.easeNone","to":"o:1;rX:0;rY:0;rZ:0;z:0;","style":"c:rgba(0,0,0,1);bg:rgba(255,255,255,1);bs:solid;bw:0 0 0 0;"}]'
+                data-textAlign="['inherit','inherit','inherit','inherit']"
+                data-paddingtop="[20,20,20,20]"
+                data-paddingright="[35,35,35,35]"
+                data-paddingbottom="[20,20,20,20]"
+                data-paddingleft="[35,35,35,35]"
+                style="
+                    z-index: 12;
+                    white-space: nowrap;
+                    font-size: 14px;
+                    line-height: 17px;
+                    font-weight: 400;
+                    color: rgba(255, 255, 255, 1);
+                    letter-spacing: 1px;
+                    font-family: Montserrat;
+                    background-color: rgba(0, 0, 0, 0.95);
+                    border-color: rgba(0, 0, 0, 1);
+                    outline: none;
+                    box-shadow: none;
+                    box-sizing: border-box;
+                    -moz-box-sizing: border-box;
+                    -webkit-box-sizing: border-box;
+                    cursor: pointer;
+                    text-decoration: none;
+                "
+            >
+                GET STARTED
+            </a> --}}
+
+            <!-- LAYER NR. 19 -->
+            {{-- <div
+                class="tp-caption tp-resizeme"
+                id="slide-8-layer-15"
+                data-x="['left','left','left','center']"
+                data-hoffset="['50','50','50','0']"
+                data-y="['bottom','bottom','bottom','middle']"
+                data-voffset="['50','50','50','42']"
+                data-fontsize="['12','12','12','32']"
+                data-lineheight="['32','32','32','35']"
+                data-fontweight="['400','400','400','300']"
+                data-color="['rgb(244,244,244)','rgb(244,244,244)','rgb(244,244,244)','rgba(255,255,255,1)']"
+                data-letterspacing="['1','1','1','-']"
+                data-width="['none','none','none','410']"
+                data-height="none"
+                data-whitespace="['nowrap','nowrap','nowrap','normal']"
+                data-visibility="['on','on','off','off']"
+                data-type="text"
+                data-actions='[{"event":"click","action":"scrollbelow","offset":"px","delay":"300","speed":"500","ease":"Linear.easeNone"}]'
+                data-basealign="slide"
+                data-responsive_offset="on"
+                data-frames='[{"delay":750,"speed":1750,"frame":"0","from":"y:[100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;opacity:0;","to":"o:1;","ease":"Power4.easeInOut"},{"delay":"wait","speed":1000,"frame":"999","to":"x:[-100%];","mask":"x:inherit;y:inherit;s:inherit;e:inherit;","ease":"Power3.easeInOut"},{"frame":"hover","speed":"1000","ease":"Power0.easeIn","to":"o:1;rX:0;rY:0;rZ:0;z:0;","style":"c:rgba(255,255,255,0.72);br:0px 0px 0px 0px;"}]'
+                data-textAlign="['center','center','center','center']"
+                data-paddingtop="[0,0,0,0]"
+                data-paddingright="[0,0,0,0]"
+                data-paddingbottom="[0,0,0,0]"
+                data-paddingleft="[0,0,0,0]"
+                style="
+                    z-index: 13;
+                    white-space: nowrap;
+                    font-size: 12px;
+                    line-height: 32px;
+                    font-weight: 400;
+                    color: #f4f4f4;
+                    letter-spacing: 1px;
+                    font-family: Montserrat;
+                    cursor: pointer;
+                "
+            >
+                MORE INFORMATION <i class="pe-7s-angle-down-circle"></i>
+            </div> --}}
+
+            <!-- LAYER NR. 20 -->
+            <div
+                class="tp-caption tp-resizeme"
+                id="slide-8-layer-16"
+                data-x="['right','right','right','center']"
+                data-hoffset="['50','50','50','0']"
+                data-y="['bottom','bottom','bottom','middle']"
+                data-voffset="['50','50','50','42']"
+                data-fontsize="['12','12','12','32']"
+                data-lineheight="['32','32','32','35']"
+                data-fontweight="['400','400','400','300']"
+                data-color="['rgb(244,244,244)','rgb(244,244,244)','rgb(244,244,244)','rgba(255,255,255,1)']"
+                data-letterspacing="['1','1','1','-']"
+                data-width="['none','none','none','410']"
+                data-height="none"
+                data-whitespace="['nowrap','nowrap','nowrap','normal']"
+                data-visibility="['on','on','off','off']"
+                data-type="text"
+                data-actions='[{"event":"click","action":"jumptoslide","slide":"rs-9","delay":"500"}]'
+                data-basealign="slide"
+                data-responsive_offset="on"
+                data-frames='[{"delay":750,"speed":1750,"frame":"0","from":"y:[100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;opacity:0;","to":"o:1;","ease":"Power4.easeInOut"},{"delay":"wait","speed":1000,"frame":"999","to":"x:[100%];","mask":"x:inherit;y:inherit;s:inherit;e:inherit;","ease":"Power3.easeInOut"},{"frame":"hover","speed":"1000","ease":"Power0.easeIn","to":"o:1;rX:0;rY:0;rZ:0;z:0;","style":"c:rgba(255,255,255,0.72);br:0px 0px 0px 0px;"}]'
+                data-textAlign="['center','center','center','center']"
+                data-paddingtop="[0,0,0,0]"
+                data-paddingright="[0,0,0,0]"
+                data-paddingbottom="[0,0,0,0]"
+                data-paddingleft="[0,0,0,0]"
+                style="
+                    z-index: 14;
+                    white-space: nowrap;
+                    font-size: 12px;
+                    line-height: 32px;
+                    font-weight: 400;
+                    color: #f4f4f4;
+                    letter-spacing: 1px;
+                    font-family: Montserrat;
+                    cursor: pointer;
+                "
+            >
+                NEXT SLIDE <i class="pe-7s-right-arrow"></i>
+            </div>
+        </li>
+    </ul>
+    <div class="tp-bannertimer tp-bottom" style="height: 5px; background: rgba(255, 191, 59, 0.81);"></div>
+</div>

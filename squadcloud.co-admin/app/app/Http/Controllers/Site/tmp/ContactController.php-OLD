@@ -1,0 +1,62 @@
+<?php
+
+namespace App\Http\Controllers\Site;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use App\Models\FrontContact;
+use Mail ;
+class ContactController extends Controller
+{
+    public $parentModel =  FrontContact::class;
+    public function store(Request $request){
+        $fullName  = $request->name ;
+        $email     = $request->email ;  
+        $phone     = $request->phone ;  
+        $message   = $request->message ;
+
+        $storeMessage =  $this->parentModel::create([
+            "name" => $fullName ,
+            "email"=> $email ,  
+            "phone"=> $phone ,  
+            "message"=> $message    
+        ]);
+        if($storeMessage){
+            // Message For Customer
+            $customer_email_data = [
+                'from'=>  config('mail.username') ,
+                'to' =>   $email ,
+                'subject' => 'Blinkbroadband Contact Request' ,
+                'message' => "This Was Your Message\t".$message ,
+            ];
+            Mail::send('EmailTemplates.customerContact' , ['data' => $customer_email_data , 'name' =>$fullName] , function($messageData) use ($customer_email_data){
+                $messageData->from($customer_email_data['from'])->to($customer_email_data['to'])->subject($customer_email_data['subject']);
+            });   
+            // Message For Admin
+            $admin_email_data = [
+                'from'    =>  config('mail.username')  ,
+                'to'      =>  ['fawadalam@lbi.net.pk','jawadalam@lbi.net.pk']  ,
+                'subject' => 'Contact Message From '.$fullName ,
+                'message' => $message,
+                'email' => $email,
+            ];
+            Mail::send('EmailTemplates.adminContact' , ['data' => $admin_email_data , 'name' => $fullName, 'phone' => $phone ] , function($messageData) use ($admin_email_data){
+                $messageData->from($admin_email_data['from'])->to($admin_email_data['to'])->subject($admin_email_data['subject']);
+            });   
+            return response()->json(["status" => true]);
+        }
+    }
+    //
+    public function index(){
+        $data['contacts']  = FrontContact::orderBy('id','DESC')->get();
+        return view('admin.front-contact.index')->with('data' , $data);
+    }
+    //
+    public function showFrontContact($id)
+    {
+        $user = FrontContact::findOrFail($id);
+        // Return user details as JSON response
+        return response()->json($user);
+    }
+
+}
