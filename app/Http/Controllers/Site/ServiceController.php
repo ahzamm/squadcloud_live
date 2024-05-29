@@ -12,17 +12,16 @@ class ServiceController extends Controller
 {
     public function index()
     {
-        // dd("===");
         $services = Service::where('is_active', 1)->get();
         $service_menu = FrontMenu::where('menu', 'Services')->first();
         return view('frontend/service', compact('services', 'service_menu'));
     }
 
-    public function serviceDetail($slug, $id)
+    public function serviceDetail($slug)
 {
-    $service = Service::where('id', $id)
+    $service = Service::where('slug', $slug)
                         ->where('is_active', 1)
-                        ->get()[0];
+                        ->first();
 
     return view('frontend/service_detail', compact('service'));
 }

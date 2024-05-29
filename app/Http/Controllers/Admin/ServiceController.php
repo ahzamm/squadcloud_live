@@ -34,12 +34,11 @@ class ServiceController extends Controller
 
     public function createService(Request $request)
     {
-
         $validatedData = [
             'service' => 'required',
             'tagline' => 'required',
             'description' => 'required',
-            'status' => 'required',
+            'slug' => 'required',
         ];
 
         $valdiate = Validator::make($request->all(), $validatedData);
@@ -47,6 +46,9 @@ class ServiceController extends Controller
         if ($valdiate->fails()) {
             return redirect()->to('/admin/service/create')->withErrors($valdiate->errors());
         } else {
+
+            $service = Service::where('slug', $request->slug)->first();
+            if($service){ return redirect()->to('/admin/service/create')->withErrors("Provided slug is already used");}
 
             $filename = "";
             if ($request->hasFile('logo')) {
@@ -60,8 +62,9 @@ class ServiceController extends Controller
             $service->service = $request['service'];
             $service->tagline = $request['tagline'];
             $service->description = $request['description'];
+            $service->slug = $request['slug'];
             $service->logo = $filename;
-            $service->is_active = $request->has('status') ? 1 : 0;
+            $service->is_active = $request->has('is_active') ? 1 : 0;
             $service->save();
 
             return redirect()->route('admin.services')->with('success', 'Service created successfully!');
@@ -80,10 +83,12 @@ class ServiceController extends Controller
         if ($crudAccess == true) {
             $service = Service::find($id);
             if ($service) {
+                if($service->logo){
                 $imagePath = public_path('frontend_assets/images/services/' . $service->logo);
                 if (file_exists($imagePath)) {
                     unlink($imagePath);
                 }
+            }
 
                 $service->delete();
 
@@ -138,7 +143,8 @@ class ServiceController extends Controller
         $service->service = $request['service'];
         $service->tagline = $request['tagline'];
         $service->description = $request['description'];
-        $service->is_active = $request->has('status') ? 1 : 0;
+        $service->slug = $request['slug'];
+        $service->is_active = $request->has('is_active') ? 1 : 0;
 
         $service->save();
 

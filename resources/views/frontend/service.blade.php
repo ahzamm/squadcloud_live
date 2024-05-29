@@ -32,7 +32,7 @@
                 @if($count == 2)
 
                <div class="position-relative hex-container">
-                  <a href="{{ url('/services/' . $service->slug . '-' . $service->id) }}" data-aos="zoom-in" data-aos-duration="1000" class="d-block hex-anchor">
+                  <a href="{{ url('/services/' . $service->slug) }}" data-aos="zoom-in" data-aos-duration="1000" class="d-block hex-anchor">
                      <div class="hex"></div>
                         <img src="frontend_assets/images/services/{{$service->logo}}" alt="{{$service->service}}" class="svg--img">
                   </a>
@@ -46,7 +46,7 @@
                <div class="position-relative hex-container" >
                   <span class="span left" data-aos="fade-down" data-aos-delay="600" data-aos-duration="1000">{{$service->service}}</span>
                   <img src="frontend_assets/images/black-arrow.png" alt="" class="black-arrow" data-aos="fade-left" data-aos-delay="500" data-aos-duration="1000">
-                  <a href="{{ url('/services/' . $service->slug . '-' . $service->id) }}" data-aos="zoom-in" data-aos-duration="1000" class="d-block hex-anchor" >
+                  <a href="{{ url('/services/' . $service->slug) }}" data-aos="zoom-in" data-aos-duration="1000" class="d-block hex-anchor" >
                      <div class="hex"></div>
                      <img src="frontend_assets/images/services/{{$service->logo}}" alt="{{$service->service}}" class="svg--img">
                   </a>
@@ -56,7 +56,7 @@
          @elseif($count == 3 || $count == 4)
          @if($count == 4)
          <div class="position-relative hex-container">
-            <a href="{{ url('/services/' . $service->slug . '-' . $service->id) }}" data-aos="zoom-in" data-aos-duration="1000" class="d-block hex-anchor">
+            <a href="{{ url('/services/' . $service->slug) }}" data-aos="zoom-in" data-aos-duration="1000" class="d-block hex-anchor">
                <div class="hex"></div>
                <img src="frontend_assets/images/services/{{$service->logo}}" alt="{{$service->service}}" class="svg--img">
             </a>
@@ -73,7 +73,7 @@
       <div class="position-relative hex-container">
          <span class="span left"  data-aos="fade-down" data-aos-delay="600" data-aos-duration="1000">{{$service->service}}</span>
          <img src="frontend_assets/images/black-arrow.png" alt="" class="black-arrow" data-aos="fade-left" data-aos-delay="500" data-aos-duration="1000">
-         <a href="{{ url('/services/' . $service->slug . '-' . $service->id) }}" data-aos="zoom-in" data-aos-duration="1000" class="d-block hex-anchor">
+         <a href="{{ url('/services/' . $service->slug) }}" data-aos="zoom-in" data-aos-duration="1000" class="d-block hex-anchor">
             <div class="hex"></div>
             <img src="frontend_assets/images/services/{{$service->logo}}" alt="{{$service->service}}" class="svg--img">
          </a>

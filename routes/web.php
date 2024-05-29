@@ -84,7 +84,7 @@ use App\Http\Controllers\Admin\AuthController;
          Route::get('/maintenance', [MaintenanceController::class, 'index'])->name('site.maintenance');
          Route::get('/index', [HomeController::class, 'index'])->name('site.index');
          Route::get('/services', [ServiceController::class, 'index'])->name('site.services');
-         Route::get('/services/{slug}-{id}', [ServiceController::class, 'serviceDetail'])->where('id', '[0-9]+')->name('site.service.detail');
+         Route::get('/services/{slug}', [ServiceController::class, 'serviceDetail'])->where('id', '[0-9]+')->name('site.service.detail');
          Route::get('/portfolio', [PortfolioController::class, 'index'])->name('site.portfolio');
          Route::get('/product', [ProductController::class, 'index'])->name('site.product');
          Route::get('/product/{id}', [ProductController::class, 'productDetail'])->name('site.product.detail');

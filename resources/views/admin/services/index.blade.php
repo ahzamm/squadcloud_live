@@ -2,8 +2,8 @@
 @push('style')
 <link rel="stylesheet" href="{{asset('backend/plugins/toastr/toastr.min.css')}}">
 <link rel="stylesheet" href="{{asset('backend/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
-<link rel="stylesheet" href="{{asset('backend/plugins/datatables-responsive/css/responsive.bootstrap4.min.css')}}">    
-<link rel="stylesheet" href="{{asset('site/sweet-alert/sweetalert2.css')}}">  
+<link rel="stylesheet" href="{{asset('backend/plugins/datatables-responsive/css/responsive.bootstrap4.min.css')}}">
+<link rel="stylesheet" href="{{asset('site/sweet-alert/sweetalert2.css')}}">
 @endpush
 @section('content')
 <div class="content-wrapper">
@@ -28,13 +28,14 @@
                       <th>Logo</th>
                       <th>TagLine</th>
                       <th>Description</th>
+                      <th>Slug</th>
                       <th>Status</th>
                       <th>Action</th>
                     </tr>
                   </thead>
                   <tbody>
                     @foreach ($services as $key=> $item)
-                    <tr class="table-row"> 
+                    <tr class="table-row">
                       <td>{{ $item->id }}</td>
                       <td>{{ $item->service}}</td>
                       <td>
@@ -42,6 +43,7 @@
                       </td>
                       <td>{{ $item->tagline}}</td>
                       <td>{!! $item->description !!}</td>
+                      <td>{{ $item->slug}}</td>
                       <td>{{$item->is_active == 1?'active':'deactive'}}</td>
                       <td class="d-flex justify-content-center" style="gap: 5px;">
                         <a class="btn btn-primary btn-sm" href="{{ route('service.edit', $item->id) }}"><i class="fa fa-edit"></i></a>
@@ -70,7 +72,7 @@
 <script src="{{asset('backend/plugins/datatables-responsive/js/responsive.bootstrap4.min.js')}}"></script>
 <script src="{{asset('site/sweet-alert/sweetalert2.min.js')}}"></script>
 <script>
-  let packageDeleteUrl  = "{{route('service.destroy')}}"; 
+  let packageDeleteUrl  = "{{route('service.destroy')}}";
   $(document).on('click' ,'.btnDeleteMenu' ,function(){
     id = $(this).attr('data-value');
     swal({
@@ -90,7 +92,7 @@
       reverseButtons: true
     }).then( function(result) {
       if (result.value) {
-        console.log(packageDeleteUrl+'/'+ id)
+        console.log("Delete URL : " + packageDeleteUrl+'/'+ id)
        $.ajax({
         url:packageDeleteUrl+'/'+ id,
         method:'get',

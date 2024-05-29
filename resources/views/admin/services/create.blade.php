@@ -63,8 +63,8 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="description">Description <span style="color: red">*</span></label>
-                            <textarea class="form-control summernote" name="description" id="summernote"   required>{{$service->description ?? ""}}</textarea>
+                            <label for="">Description <span style="color: red">*</span></label>
+                            <textarea class="form-control summernote" name="description" id="summernote">{{$service->description ?? ""}}</textarea>
                             @error('description')
                             <p class="text-danger mt-2 mb-0 text-sm">{{ $message }}</p>
                             @enderror
@@ -72,8 +72,14 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
+                            <label for="">Slug <span style="color: red">*</span></label>
+                            <input type="text" class="form-control" value="{{$service->slug ?? "" }}" name="slug">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
                             <div class="icheck-success d-inline">
-                                <input type="checkbox" name="status" id="checkboxSuccess1" {{ isset($service) && $service->is_active==1 ? 'checked' : 'unchecked' }}>
+                                <input type="checkbox" name="is_active" id="checkboxSuccess1" {{ isset($service) && $service->is_active==1 ? 'checked' : 'unchecked' }}>
                                 <label for="checkboxSuccess1">Status (On & Off)  <span style="color: red">*</span></label>
                             </div>
                         </div>
