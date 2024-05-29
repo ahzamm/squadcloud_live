@@ -6,6 +6,7 @@ use Closure;
 use Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode as Middleware;
 use App\Models\AllowedIp;
 use Illuminate\Support\Facades\Log;
+use Symfony\Component\HttpKernel\Exception\ServiceUnavailableHttpException;
 
 
 class CheckForMaintenanceMode extends Middleware
@@ -33,7 +34,8 @@ class CheckForMaintenanceMode extends Middleware
             // Check if the request IP is in the allowed IPs list
             if (!in_array($requestIp, $allowedIps)) {
                 Log::warning('IP not allowed: ' . $requestIp);
-                return response('Service Unavailablee', 503);
+                // return response('Service Unavailablee', 503);
+                throw new ServiceUnavailableHttpException(null, 'Service Unavailable', null, 503);
             } else {
                 Log::info('IP allowed: ' . $requestIp);
             }
