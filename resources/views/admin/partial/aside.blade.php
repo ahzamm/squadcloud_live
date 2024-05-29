@@ -20,9 +20,9 @@ $menusAccess = App\Models\UserMenuAccess::where('user_id',Auth::id())->where('vi
     <div class="user-panel mt-3 pb-3 mb-3 d-flex">
       <div class="image">
         <?php
-        $mainLogo = \DB::table("logos")->limit(1)->first();
+        $general_configuration = \DB::table("general_configurations")->limit(1)->first();
         ?>
-        <img src="{{asset('front-logo/' . $mainLogo->image)}}" class="img-circle elevation-2" style="object-fit: contain;" alt="User Image">
+        <img src="{{asset('frontend_assets/images/' . $general_configuration->brand_logo)}}" class="img-circle elevation-2" style="object-fit: contain;" alt="User Image">
       </div>
       <div class="info">
         @if(Auth::check())
