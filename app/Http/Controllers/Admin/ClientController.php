@@ -55,7 +55,7 @@ class ClientController extends Controller
         ];
 
         $valdiate = Validator::make($request->all(), $validatedData);
-        
+
         if ($valdiate->fails()) {
             return redirect()->back()->with('error' , 'All Fields are required');
         } else {
@@ -88,7 +88,7 @@ class ClientController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-  
+
      public function show($id)
      {
          $packageData = Client::find($id);
@@ -142,7 +142,7 @@ class ClientController extends Controller
         $client->is_active = $request->has('status') ? 1 : 0;
         $client->save();
 
-        return redirect()->route('clients.index')->with('success', 'Client updated successfully!');       
+        return redirect()->route('clients.index')->with('success', 'Client updated successfully!');
     }
     else{
         return redirect()->back()->with('error' , 'No Access To Update Clients');
@@ -163,20 +163,27 @@ class ClientController extends Controller
         $userId        =  Auth::guard('admin' , 'user')->user()->id;
         $crudAccess    =  $this->crud_access($subMenuid->id ,  $userOperation , $userId );
        if($crudAccess == true) {
-        $delete =  Client::find($id)->delete();
-        if($delete == true)
-        {
-            return response()->json(["status" => true ]);
-        }}
-        else{
-            return response()->json(["unauthorized" => true ]);
+        $client = Client::find($id);
+            if ($client) {
+                $imagePath = public_path('frontend_assets/images/clients/' . $client->logo);
+                if (file_exists($imagePath)) {
+                    unlink($imagePath);
+                }
 
+                $client->delete();
+
+                return response()->json(["status" => true]);
+            } else {
+                return response()->json(["status" => false, "message" => "Client not found."]);
+            }
+        } else {
+            return response()->json(["unauthorized" => true]);
         }
     }
     public function crud_access($submenuId = null , $operation = null , $uId = null) {
-        if (!$submenuId == null) { 
+        if (!$submenuId == null) {
         $CheckData = UserMenuAccess::where(["user_id" => $uId , "sub_menu_Id" => $submenuId , $operation => 1 , 'view_status' => 1])->count();
-   
+
         if($CheckData > 0 ){
             return true;
         }

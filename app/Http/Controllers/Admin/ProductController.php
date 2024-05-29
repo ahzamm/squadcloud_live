@@ -64,7 +64,7 @@ class ProductController extends Controller
         ];
 
         $valdiate = Validator::make($request->all(), $validatedData);
-        
+
         if ($valdiate->fails()) {
             return redirect()->back()->with('error' , 'All Fields are required');
         } else {
@@ -106,7 +106,7 @@ class ProductController extends Controller
             ]);
 
             return redirect()->route('products.index')->with('success', 'Product created successfully');
-        } 
+        }
     }
     else {
         return redirect()->back()->with('error', 'Unauthorized access');
@@ -119,7 +119,7 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-  
+
      public function show($id)
      {
          $packageData = Product::find($id);
@@ -133,7 +133,7 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        
+
         $product = Product::findOrFail($id);
         // dd($product);
         return view('admin.products.edit',compact('product'));
@@ -147,7 +147,7 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {  
+    {
         // dd("===");
         $subMenuid     =  SubMenu::where('route_name' , 'Products.index')->first();
         $userOperation =  "update_status" ;
@@ -165,10 +165,10 @@ class ProductController extends Controller
             "price"=>"required",
             "price_description"=>"required",
         ]);
-        
+
         // dd("===");
         $product = Product::findOrFail($id);
-        
+
 
         // dd($request->hasFile('image'));
         if ($request->hasFile('image')) {
@@ -181,7 +181,7 @@ class ProductController extends Controller
             $file->move(public_path('frontend_assets/images/products'), $filename);
             $product->image = $filename;
         }
-        
+
         if ($request->hasFile('screenshot_1')) {
             if ($product->image && file_exists(public_path('frontend_assets/images/products/' . $product->screenshot_1))) {
                 unlink(public_path('frontend_assets/images/products/' . $product->screenshot_1));
@@ -192,7 +192,7 @@ class ProductController extends Controller
             $file->move(public_path('frontend_assets/images/products'), $filename);
             $product->screenshot_1 = $filename;
         }
-        
+
         if ($request->hasFile('screenshot_2')) {
             if ($product->image && file_exists(public_path('frontend_assets/images/products/' . $product->screenshot_2))) {
                 unlink(public_path('frontend_assets/images/products/' . $product->screenshot_2));
@@ -203,7 +203,7 @@ class ProductController extends Controller
             $file->move(public_path('frontend_assets/images/products'), $filename);
             $product->screenshot_2 = $filename;
         }
-        
+
         if ($request->hasFile('screenshot_3')) {
             if ($product->image && file_exists(public_path('frontend_assets/images/products/' . $product->screenshot_3))) {
                 unlink(public_path('frontend_assets/images/products/' . $product->screenshot_3));
@@ -214,7 +214,7 @@ class ProductController extends Controller
             $file->move(public_path('frontend_assets/images/products'), $filename);
             $product->screenshot_3 = $filename;
         }
-        
+
         if ($request->hasFile('background_image')) {
             if ($product->image && file_exists(public_path('frontend_assets/images/products/' . $product->background_image))) {
                 unlink(public_path('frontend_assets/images/products/' . $product->background_image));
@@ -225,7 +225,7 @@ class ProductController extends Controller
             $file->move(public_path('frontend_assets/images/products'), $filename);
             $product->background_image = $filename;
         }
-        
+
 
         $product->name = $request['name'];
         $product->short_description = $request['short_description'];
@@ -240,11 +240,11 @@ class ProductController extends Controller
 
         $product->save();
 
-       
+
          return redirect()->route('products.index')->with('success', 'Product updated successfully!');
 
         }
-    
+
     else{
         return redirect()->back()->with('error' , 'No Access To Update Products');
     }
@@ -259,25 +259,45 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id = null)
-    {  $subMenuid     =  SubMenu::where('route_name' , 'Products.index')->first();
-        $userOperation =  "delete_status" ;
-        $userId        =  Auth::guard('admin' , 'user')->user()->id;
-        $crudAccess    =  $this->crud_access($subMenuid->id ,  $userOperation , $userId );
-       if($crudAccess == true) {
-        $delete =  Product::find($id)->delete();
-        if($delete == true)
-        {
-            return response()->json(["status" => true ]);
-        }}
-        else{
-            return response()->json(["unauthorized" => true ]);
+    {
+        $subMenuid = SubMenu::where('route_name', 'Products.index')->first();
+        $userOperation = "delete_status";
+        $userId = Auth::guard('admin', 'user')->user()->id;
+        $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
 
+        if ($crudAccess == true) {
+            $product = Product::find($id);
+
+            if ($product) {
+                $imageFiles = [
+                    'image' => $product->image,
+                    'screenshot_1' => $product->screenshot_1,
+                    'screenshot_2' => $product->screenshot_2,
+                    'screenshot_3' => $product->screenshot_3,
+                    'background_image' => $product->background_image,
+                ];
+
+                foreach ($imageFiles as $imageFile) {
+                    if ($imageFile && file_exists(public_path('frontend_assets/images/products/' . $imageFile))) {
+                        unlink(public_path('frontend_assets/images/products/' . $imageFile));
+                    }
+                }
+
+                $product->delete();
+
+                return response()->json(["status" => true]);
+            } else {
+                return response()->json(["status" => false, "message" => "Product not found."]);
+            }
+        } else {
+            return response()->json(["unauthorized" => true]);
         }
     }
+
     public function crud_access($submenuId = null , $operation = null , $uId = null) {
-        if (!$submenuId == null) { 
+        if (!$submenuId == null) {
         $CheckData = UserMenuAccess::where(["user_id" => $uId , "sub_menu_Id" => $submenuId , $operation => 1 , 'view_status' => 1])->count();
-   
+
         if($CheckData > 0 ){
             return true;
         }

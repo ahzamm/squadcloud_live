@@ -42,7 +42,7 @@ class AboutController extends Controller
      */
     public function store(Request $request)
     {
-        
+
         $subMenuid     =  SubMenu::where('route_name' , 'abouts.create')->first();
         $userOperation =  "create_status" ;
         $userId        =  Auth::guard('admin' , 'user')->user()->id;
@@ -63,7 +63,7 @@ class AboutController extends Controller
         ];
 
         $valdiate = Validator::make($request->all(), $validatedData);
-        
+
         if ($valdiate->fails()) {
             return redirect()->back()->with('error' , 'All Fields are required');
         } else {
@@ -101,7 +101,7 @@ class AboutController extends Controller
                     $about->$key = $value;
                 }
             }
-        
+
             $about->save();
 
             return redirect()->route('abouts.index')->with('success', 'About Added successfully');
@@ -117,7 +117,7 @@ class AboutController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-  
+
      public function show($id)
      {
         // dd($id);
@@ -144,16 +144,16 @@ class AboutController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {  
-        
+    {
+
 
         $subMenuid     =  SubMenu::where('route_name' , 'abouts.index')->first();
         $userOperation =  "update_status" ;
         $userId        =  Auth::guard('admin' , 'user')->user()->id;
         $crudAccess    =  $this->crud_access($subMenuid->id ,  $userOperation , $userId );
        if($crudAccess == true) {
-        
-       
+
+
         $validatedData = [
             "video_url"=>"required",
             "heading_1"=>"required",
@@ -163,7 +163,7 @@ class AboutController extends Controller
             "heading_3"=>"required",
             "description_3"=>"required",
             "closing_remarks"=>"required",
-            
+
         ];
         $valdiate = Validator::make($request->all(), $validatedData);
 
@@ -185,7 +185,7 @@ class AboutController extends Controller
             $file->move(public_path('frontend_assets/images/abouts'), $filename);
             $about->icon_1 = $filename;
         }
-        
+
         if ($request->hasFile('icon_2')) {
             if ($about->icon_1 && file_exists(public_path('frontend_assets/images/abouts/' . $about->icon_2))) {
                 unlink(public_path('frontend_assets/images/abouts/' . $about->icon_2));
@@ -196,8 +196,8 @@ class AboutController extends Controller
             $file->move(public_path('frontend_assets/images/abouts'), $filename);
             $about->icon_2 = $filename;
         }
-       
-       
+
+
         if ($request->hasFile('icon_3')) {
             if ($about->icon_1 && file_exists(public_path('frontend_assets/images/abouts/' . $about->icon_3))) {
                 unlink(public_path('frontend_assets/images/abouts/' . $about->icon_3));
@@ -208,7 +208,7 @@ class AboutController extends Controller
             $file->move(public_path('frontend_assets/images/abouts'), $filename);
             $about->icon_3 = $filename;
         }
-        
+
 
         $about->video_url = $request['video_url'];
         $about->heading_1 = $request['heading_1'];
@@ -218,10 +218,10 @@ class AboutController extends Controller
         $about->heading_3 = $request['heading_3'];
         $about->description_3 = $request['description_3'];
         $about->closing_remarks = $request['closing_remarks'];
-        
+
         $about->save();
 
-        return redirect()->route('abouts.index')->with('success', 'About updated successfully!');       
+        return redirect()->route('abouts.index')->with('success', 'About updated successfully!');
     }
 }
     else{
@@ -243,20 +243,27 @@ class AboutController extends Controller
         $userId        =  Auth::guard('admin' , 'user')->user()->id;
         $crudAccess    =  $this->crud_access($subMenuid->id ,  $userOperation , $userId );
        if($crudAccess == true) {
-        $delete =  About::find($id)->delete();
-        if($delete == true)
-        {
-            return response()->json(["status" => true ]);
-        }}
-        else{
-            return response()->json(["unauthorized" => true ]);
+        $about = About::find($id);
+            if ($about) {
+                $imagePath = public_path('frontend_assets/images/abouts/' . $about->logo);
+                if (file_exists($imagePath)) {
+                    unlink($imagePath);
+                }
 
+                $about->delete();
+
+                return response()->json(["status" => true]);
+            } else {
+                return response()->json(["status" => false, "message" => "About not found."]);
+            }
+        } else {
+            return response()->json(["unauthorized" => true]);
         }
     }
     public function crud_access($submenuId = null , $operation = null , $uId = null) {
-        if (!$submenuId == null) { 
+        if (!$submenuId == null) {
         $CheckData = UserMenuAccess::where(["user_id" => $uId , "sub_menu_Id" => $submenuId , $operation => 1 , 'view_status' => 1])->count();
-   
+
         if($CheckData > 0 ){
             return true;
         }
