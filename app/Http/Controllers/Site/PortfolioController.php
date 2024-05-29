@@ -10,7 +10,7 @@ use App\Http\Controllers\Controller;
 class PortfolioController extends Controller
 {
     public function index(){
-        $portfolios = Portfolio::all();
+        $portfolios = Portfolio::where('is_active', 1)->get();
         $portfolio_menu = FrontMenu::where('menu', 'Portfolio')->first();
         return view('frontend/portfolio', compact('portfolios', 'portfolio_menu'));
     }
