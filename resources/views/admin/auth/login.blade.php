@@ -22,7 +22,11 @@
 <body class="hold-transition login-page">
   <div class="login-box">
     <div class="login-logo">
-      <a href="http://logon.com.pk/" target="_blank"><b>Blink</b>Broadband</a>
+        @php
+            $general_configuration = DB::table('general_configurations')->first();
+        @endphp
+      <a href="http://logon.com.pk/" target="_blank"><img src="{{ asset('frontend_assets/images/' . $general_configuration->brand_logo) }}" alt="">
+      </a>
     </div>
     <!-- /.login-logo -->
     <div class="card">
