@@ -1,5 +1,6 @@
 /node_modules
 /public/hot
+/public/frontend_assets/images/*
 /public/storage
 /storage/*.key
 /vendor

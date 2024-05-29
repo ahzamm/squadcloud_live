@@ -72,7 +72,7 @@ class ClientController extends Controller
             $client->logo = $filename;
             $client->link = $request['link'];
             $client->description = $request['description'];
-            $client->is_active = $request->has('status') ? 1 : 0;
+            $client->is_active = $request->has('is_active') ? 1 : 0;
             $client->save();
 
             return redirect()->route('clients.index')->with('success', 'Client Added successfully');
