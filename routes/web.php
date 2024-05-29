@@ -23,6 +23,7 @@ use App\Http\Controllers\Admin\AboutController as AdminAboutController;
 use App\Http\Controllers\Admin\ContactController as AdminContactController;
 use App\Http\Controllers\Admin\SlideritemController as AdminSlideritemController;
 use App\Http\Controllers\Admin\HomeController as AdminHomeController;
+use App\Http\Controllers\Admin\AllowedIpController;
 use App\Http\Controllers\Admin\SocialController;
 use App\Http\Controllers\Admin\UserMenuAccessController;
 use App\Http\Controllers\Admin\EmailController;
@@ -102,74 +103,73 @@ use App\Http\Controllers\Admin\AuthController;
 
         Route::middleware('auth:admin')->group(function () {
         Route::get('/dashboard',[AdminHomeController::class, 'dashboard'])->name('admin.dashboard');
+        Route::post('/passwordchange',[AuthController::class, 'changePassword'])->name('admin.change.password');
+        Route::post('/logout',[AuthController::class, 'logout'])->name('admin.logout');
+        Route::resource('allowedip','App\Http\Controllers\Admin\AllowedIpController');
+        Route::get('maintenance','App\Http\Controllers\Admin\MaintenanceController@index')->name('maintenance.index');
+        Route::post('maintenance/store','App\Http\Controllers\Admin\MaintenanceController@store')->name('maintenance.store');
+        Route::get('maintenance/deactivate','App\Http\Controllers\Admin\MaintenanceController@deactivate')->name('maintenance.deactivate');
+        Route::get('front-faqs/sort','App\Http\Controllers\Admin\FrontFaqController@sort')->name('faqs.sort');
+        Route::post('front-faqs/sort','App\Http\Controllers\Admin\FrontFaqController@sortPost')->name('faqs.sort');
+        Route::post('front-faqs/destroy/{id?}','App\Http\Controllers\Admin\FrontFaqController@destroy')->name('faq.destroy');
+        Route::resource('front-faqs','App\Http\Controllers\Admin\FrontFaqController');
+        Route::resource('employee','App\Http\Controllers\Admin\EmployeeController');
+        Route::get('front-contact','App\Http\Controllers\Admin\FrontContactController@index')->name('contact.index');
+        Route::delete('front-contact/{id}','App\Http\Controllers\Admin\FrontContactController@destroy')->name('contact.delete');
+        Route::get('front-emails/edit','App\Http\Controllers\Admin\FrontContactController@editEmail');
+        Route::post('front-emails/edit','App\Http\Controllers\Admin\FrontContactController@updateEmail');
+        Route::resource('homeslider','App\Http\Controllers\Admin\HomeSliderController');
 
-        // Old Routes
-        Route::post('/passwordchange','Admin\AuthController@changePassword')->name('admin.change.password');
-        Route::post('/logout','Admin\AuthController@logout')->name('admin.logout');
-        Route::resource('allowedip','Admin\AllowedIpController');
-        Route::get('maintenance','Admin\MaintenanceController@index')->name('maintenance.index');
-        Route::post('maintenance/store','Admin\MaintenanceController@store')->name('maintenance.store');
-        Route::get('maintenance/deactivate','Admin\MaintenanceController@deactivate')->name('maintenance.deactivate');
-        Route::get('front-faqs/sort','Admin\FrontFaqController@sort')->name('faqs.sort');
-        Route::post('front-faqs/sort','Admin\FrontFaqController@sortPost')->name('faqs.sort');
-        Route::post('front-faqs/destroy/{id?}','Admin\FrontFaqController@destroy')->name('faq.destroy');
-        Route::resource('front-faqs','Admin\FrontFaqController');
-        Route::resource('employee','Admin\EmployeeController');
-        Route::get('front-contact','Admin\FrontContactController@index')->name('contact.index');
-        Route::delete('front-contact/{id}','Admin\FrontContactController@destroy')->name('contact.delete');
-        Route::get('front-emails/edit','Admin\FrontContactController@editEmail');
-        Route::post('front-emails/edit','Admin\FrontContactController@updateEmail');
-        Route::resource('homeslider','Admin\HomeSliderController');
-        Route::get("slider/edit/{id?}" , [HomeSliderController::class , 'edit'])->name('edit.slider');
-        Route::Post("slider/delete/{id?}" , [HomeSliderController::class , 'destroy'])->name('destroy.slider');
-        Route::resource('reseller','Admin\ResellerController');
-        Route::resource('whychoose','Admin\WhyChooseusController');
-        Route::resource('logo','Admin\FrontLogoController');
+        // Route::get("slider/edit/{id?}" , [HomeSliderController::class , 'edit'])->name('edit.slider');
+        // Route::Post("slider/delete/{id?}" , [HomeSliderController::class , 'destroy'])->name('destroy.slider');
+        Route::resource('reseller','App\Http\Controllers\Admin\ResellerController');
+        Route::resource('whychoose','App\Http\Controllers\Admin\WhyChooseusController');
+        Route::resource('logo','App\Http\Controllers\Admin\FrontLogoController');
 
-        Route::resource('aboutus','Admin\AboutUsController');
-        Route::resource('message','Admin\MessageController');
-        Route::resource('frontmenu','Admin\FrontMenuController');
+        Route::resource('aboutus','App\Http\Controllers\Admin\AboutUsController');
+        Route::resource('message','App\Http\Controllers\Admin\MessageController');
+        Route::resource('frontmenu','App\Http\Controllers\Admin\FrontMenuController');
         Route::get('frontmenu/edit/{id?}', [FrontMenuController::class , 'edit'])->name('front.edit');
 
 
-        Route::resource('cities','Admin\CitiesController');
-        Route::resource('coreareas','Admin\CoreAreaController');
-        Route::resource('zoneareas','Admin\ZoneAreaController');
+        Route::resource('cities','App\Http\Controllers\Admin\CitiesController');
+        Route::resource('coreareas','App\Http\Controllers\Admin\CoreAreaController');
+        Route::resource('zoneareas','App\Http\Controllers\Admin\ZoneAreaController');
 
-        Route::get('partner-emails/{flag}','Admin\CitiesController@partnerEmail');
-        Route::post('partner-emails','Admin\CitiesController@updateEmail');
-        Route::get('coveragerequest', 'Admin\CoverageRequestController@index')->name('coveragerequest.index');
-        Route::get('/coveragerequest/{id}', 'Admin\CoverageRequestController@showUserDetails')->name('coveragerequest.show');
-        Route::get('coverage/destroy/{id?}', 'Admin\CoverageRequestController@destroy')->name('coveragerequest.destroy');
+        Route::get('partner-emails/{flag}','App\Http\Controllers\Admin\CitiesController@partnerEmail');
+        Route::post('partner-emails','App\Http\Controllers\Admin\CitiesController@updateEmail');
+        Route::get('coveragerequest', 'App\Http\Controllers\Admin\CoverageRequestController@index')->name('coveragerequest.index');
+        Route::get('/coveragerequest/{id}', 'App\Http\Controllers\Admin\CoverageRequestController@showUserDetails')->name('coveragerequest.show');
+        Route::get('coverage/destroy/{id?}', 'App\Http\Controllers\Admin\CoverageRequestController@destroy')->name('coveragerequest.destroy');
 
         //Menus and Sub Menus Route -- Only Admin Access
-        Route::get('menus/create', 'Admin\MenusController@create')->name('menus.create');
-        Route::post('menus/create', 'Admin\MenusController@store')->name('menus.store');
-        Route::get('menus/index', 'Admin\MenusController@index')->name('menus.index');
-        Route::get('menus/sort', 'Admin\MenusController@sort')->name('menus.sort');
-        Route::post('menus/sort', 'Admin\MenusController@sortPost')->name('menus.sortpost');
+        Route::get('menus/create', 'App\Http\Controllers\Admin\MenusController@create')->name('menus.create');
+        Route::post('menus/create', 'App\Http\Controllers\Admin\MenusController@store')->name('menus.store');
+        Route::get('menus/index', 'App\Http\Controllers\Admin\MenusController@index')->name('menus.index');
+        Route::get('menus/sort', 'App\Http\Controllers\Admin\MenusController@sort')->name('menus.sort');
+        Route::post('menus/sort', 'App\Http\Controllers\Admin\MenusController@sortPost')->name('menus.sortpost');
         Route::get('menu/edit/{id?}', [MenusController::class , 'edit'])->name('menu.edit');
 
         // Route::get('menus/show/{id}', 'Admin\MenusController@show')->name('menus.show');
-        Route::get('menus/update/{id}', 'Admin\MenusController@edit')->name('menus.edit');
-        Route::post('menus/update/{id}', 'Admin\MenusController@update')->name('menus.update');
-        Route::post('menus/delete/{id}', 'Admin\MenusController@destroy')->name('menus.delete');
-        Route::post('menus/checkroute', 'Admin\MenusController@checkroute')->name('menus.checkroute');
-        Route::post('submenus/delete', 'Admin\MenusController@subMenuDelete')->name('submenus.delete');
+        Route::get('menus/update/{id}', 'App\Http\Controllers\Admin\MenusController@edit')->name('menus.edit');
+        Route::post('menus/update/{id}', 'App\Http\Controllers\Admin\MenusController@update')->name('menus.update');
+        Route::post('menus/delete/{id}', 'App\Http\Controllers\Admin\MenusController@destroy')->name('menus.delete');
+        Route::post('menus/checkroute', 'App\Http\Controllers\Admin\MenusController@checkroute')->name('menus.checkroute');
+        Route::post('submenus/delete', 'App\Http\Controllers\Admin\MenusController@subMenuDelete')->name('submenus.delete');
 
         //User Menu Access
         // Route::get('useraccess/index', 'Admin\UserMenuAccessController@index')->name('useraccess.index');
-        Route::get('useraccess/show/{id}', 'Admin\EmployeeController@showAccess')->name('useraccess.show');
-        Route::post('useraccess/update/{id}', 'Admin\EmployeeController@updateAccess')->name('useraccess.update');
+        Route::get('useraccess/show/{id}', 'App\Http\Controllers\Admin\EmployeeController@showAccess')->name('useraccess.show');
+        Route::post('useraccess/update/{id}', 'App\Http\Controllers\Admin\EmployeeController@updateAccess')->name('useraccess.update');
 
         //Packages
-        Route::resource('packages','Admin\PackagesController');
+        Route::resource('packages','App\Http\Controllers\Admin\PackagesController');
         Route::get("/packages/destroy/{id?}" , [PackagesController::class ,"destroy"])->name("package.destroy");
         // Sorting Table Routes
 
         Route::post("sortFrontMenu" , [FrontMenuController::class , 'updateSorting'])->name("sort.front.menu");
         Route::post("sortMenu" , [MenusController::class , 'sortMenu'])->name("sort.menu");
-        Route::post("sortSlider" , [HomeSliderController::class , 'sortSlider'])->name("sort.slider.image");
+        // Route::post("sortSlider" , [HomeSliderController::class , 'sortSlider'])->name("sort.slider.image");
         // Social Links Routes
         Route::get('/social/' , [SocialController::class , 'index'])->name('social.index');
         Route::get('/social/create' , [SocialController::class , 'create'])->name('social.create');
@@ -243,23 +243,23 @@ use App\Http\Controllers\Admin\AuthController;
         Route::post('/service/edit',[AdminServiceController::class, 'editService'])->name('service.edit.post');
 
 
-        Route::resource('portfolios','Admin\PortfolioController');
+        Route::resource('portfolios','App\Http\Controllers\Admin\PortfolioController');
         Route::get("/portfolios/destroy/{id?}" , [AdminPortfolioController::class ,"destroy"])->name("portfolio.destroy");
 
-        Route::resource('products','Admin\ProductController');
+        Route::resource('products','App\Http\Controllers\Admin\ProductController');
         Route::get("/products/destroy/{id?}" , [AdminProductController::class ,"destroy"])->name("product.destroy");
 
-        Route::resource('clients','Admin\ClientController');
+        Route::resource('clients','App\Http\Controllers\Admin\ClientController');
         Route::get("/clients/destroy/{id?}" , [AdminClientController::class ,"destroy"])->name("client.destroy");
 
-        Route::resource('abouts','Admin\AboutController');
+        Route::resource('abouts','App\Http\Controllers\Admin\AboutController');
         Route::get("/abouts/destroy/{id?}" , [AdminAboutController::class ,"destroy"])->name("about.destroy");
 
-        Route::resource('contacts','Admin\ContactController');
+        Route::resource('contacts','App\Http\Controllers\Admin\ContactController');
         Route::get("/contact/destroy/{id?}" , [AdminContactController::class ,"destroy"])->name("contact.destroy");
         Route::get("/contact/message-requests" , [AdminContactController::class ,"messageRequest"])->name("contacts.message_request");
 
-        Route::resource('slideritems','Admin\SlideritemController');
+        Route::resource('slideritems','App\Http\Controllers\Admin\SlideritemController');
         Route::get("/slideritem/destroy/{id?}" , [AdminSlideritemController::class ,"destroy"])->name("slideritem.destroy");
 
     });

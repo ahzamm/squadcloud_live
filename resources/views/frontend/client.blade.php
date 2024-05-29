@@ -17,32 +17,32 @@
 <section id="our-client" class="position-relative">
    <div class="our-portfolio-bg"></div>
    <div class="container">
-       @php
+       {{-- @php
                $inner_page_setting = DB::table('inner_page_settings')
                ->where([
                   ['status', '=', 1]])
                   ->where([
                   ['setting_key', '=', 'our_clients']])
                   ->get();
-            @endphp
-            @foreach($inner_page_setting as $ourClients)
+            @endphp --}}
+            {{-- @foreach($inner_page_setting as $ourClients) --}}
       <div class="title-img d-flex align-items-center justify-content-center flex-column mb-5" data-aos="zoom-in-down">
-         <img src="storage/media/innerpagesetting/{{$ourClients->title_image}}" alt="" style="width: 50%;">
-         <p class="text-center">{!!$ourClients->description!!}</p>
+         <img src="frontend_assets/images/title/{{$client_menu->title_image}}" alt="" style="width: 50%;">
+         <p class="text-center">{!!$client_menu->tagline!!}</p>
       </div>
-      @endforeach
+      {{-- @endforeach --}}
 
       <div class="row">
-         @forelse ($clients as $list)
+         @forelse ($clients as $client)
          <div class="col-lg-4 col-md-6">
             <div class="card" data-aos="flip-left" data-aos-duration="1000">
-               <a href="{{ $list->link }}" target="_blank" class="card-client d-flex justify-content-center align-items-center" style="height: 100px">
+               <a href="{{ $client->link }}" target="_blank" class="card-client d-flex justify-content-center align-items-center" style="height: 100px">
                   <div class="clients-logo"> 
-                     <img src="storage/media/client/{{$list->image}}" alt="{{ $list->heading }}" class="p-2 d-inline-block">
+                     <img src="frontend_assets/images/clients/{{$client->logo}}"  class="p-2 d-inline-block">
                   </div>
                </a>
                <div class="card-body">
-                  <p>{!! $list->description !!}</p>
+                  <p>{!! $client->description !!}</p>
                </div>
             </div>
          </div>

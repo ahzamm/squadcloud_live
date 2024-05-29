@@ -13,14 +13,14 @@
    <div class="jumbotron position-relative">
       <div class="bgopacty"></div>
       <div class="mt-5 jumbotron-content">
-         <h2 class="text-center fs-1  graphic" data-aos="zoom-in-down">{{$servicedetail->heading}}</h2>
-         <p class="text-center text-white" data-aos="zoom-in-up">{!!$servicedetail->description!!}</p>
+         <h2 class="text-center fs-1  graphic" data-aos="zoom-in-down">{{$service->service}}</h2>
+         <p class="text-center text-white" data-aos="zoom-in-up">{!!$service->tagline!!}</p>
          
       </div>
    </div>
 
    <section id="service-inner" class="position-relative pb-5">
-      {!!$servicedetail->text_field!!}
+      {!!$service->description!!}
    </section>
 
    	
