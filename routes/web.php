@@ -60,8 +60,9 @@ use App\Http\Controllers\Admin\AuthController;
             return "Your System Has been Wiped!...!";
         })->name('flush');
 
+        Route::middleware([CheckForMaintenanceMode::class])->group(function () {
         Route::get('/','Site\HomeController@index')->name('home');
-
+            });
         // Route::get('/sendmail','Site\EmailController@sendmail')->name('home');
 
         Route::get('site/cities/{id}','Site\ConsumerController@getCities')->name('getcities');
@@ -77,9 +78,7 @@ use App\Http\Controllers\Admin\AuthController;
 
 
 
-        Route::middleware([CheckForMaintenanceMode::class])->group(function () {
-            Route::get('/services', [ServiceController::class, 'index'])->name('site.services');
-        });
+
 
          // SquadCloud Site Routes
          Route::get('/maintenance', [MaintenanceController::class, 'index'])->name('site.maintenance');
