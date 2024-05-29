@@ -68,40 +68,45 @@ class ServiceController extends Controller
         }
     }
 
-   
+
 
     public function deleteService($id)
     {
+        $subMenuid = SubMenu::where('route_name', 'admin.services')->first();
+        $userOperation = "delete_status";
+        $userId = Auth::guard('admin', 'user')->user()->id;
+        $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
 
-        $subMenuid     =  SubMenu::where('route_name' , 'admin.services')->first();
-        $userOperation =  "delete_status" ;
-        
-        $userId        =  Auth::guard('admin' , 'user')->user()->id;
-        
-        $crudAccess    =  $this->crud_access($subMenuid->id ,  $userOperation , $userId );
-       if($crudAccess == true) {
-        $delete =  Service::find($id)->delete();
-        if($delete == true)
-        {
-            return response()->json(["status" => true ]);
-        }}
-        else{
-            return response()->json(["unauthorized" => true ]);
+        if ($crudAccess == true) {
+            $service = Service::find($id);
+            if ($service) {
+                $imagePath = public_path('frontend_assets/images/services/' . $service->logo);
+                if (file_exists($imagePath)) {
+                    unlink($imagePath);
+                }
 
+                $service->delete();
+
+                return response()->json(["status" => true]);
+            } else {
+                return response()->json(["status" => false, "message" => "Service not found."]);
+            }
+        } else {
+            return response()->json(["unauthorized" => true]);
         }
     }
-    
-    public function crud_access($submenuId = null , $operation = null , $uId = null) {
-        if (!$submenuId == null) { 
-        $CheckData = UserMenuAccess::where(["user_id" => $uId , "sub_menu_Id" => $submenuId , $operation => 1 , 'view_status' => 1])->count();
-   
-        if($CheckData > 0 ){
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+
+
+    public function crud_access($submenuId = null, $operation = null, $uId = null)
+    {
+        if (!$submenuId == null) {
+            $CheckData = UserMenuAccess::where(["user_id" => $uId, "sub_menu_Id" => $submenuId, $operation => 1, 'view_status' => 1])->count();
+
+            if ($CheckData > 0) {
+                return true;
+            } else {
+                return false;
+            }
         }
     }
 
