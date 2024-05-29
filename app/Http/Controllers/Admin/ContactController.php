@@ -27,19 +27,19 @@ class ContactController extends Controller
     //     return view('admin.contacts.index', compact('contacts'));
     // }
 
-   
+
     public function index()
     {
         $contact = Contact::first();
         return view('admin.contacts.edit', compact('contact'));
     }
-   
+
     public function messageRequest()
     {
         $contacts = ContactRequest::all();
         return view('admin.contacts.index', compact('contacts'));
     }
-    
+
 
     /**
      * Show the form for creating a new resource.
@@ -198,7 +198,7 @@ class ContactController extends Controller
         $userId = Auth::guard('admin', 'user')->user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
         if ($crudAccess == true) {
-            $delete = Contact::find($id)->delete();
+            $delete = ContactRequest::find($id)->delete();
             if ($delete == true) {
                 return response()->json(["status" => true]);
             }
