@@ -19,10 +19,15 @@ class CheckForMaintenanceMode extends Middleware
      */
     public function handle($request, Closure $next)
     {
+        // dd($request->ip());
+        // Get the IP of the request
         $requestIp = $request->ip();
+        Log::info('Request IP: ' . $requestIp);
+
+        // Check if the application is in maintenance mode
         if (app()->isDownForMaintenance()) {
+            // Retrieve allowed IPs
             $allowedIps = AllowedIp::pluck('ip_address')->toArray();
-            // dd($requestIp, $allowedIps);
             Log::info('Allowed IPs: ' . json_encode($allowedIps));
 
             // Check if the request IP is in the allowed IPs list
