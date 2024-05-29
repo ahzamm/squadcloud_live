@@ -3,13 +3,14 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Admin extends Model
+class Admin extends Authenticatable
 {
     protected $fillable = [
         'first_name' ,
         'last_name' ,
-        'email',    
+        'email',
         'password',
         'cnic',
         'address',
@@ -17,7 +18,7 @@ class Admin extends Model
         'name',
         'department',
         'role',
-        'active',   
+        'active',
      ];
 
 

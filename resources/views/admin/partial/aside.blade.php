@@ -25,7 +25,9 @@ $menusAccess = App\Models\UserMenuAccess::where('user_id',Auth::id())->where('vi
         <img src="{{asset('front-logo/' . $mainLogo->image)}}" class="img-circle elevation-2" style="object-fit: contain;" alt="User Image">
       </div>
       <div class="info">
-        <a class="d-block">{{Auth::user()->name}} ({{Auth::user()->role}})</a>
+        @if(Auth::check())
+    <a class="d-block">{{Auth::user()->name}} ({{Auth::user()->role}})</a>
+@endif
       </div>
     </div>
     <!-- Sidebar Menu -->
@@ -113,7 +115,7 @@ $menusAccess = App\Models\UserMenuAccess::where('user_id',Auth::id())->where('vi
         </li>
         @endif
         <!-- END ADMIN MENU -->
-        <!-- END OLD ADMIN MENU -->  
+        <!-- END OLD ADMIN MENU -->
 <!--
   @if (Auth::user()->role == "admin")
         <li @if(Request::route()->getName() == "menus.create" ||Request::route()->getName() == "menus.index" ) class="nav-item has-treeview menu-open" @else class="nav-item has-treeview" @endif>

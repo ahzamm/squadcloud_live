@@ -37,7 +37,7 @@ class AuthController extends Controller
         $request->session()->flush();
         $request->session()->regenerate();
         return redirect()->route('admin.login');
-        
+
     }
     // public function verify()
     // {
