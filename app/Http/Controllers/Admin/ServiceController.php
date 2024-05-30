@@ -44,11 +44,15 @@ class ServiceController extends Controller
         $valdiate = Validator::make($request->all(), $validatedData);
 
         if ($valdiate->fails()) {
-            return redirect()->to('/admin/service/create')->withErrors($valdiate->errors());
+            redirect()->back()->withErrors($valdiate->errors());
         } else {
 
             $service = Service::where('slug', $request->slug)->first();
-            if($service){ return redirect()->to('/admin/service/create')->withErrors("Provided slug is already used");}
+
+            if($service){
+                return redirect()->back()->withErrors("Provided slug is already used");
+            }
+            dd($service);
 
             $filename = "";
             if ($request->hasFile('logo')) {
@@ -126,6 +130,14 @@ class ServiceController extends Controller
     public function editService(Request $request)
     {
         $service = Service::findOrFail($request->id);
+
+        $duplicateSlug = Service::where('slug', $request->slug)
+                            ->where('id', '!=', $service->id)
+                            ->first();
+
+        if ($duplicateSlug) {
+            return redirect()->back()->withErrors("Provided slug is already used");
+        }
 
         if ($request->hasFile('logo')) {
             if ($service->logo && file_exists(public_path('frontend_assets/images/services/' . $service->logo))) {
