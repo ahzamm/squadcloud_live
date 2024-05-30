@@ -234,13 +234,16 @@ use App\Http\Controllers\Admin\AuthController;
 
 
         //  Services Routes
-        Route::get('/services',[AdminServiceController::class, 'index'])->name('admin.services');
-        Route::get('/service/create',[AdminServiceController::class, 'showCreateServiceForm'])->name('service.create');
-        Route::post('/service/create',[AdminServiceController::class, 'createService'])->name('service.create.post');
-        Route::get("/service/destroy/{id?}" , [AdminServiceController::class ,"deleteService"])->name("service.destroy");
-        Route::get('/services/{id}/edit',[AdminServiceController::class, 'showEditServiceForm'])->name('service.edit');
-        Route::post('/service/edit',[AdminServiceController::class, 'editService'])->name('service.edit.post');
+        // Route::get('/services',[AdminServiceController::class, 'index'])->name('admin.services');
+        // Route::get('/service/create',[AdminServiceController::class, 'showCreateServiceForm'])->name('service.create');
+        // Route::post('/service/create',[AdminServiceController::class, 'createService'])->name('service.create.post');
+        // Route::get("/service/destroy/{id?}" , [AdminServiceController::class ,"deleteService"])->name("service.destroy");
+        // Route::get('/services/{id}/edit',[AdminServiceController::class, 'showEditServiceForm'])->name('service.edit');
+        // Route::post('/service/edit',[AdminServiceController::class, 'editService'])->name('service.edit.post');
 
+
+        Route::resource('services','App\Http\Controllers\Admin\ServiceController');
+        Route::get("/services/destroy/{id?}" , [AdminServiceController::class ,"destroy"])->name("service.destroy");
 
         Route::resource('portfolios','App\Http\Controllers\Admin\PortfolioController');
         Route::get("/portfolios/destroy/{id?}" , [AdminPortfolioController::class ,"destroy"])->name("portfolio.destroy");

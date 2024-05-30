@@ -15,7 +15,7 @@
           <div class="card mt-3 card-outline card-info">
             <div class="card-header">
               <h3 class="card-title"><span><i class="fa-solid fa-box-open"></i></span> Service</h3>
-              <a class="btn btn-success btn-sm float-right" href="{{route('service.create')}}"><i class="fa fa-plus"></i> Add Service</a>
+              <a class="btn btn-success btn-sm float-right" href="{{route('services.create')}}"><i class="fa fa-plus"></i> Add Service</a>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
@@ -46,7 +46,7 @@
                       <td>{{ $item->slug}}</td>
                       <td>{{$item->is_active == 1?'active':'deactive'}}</td>
                       <td class="d-flex justify-content-center" style="gap: 5px;">
-                        <a class="btn btn-primary btn-sm" href="{{ route('service.edit', $item->id) }}"><i class="fa fa-edit"></i></a>
+                        <a class="btn btn-primary btn-sm" href="{{ route('services.edit', $item->id) }}"><i class="fa fa-edit"></i></a>
                         <button class="btn btn-danger btn-sm btnDeleteMenu" data-value="{{ $item->id }}"><i class="fa fa-trash"></i></button>
                       </td>
                     </td>
