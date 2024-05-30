@@ -40,7 +40,7 @@
                     </div>
                   </div>
 
-                  <div class="col-md-6">
+                  <div class="col-md-12">
                     <div class="form-group">
                       <label for="">Tagline <span style="color: red">*</span></label>
                       <input type="text" class="form-control" name="tagline" placeholder="Transforming Ideas into Innovative Mobile Experiences" required value="{{old('tagline')}}">
@@ -65,6 +65,16 @@
                       <label for="">Slug <span style="color: red">*</span></label>
                       <input type="text" class="form-control" name="slug" placeholder="Transforming Ideas into Innovative Mobile Experiences" required value="{{old('slug')}}">
                       @error('slug')
+                      <p class="text-danger mt-2 mb-0 text-sm">{{$message}}</p>
+                      @enderror
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="">Background Image <span style="color: red">*</span></label>
+                      <input type="file" name="background_image">
+                      @error('background_image')
                       <p class="text-danger mt-2 mb-0 text-sm">{{$message}}</p>
                       @enderror
                     </div>

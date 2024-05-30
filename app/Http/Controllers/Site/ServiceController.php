@@ -18,12 +18,16 @@ class ServiceController extends Controller
     }
 
     public function serviceDetail($slug)
-{
-    $service = Service::where('slug', $slug)
-                        ->where('is_active', 1)
-                        ->first();
+    {
+        $service = Service::where('slug', $slug)
+            ->where('is_active', 1)
+            ->first();
 
-    return view('frontend/service_detail', compact('service'));
-}
+        if (!$service) {
+            abort(404);
+        }
+
+        return view('frontend/service_detail', compact('service'));
+    }
 
 }

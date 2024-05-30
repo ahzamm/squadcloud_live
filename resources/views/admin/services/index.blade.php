@@ -29,6 +29,7 @@
                       <th>TagLine</th>
                       <th>Description</th>
                       <th>Slug</th>
+                      <th>Background Image</th>
                       <th>Status</th>
                       <th>Action</th>
                     </tr>
@@ -44,6 +45,9 @@
                       <td>{{ $item->tagline}}</td>
                       <td>{!! $item->description !!}</td>
                       <td>{{ $item->slug}}</td>
+                      <td>
+                        <img width="40px" height="40px" src="{{ asset('frontend_assets/images/services/' . $item->background_image) }}" alt="internet service provider in karachi/Clifton/pakistan" />
+                    </td>
                       <td>{{$item->is_active == 1?'active':'deactive'}}</td>
                       <td class="d-flex justify-content-center" style="gap: 5px;">
                         <a class="btn btn-primary btn-sm" href="{{ route('services.edit', $item->id) }}"><i class="fa fa-edit"></i></a>

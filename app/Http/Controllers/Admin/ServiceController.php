@@ -87,6 +87,13 @@ class ServiceController extends Controller
             return redirect()->back()->withInput()->with('error', 'Please provide a valid image file of type: jpeg, png, or jpg.');
         }
 
+        if (!$request->hasFile('background_image')) {
+            return redirect()->back()->withInput()->with('error', 'Please provide a background image.');
+        }
+        if (!$request->file('background_image')->isValid() || !in_array($request->file('background_image')->extension(), ['jpeg', 'png', 'jpg'])) {
+            return redirect()->back()->withInput()->with('error', 'Please provide a valid background image file of type: jpeg, png, or jpg.');
+        }
+
 
         $filename = "";
         $file = $request->file('logo');
@@ -94,12 +101,19 @@ class ServiceController extends Controller
         $filename = Str::random(40) . '.' . $extension;
         $file->move(public_path('frontend_assets/images/services'), $filename);
 
+        $backgroundImageFileName = "";
+        $file = $request->file('background_image');
+        $extension = $file->getClientOriginalExtension();
+        $backgroundImageFileName = Str::random(40) . '.' . $extension;
+        $file->move(public_path('frontend_assets/images/services'), $backgroundImageFileName);
+
         $service = new Service();
         $service->service = $request['service'];
         $service->tagline = $request['tagline'];
         $service->description = $request['description'];
         $service->slug = $request['slug'];
         $service->logo = $filename;
+        $service->background_image = $backgroundImageFileName;
         $service->is_active = $request->has('is_active') ? 1 : 0;
         $service->save();
 
@@ -165,6 +179,12 @@ class ServiceController extends Controller
             }
         }
 
+        if ($request->hasFile('background_image')) {
+            if (!$request->file('background_image')->isValid() || !in_array($request->file('background_image')->extension(), ['jpeg', 'png', 'jpg'])) {
+                return redirect()->back()->withInput()->with('error', 'Please provide a valid background image file of type: jpeg, png, or jpg.');
+            }
+        }
+
         $validator = Validator::make($request->all(), [
             'slug' => 'required|regex:/^[a-zA-Z0-9\-]+$/'
         ]);
@@ -193,8 +213,19 @@ class ServiceController extends Controller
             $extension = $file->getClientOriginalExtension();
             $filename = Str::random(40) . '.' . $extension;
             $file->move(public_path('frontend_assets/images/services'), $filename);
-
             $service->logo = $filename;
+        }
+
+        if ($request->hasFile('background_image')) {
+            if ($service->background_image && file_exists(public_path('frontend_assets/images/services/' . $service->background_image))) {
+                unlink(public_path('frontend_assets/images/services/' . $service->background_image));
+            }
+
+            $file = $request->file('background_image');
+            $extension = $file->getClientOriginalExtension();
+            $filename = Str::random(40) . '.' . $extension;
+            $file->move(public_path('frontend_assets/images/services'), $filename);
+            $service->background_image = $filename;
         }
 
         $service->service = $request['service'];

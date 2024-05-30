@@ -75,6 +75,21 @@
                     </div>
                   </div>
 
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="">Background Image <span style="color: red">*</span></label>
+                      @isset($service->background_image)
+                      <img src="{{ asset('frontend_assets/images/services/'. $service->background_image) }}" height="60"
+                      width="120" alt="" srcset="" >
+                      @endisset
+                      <br><br>
+                      <input type="file" value="{{ $service->background_image }}" name="background_image">
+                      @error('background_image')
+                      <p class="text-danger mt-2 mb-0 text-sm">{{$message}}</p>
+                      @enderror
+                    </div>
+                  </div>
+
                 <div class="col-md-6">
                   <div class="form-group clearfix">
                     <div class="icheck-success d-inline">
