@@ -48,64 +48,62 @@ class ServiceController extends Controller
         $userOperation = "create_status";
         $userId = Auth::guard('admin', 'user')->user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
-        if ($crudAccess == true) {
-            $validatedData = [
-                'service' => 'required',
-                'tagline' => 'required',
-                'description' => 'required',
-                'slug' => 'required',
-            ];
-
-            $valdiate = Validator::make($request->all(), $validatedData);
-
-            if ($valdiate->fails()) {
-                return redirect()->back()->withInput()->with('error', 'All Fields are required');
-            } else {
-
-                $validator = Validator::make($request->all(), [
-                    'slug' => 'required|regex:/^[a-zA-Z0-9\-]+$/'
-                ]);
-
-                if ($validator->fails()) {
-                    return redirect()->back()->withInput()->with('error', 'Please provide a valid slug');
-                }
-
-                $service = Service::where('slug', $request->slug)->first();
-
-                if (!$request->hasFile('logo')) {
-                    return redirect()->back()->withInput()->with('error', 'Please provide an image.');
-                }
-
-                if (!$request->file('logo')->isValid() || !in_array($request->file('logo')->extension(), ['jpeg', 'png', 'jpg'])) {
-                    return redirect()->back()->withInput()->with('error', 'Please provide a valid image file of type: jpeg, png, or jpg.');
-                }
-
-
-                if ($service) {
-                    return redirect()->back()->withInput()->with('error', "Provided slug is already used");
-                }
-
-
-                $filename = "";
-                if ($request->hasFile('logo')) {
-                    $file = $request->file('logo');
-                    $extension = $file->getClientOriginalExtension();
-                    $filename = Str::random(40) . '.' . $extension;
-                    $file->move(public_path('frontend_assets/images/services'), $filename);
-                }
-
-                $service = new Service();
-                $service->service = $request['service'];
-                $service->tagline = $request['tagline'];
-                $service->description = $request['description'];
-                $service->slug = $request['slug'];
-                $service->logo = $filename;
-                $service->is_active = $request->has('is_active') ? 1 : 0;
-                $service->save();
-
-                return redirect()->route('services.index')->with('success', 'Service created successfully!');
-            }
+        if ($crudAccess == false) {
+            return redirect()->back()->withInput()->with('error', 'No right to add a service');
         }
+
+        $validatedData = [
+            'service' => 'required',
+            'tagline' => 'required',
+            'description' => 'required',
+            'slug' => 'required',
+        ];
+        $valdiate = Validator::make($request->all(), $validatedData);
+        if ($valdiate->fails()) {
+            return redirect()->back()->withInput()->with('error', 'All Fields are required');
+        }
+
+        $validator = Validator::make($request->all(), [
+            'slug' => 'required|regex:/^[a-zA-Z0-9\-]+$/'
+        ]);
+        if ($validator->fails()) {
+            return redirect()->back()->withInput()->with('error', 'Please provide a valid slug');
+        }
+
+        $isDuplicateSlugExists = Service::where('slug', $request->slug)->first();
+        if ($isDuplicateSlugExists) {
+            return redirect()->back()->withInput()->with('error', "Provided slug is already used");
+        }
+
+        $isDuplicateNameExists = Service::where('service', $request->service)->first();
+        if ($isDuplicateNameExists) {
+            return redirect()->back()->withInput()->with('error', "Provided service name is already in use");
+        }
+
+        if (!$request->hasFile('logo')) {
+            return redirect()->back()->withInput()->with('error', 'Please provide an image.');
+        }
+        if (!$request->file('logo')->isValid() || !in_array($request->file('logo')->extension(), ['jpeg', 'png', 'jpg'])) {
+            return redirect()->back()->withInput()->with('error', 'Please provide a valid image file of type: jpeg, png, or jpg.');
+        }
+
+
+        $filename = "";
+        $file = $request->file('logo');
+        $extension = $file->getClientOriginalExtension();
+        $filename = Str::random(40) . '.' . $extension;
+        $file->move(public_path('frontend_assets/images/services'), $filename);
+
+        $service = new Service();
+        $service->service = $request['service'];
+        $service->tagline = $request['tagline'];
+        $service->description = $request['description'];
+        $service->slug = $request['slug'];
+        $service->logo = $filename;
+        $service->is_active = $request->has('is_active') ? 1 : 0;
+        $service->save();
+
+        return redirect()->route('services.index')->with('success', 'Service created successfully!');
     }
 
     /**
@@ -146,72 +144,67 @@ class ServiceController extends Controller
         $userId = Auth::guard('admin', 'user')->user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
 
-        if ($crudAccess == true) {
-
-            $validatedData = [
-                'service' => 'required',
-                'tagline' => 'required',
-                'description' => 'required',
-                'slug' => 'required',
-            ];
-
-            $valdiate = Validator::make($request->all(), $validatedData);
-
-            if ($valdiate->fails()) {
-                return redirect()->back()->withInput()->with('error', 'All Fields are required');
-            } else {
-
-            if ($request->hasFile('logo')) {
-                if (!$request->file('logo')->isValid() || !in_array($request->file('logo')->extension(), ['jpeg', 'png', 'jpg'])) {
-                    return redirect()->back()->withInput()->with('error', 'Please provide a valid image file of type: jpeg, png, or jpg.');
-                }
-            }
-
-            $validator = Validator::make($request->all(), [
-                'slug' => 'required|regex:/^[a-zA-Z0-9\-]+$/'
-            ]);
-
-            if ($validator->fails()) {
-                return redirect()->back()->withInput()->with('error', 'Please provide a valid slug');
-            }
-
-
-            $duplicateSlug = Service::where('slug', $request->slug)
-                ->where('id', '!=', $id)
-                ->first();
-
-
-            if ($duplicateSlug) {
-                return redirect()->back()->withInput()->with('error', "Provided slug is already used");
-            }
-
-            $service = Service::findOrFail($id);
-
-            if ($request->hasFile('logo')) {
-                if ($service->logo && file_exists(public_path('frontend_assets/images/services/' . $service->logo))) {
-                    unlink(public_path('frontend_assets/images/services/' . $service->logo));
-                }
-
-                $file = $request->file('logo');
-                $extension = $file->getClientOriginalExtension();
-                $filename = Str::random(40) . '.' . $extension;
-                $file->move(public_path('frontend_assets/images/services'), $filename);
-
-                $service->logo = $filename;
-            }
-
-            $service->service = $request['service'];
-            $service->tagline = $request['tagline'];
-            $service->description = $request['description'];
-            $service->slug = $request['slug'];
-            $service->is_active = $request->has('is_active') ? 1 : 0;
-
-            $service->save();
-
-
-            return redirect()->route('services.index')->with('success', 'Service updated successfully!');
+        if ($crudAccess == false) {
+            return redirect()->back()->withInput()->with('error', 'No right to edit a service');
         }
-    }
+
+        $validatedData = [
+            'service' => 'required',
+            'tagline' => 'required',
+            'description' => 'required',
+            'slug' => 'required',
+        ];
+        $valdiate = Validator::make($request->all(), $validatedData);
+        if ($valdiate->fails()) {
+            return redirect()->back()->withInput()->with('error', 'All Fields are required');
+        }
+
+        if ($request->hasFile('logo')) {
+            if (!$request->file('logo')->isValid() || !in_array($request->file('logo')->extension(), ['jpeg', 'png', 'jpg'])) {
+                return redirect()->back()->withInput()->with('error', 'Please provide a valid image file of type: jpeg, png, or jpg.');
+            }
+        }
+
+        $validator = Validator::make($request->all(), [
+            'slug' => 'required|regex:/^[a-zA-Z0-9\-]+$/'
+        ]);
+        if ($validator->fails()) {
+            return redirect()->back()->withInput()->with('error', 'Please provide a valid slug');
+        }
+
+        $isDuplicateSlugExists = Service::where('slug', $request->slug)->where('id', '!=', $id)->first();
+        if ($isDuplicateSlugExists) {
+            return redirect()->back()->withInput()->with('error', "Provided slug is already used");
+        }
+
+        $isDuplicateNameExists = Service::where('service', $request->service)->where('id', '!=', $id)->first();
+        if ($isDuplicateNameExists) {
+            return redirect()->back()->withInput()->with('error', "Provided service name is already in use");
+        }
+
+        $service = Service::findOrFail($id);
+
+        if ($request->hasFile('logo')) {
+            if ($service->logo && file_exists(public_path('frontend_assets/images/services/' . $service->logo))) {
+                unlink(public_path('frontend_assets/images/services/' . $service->logo));
+            }
+
+            $file = $request->file('logo');
+            $extension = $file->getClientOriginalExtension();
+            $filename = Str::random(40) . '.' . $extension;
+            $file->move(public_path('frontend_assets/images/services'), $filename);
+
+            $service->logo = $filename;
+        }
+
+        $service->service = $request['service'];
+        $service->tagline = $request['tagline'];
+        $service->description = $request['description'];
+        $service->slug = $request['slug'];
+        $service->is_active = $request->has('is_active') ? 1 : 0;
+        $service->save();
+
+        return redirect()->route('services.index')->with('success', 'Service updated successfully!');
     }
 
 
