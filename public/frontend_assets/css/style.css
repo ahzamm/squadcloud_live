@@ -41,7 +41,7 @@ header#main-header.menu-sticky {
 	-webkit-box-shadow: 0px 0px 30px 0px rgba(0, 0, 0, 0.4);
 	-moz-box-shadow: 0px 0px 30px 0px rgba(0, 0, 0, 0.4);
 	box-shadow: 0px 0px 30px 0px rgba(0, 0, 0, 0.4);
-	
+
 }
 
 header#main-header.menu-sticky {
@@ -373,7 +373,7 @@ footer {
 footer{
 	background: linear-gradient(0deg, rgba(204,204,204,1) 0%, rgba(221,221,221,1) 50%, rgba(239,239,239,1) 100%);
  }
- 
+
  .folder-name{
 	position: absolute;
     top: -35px;
@@ -606,7 +606,7 @@ bottom: 0;
 z-index: -1;
  }
  .contact-bg{
-	background-image: url(../../frontend_assets/images/contact-bg.webp);
+	/* background-image: url(../../frontend_assets/images/contact-bg.webp); */
 background-repeat: no-repeat;
 background-size: cover;
 background-position: center;
@@ -734,7 +734,7 @@ display: block;
 transform-origin: 59px 50%;
 }
  /* product section */
-    
+
 
  .outer-folder {
 	width: 470px;
@@ -789,7 +789,7 @@ transform-origin: 59px 50%;
 background-size: cover;
 border-radius: 12px;
  clip-path: polygon(0 35%, 51% 35%, 51% 13%, 100% 13%, 100% 100%, 0 100%);
-}     
+}
 .our-portfolio-bg::before{
  content: '';
 	   position: absolute;
@@ -967,12 +967,12 @@ a:hover{color: #69030e;}
   position: absolute;
   top: -7px;
   right: -5px;
-  
+
   cursor: pointer;
-  
+
   opacity: 0; /* hide this */
   z-index: 2; /* and place it over the hamburger */
-  
+
   -webkit-touch-callout: none;
 }
 
@@ -1117,12 +1117,12 @@ a:hover{color: #69030e;}
   position: absolute;
   top: -7px;
   right: -5px;
-  
+
   cursor: pointer;
-  
+
   opacity: 0; /* hide this */
   z-index: 2; /* and place it over the hamburger */
-  
+
   -webkit-touch-callout: none;
 }
 
@@ -1177,7 +1177,7 @@ a:hover{color: #69030e;}
 	transform: rotate(90deg);
 	transition: .5s ease;
   }
-  
+
   .hex:before,
   .hex:after {
 	position: absolute;
@@ -1187,12 +1187,12 @@ a:hover{color: #69030e;}
 	background: inherit;
 	content: '';
   }
-  
+
   .hex:before {
 	-webkit-transform: rotate(60deg);
 	transform: rotate(60deg);
   }
-  
+
   .hex:after {
 	-webkit-transform: rotate(-60deg);
 	transform: rotate(-60deg);
@@ -1356,8 +1356,8 @@ margin-bottom: 0;
 }
 .custom-textarea{
 position: relative;
-height: 350px; 
-background-image: url(../images/contact-bg.webp); 
+height: 350px;
+/* background-image: url(../images/contact-bg.webp); */
 z-index: 9;
 border-bottom-left-radius: 20px;
 background-repeat: no-repeat;
@@ -1407,7 +1407,7 @@ font-size:6rem;margin-bottom:79px;font-weight:900;
          bottom: 0;
          top: 0;
          background-color: #bfbfbf73;
-      }                                                                          
+      }
       .graphic{font-weight:900; color: #fff; margin-bottom: 10px;  }
       #service-inner .card-header{background-color: transparent !important;border: none !important;}
       #service-inner .card-header p{font-size: 1.5em;}
@@ -1420,7 +1420,7 @@ font-size:6rem;margin-bottom:79px;font-weight:900;
       .shape.four{right: 0;bottom: 0;transform: scaleX(-1); opacity: .2;width: 200px}
 
 .screenshot-wrapper{display: flex; column-gap: 10px;justify-content: center;}
-.screensht{ 
+.screensht{
 	border: #000 1px solid; border-radius:10px;padding: 10px}
 .screensht .screensht-bg{width: 100%;
     height: 100%;
@@ -1436,7 +1436,7 @@ font-size:6rem;margin-bottom:79px;font-weight:900;
     width: 100%;
     height: 100%;
     position: absolute;
-    z-index: -1;  
+    z-index: -1;
 }
 
 .product-jumbotron .bgopacty::before{

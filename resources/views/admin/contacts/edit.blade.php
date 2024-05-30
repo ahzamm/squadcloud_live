@@ -15,7 +15,7 @@
               <a class="btn btn-success btn-sm float-right" href="{{route('contacts.message_request')}}">  Message Requests  </a>
             </div>
           </div>
-          <form action="{{route('contacts.update',$contact->id)}}" method="POST" enctype="multipart/form-data">
+          <form action="{{route('contacts.update')}}" method="POST" enctype="multipart/form-data">
             @method('PUT')
             <!-- /.card-header -->
             <div class="card-body pad">
@@ -38,7 +38,7 @@
                     @isset($contact->title)
                     <input type="text" class="form-control" name="title"  value="{{old('title') == NULL?$contact->title:old('title') }}">
                     @endisset
-                    
+
                     @error('title')
                     <p class="text-danger mt-2 mb-0 text-sm">{{$message}}</p>
                     @enderror
@@ -50,7 +50,7 @@
                     @isset($contact->tagline)
                     <input type="text" class="form-control" name="tagline"  value="{{old('tagline') == NULL?$contact->tagline:old('tagline') }}">
                     @endisset
-                    
+
                     @error('tagline')
                     <p class="text-danger mt-2 mb-0 text-sm">{{$message}}</p>
                     @enderror
@@ -62,7 +62,7 @@
                     @isset($contact->phone)
                     <input type="text" class="form-control" name="phone"  value="{{old('phone') == NULL?$contact->phone:old('phone') }}">
                     @endisset
-                    
+
                     @error('phone')
                     <p class="text-danger mt-2 mb-0 text-sm">{{$message}}</p>
                     @enderror
@@ -74,7 +74,7 @@
                     @isset($contact->email)
                     <input type="text" class="form-control" name="email"  value="{{old('email') == NULL?$contact->email:old('email') }}">
                     @endisset
-                    
+
                     @error('email')
                     <p class="text-danger mt-2 mb-0 text-sm">{{$message}}</p>
                     @enderror
@@ -86,7 +86,7 @@
                     @isset($contact->address)
                     <input type="text" class="form-control" name="address"  value="{{old('address') == NULL?$contact->address:old('address') }}">
                     @endisset
-                    
+
                     @error('address')
                     <p class="text-danger mt-2 mb-0 text-sm">{{$message}}</p>
                     @enderror
@@ -98,7 +98,7 @@
                     @isset($contact->office_hours_start)
                     <input type="text" class="form-control" name="office_hours_start"  value="{{old('office_hours_start') == NULL?$contact->office_hours_start:old('office_hours_start') }}">
                     @endisset
-                    
+
                     @error('office_hours_start')
                     <p class="text-danger mt-2 mb-0 text-sm">{{$message}}</p>
                     @enderror
@@ -110,12 +110,26 @@
                     @isset($contact->office_hours_end)
                     <input type="text" class="form-control" name="office_hours_end"  value="{{old('office_hours_end') == NULL?$contact->office_hours_end:old('office_hours_end') }}">
                     @endisset
-                    
+
                     @error('office_hours_end')
                     <p class="text-danger mt-2 mb-0 text-sm">{{$message}}</p>
                     @enderror
                   </div>
                 </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="">Background Image <span style="color: red">*</span></label>
+                      @isset($contact->background_image)
+                      <img src="{{ asset('frontend_assets/images/contacts/'. $contact->background_image) }}" height="60"
+                      width="120" alt="" srcset="" >
+                      @endisset
+                      <br><br>
+                      <input type="file" value="{{ $contact->background_image }}" name="background_image">
+                      @error('background_image')
+                      <p class="text-danger mt-2 mb-0 text-sm">{{$message}}</p>
+                      @enderror
+                    </div>
+                  </div>
               </div>
             </div>
             <div class="card-footer">

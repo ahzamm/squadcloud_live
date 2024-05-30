@@ -16,28 +16,86 @@ use Auth;
 
 class ContactController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    // public function index()
-    // {
-    //     $contacts = Contact::all();
-    //     return view('admin.contacts.index', compact('contacts'));
-    // }
-
 
     public function index()
     {
         $contact = Contact::first();
+        // dd($contact->background_image);
         return view('admin.contacts.edit', compact('contact'));
     }
+
+
+
+    public function update(Request $request)
+    {
+        $subMenuid = SubMenu::where('route_name', 'contacts.index')->first();
+        $userOperation = "update_status";
+        $userId = Auth::guard('admin', 'user')->user()->id;
+        $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
+
+        if ($crudAccess == false) {
+            return redirect()->back()->with('error', 'No Access To Update Contacts');
+        }
+
+        $validatedData = [
+            "title" => "required",
+            "tagline" => "required",
+            "phone" => "required",
+            "email" => "required",
+            "address" => "required",
+            "office_hours_start" => "required",
+            "office_hours_end" => "required",
+            "location_url" => "required",
+        ];
+        $validate = Validator::make($request->all(), $validatedData);
+        if ($validate->fails()) {
+            return redirect()->back()->with('error', 'All Fields are required');
+        }
+
+        if ($request->hasFile('background_image')) {
+            if (!$request->file('background_image')->isValid() || !in_array($request->file('background_image')->extension(), ['jpeg', 'png', 'jpg'])) {
+                return redirect()->back()->withInput()->with('error', 'Please provide a valid background image file of type: jpeg, png, or jpg.');
+            }
+        }
+
+        $contact = Contact::first();
+        if ($request->hasFile('background_image')) {
+            if ($contact->background_image && file_exists(public_path('frontend_assets/images/contacts/' . $contact->background_image))) {
+                unlink(public_path('frontend_assets/images/contacts/' . $contact->background_image));
+            }
+            $file = $request->file('background_image');
+            $extension = $file->getClientOriginalExtension();
+            $filename = Str::random(40) . '.' . $extension;
+            $file->move(public_path('frontend_assets/images/contacts'), $filename);
+            $contact->background_image = $filename;
+        }
+
+            $contact->title = $request['title'];
+            $contact->tagline = $request['tagline'];
+            $contact->phone = $request['phone'];
+            $contact->email = $request['email'];
+            $contact->address = $request['address'];
+            $contact->office_hours_start = $request['office_hours_start'];
+            $contact->office_hours_end = $request['office_hours_end'];
+            $contact->location_url = $request['location_url'];
+            $contact->save();
+
+            return redirect()->route('contacts.index')->with('success', 'Contact updated successfully!');
+
+
+
+    }
+
+
+
+
+
+
 
     public function messageRequest()
     {
         $contacts = ContactRequest::all();
-        return view('admin.contacts.index', compact('contacts'));
+        return view('admin.contacts.message_requests', compact('contacts'));
     }
 
 
@@ -123,7 +181,9 @@ class ContactController extends Controller
      */
     public function edit($id)
     {
+        dd("==");
         $contact = Contact::find($id);
+        dd($contact);
         return view('admin.contacts.edit', compact('contact'));
     }
 
@@ -135,54 +195,7 @@ class ContactController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function update(Request $request, $id)
-    {
 
-
-        $subMenuid = SubMenu::where('route_name', 'contacts.index')->first();
-        $userOperation = "update_status";
-        $userId = Auth::guard('admin', 'user')->user()->id;
-        $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
-        if ($crudAccess == true) {
-
-
-            $validatedData = [
-                "title" => "required",
-                "tagline" => "required",
-                "phone" => "required",
-                "email" => "required",
-                "address" => "required",
-                "office_hours_start" => "required",
-                "office_hours_end" => "required",
-                "location_url" => "required",
-
-            ];
-            $validate = Validator::make($request->all(), $validatedData);
-
-            if ($validate->fails()) {
-                return redirect()->back()->with('error', 'All Fields are required');
-            } else {
-
-                $contact = Contact::findOrFail($id);
-
-
-                $contact->title = $request['title'];
-                $contact->tagline = $request['tagline'];
-                $contact->phone = $request['phone'];
-                $contact->email = $request['email'];
-                $contact->address = $request['address'];
-                $contact->office_hours_start = $request['office_hours_start'];
-                $contact->office_hours_end = $request['office_hours_end'];
-                $contact->location_url = $request['location_url'];
-                $contact->save();
-
-                return redirect()->route('contacts.index')->with('success', 'Contact updated successfully!');
-            }
-        } else {
-            return redirect()->back()->with('error', 'No Access To Update Contacts');
-        }
-
-    }
 
 
     /**

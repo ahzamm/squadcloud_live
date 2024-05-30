@@ -232,16 +232,7 @@ use App\Http\Controllers\Admin\AuthController;
 
 
 
-
-        //  Services Routes
-        // Route::get('/services',[AdminServiceController::class, 'index'])->name('admin.services');
-        // Route::get('/service/create',[AdminServiceController::class, 'showCreateServiceForm'])->name('service.create');
-        // Route::post('/service/create',[AdminServiceController::class, 'createService'])->name('service.create.post');
-        // Route::get("/service/destroy/{id?}" , [AdminServiceController::class ,"deleteService"])->name("service.destroy");
-        // Route::get('/services/{id}/edit',[AdminServiceController::class, 'showEditServiceForm'])->name('service.edit');
-        // Route::post('/service/edit',[AdminServiceController::class, 'editService'])->name('service.edit.post');
-
-
+        //  Squadcloud Admin Routes
         Route::resource('services','App\Http\Controllers\Admin\ServiceController');
         Route::get("/services/destroy/{id?}" , [AdminServiceController::class ,"destroy"])->name("service.destroy");
 
@@ -257,9 +248,11 @@ use App\Http\Controllers\Admin\AuthController;
         Route::resource('abouts','App\Http\Controllers\Admin\AboutController');
         Route::get("/abouts/destroy/{id?}" , [AdminAboutController::class ,"destroy"])->name("about.destroy");
 
-        Route::resource('contacts','App\Http\Controllers\Admin\ContactController');
-        Route::get("/contact/destroy/{id?}" , [AdminContactController::class ,"destroy"])->name("contact.destroy");
+        Route::get("/contacts" , [AdminContactController::class ,"index"])->name("contacts.index");
+        Route::put("/contacts" , [AdminContactController::class ,"update"])->name("contacts.update");
+
         Route::get("/contact/message-requests" , [AdminContactController::class ,"messageRequest"])->name("contacts.message_request");
+        Route::get("/contact/destroy/{id?}" , [AdminContactController::class ,"destroy"])->name("contact.destroy");
 
         Route::resource('slideritems','App\Http\Controllers\Admin\SlideritemController');
         Route::get("/slideritem/destroy/{id?}" , [AdminSlideritemController::class ,"destroy"])->name("slideritem.destroy");
