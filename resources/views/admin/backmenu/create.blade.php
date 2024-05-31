@@ -22,7 +22,7 @@
           <div class="row mt-5 justify-content-center">
             <div class="col-md-8 col-sm-12 col-xs-12">
               <div class="card" style="border-color: rgb(126, 120, 120);">
-                <div class="card-body">              
+                <div class="card-body">
                   <form action="{{route('menus.store')}}" method="POST" id="AddMenusForm">
                     @csrf
                     <div class="row">
@@ -70,7 +70,7 @@
                               </td>
                               <td class="td-second">
                                 <input type="" name="submenuroute[]" placeholder="Example : viewdetail.index" class="form-control" required/>
-                                <span class="text-danger text-sm d-none">Route name not exist in database</span>
+                                {{-- <span class="text-danger text-sm d-none">Route name not exist in database</span> --}}
                               </td>
                               <td><button class="btn btn-success btn-sm my-1" type="button" id="btnAddSubMenu"><i class="fa fa-plus"></i></button></td>
                             </tr>
@@ -204,7 +204,7 @@
         error:function(jhxr,status,err){
                     //console.log(jhxr);
                   }
-                }) 
+                })
     }
   })
   $(document).on('click','#btnDeleteSubMenu',function(){

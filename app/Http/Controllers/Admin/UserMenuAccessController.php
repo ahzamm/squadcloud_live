@@ -14,9 +14,9 @@ use Auth;
 class UserMenuAccessController extends Controller
 {
     public $parentModel =  Admin::class;
-    public $menuAccessModel = UserMenuAccess::class;   
-    public $subMenuModel = SubMenu::class;  
-    public $MenuModel = Menu::class;  
+    public $menuAccessModel = UserMenuAccess::class;
+    public $subMenuModel = SubMenu::class;
+    public $MenuModel = Menu::class;
     public function index()
     {
         $data['users'] = $this->parentModel::all();
@@ -24,12 +24,12 @@ class UserMenuAccessController extends Controller
     }
     public function create(){
         $data['action'] = "create";
-        return view("admin.users.create")->with("data",$data);   
+        return view("admin.users.create")->with("data",$data);
     }
     public function edit($id = null){
         $data['action'] = "edit";
         $data['user']   = $this->parentModel::where('id' , $id)->first();
-        return view("admin.users.create")->with("data",$data);   
+        return view("admin.users.create")->with("data",$data);
     }
 
     public function store(Request $request){
@@ -37,14 +37,14 @@ class UserMenuAccessController extends Controller
     $last_name  = $request->last_name;
     $first_name = $request->first_name;
     $status     = $request->status == "on" ? 1 : 0 ;
-    $email      = $request->email ; 
+    $email      = $request->email ;
     $password   = Hash::make($request->password);
     $cnic       = $request->cnic ;
     $address    = $request->address ;
     $phone      = $request->phone ;
     $department = $request->department ;
 
-    $userEmailcheck  = $this->parentModel::where("email","=", $email)->count(); 
+    $userEmailcheck  = $this->parentModel::where("email","=", $email)->count();
     $userNamecheck   = $this->parentModel::where("name","=", $userName)->count();
     $userCniccheck   = $this->parentModel::where("cnic","=", $cnic)->count();
     if($userEmailcheck > 0 ){
@@ -65,11 +65,11 @@ class UserMenuAccessController extends Controller
         'name'  => $userName ,
         'first_name' => $first_name ,
         'last_name'  => $last_name ,
-        'email'      => $email ,  
-        'password'   => $password, 
+        'email'      => $email ,
+        'password'   => $password,
         'cnic'       => $cnic,
         'address'    => $address,
-        'phone'      => $phone , 
+        'phone'      => $phone ,
         'department' => $department , //It Department
         'active'     => $status ,
         'role'       => "user",
@@ -77,16 +77,16 @@ class UserMenuAccessController extends Controller
 
     if($userCreate == true){
         $subMenu  =  $this->subMenuModel::with('menu')->get();
-   
+
         foreach($subMenu as $key => $value){
                 $createAccess =  $this->menuAccessModel::create([
                     'sub_menu_id' => $subMenu[$key]->id  ,
                     'user_id'     => $userCreate->id ,
                     'menu_id'     => $subMenu[$key]->menu->id,
-                   
+
                 ]);
-        }   
-         
+        }
+
         return redirect()->route('user.index')->with('success','User Has been Created');
     }
     else
@@ -104,7 +104,7 @@ class UserMenuAccessController extends Controller
         $userName   = $request->user_name ;
         $last_name  = $request->last_name;
         $first_name = $request->first_name;
-        $email      = $request->email ; 
+        $email      = $request->email ;
         $cnic       = $request->cnic ;
         $address    = $request->address ;
         $phone      = $request->phone ;
@@ -123,14 +123,14 @@ class UserMenuAccessController extends Controller
             'name'       => $userName ,
             'first_name' => $first_name ,
             'last_name'  => $last_name ,
-            'email'      => $email ,  
+            'email'      => $email ,
             'cnic'       => $cnic,
             'address'    => $address,
-            'phone'      => $phone , 
+            'phone'      => $phone ,
             'department' => $department , //It Department
         ]);
 
-      
+
             return redirect()->back()->with('success' , 'User Profile Has been Updated');
 
        }
@@ -139,7 +139,7 @@ class UserMenuAccessController extends Controller
        }
     }
     public function change_status(Request $request){
-      
+
         $subMenuid     =  SubMenu::where('route_name' , 'user.index')->first();
         $userOperation =  "update_status" ;
         $userId        =  Auth::guard('admin' , 'user')->user()->id;
@@ -159,7 +159,7 @@ class UserMenuAccessController extends Controller
         }
     }
     public function destroy($id = null){
-      
+
         $subMenuid     =  SubMenu::where('route_name' , 'user.index')->first();
         $userOperation =  "delete_status" ;
         $userId        =  Auth::guard('admin' , 'user')->user()->id;
@@ -180,14 +180,14 @@ class UserMenuAccessController extends Controller
         }
     }
     // Updating Users
-   
+
 
     public function menuAccess($id){
         $data['submenus']  =  $this->menuAccessModel::where('user_id' , $id)->with('submenu')->get();
         return view('admin.users.manuaccess')->with("data" , $data) ;
     }
     public function giveAccess(Request $request , $id = null){
-        
+
         $view_status      = $request->view_id;
         $update_status    = $request->update_id;
         $create_status    = $request->create_id;
@@ -203,14 +203,14 @@ class UserMenuAccessController extends Controller
         }
         else
         {
-            return response()->json(['status' => false]);   
+            return response()->json(['status' => false]);
         }
 
     }
     public function crud_access($submenuId = null , $operation = null , $uId = null) {
-        if (!$submenuId == null) { 
+        if (!$submenuId == null) {
         $CheckData = UserMenuAccess::where(["user_id" => $uId , "sub_menu_Id" => $submenuId , $operation => 1 , 'view_status' => 1])->count();
-   
+
         if($CheckData > 0 ){
             return true;
         }

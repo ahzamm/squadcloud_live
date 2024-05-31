@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Menu;
 use App\Models\SubMenu;
 use App\User;
-use App\Admin;
+use App\Models\Admin;
 use App\Models\UserMenuAccess;
 use Route;
 use Illuminate\Support\Facades\DB;
@@ -44,13 +44,13 @@ class MenusController extends Controller
      */
     public function store(Request $request)
     {
-       
+
         //  dd($lastmenuCount);
         DB::transaction(function () use ($request){
             $hassubmenu = $request->has('hassubmenu') ? 1 : 0;
             $lastmenu =  Menu::orderBy('order_menu')->get()->last();
             $lastmenuCount = $lastmenu != null?$lastmenu->order_menu:0;
-          
+
             $menu = Menu::create([
                 "menu"=> $request->parentMenu,
                 'has_submenu'=>$hassubmenu,
@@ -81,7 +81,7 @@ class MenusController extends Controller
                         "submenu"=> $value,
                         "menu_id"=>$menu->id,
                         "route_name"=>$request->submenuroute[$key] ,
-                        
+
                     ]);
                     foreach ($users as $userKey => $userValue) {
 
@@ -105,7 +105,7 @@ class MenusController extends Controller
      */
     public function show($id)
     {
-        
+
     }
 
     /**
@@ -152,14 +152,14 @@ class MenusController extends Controller
                                 "menu_id"=>$menu->id,
                                 "route_name"=>$request->submenuroute[$key]
                             ]);
-    
+
                             foreach ($users as $userKey => $userValue) {
-    
+
                                 UserMenuAccess::create([
                                     'user_id'=>$userValue->id,
                                     'sub_menu_id'=> $submenu->id,
                                     'menu_id'   =>$menu->id,
-                                   
+
                                 ]);
                             }
                         }

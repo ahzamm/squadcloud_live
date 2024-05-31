@@ -91,7 +91,7 @@ use App\Http\Controllers\Admin\AuthController;
          Route::get('/client', [ClientController::class, 'index'])->name('site.client');
          Route::get('/about', [AboutController::class, 'index'])->name('site.about');
          Route::get('/contact', [ContactController::class, 'index'])->name('site.contact');
-         Route::post('/contact-request', [ContactController::class, 'contactRequest'])->name('site.contact.request');
+         Route::post('/contact-request', [ContactController::class, 'store'])->name('site.contact.request');
          Route::post('/manage_contacts', [ContactController::class, 'index'])->name('contact.manage_contact_forms_process');
 
         // End Of Contact Routes From Site section
@@ -257,5 +257,6 @@ use App\Http\Controllers\Admin\AuthController;
         Route::resource('slideritems','App\Http\Controllers\Admin\SlideritemController');
         Route::get("/slideritem/destroy/{id?}" , [AdminSlideritemController::class ,"destroy"])->name("slideritem.destroy");
 
+        // Route::get("asdffd" , [AdminSlideritemController::class ,"destroy"])->name("asdffd");
     });
 });

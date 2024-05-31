@@ -7,50 +7,73 @@ use Illuminate\Http\Request;
 use App\Models\FrontMenu;
 use App\Models\Contact;
 use App\Models\ContactRequest;
-use Illuminate\Support\Facades\Validator;
+use App\Models\FrontEmail;
+use App\Models\Admin;
 
 class ContactController extends Controller
 {
     public function extractGoogleMapsSrc($iframeHtml)
     {
-    preg_match('/<iframe.*?src=["\'](.*?)["\'].*?>/i', $iframeHtml, $matches);
-    return $matches[1] ?? $iframeHtml;
+        preg_match('/<iframe.*?src=["\'](.*?)["\'].*?>/i', $iframeHtml, $matches);
+        return $matches[1] ?? $iframeHtml;
     }
 
-    public function index(){
+    public function index()
+    {
         $contact = Contact::where('is_active', 1)->first();
-        if(!empty($contact)){
-        $contact->location_url = $this->extractGoogleMapsSrc($contact->location_url);
+        if (!empty($contact)) {
+            $contact->location_url = $this->extractGoogleMapsSrc($contact->location_url);
         }
         $contact_menu = FrontMenu::where('menu', 'Contact')->first();
 
         return view('frontend.contact', compact('contact', 'contact_menu'));
     }
 
-    public function contactRequest(Request $request){
-        $validatedData = [
-            "full_name"=>"required",
-            "email"=>"required",
-            "phone"=>"required",
-            "service_required"=>"required",
-            "message"=>"required",
-        ];
-        $validate = Validator::make($request->all(), $validatedData);
+    public function store(Request $request)
+    {
+        $adminEmails = Admin::where('active', 1)->pluck('email')->toArray();
+        $email_settings = FrontEmail::where('status', 1)->First();
 
-        if ($validate->fails()) {
-            return redirect()->back()->with('error', 'All Fields are required');
-        } else {
-            $contact_request = new ContactRequest();
-            $contact_request->full_name = $request['full_name'];
-            $contact_request->email = $request['email'];
-            $contact_request->phone = $request['phone'];
-            $contact_request->service_required = $request['service_required'];
-            $contact_request->message = $request['message'];
+        $full_name = $request->full_name;
+        $email = $request->email;
+        $phone = $request->phone;
+        $service_required = $request->service_required;
+        $message = $request->message;
 
-            $contact_request->save();
+        $storeMessage = ContactRequest::create([
+            "full_name" => $full_name,
+            "email" => $email,
+            "phone" => $phone,
+            "service_required" => $service_required,
+            "message" => $message
+        ]);
+        if ($storeMessage) {
 
-            return redirect()->route('site.contact')->with('success', 'Contact Added successfully');
+            // Send customer email
+            Admin::sendEmail(
+                'Blinkbroadband Contact Request',
+                'EmailTemplates.customerContact',
+                ['fullName' => $full_name, 'message' => $message],
+                $email_settings->emails,
+                $email
+            );
+
+            // Send admin email
+            foreach ($adminEmails as $adminEmail) {
+                Admin::sendEmail(
+                    'Contact Message From ' . $full_name,
+                    'EmailTemplates.adminContact',
+                    [
+                        'fullName' => $full_name,
+                        'email' => $email,
+                        'phone' => $phone,
+                        'message' => $message,
+                    ],
+                    $email_settings->emails,
+                    $adminEmail
+                );
+            }
         }
-
+        return redirect()->back();
     }
 }
