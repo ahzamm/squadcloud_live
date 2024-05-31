@@ -20,7 +20,7 @@
             <div class="card-body pad">
               @csrf
               <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-12">
                   <div class="form-group">
                     <label for="">Video URL <span style="color: red">*</span></label>
                     @isset($about->video_url)
@@ -55,7 +55,7 @@
                     @enderror
                   </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-12">
                   <div class="form-group">
                     <label for="">Description 1 <span style="color: red">*</span></label>
                     <!-- <input type="text" class="form-control" name="description_1"  value="{{old('description_1') == NULL?$about->description_1:old('description_1') }}"> -->
@@ -88,7 +88,7 @@
                     @enderror
                   </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-12">
                   <div class="form-group">
                     <label for="">Description 2 <span style="color: red">*</span></label>
                     <!-- <input type="text" class="form-control" name="description_2"  value="{{old('description_1') == NULL?$about->description_1:old('description_2') }}"> -->
@@ -121,7 +121,7 @@
                     @enderror
                   </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-13">
                   <div class="form-group">
                     <label for="">Description 3 <span style="color: red">*</span></label>
                     <!-- <input type="text" class="form-control" name="description_3"  value="{{old('description_3') == NULL?$about->description_3:old('description_3') }}"> -->
@@ -131,7 +131,7 @@
                     @enderror
                   </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-12">
                   <div class="form-group">
                     <label for="">Closing Remarks <span style="color: red">*</span></label>
                     <!-- <input type="text" class="form-control" name="closing_remarks"  value="{{old('closing_remarks') == NULL?$about->closing_remarks:old('closing_remarks') }}"> -->
