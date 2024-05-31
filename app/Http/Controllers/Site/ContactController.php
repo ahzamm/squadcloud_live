@@ -9,6 +9,7 @@ use App\Models\Contact;
 use App\Models\ContactRequest;
 use App\Models\FrontEmail;
 use App\Models\Admin;
+use Illuminate\Support\Facades\Validator;
 
 class ContactController extends Controller
 {
@@ -31,6 +32,27 @@ class ContactController extends Controller
 
     public function store(Request $request)
     {
+        $validatedData = [
+            "full_name" => "required",
+            "email" => "required",
+            "phone" => "required",
+            "service_required" => "required",
+            "message" => "required",
+        ];
+        $validate = Validator::make($request->all(), $validatedData);
+
+        if ($validate->fails()) {
+            return redirect()->back()->with('error', 'All Fields are required');
+        }
+        $contact_request = new ContactRequest();
+        $contact_request->full_name = $request['full_name'];
+        $contact_request->email = $request['email'];
+        $contact_request->phone = $request['phone'];
+        $contact_request->service_required = $request['service_required'];
+        $contact_request->message = $request['message'];
+
+        $contact_request->save();
+
         $adminEmails = Admin::where('active', 1)->pluck('email')->toArray();
         $email_settings = FrontEmail::where('status', 1)->First();
 
