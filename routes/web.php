@@ -23,6 +23,7 @@ use App\Http\Controllers\Admin\AboutController as AdminAboutController;
 use App\Http\Controllers\Admin\ContactController as AdminContactController;
 use App\Http\Controllers\Admin\SlideritemController as AdminSlideritemController;
 use App\Http\Controllers\Admin\HomeController as AdminHomeController;
+use App\Http\Controllers\Admin\GeneralConfigurationController as AdminGeneralConfigurationController;
 use App\Http\Controllers\Admin\AllowedIpController;
 use App\Http\Controllers\Admin\SocialController;
 use App\Http\Controllers\Admin\UserMenuAccessController;
@@ -257,6 +258,8 @@ use App\Http\Controllers\Admin\AuthController;
         Route::resource('slideritems','App\Http\Controllers\Admin\SlideritemController');
         Route::get("/slideritem/destroy/{id?}" , [AdminSlideritemController::class ,"destroy"])->name("slideritem.destroy");
 
-        // Route::get("asdffd" , [AdminSlideritemController::class ,"destroy"])->name("asdffd");
+        Route::get("/general-configurations" , [AdminGeneralConfigurationController::class ,"index"])->name("general_configurations.index");
+        Route::put("/general-configuration-update" , [AdminGeneralConfigurationController::class ,"update"])->name("general-configurations.update");
+
     });
 });
