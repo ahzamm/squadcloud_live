@@ -73,7 +73,7 @@ class ContactController extends Controller
 
             // Send customer email
             Admin::sendEmail(
-                'Blinkbroadband Contact Request',
+                'SquadCloud Contact Request',
                 'EmailTemplates.customerContact',
                 ['fullName' => $full_name, 'message' => $message],
                 $email_settings->emails,

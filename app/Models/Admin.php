@@ -47,7 +47,7 @@ class Admin extends Authenticatable
              $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
              $mail->Port = $email_settings->port;
 
-             $mail->setFrom($sender, 'Blinkbroadband');
+             $mail->setFrom($sender, 'SquadCloud');
              $mail->addAddress($recipient);
              $mail->isHTML(true);
              $mail->Subject = $subject;
