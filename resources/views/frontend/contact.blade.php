@@ -11,6 +11,14 @@
    section#about {
       padding-top: 150px;
    }
+   .error {
+      border-color: red;
+   }
+   .error-message {
+      color: red;
+      font-size: 0.9rem;
+      display: none;
+   }
 </style>
 
 <section id="about" class="position-relative pb-5">
@@ -44,28 +52,33 @@
          @endif
                <div class="contact-wrapper">
                   <!-- <form class="contact-form" action="{{ route('contact.manage_contact_forms_process') }}" method="post"> -->
-                  <form class="contact-form" action="{{route('site.contact.request')}}" method="post">
+                  <form class="contact-form" action="{{route('site.contact.request')}}" method="post" id="contactForm">
                      @csrf
                      <div class="row mb-3">
                         <div class="col" data-aos="fade-right" data-aos-duration="1000">
                            <input type="text" id="full_name" class="form-control name" name="full_name" value="{{ old('full_name') }}" placeholder="Full Name*">
+                           <span class="error-message" id="name-error">This field is required</span>
                         </div>
                         <div class="col" data-aos="fade-left" data-aos-duration="1000">
                            <input type="text" id="email" class="form-control email" name="email" value="{{ old('email') }}" placeholder="Email*">
+                           <span class="error-message" id="email-error">This field is required</span>
                         </div>
                      </div>
                      <div class="row mb-3">
                         <div class="col" data-aos="fade-right" data-aos-duration="1000">
                            <input type="text" id="phone_number" class="form-control phone" name="phone" value="{{ old('phone') }}" placeholder="Phone Number*">
+                           <span class="error-message" id="phone-error">This field is required</span>
                         </div>
                         <div class="col" data-aos="fade-left" data-aos-duration="1000">
                            <input type="text" id="service_required" class="form-control service" name="service_required" value="{{ old('service_required') }}" placeholder="Service Required*">
+                           <span class="error-message" id="service-error">This field is required</span>
                         </div>
                      </div>
                      <div class="row" style="margin-top: 25px; z-index: 9;">
                         <div class="col position-relative" data-aos="fade-up" data-aos-duration="1000">
                            <div class="overlay"></div>
-                           <textarea class="form-control custom-textarea"  name="message" id="message" placeholder="Message*" cols="30" rows="50" style=" background-size: cover; background-image: url('{{ asset('frontend_assets/images/contacts/' . $contact->background_image) }}');">{{ old('message') }}</textarea>
+                           <textarea class="form-control custom-textarea" name="message" id="message" placeholder="Message*" cols="30" rows="5" style="background-size: cover; background-image: url('{{ asset('frontend_assets/images/contacts/' . $contact->background_image) }}');">{{ old('message') }}</textarea>
+                           <span class="error-message" id="message-error">This field is required</span>
                            <div class="d-flex align-items-center justify-content-center">
                               <button type="submit" id="send" value="send me" class="" style="background: #fff; margin: auto; width: 250px; margin-top: -60px; height: 60px; color: #71030f; border-top-left-radius: 20px; border-top-right-radius: 20px; border:none; z-index: 9;">Send Message</button>
                            </div>
@@ -114,5 +127,41 @@
       </div>
    </div>
 </section>
+
+<script>
+   document.getElementById('contactForm').addEventListener('submit', function(event) {
+      let valid = true;
+
+      // Clear previous error states
+      document.querySelectorAll('.error').forEach(function(el) {
+         el.classList.remove('error');
+      });
+      document.querySelectorAll('.error-message').forEach(function(el) {
+         el.style.display = 'none';
+      });
+
+      // Validate fields
+      const fields = [
+         { id: 'full_name', errorId: 'name-error' },
+         { id: 'email', errorId: 'email-error' },
+         { id: 'phone_number', errorId: 'phone-error' },
+         { id: 'service_required', errorId: 'service-error' },
+         { id: 'message', errorId: 'message-error' }
+      ];
+
+      fields.forEach(function(field) {
+         const input = document.getElementById(field.id);
+         if (!input.value.trim()) {
+            valid = false;
+            input.classList.add('error');
+            document.getElementById(field.errorId).style.display = 'block';
+         }
+      });
+
+      if (!valid) {
+         event.preventDefault(); // Prevent form submission if any field is invalid
+      }
+   });
+</script>
 
 @endsection
