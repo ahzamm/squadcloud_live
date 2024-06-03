@@ -77,48 +77,52 @@
     <!-- End Social Links -->
     <section id="home" class="iq-main-slider p-0">
         <div id="home-slider" class="slider m-0 p-0">
+            @foreach ($home_sliders as $home_slider)
             <div class="slide slick-slide slick-bg s-bg-1">
                 <div class="container-fluid position-relative h-100">
                     <div class="slider-inner h-100">
 
-                        @if (isset($home_slider) && $home_slider->isNotEmpty())
+
                             <div class="row align-items-center h-100">
+
+
                                 <div class="col-lg-6 zIndex">
                                     <h1 class="slider-text title" data-animation-in="fadeInLeft" data-delay-in="0.6">
-
-
-                                        {{ $home_slider[0]->heading }}</h1>
+                                        {{ $home_slider->heading }}</h1>
 
                                     <h4 class="text-white" data-animation-in="fadeInLeft" data-delay-in="0.6">
-                                        {{ $home_slider[0]->subheading }}</h4>
+                                        {{ $home_slider->subheading }}</h4>
                                     <div class="d-flex align-items-center" data-animation-in="fadeInUp" data-delay-in="1">
                                     </div>
-                                    <p data-animation-in="fadeInUp" data-delay-in="1.2">{{ $home_slider[0]->description }}
+                                    <p data-animation-in="fadeInUp" data-delay-in="1.2">{{ $home_slider->description }}
                                     </p>
 
                                 </div>
                                 <div class="col-lg-6 minusZindex">
                                     <div class="position-relative">
-                                        <img src="storage/media/header/img1/{{ $home_slider[0]->image_1 }}"
+                                        <img src="{{ asset('frontend_assets/images/home_sliders/' . $home_slider->image_1) }}"
                                             class="position-absolute sub-img-1" alt=""
                                             data-animation-in="fadeInDown" data-delay-in="0.6">
-                                        <img src="storage/media/header/img2/{{ $home_slider[0]->image_2 }}"
+                                        <img src="{{ asset('frontend_assets/images/home_sliders/' . $home_slider->image_2) }}"
                                             class="position-absolute sub-img-2" alt=""
                                             data-animation-in="fadeInDown" data-delay-in="1">
-                                        <img src="storage/media/header/img3/{{ $home_slider[0]->image_3 }}"
+                                        <img src="{{ asset('frontend_assets/images/home_sliders/' . $home_slider->image_3) }}"
                                             class="position-absolute sub-img-3" alt=""
                                             data-animation-in="fadeInDown" data-delay-in="1.4">
-                                        <img src="storage/media/header/img4/{{ $home_slider[0]->image_4 }}"
+                                        <img src="{{ asset('frontend_assets/images/home_sliders/' . $home_slider->image_4) }}"
                                             class="position-absolute sub-img-4" alt=""
                                             data-animation-in="fadeInDown" data-delay-in="1.6">
                                     </div>
                                 </div>
+
                             </div>
-                        @endif
+
+
 
                     </div>
                 </div>
             </div>
+            @endforeach
         </div>
         <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
             <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 44 44" width="44px" height="44px" id="circle"
@@ -129,391 +133,7 @@
         <a href="#service-section" class="moveDownBtn"><i class="fa fa-chevron-down chevron_animate"></i></a>
     </section>
 
-    <!-- -------SERVICES------- -->
-    <section id="service-section" class="position-relative">
-        <div class="container">
-            @if (isset($front_menu) && $front_menu->isNotEmpty())
-                <div class="text-center" data-aos="zoom-in-down">
-                    <div style="margin-bottom:11rem;">
-                        @php
-                            $service_menu = $front_menu->firstWhere('menu', 'Services');
-                        @endphp
-                        <h2 class="section-heading text-uppercase">Services</h2>
-                        <h3 class="section-subheading text-muted">{{ $service_menu->tagline }}</h3>
-                    </div>
-
-                </div>
-            @endif
-            <div class="row">
-
-                @if (isset($services) && $services->isNotEmpty())
-                    @foreach ($services->take(6) as $service)
-                        <div class="col-lg-4 col-md-6" style="margin-top:-105px; height:300px;">
-
-                            <div class="card" data-aos="flip-left" data-aos-duration="1000">
-                                <a href="{{ url('/service/' . $service->slug . '-' . $service->id) }}" class="card-service"
-                                    style='background-color: white'>
-                                    <div style="display:inline-block; width: 70px; height: 70px;">
-                                        <img src="{{ asset('frontend_assets/images/services/' . $service->logo) }}"
-                                            alt="" class="p-2" style="width:100%;height: 100%;">
-                                    </div>
-                                    <p style="height:auto;" class="p-3 d-inline-block mb-0"
-                                        style="transform: translate(7px, 6px);">{{ $service->service }}</p>
-                                </a>
-                                <div class="card-body">
-                                    <p class="para-text">{!! $service->description !!}
-                                        <span>[<a href="{{ url('/service/' . $service->slug . '-' . $service->id) }}"
-                                                class="button">...</a>]</span>
-                                    </p>
-                                </div>
-                            </div>
-
-                        </div>
-                    @endforeach
-                @endif
-            </div>
-        </div>
-        <div style="display: flex; justify-content: center">
-
-            <a href="s" class="more_action">
-                View All
-                <!-- <svg width="13px" height="10px" viewBox="0 0 13 10">
-                   <path d="M1,5 L11,5"></path>
-                   <polyline points="8 1 12 5 8 9"></polyline> -->
-                <!-- </svg> -->
-            </a>
-        </div>
-
-    </section>
-
-    <!-- -------PORTFOLIO------- -->
-    <section id="portfolio-section" class="position-relative">
-        <div class="portfolio-bg"></div>
-        <div class="container pb-5">
-            @if (isset($front_menu) && $front_menu->isNotEmpty())
-                <div class="text-center " data-aos="zoom-in-down">
-                    @php
-                        $portfolio_menu = $front_menu->firstWhere('menu', 'Portfolio');
-                    @endphp
-                    <h2 class="section-heading text-uppercase">Portfolio</h2>
-                    <h3 class="section-subheading text-muted2">{{ $portfolio_menu->tagline }}</h3>
-
-                </div>
-            @endif
-
-            <div class="row">
-                @if (isset($portfolios) && $portfolios->isNotEmpty())
-                    @foreach ($portfolios->take(3) as $portfolio)
-                        <div class="col-lg-4 mt-3">
-                            <a href="{{ $portfolio->link }}">
-                                <div class="card" data-aos="flip-right" data-aos-duration="1000">
-                                    <div class="card-header">
-                                        <p class="p-3 d-inline-block mb-0 text-center w-100">{{ $portfolio->title }}</p>
-
-                                    </div>
-                                    <div class="card-body">
-                                        <p class="text-center">{!! $portfolio->description !!}</p>
-                                        <img src="{{ asset('storage/media/portfolio/' . $portfolio->image) }}"
-                                            class="w-100" alt="">
-                                    </div>
-                                    <div class="card-footer">
-                                        <a href="{{ $portfolio->link }}">
-                                            <div class="d-flex align-items-center justify-content-between pt-3">
-                                                <p class="mb-0" style="font-weight:bold;">View Case Study</p>
-                                                <img src="{{ asset('frontend_assets/images/arrow-small.png') }}"
-                                                    alt="" style="width: 15%;">
-                                            </div>
-                                        </a>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                    @endforeach
-                @endif
-            </div>
-        </div>
 
 
-        <div style="display: flex; justify-content: center">
-            <a href="" class="more_action">
-                View All
-                <!-- <svg width="13px" height="10px" viewBox="0 0 13 10">
-                   <path d="M1,5 L11,5"></path>
-                   <polyline points="8 1 12 5 8 9"></polyline>
-                </svg> -->
-            </a>
-        </div>
-    </section>
-
-    <!-- -------PRODUCTS------- -->
-    <section id="product-section" class="position-relative">
-        <div class="product-bg"></div>
-
-        <div class="container">
-            @if (isset($front_menu) && $front_menu->isNotEmpty())
-                <div class="text-center" data-aos="zoom-in-down">
-                    @php
-                        $product_menu = $front_menu->firstWhere('menu', 'Product');
-                    @endphp
-                    <h2 class="section-heading text-uppercase">{{ $product_menu->manu }}</h2>
-                    <h3 class="section-subheading text-muted">{{ $product_menu->tagline }}</h3>
-                </div>
-            @endif
-
-
-            <div class="row pb-5">
-
-                @if (isset($producs) && $producs->isNotEmpty())
-                    @forelse($producs->take(3) as $produc)
-                        <div class="col-lg-4 mt-3">
-                            <div class="card" data-aos="zoom-in-up" data-aos-delay="200" data-aos-duration="1000">
-                                <div class="card-header three">
-                                    <p class="p-3 d-inline-block mb-0 text-center w-100">{{ $produc->name }}</p>
-                                </div>
-                                <div class="card-body">
-                                    {!! $produc->short_description !!}
-                                    <!-- <ul class="">
-                            <li></li>
-                         </ul> -->
-                                </div>
-                                <div class="d-flex align-items-center justify-content-around mb-5">
-                                    <a href="/contact" class="btn btn-product red-bg">Request Demo</a>
-                                    <a href="{{ $produc->link }}" class="btn btn-product red-bg">Get Demo</a>
-                                    {{-- @php
-                        $contacts = DB::table('settings')
-                        ->where([
-                           ['status', '=', 1]])
-                           ->where([
-                           ['key', '=', 'contact']])
-                           ->get();
-                     @endphp --}}
-                                    <!-- <a href="/contact" class="btn btn-product red-bg">Free Trial</a> -->
-                                    <!-- <a href="/checkout/{{ $list->id }}" class="btn btn-product red-bg">Add to cart</a> -->
-                                </div>
-                            </div>
-                        </div>
-
-
-
-                    <!-- <div class="col-lg-4 mt-3">
-                   <div class="card" data-aos="zoom-in-up" data-aos-delay="200" data-aos-duration="1000">
-                      <div class="card-header one">
-                         <p class="p-3 d-inline-block mb-0 text-center w-100">{{ $list->product_name }}</p>
-                      </div>
-                      <div class="card-body">
-                         <ul class="">
-                            <li>{{ $list->features }}</li>
-                         </ul>
-                      </div>
-                      <div class="d-flex align-items-center justify-content-around mb-5">
-                         <a href="#" class="btn btn-product grey-bg">Get Demo</a>
-
-                         <a href="#" class="btn btn-product grey-bg">Free Trial</a>
-                         <a href="#" class="btn btn-product grey-bg">Add to cart</a>
-                      </div>
-                   </div>
-                </div>
-
-                <div class="col-lg-4 mt-3">
-                   <div class="card" data-aos="zoom-in-up" data-aos-delay="200" data-aos-duration="1000">
-                      <div class="card-header two">
-                         <p class="p-3 d-inline-block mb-0 text-center w-100">{{ $list->product_name }}</p>
-                      </div>
-                      <div class="card-body">
-                         <ul class="">
-                            <li>{{ $list->features }}</li>
-                         </ul>
-                      </div>
-                      <div class="d-flex align-items-center justify-content-around mb-5">
-                         <a href="{{ $list->link }}" class="btn btn-product dark-bg">Get Demo</a>
-                         <a href="#" class="btn btn-product dark-bg">Free Trial</a>
-                         <a href="#" class="btn btn-product dark-bg">Add to cart</a>
-                      </div>
-                   </div>
-                </div> -->
-
-                @empty
-                @endforelse
-                @endif
-
-
-            </div>
-
-        </div>
-    </section>
-
-    <!-- -------CLIENTS------- -->
-    <section id="service-section" class="clients position-relative">
-        <div class="container">
-            @if (isset($front_menu) && $front_menu->isNotEmpty())
-                <div class="text-center" data-aos="zoom-in-down" style="">
-                    @php
-                        $client_menu = $front_menu->firstWhere('menu', 'Client');
-                    @endphp
-                        <h2 class="section-heading text-uppercase">{{ $client_menu->menu }}</h2>
-                        <h3 class="section-subheading text-muted">{{ $client_menu->tagline }}</h3>
-                </div>
-            @endif
-
-            <div class="row">
-                @if (isset($clients) && $clients->isNotEmpty())
-                @forelse($clients->take(6) as $client)
-                    <div class="col-lg-4 col-md-6" style="margin-top:-50px;">
-                        <div class="card" data-aos="flip-right" data-aos-duration="1000">
-                            <a href="{{ $client->link }}" target="_blank"
-                                class="card-header d-flex justify-content-center align-items-center"
-                                style="height: 100px">
-                                <div class="clients-logo">
-                                    <img src="{{ asset('frontend_assets/images/client/' . $list->logo) }}"
-                                        class="p-2 d-inline-block">
-                                </div>
-                            </a>
-                            <div style="height:auto;" class="card-body">
-                                <p class="para-text">{!! $client->description !!}</p>
-                            </div>
-                        </div>
-
-                    </div>
-                @empty
-
-                    <div class="alert alert-danger">No Clients Found</div>
-                @endforelse
-                @endif
-            </div>
-        </div>
-        @if (isset($clients) && $clients->isNotEmpty())
-        <div style="display: flex; justify-content: center">
-            <a href="{{ $clients[0]->link }}" class="more_action">
-                View All
-                <!-- <svg width="13px" height="10px" viewBox="0 0 13 10">
-                   <path d="M1,5 L11,5"></path>
-                   <polyline points="8 1 12 5 8 9"></polyline>
-                </svg> -->
-            </a>
-        </div>
-        @endif
-    </section>
-
-    <!-- -------SLIDER------- -->
-
-    <section id="section-slider" class="slider m-0 p-0 position-relative">
-
-
-        <div class="strategy-bg"></div>
-        <div class="strategy-slider" data-aos="fade" data-aos-delay="300">
-            <div class="slider-1 d-flex align-items-center justify-content-center py-3">
-                @if (isset($home_bottom_slider) && $home_bottom_slider->isNotEmpty())
-                    <img src="storage/media/slider/{{ $home_bottom_slider->image }}" style="width: 1200px;"
-                        class="w-50" alt="{{ $home_bottom_slider->title }}">
-                @endif
-            </div>
-
-        </div>
-        <!-- <div class="slide slick-slide slick-bg s-bg-1">
-             <div class="container-fluid position-relative h-100">
-                <div class="slider-inner h-100">
-                   <div class="row align-items-center  h-100">
-                      <div class="col-xl-6 col-lg-12 col-md-12">
-                         <h1 class="slider-text title" data-animation-in="fadeInLeft" data-delay-in="0.6">
-                            Website</h1>
-                         <div class="d-flex align-items-center" data-animation-in="fadeInUp" data-delay-in="1">
-                         </div>
-                         <p data-animation-in="fadeInUp" data-delay-in="1.2">Lorem ipsum dolor sit amet consectetur
-                            adipisicing elit. Libero voluptatem consequuntur repudiandae quibusdam illum nisi, ipsum
-                            itaque ducimus dolorem sed, molestias neque facilis incidunt numquam vero a non, ad
-                            repellendus!
-                         </p>
-                      </div>
-                   </div>
-                </div>
-             </div>
-          </div> -->
-    </section>
-
-    <!-- -------New projects------- -->
-    <div id="portfolio-section" class="project position-relative py-5">
-        <div class="project-bg"></div>
-        <div class="container">
-            <div class="text-center" data-aos="zoom-in-down">
-                @if (isset($project_inquiries) && $project_inquiries->isNotEmpty())
-                    <h2 class="section-heading">{{ $project_inquiries[0]->title }}</h2>
-                    <h5 class="text-white">{{ $project_inquiries[0]->tagline }}</h3>
-                @endif
-            </div>
-            <div class="d-flex align-items-center justify-content-center mt-4" style="column-gap: 12px">
-                @if (isset($general_configuration) && $general_configuration->isNotEmpty())
-                    <a href="{{ $general_configuration[0]->message_url }}" class="social-btn" data-aos="fade-up"
-                        data-aos-duration="1000"><i class="far fa-envelope"></i></a>
-                    <a href="{{ $general_configuration[0]->whatsapp_url }}" class="social-btn" data-aos="fade-down"
-                        data-aos-duration="1000"><i class="fab fa-whatsapp"></i></a>
-                    <a href="{{ $general_configuration[0]->skype_url }}" class="social-btn" data-aos="fade-up"
-                        data-aos-duration="1000"><i class="fab fa-skype"></i></a>
-                    <a href="{{ $general_configuration[0]->phone_url }}" class="social-btn" data-aos="fade-down"
-                        data-aos-duration="1000"><i class="fa fa-phone"></i></a>
-                @endif
-            </div>
-        </div>
-    </div>
-
-    <!-- -------Contact Us------- -->
-    <section id="portfolio-section" class="contact position-relative pb-5">
-        <div class="contact-bg"></div>
-        <div class="container pb-1">
-            @if (isset($front_menu) && $front_menu->isNotEmpty())
-                <div class="text-center" data-aos="zoom-in-down">
-                    @php
-                        $contact_menu = $front_menu->firstWhere('menu', 'Contact');
-                    @endphp
-                    <h2 class="section-heading text-uppercase">{{ $contact_menu->manu }}</h2>
-                    <h3 class="section-subheading text-muted2">{!! $contact_menu->tagline !!}</h3>
-                </div>
-            @endif
-            <div class="main-form">
-
-                {{-- <form class="contact-form" action="{{ route('contact.manage_contact_forms_process') }}" method="post"> --}}
-                <form class="contact-form" action="#" method="get">
-                    @csrf
-                    <div class="row mb-3">
-                        <div class="col" data-aos="fade-right" data-aos-duration="1000">
-                            <input type="text" id="full_name" class="form-control name" name="full_name"
-                                value="{{ old('full_name') }}" placeholder="Full Name*">
-                        </div>
-                        <div class="col" data-aos="fade-left" data-aos-duration="1000">
-                            <input type="text" id="email" class="form-control email" name="email"
-                                value="{{ old('email') }}" placeholder="Email*">
-                        </div>
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col" data-aos="fade-right" data-aos-duration="1000">
-                            <input type="text" id="phone_number" class="form-control phone" name="phone_number"
-                                value="{{ old('phone_number') }}" placeholder="Phone Number*">
-                        </div>
-                        <div class="col" data-aos="fade-left" data-aos-duration="1000">
-                            <input type="text" id="service_required" class="form-control service"
-                                name="service_required" value="{{ old('service_required') }}"
-                                placeholder="Service Required*">
-                        </div>
-                    </div>
-                    <div class="row" style="margin-top: 25px;z-index: 9;">
-                        <div class="col" data-aos="fade-up" data-aos-duration="1000">
-                            <textarea class="form-control" name="message" id="message" cols="30" rows="50"
-                                style="height: 350px; background-color: #71030f;color: #fff; z-index: 9;border-bottom-left-radius: 20px;
-                      border-bottom-right-radius: 20px;"></textarea>
-                            <div class="d-flex align-items-center justify-content-center">
-                                <button type="submit" id="send" class=""
-                                    style="background: #fff;margin: auto;width: 250px;margin-top: -60px;height: 60px;color: #71030f; border-top-left-radius: 20px; border-top-right-radius: 20px;border:none">Send
-                                    Message</button>
-
-                            </div>
-
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </section>
-
-    <!-- -------Contact After------- -->
-    <!-- <section id="service-section" class="position-relative contact_after" style="height: 410px"></section> -->
 
 @endsection()

@@ -50,6 +50,11 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label for="">Image <span style="color: red">*</span></label> <br>
+                    @isset($portfolio->image)
+                    <img src="{{ asset('frontend_assets/images/portfolio/'. $portfolio->image) }}" height="60"
+                    width="120" alt="" srcset="" >
+                    @endisset
+                    <br><br>
                     <input type="file" value="{{ $portfolio->image }}" name="image">
                     @error('image')
                     <p class="text-danger mt-2 mb-0 text-sm">{{$message}}</p>

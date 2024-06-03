@@ -79,7 +79,7 @@
    <div class="container">
       <div class="title-img d-flex align-items-center justify-content-center flex-column mb-5" data-aos="zoom-in-down">
          <img src="frontend_assets/images/title/{{$portfolio_menu->title_image}}" alt="" style="width: 50%;">
-         <p class="text-center">{{ $portfolio_menu->tagline }}</p>
+         {{-- <p class="text-center">{{ $portfolio_menu->tagline }}</p> --}}
       </div>
 
       <div class="product_container">
@@ -93,7 +93,7 @@
                      <h5>{{ $portfolio->title }}</h5>
                      <p><i class="fa fa-heart"></i></p>
                   </div>
-                  <button><a href="{{$portfolio->link}}">More Info</a></button>
+                  <button><a href="{{$portfolio->link}}">View Demo</a></button>
                </div>
             @empty
                <div class="alert alert-danger">No Record Found!</div>

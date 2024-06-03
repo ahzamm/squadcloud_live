@@ -21,7 +21,8 @@ use App\Http\Controllers\Admin\PortfolioController as AdminPortfolioController;
 use App\Http\Controllers\Admin\ClientController as AdminClientController;
 use App\Http\Controllers\Admin\AboutController as AdminAboutController;
 use App\Http\Controllers\Admin\ContactController as AdminContactController;
-use App\Http\Controllers\Admin\SlideritemController as AdminSlideritemController;
+use App\Http\Controllers\Admin\HomeSlideController as AdminHomeSlideController;
+// use App\Http\Controllers\Admin\SlideritemController as AdminSlideritemController;
 use App\Http\Controllers\Admin\HomeController as AdminHomeController;
 use App\Http\Controllers\Admin\GeneralConfigurationController as AdminGeneralConfigurationController;
 use App\Http\Controllers\Admin\AllowedIpController;
@@ -255,8 +256,8 @@ use App\Http\Controllers\Admin\AuthController;
         Route::get("/contact/message-requests" , [AdminContactController::class ,"messageRequest"])->name("contacts.message_request");
         Route::get("/contact/destroy/{id?}" , [AdminContactController::class ,"destroy"])->name("contact.destroy");
 
-        Route::resource('slideritems','App\Http\Controllers\Admin\SlideritemController');
-        Route::get("/slideritem/destroy/{id?}" , [AdminSlideritemController::class ,"destroy"])->name("slideritem.destroy");
+        Route::resource('homesliders','App\Http\Controllers\Admin\HomeSliderController');
+        Route::get("/homesliders/destroy/{id?}" , [AdminHomeSlideController::class ,"destroy"])->name("homeslider.destroy");
 
         Route::get("/general-configurations" , [AdminGeneralConfigurationController::class ,"index"])->name("general_configurations.index");
         Route::put("/general-configuration-update" , [AdminGeneralConfigurationController::class ,"update"])->name("general-configurations.update");

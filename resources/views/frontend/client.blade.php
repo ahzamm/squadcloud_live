@@ -28,7 +28,7 @@
             {{-- @foreach($inner_page_setting as $ourClients) --}}
       <div class="title-img d-flex align-items-center justify-content-center flex-column mb-5" data-aos="zoom-in-down">
          <img src="frontend_assets/images/title/{{$client_menu->title_image}}" alt="" style="width: 50%;">
-         <p class="text-center">{!!$client_menu->tagline!!}</p>
+         {{-- <p class="text-center">{!!$client_menu->tagline!!}</p> --}}
       </div>
       {{-- @endforeach --}}
 
@@ -37,7 +37,7 @@
          <div class="col-lg-4 col-md-6">
             <div class="card" data-aos="flip-left" data-aos-duration="1000">
                <a href="{{ $client->link }}" target="_blank" class="card-client d-flex justify-content-center align-items-center" style="height: 100px">
-                  <div class="clients-logo"> 
+                  <div class="clients-logo">
                      <img src="frontend_assets/images/clients/{{$client->logo}}"  class="p-2 d-inline-block">
                   </div>
                </a>

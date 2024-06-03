@@ -4,8 +4,11 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="csrf-token" content="{{ csrf_token() }}">
-  <link rel="icon" href="{{asset('site/favicon.png')}}" sizes="32x32" />
-  <link rel="icon" href="{{asset('site/favicon.png')}}" sizes="192x192" />
+  @php
+      $general_configuration = DB::table('general_configurations')->first();
+  @endphp
+  <link rel="icon" href="{{asset('frontend_assets/images/' . $general_configuration->brand_logo)}}" sizes="32x32" />
+  <link rel="icon" href="{{asset('frontend_assets/images/' . $general_configuration->brand_logo)}}" sizes="192x192" />
   <title>
     @yield('title')
   </title>
@@ -180,7 +183,7 @@
                   <div class="col-md-4 col-sm-12 text-center">
                     @php
                     $userProfile  = Auth::user()->image ;
-                    @endphp  
+                    @endphp
                     @if(  $userProfile == null )
                     <img src="https://bestprofilepictures.com/wp-content/uploads/2021/08/Amazing-Profile-Picture-945x1024.jpg" style="height: 220px;object-fit:cover;" alt="Your Name" class="img-fluid img-thumbnail rounded">
                     @else
@@ -241,7 +244,7 @@
     <!-- End of that -->
     @include('admin.partial.scripts')
     @stack('scripts')
-    <script>  
+    <script>
      $("#insertProfile").submit(function(e){
       if($('#fullName').val() == ""){
         e.preventDefault();
