@@ -53,67 +53,80 @@ class HomeSliderController extends Controller
         }
 
         $validatedData = [
-            'homeslider' => 'required',
-            'tagline' => 'required',
+            'heading' => 'required',
+            'subheading' => 'required',
             'description' => 'required',
-            'slug' => 'required',
         ];
         $valdiate = Validator::make($request->all(), $validatedData);
         if ($valdiate->fails()) {
+            dd("==");
+            dd($valdiate->errors());
             return redirect()->back()->withInput()->with('error', 'All Fields are required');
         }
 
-        $validator = Validator::make($request->all(), [
-            'slug' => 'required|regex:/^[a-zA-Z0-9\-]+$/'
-        ]);
-        if ($validator->fails()) {
-            return redirect()->back()->withInput()->with('error', 'Please provide a valid slug');
-        }
-
-        $isDuplicateSlugExists = Homeslider::where('slug', $request->slug)->first();
-        if ($isDuplicateSlugExists) {
-            return redirect()->back()->withInput()->with('error', "Provided slug is already used");
-        }
-
-        $isDuplicateNameExists = Homeslider::where('homeslider', $request->homeslider)->first();
-        if ($isDuplicateNameExists) {
-            return redirect()->back()->withInput()->with('error', "Provided homeslider name is already in use");
-        }
-
-        if (!$request->hasFile('logo')) {
+        if (!$request->hasFile('image_1')) {
             return redirect()->back()->withInput()->with('error', 'Please provide an image.');
         }
-        if (!$request->file('logo')->isValid() || !in_array($request->file('logo')->extension(), ['jpeg', 'png', 'jpg'])) {
+        if (!$request->file('image_1')->isValid() || !in_array($request->file('image_1')->extension(), ['jpeg', 'png', 'jpg'])) {
             return redirect()->back()->withInput()->with('error', 'Please provide a valid image file of type: jpeg, png, or jpg.');
         }
 
-        if (!$request->hasFile('background_image')) {
-            return redirect()->back()->withInput()->with('error', 'Please provide a background image.');
+        if (!$request->hasFile('image_2')) {
+            return redirect()->back()->withInput()->with('error', 'Please provide an image.');
         }
-        if (!$request->file('background_image')->isValid() || !in_array($request->file('background_image')->extension(), ['jpeg', 'png', 'jpg'])) {
-            return redirect()->back()->withInput()->with('error', 'Please provide a valid background image file of type: jpeg, png, or jpg.');
+        if (!$request->file('image_2')->isValid() || !in_array($request->file('image_2')->extension(), ['jpeg', 'png', 'jpg'])) {
+            return redirect()->back()->withInput()->with('error', 'Please provide a valid image file of type: jpeg, png, or jpg.');
+        }
+
+        if (!$request->hasFile('image_3')) {
+            return redirect()->back()->withInput()->with('error', 'Please provide an image.');
+        }
+        if (!$request->file('image_3')->isValid() || !in_array($request->file('image_3')->extension(), ['jpeg', 'png', 'jpg'])) {
+            return redirect()->back()->withInput()->with('error', 'Please provide a valid image file of type: jpeg, png, or jpg.');
+        }
+
+        if (!$request->hasFile('image_4')) {
+            return redirect()->back()->withInput()->with('error', 'Please provide an image.');
+        }
+        if (!$request->file('image_4')->isValid() || !in_array($request->file('image_4')->extension(), ['jpeg', 'png', 'jpg'])) {
+            return redirect()->back()->withInput()->with('error', 'Please provide a valid image file of type: jpeg, png, or jpg.');
         }
 
 
-        $filename = "";
-        $file = $request->file('logo');
+        $image_1_filename = "";
+        $file = $request->file('image_1');
         $extension = $file->getClientOriginalExtension();
-        $filename = Str::random(40) . '.' . $extension;
-        $file->move(public_path('frontend_assets/images/homesliders'), $filename);
+        $image_1_filename = Str::random(40) . '.' . $extension;
+        $file->move(public_path('frontend_assets/images/home_sliders'), $image_1_filename);
 
-        $backgroundImageFileName = "";
-        $file = $request->file('background_image');
+        $image_2_filename = "";
+        $file = $request->file('image_2');
         $extension = $file->getClientOriginalExtension();
-        $backgroundImageFileName = Str::random(40) . '.' . $extension;
-        $file->move(public_path('frontend_assets/images/homesliders'), $backgroundImageFileName);
+        $image_2_filename = Str::random(40) . '.' . $extension;
+        $file->move(public_path('frontend_assets/images/home_sliders'), $image_2_filename);
+
+        $image_3_filename = "";
+        $file = $request->file('image_3');
+        $extension = $file->getClientOriginalExtension();
+        $image_3_filename = Str::random(40) . '.' . $extension;
+        $file->move(public_path('frontend_assets/images/home_sliders'), $image_3_filename);
+
+        $image_4_filename = "";
+        $file = $request->file('image_4');
+        $extension = $file->getClientOriginalExtension();
+        $image_4_filename = Str::random(40) . '.' . $extension;
+        $file->move(public_path('frontend_assets/images/home_sliders'), $image_4_filename);
+
+
 
         $homeslider = new Homeslider();
-        $homeslider->homeslider = $request['homeslider'];
-        $homeslider->tagline = $request['tagline'];
+        $homeslider->heading = $request['heading'];
+        $homeslider->subheading = $request['subheading'];
         $homeslider->description = $request['description'];
-        $homeslider->slug = $request['slug'];
-        $homeslider->logo = $filename;
-        $homeslider->background_image = $backgroundImageFileName;
+        $homeslider->image_1 = $image_1_filename;
+        $homeslider->image_2 = $image_2_filename;
+        $homeslider->image_3 = $image_3_filename;
+        $homeslider->image_4 = $image_4_filename;
         $homeslider->is_active = $request->has('is_active') ? 1 : 0;
         $homeslider->save();
 
