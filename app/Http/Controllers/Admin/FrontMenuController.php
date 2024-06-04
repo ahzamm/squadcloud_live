@@ -130,19 +130,41 @@ class FrontMenuController extends Controller
         $userOperation = "update_status";
         $userId = Auth::user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
-        if ($crudAccess) {
-            DB::transaction(function () use ($request, $id) {
-                $menu = FrontMenu::find($id);
-                if ($menu != null) {
-                    $menu->menu = $request->parentMenu;
-                    $menu->menu_id = $request->menu_id;
-                    $menu->save();
-                }
-            }, 3);
-            return redirect()->route("frontmenu.index");
-        } else {
-            return redirect()->back()->with('error', 'No Rights To Update Front Menus');
+        if (!$crudAccess) {
+            return redirect()->back()->with("error", "No rights To Update Front Menus");
         }
+
+        $validatedData = [
+            "menu" => "required",
+            "route" => "required",
+            "tagline" => "required",
+        ];
+        $valdiate = Validator::make($request->all(), $validatedData);
+        if ($valdiate->fails()) {
+            return redirect()->back()->with('error', 'All Fields are required');
+        }
+
+        $front_menu = FrontMenu::findOrFail($id);
+
+        if ($request->hasFile('title_image')) {
+            if ($front_menu->title_image && file_exists(public_path('frontend_assets/images/title/' . $front_menu->title_image))) {
+                unlink(public_path('frontend_assets/images/title/' . $front_menu->title_image));
+            }
+            $file = $request->file('title_image');
+            $extension = $file->getClientOriginalExtension();
+            $filename = Str::random(40) . '.' . $extension;
+            $file->move(public_path('frontend_assets/images/title'), $filename);
+            $front_menu->title_image = $filename;
+            $front_menu->title_image = $filename;
+        }
+
+        $front_menu->menu = $request['menu'];
+        $front_menu->slug = $request['route'];
+        $front_menu->tagline = $request['tagline'];
+        $front_menu->is_active = $request->has('is_active') ? 1 : 0;
+        $front_menu->save();
+
+        return redirect()->route('frontmenu.index')->with('success', 'Menu Updated successfully');
     }
 
     /**

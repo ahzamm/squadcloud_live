@@ -27,7 +27,7 @@
                   <div class="card-header">
                     <h5 class="card-title">Update Main Menu</h5>
                   </div>
-                  <div class="card-body">              
+                  <div class="card-body">
                     <form action="{{route('frontmenu.update',$menus->id)}}" method="POST" id="AddMenusForm">
                       @method('PUT')
                       @csrf
@@ -35,15 +35,47 @@
                         <div class="col-lg-12 col-sm-12 col-xs-12">
                           <div class="form-group">
                             <label>Main Menu Name <span style="color: red">*</span></label>
-                            <input name="parentMenu" type="text" class="form-control" placeholder="Example : Contact Us" value="{{$menus->menu}}" required>
+                            <input name="menu" type="text" class="form-control" placeholder="Example : Contact Us" value="{{$menus->menu}}" >
                           </div>
                         </div>
                         <div class="col-lg-12 col-sm-12 col-xs-12">
                           <div class="form-group">
-                            <label>Main Menu (ID)<span style="color: red">*</span></label>
-                            <input name="menu_id" type="text" class="form-control" placeholder="Example : Contact Us" value="{{$menus->menu_id}}" required>
+                            <label>Route<span style="color: red">*</span></label>
+                            <input name="route" type="text" class="form-control" placeholder="Example : Contact Us" value="{{$menus->slug}}" >
                           </div>
                         </div>
+
+                        <div class="col-lg-12 col-sm-12 col-xs-12">
+                          <div class="form-group">
+                            <label>Tagline<span style="color: red">*</span></label>
+                            <input name="tagline" type="text" class="form-control" placeholder="Example : Contact Us" value="{{$menus->tagline}}" >
+                          </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="">Title Image<span style="color: red">*</span></label>
+                              @isset($menus->title_image)
+                              <img src="{{ asset('frontend_assets/images/title/'. $menus->title_image) }}" height="60"
+                              width="120" alt="" srcset="" >
+                              @endisset
+                              <br><br>
+                              <input type="file" value="{{ $menus->title_image }}" name="logo">
+                              @error('image')
+                              <p class="text-danger mt-2 mb-0 text-sm">{{$message}}</p>
+                              @enderror
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group clearfix">
+                              <div class="icheck-success d-inline">
+                                <input type="checkbox"  {{ $menus->is_active == 1? 'checked' :'unchecked' }} name="status" id="checkboxSuccess1">
+                                <label for="checkboxSuccess1">
+                                  Status (On & Off)
+                                </label>
+                              </div>
+                            </div>
+                          </div>
                         <div class="col-md-12">
                           <div class="form-group">
                             <a class="btn btn-outline-secondary btn-sm float-right ml-2" href="{{route('frontmenu.index')}}">Cancel</a>
@@ -68,10 +100,10 @@
       <input type="hidden" name="submenuId[]" value="0"/>
     </td>
     <td class="td-first">
-      <input type="" name="submenu[]" placeholder="Sub Menu Name" class="form-control" required/>
+      <input type="" name="submenu[]" placeholder="Sub Menu Name" class="form-control" />
     </td>
     <td class="td-second">
-      <input type="" name="submenuroute[]" placeholder="Sub Menu Route" class="form-control" required/>
+      <input type="" name="submenuroute[]" placeholder="Sub Menu Route" class="form-control" />
       <span class="text-danger text-sm d-none">Route name not exist in database</span>
     </td>
     <td><button class="btn btn-success btn-sm my-1" type="button" id="btnAddSubMenu"><i class="fa fa-plus"></i></button></td>

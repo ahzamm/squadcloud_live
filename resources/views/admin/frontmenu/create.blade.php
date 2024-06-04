@@ -34,14 +34,14 @@
                                                     <div class="form-group">
                                                         <label>Main Menu Name <span style="color: red">*</span></label>
                                                         <input name="menu" type="text" class="form-control"
-                                                            placeholder="Example : Contact Us" required>
+                                                            placeholder="Example : Contact Us"  value="{{old('menu')}}">
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-12 col-sm-12 col-xs-12">
                                                     <div class="form-group">
                                                         <label>Route <span style="color: red">*</span></label>
                                                         <input name="route" type="text" class="form-control"
-                                                            placeholder="Example : Contact Us" required>
+                                                            placeholder="Example : Contact Us"  value="{{old('route')}}">
                                                     </div>
                                                 </div>
 
@@ -49,14 +49,14 @@
                                                     <div class="form-group">
                                                         <label>Tagline <span style="color: red">*</span></label>
                                                         <input name="tagline" type="text" class="form-control"
-                                                            placeholder="Example : Contact Us" required>
+                                                            placeholder="Example : Contact Us"  value="{{old('tagline')}}">
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-12 col-sm-12 col-xs-12">
                                                     <div class="form-group">
                                                         <label for="title_image">Title Image <span
                                                                 style="color: red">*</span></label>
-                                                        <input type="file" name="title_image">
+                                                        <input type="file" name="title_image" value="{{old('title_image')}}">
 
                                                         @error('title_image')
                                                             <p class="text-danger mt-2 mb-0 text-sm">{{ $message }}</p>
