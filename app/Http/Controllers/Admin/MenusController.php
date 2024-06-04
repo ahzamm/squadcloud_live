@@ -79,8 +79,9 @@ class MenusController extends Controller
                 return redirect()->back()->withInput()->with('error', 'All Fields are required');
             }
         }
+}
 
-    }
+
 
 
     DB::transaction(function () use ($request, $hassubmenu, $lastmenuCount) {
@@ -268,10 +269,11 @@ class MenusController extends Controller
 
     public function checkroute(Request $request)
     {
-        if (Route::has($request->routename)) {
-            return response()->json(['status' => true]);
-        }
-        return response()->json(['status' => false]);
+        // if (Route::has($request->routename)) {
+        //     return response()->json(['status' => true]);
+        // }
+        // return response()->json(['status' => false]);
+        return response()->json(['status' => true]);
     }
 
 

@@ -73,7 +73,7 @@
                               </td>
                               <td class="td-second">
                                 <input type="" name="submenuroute[]" placeholder="Example : viewdetail.index" class="form-control"/ value="{{old('submenuroute[]')}}">
-                                {{-- <span class="text-danger text-sm d-none">Route name not exist in database</span> --}}
+                                <span class="text-danger text-sm d-none">Route name not exist in database</span>
                               </td>
                               <td><button class="btn btn-success btn-sm my-1" type="button" id="btnAddSubMenu"><i class="fa fa-plus"></i></button></td>
                             </tr>
@@ -99,16 +99,20 @@
 </section>
 </div>
 <script type="text/html" id="data-row">
-  <tr>
-    <td class="td-first">
-      <input type="" name="submenu[]" placeholder="Sub Menu Name" class="form-control"/>
-    </td>
-    <td class="td-second">
-      <input type="" name="submenuroute[]" placeholder="Sub Menu Route" class="form-control"/>
-    </td>
-    <td><button class="btn btn-success btn-sm my-1" type="button" id="btnAddSubMenu"><i class="fa fa-plus"></i></button></td>
-  </tr>
-</script>
+    <tr>
+      <td class="td-first">
+        <input type="" name="submenu[]" placeholder="Sub Menu Name" class="form-control"/>
+      </td>
+      <td class="td-second">
+        <input type="" name="submenuroute[]" placeholder="Sub Menu Route" class="form-control"/>
+      </td>
+      <td>
+        <button class="btn btn-success btn-sm my-1" type="button" id="btnAddSubMenu"><i class="fa fa-plus"></i></button>
+        <button class="btn btn-danger btn-sm my-1" type="button" id="btnDeleteSubMenu"><i class="fa fa-trash"></i></button>
+      </td>
+    </tr>
+  </script>
+
 <script type="text/html" id="singleMenubody">
   <div class="form-group">
     <label>Route Name</label>
@@ -209,7 +213,7 @@
                 })
     }
   })
-  $(document).on('click','#btnDeleteSubMenu',function(){
+    $(document).on('click','#btnDeleteSubMenu',function(){
     $(this).parents('tr').remove();
   })
   $(document).on('submit','#AddMenusForm',function(e){
@@ -242,24 +246,26 @@ let oldSubmenuroutes = @json(old('submenuroute', []));
 
 // When the document is ready
 $(document).ready(function() {
-    // For each old submenu
     for (let i = 0; i < oldSubmenus.length; i++) {
-        // If it's not the first submenu (which already exists in the HTML)
         if (i !== 0) {
-            // Clone the first submenu row
             let newRow = $('#submenu-list tr:first').clone();
-
-            // Append the new row to the list
             $('#submenu-list').append(newRow);
         }
 
-        // Set the value of the submenu input in the last row
         $('#submenu-list tr:last .td-first input').val(oldSubmenus[i]);
-
-        // Set the value of the submenuroute input in the last row
         $('#submenu-list tr:last .td-second input').val(oldSubmenuroutes[i]);
+
+        $('#submenu-list tr:last button#btnAddSubMenu')
+            .removeClass("btn-success")
+            .addClass("btn-danger")
+            .html("<i class='fa fa-trash'></i>")
+            .attr('id','btnDeleteSubMenu');
+
+        $('#submenu-list tr:last td:last')
+            .prepend('<button class="btn btn-success btn-sm my-1" type="button" id="btnAddSubMenu"><i class="fa fa-plus"></i></button>');
     }
 });
+
 
 </script>
 @endpush
