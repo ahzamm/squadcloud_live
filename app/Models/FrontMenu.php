@@ -8,6 +8,10 @@ class FrontMenu extends Model
 {
     protected $table="front_menus";
     protected $fillable = [
-        'menu','created_at','updated_at','menu_id'
+        'menu',
+'slug',
+'tagline',
+'title_image',
+'is_active'
     ];
 }

@@ -181,7 +181,6 @@ class ContactController extends Controller
      */
     public function edit($id)
     {
-        dd("==");
         $contact = Contact::find($id);
         dd($contact);
         return view('admin.contacts.edit', compact('contact'));
