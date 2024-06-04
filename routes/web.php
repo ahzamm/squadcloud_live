@@ -63,7 +63,7 @@ use App\Http\Controllers\Admin\AuthController;
         })->name('flush');
 
         Route::middleware([CheckForMaintenanceMode::class])->group(function () {
-        Route::get('/','Site\HomeController@index')->name('home');
+        Route::get('/','App\Http\Controllers\Site\HomeController@index')->name('home');
             });
         // Route::get('/sendmail','Site\EmailController@sendmail')->name('home');
 
