@@ -28,30 +28,33 @@
                     <div class="row">
                       <div class="col-12">
                         <div class="i-checks float-right">
-                          <input id="hassubmenu" type="checkbox" value="hassubmenu" name="hassubmenu" data-value="false" checked="" class="checkbox-template">
+                          <input id="hassubmenu" type="checkbox" checked value="hassubmenu" name="hassubmenu" data-value="false" class="checkbox-template" {{ old('hassubmenu') ? 'checked' : '' }}>
+
+
                           <label for="hassubmenu">Has SubMenus <span style="color: red">*</span></label>
                         </div>
                       </div>
                       <div class="col-lg-12 col-sm-12 col-xs-12">
                         <div class="form-group">
                           <label>Main Menu Name <span style="color: red">*</span></label>
-                          <input name="parentMenu" type="text" class="form-control" placeholder="Example : About Us" required>
+                          <input name="parentMenu" type="text" class="form-control" placeholder="Example : About Us" value="{{old('parentMenu')}}">
                         </div>
                       </div>
                       <div class="col-md-12">
                         <div class="form-group">
-                          <label for="">Select Icon <span style="color: red">*</span></label>
-                          <select name="menuicon" class="form-control" id="selectIcon">
-                            <option value></option>
-                            @foreach ($icons as $item)
-                            <option value="{{$item}}">{{$item}}</option>
-                            @endforeach
-                          </select>
-                          @error('icon')
-                          <p class="text-danger mt-2 mb-0 text-sm">{{$message}}</p>
-                          @enderror
+                            <label for="">Select Icon <span style="color: red">*</span></label>
+                            <select name="menuicon" class="form-control" id="selectIcon">
+                                <option value></option>
+                                @foreach ($icons as $item)
+                                    <option value="{{$item}}" {{ old('menuicon') == $item ? 'selected' : '' }}>{{$item}}</option>
+                                @endforeach
+                            </select>
+                            @error('icon')
+                                <p class="text-danger mt-2 mb-0 text-sm">{{$message}}</p>
+                            @enderror
                         </div>
-                      </div>
+                    </div>
+
                       <div class="col-md-12" id="singleRoute" style="display: none">
                       </div>
                       <div class="col-md-12" id="subRoute">
@@ -66,10 +69,10 @@
                           <tbody id="submenu-list">
                             <tr>
                               <td class="td-first">
-                                <input type="" name="submenu[]" placeholder="Example : View Detail" class="form-control" required/>
+                                <input type="" name="submenu[]" value="{{old('submenu[]')}}" placeholder="Example : View Detail" class="form-control"/ >
                               </td>
                               <td class="td-second">
-                                <input type="" name="submenuroute[]" placeholder="Example : viewdetail.index" class="form-control" required/>
+                                <input type="" name="submenuroute[]" placeholder="Example : viewdetail.index" class="form-control"/ value="{{old('submenuroute[]')}}">
                                 {{-- <span class="text-danger text-sm d-none">Route name not exist in database</span> --}}
                               </td>
                               <td><button class="btn btn-success btn-sm my-1" type="button" id="btnAddSubMenu"><i class="fa fa-plus"></i></button></td>
@@ -98,11 +101,10 @@
 <script type="text/html" id="data-row">
   <tr>
     <td class="td-first">
-      <input type="" name="submenu[]" placeholder="Sub Menu Name" class="form-control" required/>
+      <input type="" name="submenu[]" placeholder="Sub Menu Name" class="form-control"/>
     </td>
     <td class="td-second">
-      <input type="" name="submenuroute[]" placeholder="Sub Menu Route" class="form-control" required/>
-      <span class="text-danger text-sm d-none">Route name not exist in database</span>
+      <input type="" name="submenuroute[]" placeholder="Sub Menu Route" class="form-control"/>
     </td>
     <td><button class="btn btn-success btn-sm my-1" type="button" id="btnAddSubMenu"><i class="fa fa-plus"></i></button></td>
   </tr>
@@ -110,7 +112,7 @@
 <script type="text/html" id="singleMenubody">
   <div class="form-group">
     <label>Route Name</label>
-    <input name="parentroutename" type="text" class="form-control" required>
+    <input name="parentroutename" type="text" class="form-control" value="{{old('parentroutename')}}">
   </div>
 </script>
 <script type="text/html" id="subMenubody">
@@ -125,10 +127,10 @@
     <tbody id="submenu-list">
       <tr>
         <td class="td-first">
-          <input type="" name="submenu[]" placeholder="Sub Menu Name" class="form-control" required/>
+          <input type="" name="submenu[]" placeholder="Sub Menu Name" class="form-control"/>
         </td>
         <td class="td-second">
-          <input type="" name="submenuroute[]" placeholder="Sub Menu Route" class="form-control" required/>
+          <input type="" name="submenuroute[]" placeholder="Sub Menu Route" class="form-control"/>
           <span class="text-danger text-sm d-none">Route name not exist in database</span>
         </td>
         <td><button class="btn btn-success btn-sm my-1" type="button" id="btnAddSubMenu"><i class="fa fa-plus"></i></button></td>
@@ -231,5 +233,33 @@
       $(this).attr('data-value',true);
     }
   })
+</script>
+
+<script>
+    // Assuming you have old submenu and submenuroute values as arrays
+let oldSubmenus = @json(old('submenu', []));
+let oldSubmenuroutes = @json(old('submenuroute', []));
+
+// When the document is ready
+$(document).ready(function() {
+    // For each old submenu
+    for (let i = 0; i < oldSubmenus.length; i++) {
+        // If it's not the first submenu (which already exists in the HTML)
+        if (i !== 0) {
+            // Clone the first submenu row
+            let newRow = $('#submenu-list tr:first').clone();
+
+            // Append the new row to the list
+            $('#submenu-list').append(newRow);
+        }
+
+        // Set the value of the submenu input in the last row
+        $('#submenu-list tr:last .td-first input').val(oldSubmenus[i]);
+
+        // Set the value of the submenuroute input in the last row
+        $('#submenu-list tr:last .td-second input').val(oldSubmenuroutes[i]);
+    }
+});
+
 </script>
 @endpush
