@@ -26,14 +26,14 @@
                 <div class="card-header">
                   <h5 class="card-title">Modify Main Menu and SubMenu</h5>
                 </div>
-                <div class="card-body">              
+                <div class="card-body">
                   <form action="{{route('menus.update',$menus->id)}}" method="POST" id="AddMenusForm">
                     @csrf
                     <div class="row">
                       <div class="col-lg-12 col-sm-12 col-xs-12">
                         <div class="form-group">
                           <label>Main Menu Name <span style="color: red">*</span></label>
-                          <input name="parentMenu" type="text" class="form-control" value="{{$menus->menu}}" placeholder="Example : About Us" required>
+                          <input name="parentMenu" type="text" class="form-control" value="{{$menus->menu}}" placeholder="Example : About Us">
                         </div>
                       </div>
                       <div class="col-md-12">
@@ -66,10 +66,10 @@
                                 <input type="hidden" name="submenuId[]" value="{{$item->id}}"/>
                               </td>
                               <td class="td-first">
-                                <input type="" name="submenu[]" value="{{$item->submenu}}" placeholder="Example : View Detail" class="form-control" required/>
+                                <input type="" name="submenu[]" value="{{$item->submenu}}" placeholder="Example : View Detail" class="form-control"/>
                               </td>
                               <td class="td-second">
-                                <input type="" name="submenuroute[]" value="{{$item->route_name}}" placeholder="Example : viewdetail.index" class="form-control" required/>
+                                <input type="" name="submenuroute[]" value="{{$item->route_name}}" placeholder="Example : viewdetail.index" class="form-control"/>
                                 <span class="text-danger text-sm d-none">Route name not exist in database</span>
                               </td>
                               <td>
@@ -79,7 +79,7 @@
                                 <button class="btn btn-danger btn-sm my-1 btnDeleteSubMenu" type="button"><i class="fa fa-trash"></i></button>
                                 @endif
                               </td>
-                            </tr>   
+                            </tr>
                             @endforeach
                           </tbody>
                         </table>
@@ -89,7 +89,7 @@
                           <a class="btn btn-outline-secondary btn-sm float-right ml-2" href="{{route('menus.index')}}">Cancel</a>
                           <button class="btn btn-outline-primary btn-sm float-right" type="submit" id="menuBtn">Update Menu</button>
                         </div>
-                      </div>    
+                      </div>
                     </div>
                   </form>
                 </div>
@@ -108,10 +108,10 @@
       <input type="hidden" name="submenuId[]" value="0"/>
     </td>
     <td class="td-first">
-      <input type="" name="submenu[]" placeholder="Sub Menu Name" class="form-control" required/>
+      <input type="" name="submenu[]" placeholder="Sub Menu Name" class="form-control"/>
     </td>
     <td class="td-second">
-      <input type="" name="submenuroute[]" placeholder="Sub Menu Route" class="form-control" required/>
+      <input type="" name="submenuroute[]" placeholder="Sub Menu Route" class="form-control"/>
       <span class="text-danger text-sm d-none">Route name not exist in database</span>
     </td>
     <td><button class="btn btn-success btn-sm my-1" type="button" id="btnAddSubMenu"><i class="fa fa-plus"></i></button></td>
@@ -186,7 +186,7 @@
         error:function(jhxr,status,err){
                     //console.log(jhxr);
                   }
-                }) 
+                })
     }
   })
   $(document).on('click','.btnDeleteSubMenu',function(){

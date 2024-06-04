@@ -70,12 +70,6 @@ class MenusController extends Controller
     }
 
     if ($hassubmenu && $request->has('submenu')) {
-        // foreach ($request->submenu as $key => $value) {
-        //     $subMenuValidator = Validator::make(['submenuroute' => $request->submenuroute[$key]], ['submenuroute' => 'required']);
-        //     if ($subMenuValidator->fails()) {
-        //         return redirect()->back()->withInput()->with('error', 'All Submenu Routes are required');
-        //     }
-        // }
         foreach ($request->submenu as $key => $value) {
             $subMenuValidator = Validator::make(
                 ['submenu' => $value, 'submenuroute' => $request->submenuroute[$key]],
@@ -167,6 +161,42 @@ class MenusController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $hassubmenu = $request->has('hassubmenu') ? 1 : 0;
+        $lastmenu = Menu::orderBy('order_menu')->get()->last();
+        $lastmenuCount = $lastmenu != null ? $lastmenu->order_menu : 0;
+
+        $validatedData = [
+            'parentMenu' => 'required',
+            'menuicon' => 'required',
+        ];
+        $validator = Validator::make($request->all(), $validatedData);
+        if ($validator->fails()) {
+            return redirect()->back()->withInput()->with('error', 'All Fields are required');
+        }
+
+        if (!$request->has('submenu')) {
+            $validatedData = [
+                'parentroutename' => 'required',
+            ];
+            $validator = Validator::make($request->all(), $validatedData);
+            if ($validator->fails()) {
+                return redirect()->back()->withInput()->with('error', 'All Fields are required');
+            }
+        }
+
+        if ($request->has('submenu')) {
+            foreach ($request->submenu as $key => $value) {
+                $subMenuValidator = Validator::make(
+                    ['submenu' => $value, 'submenuroute' => $request->submenuroute[$key]],
+                    ['submenu' => 'required', 'submenuroute' => 'required']
+                );
+                if ($subMenuValidator->fails()) {
+                    return redirect()->back()->withInput()->with('error', 'All Submenu Routes are required');
+                }
+            }
+
+        }
+
         DB::transaction(function () use ($request, $id) {
             $menu = Menu::find($id);
             if ($menu != null) {
