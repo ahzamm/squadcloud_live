@@ -76,7 +76,7 @@ class MenusController extends Controller
                 ['submenu' => 'required', 'submenuroute' => 'required']
             );
             if ($subMenuValidator->fails()) {
-                return redirect()->back()->withInput()->with('error', 'All Submenu Routes are required');
+                return redirect()->back()->withInput()->with('error', 'All Fields are required');
             }
         }
 
