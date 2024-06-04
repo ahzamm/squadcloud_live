@@ -66,7 +66,7 @@
                                                 <div class="col-lg-12 col-sm-12 col-xs-12">
                                                     <div class="form-group clearfix">
                                                       <div class="icheck-success d-inline">
-                                                        <input type="checkbox" {{old('is_active') != null? 'checked' :'unchecked' }} name="is_active" id="checkboxSuccess1">
+                                                        <input type="checkbox" {{old('is_active') != null? 'checked' :'unchecked' }} name="status" id="checkboxSuccess1">
                                                         <label for="checkboxSuccess1">
                                                           Status (On & Off)
                                                         </label>

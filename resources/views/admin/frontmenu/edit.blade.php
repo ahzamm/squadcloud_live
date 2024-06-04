@@ -28,7 +28,7 @@
                     <h5 class="card-title">Update Main Menu</h5>
                   </div>
                   <div class="card-body">
-                    <form action="{{route('frontmenu.update',$menus->id)}}" method="POST" id="AddMenusForm">
+                    <form action="{{route('frontmenu.update',$menus->id)}}" method="POST" id="AddMenusForm" enctype="multipart/form-data">
                       @method('PUT')
                       @csrf
                       <div class="row">
@@ -60,7 +60,7 @@
                               width="120" alt="" srcset="" >
                               @endisset
                               <br><br>
-                              <input type="file" value="{{ $menus->title_image }}" name="logo">
+                              <input type="file" value="{{ $menus->title_image }}" name="title_image">
                               @error('image')
                               <p class="text-danger mt-2 mb-0 text-sm">{{$message}}</p>
                               @enderror

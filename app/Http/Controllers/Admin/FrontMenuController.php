@@ -50,7 +50,7 @@ class FrontMenuController extends Controller
         $userId = Auth::user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
         if (!$crudAccess) {
-            return redirect()->back()->with("error", "No rights To Create Front Menus");
+            return redirect()->back()->withInput()->with("error", "No rights To Create Front Menus");
         }
 
         $validatedData = [
@@ -60,7 +60,14 @@ class FrontMenuController extends Controller
         ];
         $valdiate = Validator::make($request->all(), $validatedData);
         if ($valdiate->fails()) {
-            return redirect()->back()->with('error', 'All Fields are required');
+            return redirect()->back()->withInput()->with('error', 'All Fields are required');
+        }
+
+        $validator = Validator::make($request->all(), [
+            'route' => 'required|regex:/^[a-zA-Z0-9\-]+$/'
+        ]);
+        if ($validator->fails()) {
+            return redirect()->back()->withInput()->with('error', 'Please provide a valid rotue');
         }
 
         if (!$request->hasFile('title_image')) {
@@ -89,7 +96,7 @@ class FrontMenuController extends Controller
         $front_menu->is_active = $request->has('is_active') ? 1 : 0;
         $front_menu->save();
 
-        return redirect()->route("frontmenu.index");
+        return redirect()->route("frontmenu.index")->with("success", "Menu Added successfulyl");
     }
 
     /**
@@ -131,7 +138,7 @@ class FrontMenuController extends Controller
         $userId = Auth::user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
         if (!$crudAccess) {
-            return redirect()->back()->with("error", "No rights To Update Front Menus");
+            return redirect()->back()->withInput()->with("error", "No rights To Update Front Menus");
         }
 
         $validatedData = [
@@ -141,10 +148,23 @@ class FrontMenuController extends Controller
         ];
         $valdiate = Validator::make($request->all(), $validatedData);
         if ($valdiate->fails()) {
-            return redirect()->back()->with('error', 'All Fields are required');
+            return redirect()->back()->withInput()->with('error', 'All Fields are required');
+        }
+
+        $validator = Validator::make($request->all(), [
+            'route' => 'required|regex:/^[a-zA-Z0-9\-]+$/'
+        ]);
+        if ($validator->fails()) {
+            return redirect()->back()->withInput()->with('error', 'Please provide a valid slug');
         }
 
         $front_menu = FrontMenu::findOrFail($id);
+
+        if ($request->hasFile('title_image')) {
+            if (!$request->file('title_image')->isValid() || !in_array($request->file('title_image')->extension(), ['jpeg', 'png', 'jpg'])) {
+                return redirect()->back()->withInput()->with('error', 'Please provide a valid background image file of type: jpeg, png, or jpg.');
+            }
+        }
 
         if ($request->hasFile('title_image')) {
             if ($front_menu->title_image && file_exists(public_path('frontend_assets/images/title/' . $front_menu->title_image))) {
@@ -161,7 +181,7 @@ class FrontMenuController extends Controller
         $front_menu->menu = $request['menu'];
         $front_menu->slug = $request['route'];
         $front_menu->tagline = $request['tagline'];
-        $front_menu->is_active = $request->has('is_active') ? 1 : 0;
+        $front_menu->is_active = $request->has('status') ? 1 : 0;
         $front_menu->save();
 
         return redirect()->route('frontmenu.index')->with('success', 'Menu Updated successfully');
