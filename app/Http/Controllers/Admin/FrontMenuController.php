@@ -30,7 +30,7 @@ class FrontMenuController extends Controller
      */
     public function create()
     {
-        
+
         return view('admin.frontmenu.create');
     }
 
@@ -44,18 +44,18 @@ class FrontMenuController extends Controller
     {
         $subMenuid     =  SubMenu::where('route_name' , 'frontmenu.index')->first();
         $userOperation =  "create_status" ;
-        $userId        =  Auth::user()->id ;   
+        $userId        =  Auth::user()->id ;
         $crudAccess   = $this->crud_access($subMenuid->id ,  $userOperation , $userId );
         if ($crudAccess) {
-       
+
         //  dd($lastmenuCount);
         DB::transaction(function () use ($request){
-           
+
             $menu = FrontMenu::create([
                 "menu"=> $request->parentMenu,
                 "menu_id"=>$request->menu_id,
             ]);
-      
+
         },3);
         return redirect()->route("frontmenu.index");}
         else{
@@ -71,7 +71,7 @@ class FrontMenuController extends Controller
      */
     public function show($id)
     {
-        
+
     }
 
     /**
@@ -83,7 +83,7 @@ class FrontMenuController extends Controller
     public function edit($id = null)
     {
         $menus = FrontMenu::find($id);
-        
+
         return view("admin.frontmenu.edit",compact('menus'));
     }
 
@@ -96,10 +96,10 @@ class FrontMenuController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
+
         $subMenuid     =  SubMenu::where('route_name' , 'frontmenu.index')->first();
         $userOperation =  "update_status" ;
-        $userId        =  Auth::user()->id ;   
+        $userId        =  Auth::user()->id ;
         $crudAccess   = $this->crud_access($subMenuid->id ,  $userOperation , $userId );
         if ($crudAccess) {
         DB::transaction(function () use ($request,$id){
@@ -127,12 +127,12 @@ class FrontMenuController extends Controller
     {
         $subMenuid     =  SubMenu::where('route_name' , 'frontmenu.index')->first();
         $userOperation =  "delete_status" ;
-        $userId        =  Auth::user()->id ;   
+        $userId        =  Auth::user()->id ;
         $crudAccess   = $this->crud_access($subMenuid->id ,  $userOperation , $userId );
         if ($crudAccess) {
             $menu = FrontMenu::find($request->frontmenu);
             $menu->delete();
-   
+
         return response()->json(["status"=>true]);}
         else{
             return response()->json(["unauthorized"=>true]);
@@ -148,7 +148,7 @@ class FrontMenuController extends Controller
     }
     public function updateSorting(Request $request){
         $sortIds = $request->sort_Ids;
-        foreach ($sortIds as $key => $value) { 
+        foreach ($sortIds as $key => $value) {
             $menu = FrontMenu::find($value);
         if ($menu) {
             $menu->sortIds = $key;
@@ -160,9 +160,9 @@ class FrontMenuController extends Controller
     }
 
     public function crud_access($submenuId = null , $operation = null , $uId = null) {
-        if (!$submenuId == null) { 
+        if (!$submenuId == null) {
         $CheckData = UserMenuAccess::where(["user_id" => $uId , "sub_menu_Id" => $submenuId , $operation => 1 , 'view_status' => 1])->count();
-   
+
         if($CheckData > 0 ){
             return true;
         }
@@ -172,5 +172,5 @@ class FrontMenuController extends Controller
         }
         }
     }
-  
+
 }

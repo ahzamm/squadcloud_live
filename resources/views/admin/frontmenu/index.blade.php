@@ -40,7 +40,10 @@
                                     <tr>
                                        <th>Serial#</th>
                                        <th>Main Menus</th>
-                                       <th>Main Menu (ID)</th>
+                                       <th>Route</th>
+                                       <th>Tagline</th>
+                                       <th>Title Image</th>
+                                       <th>Status</th>
                                        <th>Action</th>
                                     </tr>
                                  </thead>
@@ -55,7 +58,10 @@
                                          <input type="hidden" class="order-id" value="{{$menu->id}}">
                                       </td>
                                       <td>{{$menu->menu}}</td>
-                                      <td>{{$menu->menu_id}}</td>
+                                      <td>{{$menu->slug}}</td>
+                                      <td>{{$menu->tagline}}</td>
+                                      <td>{{$menu->title_image}}</td>
+                                      <td>{{$menu->is_active == 1?'active':'deactive'}}</td>
                                       <td>
                                        <a href="{{route("front.edit"  , $menu->id)}}" class="btn btn-sm btn-info"><i class="fa fa-edit"></i></a>
                                        <button class="btn btn-danger btn-sm btnDeleteMenu" data-id="{{ $menu->id }}">
@@ -176,7 +182,10 @@
                   <input type="hidden" class="order-id" value="${value.id}">
                   </td>
                   <td >${value.menu}</td>
-                  <td>${value.menu_id}</td>
+                  <td>${value.slug}</td>
+                  <td>${value.tagline}</td>
+                  <td>${value.title_image}</td>
+                  <td>${value.is_active == 1?'active':'deactive'}</td>
                   <td>
                   <a href="` + editUrlFront + "/" + value.id + `" class="btn btn-sm btn-info"><i class="fa fa-edit"></i></a>
                   <button class="btn btn-danger btn-sm deleteRecord" data-id="${value.id}">

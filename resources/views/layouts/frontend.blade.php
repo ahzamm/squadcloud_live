@@ -55,7 +55,7 @@
 <body>
           @php
             $GeneralConfiguration = DB::table('general_configurations')->where('is_active', 1)->first();
-            $menus = DB::table('front_menus')->where('is_active', 1)->get();
+            $menus = DB::table('front_menus')->where('is_active', 1)->orderby("sortIds" , "asc")->get();
            @endphp
 
     <header id="main-header">
