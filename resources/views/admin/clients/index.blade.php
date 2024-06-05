@@ -32,10 +32,15 @@
                       <th>Action</th>
                     </tr>
                   </thead>
-                  <tbody>
+                  <tbody id="sortfrontMenu" class="move">
                     @foreach ($clients as $key=> $item)
                     <tr class="table-row">
-                      <td>{{++$key}}</td>
+                        <td>
+                            {{ $key + 1 }}
+                            <i class="fas fa-sort" id="sort-serial"></i>
+                            <input type="hidden" class="order-id"
+                                value="{{ $item->id }}">
+                        </td>
                       <td>
                         <img width="40px" height="40px" src="{{ asset('frontend_assets/images/clients/' . $item->logo) }}" alt="internet product provider in karachi/Clifton/pakistan" />
                     </td>
@@ -69,6 +74,12 @@
 <script src="{{asset('backend/plugins/datatables-responsive/js/dataTables.responsive.min.js')}}"></script>
 <script src="{{asset('backend/plugins/datatables-responsive/js/responsive.bootstrap4.min.js')}}"></script>
 <script src="{{asset('site/sweet-alert/sweetalert2.min.js')}}"></script>
+<script>
+    $(function() {
+        $("#sortable").sortable();
+        $("#sortable").disableSelection();
+    });
+</script>
 <script>
   let packageDeleteUrl  = "{{route('client.destroy')}}";
   $(document).on('click' ,'.btnDeleteMenu' ,function(){
@@ -233,5 +244,54 @@
       }
     })
   })
+
+  let sortTable = $("#sortfrontMenu");
+    let sortingFrontUrl = "{{ route('sort.client') }}";
+    let csrfToken = $(".csrf_token");
+    var editUrlFront = "{{ route('client.edit') }}";
+    $(sortTable).sortable({
+        update: function(event, ui) {
+            var SortIds = $(this).find('.order-id').map(function() {
+                return $(this).val().trim();
+            }).get();
+            // Getting The Order id of each sortIds
+            $(this).find('.order-id').each(function(index) {
+                $(this).text(SortIds[index]);
+            });
+            //Sending Ajax to update the sort ids and change the data sorting
+            $.ajax({
+                url: sortingFrontUrl,
+                type: "post",
+                data: {
+                    sort_Ids: SortIds
+                },
+                headers: {
+                    "X-CSRF-TOKEN": csrfToken.val()
+                },
+                success: function(response) {
+                    let table = "";
+                    $(response).each(function(index, value) {
+                        table += ` <tr>
+                  <td>${index + 1 } <i class="fas fa-sort" id="sort-serial"></i>
+                  <input type="hidden" class="order-id" value="${value.id}">
+                  </td>
+                  <td> <img width="40px" height="40px" src="{{ asset('frontend_assets/images/clients/') }}/${value.logo}" alt="service logo" /></td>
+                   <td>${value.link}</td>
+                   <td>${value.title}</td>
+                  <td>${value.description.length > 100 ? value.description.substring(0, 100) : value.description}</td>
+                  <td>${value.is_active == 1?'active':'deactive'}</td>
+                  <td>
+                  <a href="` + editUrlFront + "/" + value.id + `" class="btn btn-sm btn-info"><i class="fa fa-edit"></i></a>
+                  <button class="btn btn-danger btn-sm deleteRecord" data-id="${value.id}">
+                  <i class="fa fa-trash"></i> </button>
+                  </td>
+                  </tr>`;
+                    });
+                    $(sortTable).html(table);
+                }
+            })
+        }
+    });
+
 </script>
 @endpush

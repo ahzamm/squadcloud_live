@@ -216,4 +216,18 @@ class ClientController extends Controller
             }
         }
     }
+
+    public function updateSorting(Request $request)
+    {
+        $sortIds = $request->sort_Ids;
+        foreach ($sortIds as $key => $value) {
+            $menu = Client::find($value);
+            if ($menu) {
+                $menu->sortIds = $key;
+                $menu->save();
+            }
+        }
+        $frontValue = Client::orderby("sortIds", 'asc')->get();
+        return response()->json($frontValue);
+    }
 }
