@@ -23,6 +23,8 @@ class HomeController extends Controller
         $home_sliders = HomeSlider::where('is_active', 1)->get();
         $service_menu = FrontMenu::where('menu', 'Services')->first();
         $services = Service::where('is_active', 1)->orderby("sortIds" , "asc")->get();
+        $portfolio_menu = FrontMenu::where('menu', 'Portfolio')->first();
+        $portfolios = Portfolio::where('is_active', 1)->orderby("sortIds" , "asc")->get();
         // $front_menu = FrontMenu::where('is_active', 1)->first();
         // $portfolios = Portfolio::where('is_active', 1)->first();
         // $products = Product::where('is_active', 1)->first();
@@ -36,6 +38,8 @@ class HomeController extends Controller
             'home_sliders',
             'service_menu',
             'services',
+            'portfolio_menu',
+            'portfolios',
             // 'portfolios',
             // 'products',
             // 'clients',

@@ -179,6 +179,50 @@
  </section>
 
 
+<!-- -------PORTFOLIO------- -->
+<section id="portfolio-section" class="position-relative">
+    <div class="portfolio-bg"></div>
+    <div class="container pb-5">
+       <div class="text-center " data-aos="zoom-in-down">
+          <h2 class="section-heading text-uppercase" >Portfolio</h2>
+          <h3 class="section-subheading text-muted2">{{$portfolio_menu->tagline}}</h3>
+       </div>
+
+       <div class="row">
+          @foreach ($portfolios->take(3) as $list)
+          <div class="col-lg-4 mt-3">
+             <a href="{{ $list->link }}">
+                <div class="card" data-aos="flip-right" data-aos-duration="1000">
+                   <div class="card-header">
+                      <p class="p-3 d-inline-block mb-0 text-center w-100">{{$list->title}}</p>
+
+                   </div>
+                   <div class="card-body">
+                      <p class="text-center">{!! substr($list->description, 0, 100) !!}</p>
+                      <img src="{{ asset('frontend_assets/images/portfolio/'. $list->image) }}" class="w-100" alt="">
+                   </div>
+                   <div class="card-footer">
+                      <a href="{{$list->link}}">
+                         <div class="d-flex align-items-center justify-content-between pt-3">
+                            <p class="mb-0" style="font-weight:bold;">View Case Study</p>
+                            <img src="{{ asset('frontend_assets/images/arrow-small.png') }}" alt="" style="width: 15%;">
+                         </div>
+                      </a>
+                   </div>
+                </div>
+             </a>
+          </div>
+          @endforeach
+       </div>
+    </div>
+
+    <div style="display: flex; justify-content: center">
+       <a href="portfolio" class="more_action">
+          View All
+       </a>
+    </div>
+ </section>
+
 
 
 @endsection()
