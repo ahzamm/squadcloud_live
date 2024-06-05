@@ -12,7 +12,7 @@ class ServiceController extends Controller
 {
     public function index()
     {
-        $services = Service::where('is_active', 1)->get();
+        $services = Service::where('is_active', 1)->orderby("sortIds" , "asc")->get();
         $service_menu = FrontMenu::where('menu', 'Services')->first();
         return view('frontend/service', compact('services', 'service_menu'));
     }

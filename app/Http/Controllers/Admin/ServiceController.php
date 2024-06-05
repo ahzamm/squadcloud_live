@@ -22,7 +22,7 @@ class ServiceController extends Controller
      */
     public function index()
     {
-        $services = Service::all();
+        $services = Service::orderby("sortIds", "asc")->get();
         return view('admin.services.index', compact('services'));
     }
 
@@ -284,5 +284,19 @@ class ServiceController extends Controller
                 return false;
             }
         }
+    }
+
+    public function updateSorting(Request $request)
+    {
+        $sortIds = $request->sort_Ids;
+        foreach ($sortIds as $key => $value) {
+            $menu = Service::find($value);
+            if ($menu) {
+                $menu->sortIds = $key;
+                $menu->save();
+            }
+        }
+        $frontValue = Service::orderby("sortIds", 'asc')->get();
+        return response()->json($frontValue);
     }
 }

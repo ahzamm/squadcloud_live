@@ -131,6 +131,7 @@ use App\Http\Controllers\Admin\AuthController;
         Route::resource('message','App\Http\Controllers\Admin\MessageController');
         Route::resource('frontmenu','App\Http\Controllers\Admin\FrontMenuController');
         Route::get('frontmenu/edit/{id?}', [FrontMenuController::class , 'edit'])->name('front.edit');
+        Route::get('service/edit/{id?}', [AdminServiceController::class , 'edit'])->name('service.edit');
 
 
         Route::resource('cities','App\Http\Controllers\Admin\CitiesController');
@@ -170,6 +171,7 @@ use App\Http\Controllers\Admin\AuthController;
 
         Route::post("sortFrontMenu" , [FrontMenuController::class , 'updateSorting'])->name("sort.front.menu");
         Route::post("sortMenu" , [MenusController::class , 'sortMenu'])->name("sort.menu");
+        Route::post("sortService" , [AdminServiceController::class , 'updateSorting'])->name("sort.service");
         // Route::post("sortSlider" , [HomeSliderController::class , 'sortSlider'])->name("sort.slider.image");
         // Social Links Routes
         Route::get('/social/' , [SocialController::class , 'index'])->name('social.index');
