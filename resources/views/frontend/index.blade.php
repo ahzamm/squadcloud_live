@@ -224,5 +224,79 @@
  </section>
 
 
+ <!-- -------PRODUCTS------- -->
+ <section id="product-section" class="position-relative">
+    <div class="product-bg"></div>
+
+    <div class="container">
+       <div class="text-center" data-aos="zoom-in-down">
+          <h2 class="section-heading text-uppercase">Products</h2>
+          <h3 class="section-subheading text-muted">{{$product_menu->tagline}}</h3>
+       </div>
+
+       <div class="row pb-5">
+
+          @forelse($products->take(3) as $list)
+          <div class="col-lg-4 mt-3">
+             <div class="card" data-aos="zoom-in-up" data-aos-delay="200" data-aos-duration="1000">
+                <div class="card-header three">
+                   <p class="p-3 d-inline-block mb-0 text-center w-100">{{$list->name}}</p>
+                </div>
+                <div class="card-body">
+                {!!$list->short_description!!}
+                </div>
+                <div class="d-flex align-items-center justify-content-around mb-5">
+                   <a href="/contact" class="btn btn-product red-bg">Request Demo</a>
+                </div>
+             </div>
+          </div>
+          @empty
+
+          @endforelse
+
+
+       </div>
+
+    </div>
+ </section>
+
+ <!-- -------CLIENTS------- -->
+ <section id="service-section" class="clients position-relative">
+    <div class="container">
+       <div class="text-center" data-aos="zoom-in-down" style="">
+          <h2 class="section-heading text-uppercase">Clients</h2>
+          <h3 class="section-subheading text-muted">{{$client_menu->tagline}}</h3>
+       </div>
+
+       <div class="row">
+          @forelse($Clients->take(6) as $list)
+          <div class="col-lg-4 col-md-6" style="margin-top:-50px;">
+                <div class="card" data-aos="flip-right" data-aos-duration="1000">
+                   <a href="{{ $list->link }}" target="_blank" class="card-header d-flex justify-content-center align-items-center" style="height: 100px">
+                      <div class="clients-logo">
+                         <img src="{{ asset('frontend_assets/images/clients/'. $list->logo) }}" alt="{{ $list->title }}" class="p-2 d-inline-block">
+                      </div>
+                   </a>
+                   <div style="height:auto;" class="card-body">
+                       <p><b><h5 class="text-center">{!! substr($list->title, 0, 20) !!}</h5></b></p>
+                   </div>
+                </div>
+
+          </div>
+          @empty
+             <div class="alert alert-danger">No Clients Found</div>
+          @endforelse
+       </div>
+    </div>
+    <br><br>
+    <div style="display: flex; justify-content: center">
+       <a href="client" class="more_action">
+          View All
+       </a>
+    </div>
+ </section>
+
+
+
 
 @endsection()

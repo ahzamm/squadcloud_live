@@ -22,32 +22,27 @@ class HomeController extends Controller
 
         $home_sliders = HomeSlider::where('is_active', 1)->get();
         $service_menu = FrontMenu::where('menu', 'Services')->first();
-        $services = Service::where('is_active', 1)->orderby("sortIds" , "asc")->get();
+        $services = Service::where('is_active', 1)->orderby("sortIds", "asc")->get();
         $portfolio_menu = FrontMenu::where('menu', 'Portfolio')->first();
-        $portfolios = Portfolio::where('is_active', 1)->orderby("sortIds" , "asc")->get();
-        // $front_menu = FrontMenu::where('is_active', 1)->first();
-        // $portfolios = Portfolio::where('is_active', 1)->first();
-        // $products = Product::where('is_active', 1)->first();
-        // $clients = Client::where('is_active', 1)->first();
-        // $home_bottom_slider = HomeBottomSlider::where('is_active', 1)->first();
-        // $general_configuration = GeneralConfiguration::where('is_active', 1)->first();
-        // $project_inquiries = ProjectInquiries::where('is_active', 1)->first();
-        // $contacts = Contact::where('is_active', 1)->first();
+        $portfolios = Portfolio::where('is_active', 1)->orderby("sortIds", "asc")->get();
+        $product_menu = FrontMenu::where('menu', 'Product')->first();
+        $products = Product::where('is_active', 1)->get();
+        $client_menu = FrontMenu::where('menu', 'Client')->first();
+        $Clients = Client::where('is_active', 1)->orderby("sortIds", "asc")->get();
 
-        return view('frontend.index', compact(
-            'home_sliders',
-            'service_menu',
-            'services',
-            'portfolio_menu',
-            'portfolios',
-            // 'portfolios',
-            // 'products',
-            // 'clients',
-            // 'home_bottom_slider',
-            // 'general_configuration',
-            // 'project_inquiries',
-            // 'contacts'
-        )
+        return view(
+            'frontend.index',
+            compact(
+                'home_sliders',
+                'service_menu',
+                'services',
+                'portfolio_menu',
+                'portfolios',
+                'client_menu',
+                'Clients',
+                'product_menu',
+                'products'
+            )
         );
     }
 }
