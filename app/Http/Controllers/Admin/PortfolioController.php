@@ -27,8 +27,7 @@ class PortfolioController extends Controller
      */
     public function index()
     {
-        $portfolios = Portfolio::all();
-        // dd($portfolios);
+        $portfolios = Portfolio::orderby("sortIds", "asc")->get();
         return view('admin.portfolios.index', compact('portfolios'));
     }
 
@@ -210,5 +209,19 @@ class PortfolioController extends Controller
                 return false;
             }
         }
+    }
+
+    public function updateSorting(Request $request)
+    {
+        $sortIds = $request->sort_Ids;
+        foreach ($sortIds as $key => $value) {
+            $menu = Portfolio::find($value);
+            if ($menu) {
+                $menu->sortIds = $key;
+                $menu->save();
+            }
+        }
+        $frontValue = Portfolio::orderby("sortIds", 'asc')->get();
+        return response()->json($frontValue);
     }
 }

@@ -132,6 +132,9 @@ use App\Http\Controllers\Admin\AuthController;
         Route::resource('frontmenu','App\Http\Controllers\Admin\FrontMenuController');
         Route::get('frontmenu/edit/{id?}', [FrontMenuController::class , 'edit'])->name('front.edit');
         Route::get('service/edit/{id?}', [AdminServiceController::class , 'edit'])->name('service.edit');
+        Route::get('portfolio/edit/{id?}', [AdminPortfolioController::class , 'edit'])->name('portfolio.edit');
+        Route::get('client/edit/{id?}', [AdminClientController::class , 'edit'])->name('client.edit');
+        Route::get('product/edit/{id?}', [AdminProductController::class , 'edit'])->name('product.edit');
 
 
         Route::resource('cities','App\Http\Controllers\Admin\CitiesController');
@@ -172,7 +175,13 @@ use App\Http\Controllers\Admin\AuthController;
         Route::post("sortFrontMenu" , [FrontMenuController::class , 'updateSorting'])->name("sort.front.menu");
         Route::post("sortMenu" , [MenusController::class , 'sortMenu'])->name("sort.menu");
         Route::post("sortService" , [AdminServiceController::class , 'updateSorting'])->name("sort.service");
-        // Route::post("sortSlider" , [HomeSliderController::class , 'sortSlider'])->name("sort.slider.image");
+        Route::post("sortPortfolio" , [AdminPortfolioController::class , 'updateSorting'])->name("sort.portfolio");
+        Route::post("sortClient" , [AdminClientController::class , 'updateSorting'])->name("sort.client");
+        Route::post("sortProduct" , [AdminProductController::class , 'updateSorting'])->name("sort.product");
+
+
+
+
         // Social Links Routes
         Route::get('/social/' , [SocialController::class , 'index'])->name('social.index');
         Route::get('/social/create' , [SocialController::class , 'create'])->name('social.create');
