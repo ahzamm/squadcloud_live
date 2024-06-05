@@ -56,7 +56,7 @@ class UserMenuAccessController extends Controller
     if($userCniccheck){
         return redirect()->back()->with('error' , 'User Cnic Already Used');
     }
-    $subMenuid     =  SubMenu::where('route_name' , 'user.create')->first();
+    $subMenuid     =  SubMenu::where('route_name' , 'user.index')->first();
     $userOperation =  "create_status" ;
     $userId        =  Auth::guard('admin' , 'user')->user()->id;
     $crudAccess    =  $this->crud_access($subMenuid->id ,  $userOperation , $userId );

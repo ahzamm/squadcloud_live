@@ -44,7 +44,7 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        $subMenuid     =  SubMenu::where('route_name' , 'products.create')->first();
+        $subMenuid     =  SubMenu::where('route_name' , 'products.index')->first();
         // dd($subMenuid);
         $userOperation =  "create_status" ;
         $userId        =  Auth::guard('admin' , 'user')->user()->id;

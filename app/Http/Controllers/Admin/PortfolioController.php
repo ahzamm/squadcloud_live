@@ -50,7 +50,7 @@ class PortfolioController extends Controller
      */
     public function store(Request $request)
     {
-        $subMenuid = SubMenu::where('route_name', 'portfolios.create')->first();
+        $subMenuid = SubMenu::where('route_name', 'portfolios.index')->first();
         $userOperation = "create_status";
         $userId = Auth::guard('admin', 'user')->user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
@@ -61,17 +61,22 @@ class PortfolioController extends Controller
         $validatedData = [
             'title' => 'required',
             'description' => 'required',
-            'status' => 'required',
         ];
         $valdiate = Validator::make($request->all(), $validatedData);
 
         if ($valdiate->fails()) {
-            return redirect()->back()->with('error', 'All Fields are required');
+            return redirect()->back()->withInput()->with('error', 'All Fields are required');
         }
 
+        if (!$request->hasFile('image')) {
+            return redirect()->back()->withInput()->with('error', 'Image is required');
+        }
+
+        if ($request->hasFile('image')) {
         if (!$request->file('image')->isValid() || !in_array($request->file('image')->extension(), ['jpeg', 'png', 'jpg'])) {
             return redirect()->back()->withInput()->with('error', 'Please provide a valid background image file of type: jpeg, png, or jpg.');
         }
+    }
 
         $filename = "";
         if ($request->hasFile('image')) {

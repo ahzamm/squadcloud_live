@@ -118,7 +118,7 @@ class ContactController extends Controller
     public function store(Request $request)
     {
 
-        $subMenuid = SubMenu::where('route_name', 'contacts.create')->first();
+        $subMenuid = SubMenu::where('route_name', 'contacts.index')->first();
         $userOperation = "create_status";
         $userId = Auth::guard('admin', 'user')->user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);

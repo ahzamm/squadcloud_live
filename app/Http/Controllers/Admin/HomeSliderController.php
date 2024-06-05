@@ -44,7 +44,7 @@ class HomeSliderController extends Controller
      */
     public function store(Request $request)
     {
-        $subMenuid = SubMenu::where('route_name', 'homesliders.create')->first();
+        $subMenuid = SubMenu::where('route_name', 'homesliders.index')->first();
         $userOperation = "create_status";
         $userId = Auth::guard('admin', 'user')->user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);

@@ -22,7 +22,7 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label for="">Portfolio Title <span style="color: red">*</span></label>
-                    <input type="text" class="form-control" name="title" placeholder="Example : Bitcoin" required value="{{old('package_name')}}">
+                    <input type="text" class="form-control" name="title" placeholder="Example : Bitcoin" required value="{{old('title')}}">
                     @error('package_name')
                     <p class="text-danger mt-2 mb-0 text-sm">{{$message}}</p>
                     @enderror
@@ -31,7 +31,7 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label for="">Description <span style="color: red">*</span></label>
-                    <input type="text" class="form-control" name="description" placeholder="Example : 15 Mbps" required value="{{old('mbps')}}">
+                    <input type="text" class="form-control" name="description" placeholder="Example : 15 Mbps" required value="{{old('description')}}">
                     @error('mbps')
                     <p class="text-danger mt-2 mb-0 text-sm">{{$message}}</p>
                     @enderror
@@ -40,7 +40,7 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label for="">Link <span style="color: red">*</span></label>
-                    <input type="url" class="form-control" name="link" placeholder="Example : Green" required value="{{old('color')}}">
+                    <input type="url" class="form-control" name="link" placeholder="Example : Green" required value="{{old('link')}}">
                     @error('color')
                     <p class="text-danger mt-2 mb-0 text-sm">{{$message}}</p>
                     @enderror
