@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
+    @php
+            $general_configuration = DB::table('general_configurations')->first();
+        @endphp
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Admin Login | Blink Broadband</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" href="{{asset('site/favicon.png')}}" sizes="32x32" />
-  <link rel="icon" href="{{asset('site/favicon.png')}}" sizes="192x192" />
+  <link rel="icon" href="{{ asset('frontend_assets/images/' . $general_configuration->brand_logo) }}" sizes="32x32" />
+  <link rel="icon" href="{{ asset('frontend_assets/images/' . $general_configuration->brand_logo) }}" sizes="192x192" />
   <!-- Font Awesome -->
   <link rel="stylesheet" href="{{asset('backend/plugins/fontawesome-free/css/all.min.css')}}">
   <!-- Ionicons -->
@@ -22,9 +25,6 @@
 <body class="hold-transition login-page">
   <div class="login-box">
     <div class="login-logo">
-        @php
-            $general_configuration = DB::table('general_configurations')->first();
-        @endphp
       <a href="http://logon.com.pk/" target="_blank"><img src="{{ asset('frontend_assets/images/' . $general_configuration->brand_logo) }}" alt="">
       </a>
     </div>

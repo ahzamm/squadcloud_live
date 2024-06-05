@@ -2,8 +2,8 @@
 @push('style')
 <link rel="stylesheet" href="{{asset('backend/plugins/toastr/toastr.min.css')}}">
 <link rel="stylesheet" href="{{asset('backend/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
-<link rel="stylesheet" href="{{asset('backend/plugins/datatables-responsive/css/responsive.bootstrap4.min.css')}}">    
-<link rel="stylesheet" href="{{asset('site/sweet-alert/sweetalert2.css')}}">  
+<link rel="stylesheet" href="{{asset('backend/plugins/datatables-responsive/css/responsive.bootstrap4.min.css')}}">
+<link rel="stylesheet" href="{{asset('site/sweet-alert/sweetalert2.css')}}">
 @endpush
 @section('content')
 <div class="content-wrapper">
@@ -26,6 +26,7 @@
                       <th>Serial#</th>
                       <th>Client Logo</th>
                       <th>Link</th>
+                      <th>Title</th>
                       <th>Description</th>
                       <th>Status</th>
                       <th>Action</th>
@@ -33,16 +34,16 @@
                   </thead>
                   <tbody>
                     @foreach ($clients as $key=> $item)
-                    <tr class="table-row"> 
+                    <tr class="table-row">
                       <td>{{++$key}}</td>
                       <td>
                         <img width="40px" height="40px" src="{{ asset('frontend_assets/images/clients/' . $item->logo) }}" alt="internet product provider in karachi/Clifton/pakistan" />
                     </td>
                       <td>{{$item->link}}</td>
-                      <td>{{$item->description}}</td>
+                      <td>{{$item->title}}</td>
+                      <td>{!! $item->description !!}</td>
                       <td>{{$item->is_active == 1?'active':'deactive'}}</td>
                       <td class="d-flex justify-content-center" style="gap: 5px;">
-                        {{-- <button class="btn btn-success btn-sm viewFrontPages" data-value="{{ $item->id }}"><i class="fa fa-eye"></i></button> --}}
                         <a class="btn btn-primary btn-sm" href="{{ route('clients.edit', $item->id) }}"><i class="fa fa-edit"></i></a>
                         <button class="btn btn-danger btn-sm btnDeleteMenu" data-value="{{ $item->id }}"><i class="fa fa-trash"></i></button>
                       </td>
@@ -69,7 +70,7 @@
 <script src="{{asset('backend/plugins/datatables-responsive/js/responsive.bootstrap4.min.js')}}"></script>
 <script src="{{asset('site/sweet-alert/sweetalert2.min.js')}}"></script>
 <script>
-  let packageDeleteUrl  = "{{route('client.destroy')}}"; 
+  let packageDeleteUrl  = "{{route('client.destroy')}}";
   $(document).on('click' ,'.btnDeleteMenu' ,function(){
     id = $(this).attr('data-value');
     swal({

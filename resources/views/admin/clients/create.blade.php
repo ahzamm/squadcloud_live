@@ -37,10 +37,22 @@
                     @enderror
                   </div>
                 </div>
+
                 <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="">Title <span style="color: red">*</span></label>
+                      <input type="text" class="form-control" name="title" placeholder="Example : 15 Mbps" required value="{{old('title')}}">
+                      @error('title')
+                      <p class="text-danger mt-2 mb-0 text-sm">{{$message}}</p>
+                      @enderror
+                    </div>
+                  </div>
+
+
+                <div class="col-md-12">
                   <div class="form-group">
                     <label for="">Description <span style="color: red">*</span></label>
-                    <input type="text" class="form-control" name="description" placeholder="Example : Green" required value="{{old('description')}}">
+                    <textarea name="description" rows="4" placeholder=""  class="form-control summernote">{{old('description')}}</textarea>
                     @error('color')
                     <p class="text-danger mt-2 mb-0 text-sm">{{$message}}</p>
                     @enderror

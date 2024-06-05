@@ -36,16 +36,20 @@
          @forelse ($clients as $client)
          <div class="col-lg-4 col-md-6">
             <div class="card" data-aos="flip-left" data-aos-duration="1000">
-               <a href="{{ $client->link }}" target="_blank" class="card-client d-flex justify-content-center align-items-center" style="height: 100px">
-                  <div class="clients-logo">
-                     <img src="frontend_assets/images/clients/{{$client->logo}}"  class="p-2 d-inline-block">
-                  </div>
-               </a>
-               <div class="card-body">
-                  <p>{!! $client->description !!}</p>
-               </div>
+              <a href="{{ $client->link }}" target="_blank" class="card-client d-flex justify-content-center align-items-center" style="height: 100px">
+                <div class="clients-logo">
+                  <img src="frontend_assets/images/clients/{{$client->logo}}" class="p-2 d-inline-block">
+                </div>
+              </a>
+              <div class="card-body" style=" display: flex;
+              justify-content: center;
+              align-items: center;
+              height: 100%;">
+                <p><b><h5>{!! substr($client->title, 0, 20) !!}</h5></b></p>
+              </div>
             </div>
-         </div>
+          </div>
+
          @empty
          <div class="alert alert-danger">No Record Found!</div>
          @endforelse

@@ -44,7 +44,7 @@ class ClientController extends Controller
      */
     public function store(Request $request)
     {
-        $subMenuid = SubMenu::where('route_name', 'clients.create')->first();
+        $subMenuid = SubMenu::where('route_name', 'clients.index')->first();
         $userOperation = "create_status";
         $userId = Auth::guard('admin', 'user')->user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
@@ -54,12 +54,12 @@ class ClientController extends Controller
 
         $validatedData = [
             "link" => "required",
+            "title" => "required",
             "description" => "required",
-            "is_active" => "required",
         ];
         $valdiate = Validator::make($request->all(), $validatedData);
         if ($valdiate->fails()) {
-            return redirect()->back()->with('error', 'All Fields are required');
+            return redirect()->back()->withInput()->with('error', 'All Fields are required');
         }
 
         if (!$request->hasFile('logo')) {
@@ -83,6 +83,7 @@ class ClientController extends Controller
         $client = new Client();
         $client->logo = $filename;
         $client->link = $request['link'];
+        $client->title = $request['title'];
         $client->description = $request['description'];
         $client->is_active = $request->has('is_active') ? 1 : 0;
         $client->save();
@@ -129,11 +130,12 @@ class ClientController extends Controller
         $userId = Auth::guard('admin', 'user')->user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
         if (!$crudAccess) {
-            return redirect()->back()->with('error', 'No Access To Update Clients');
+            return redirect()->back()->withInput()->with('error', 'No Access To Update Clients');
         }
 
         $validatedData = [
             "link" => "required",
+            "title" => "required",
             "description" => "required",
         ];
         $valdiate = Validator::make($request->all(), $validatedData);
@@ -160,9 +162,10 @@ class ClientController extends Controller
             $client->logo = $filename;
         }
 
+        $client->title = $request['title'];
         $client->description = $request['description'];
         $client->link = $request['link'];
-        $client->is_active = $request->has('status') ? 1 : 0;
+        $client->is_active = $request->has('is_active') ? 1 : 0;
         $client->save();
 
         return redirect()->route('clients.index')->with('success', 'Client updated successfully!');

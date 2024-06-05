@@ -43,19 +43,30 @@
                     @enderror
                   </div>
                 </div>
+
                 <div class="col-md-6">
                   <div class="form-group">
-                    <label for="">Description <span style="color: red">*</span></label>
-                    <input type="text" class="form-control" name="description"  value="{{old('description') == NULL?$client->description:old('description') }}">
-                    @error('description')
+                    <label for="">Title <span style="color: red">*</span></label>
+                    <input type="text" class="form-control" name="title"  value="{{old('title') == NULL?$client->title:old('title') }}">
+                    @error('title')
                     <p class="text-danger mt-2 mb-0 text-sm">{{$message}}</p>
                     @enderror
+                  </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="">Description <span style="color: red">*</span></label>
+                      <textarea name="description" rows="4" placeholder="Example : How are you" required class="form-control summernote">{{$client->description}}</textarea>
+                      @error('description')
+                      <p class="text-danger mt-2 mb-0 text-sm">{{$message}}</p>
+                      @enderror
+                    </div>
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group clearfix">
                     <div class="icheck-success d-inline">
-                      <input type="checkbox"  {{ $client->is_active == 1? 'checked' :'unchecked' }} name="status" id="checkboxSuccess1">
+                      <input type="checkbox"  {{ $client->is_active == 1? 'checked' :'unchecked' }} name="is_active" id="checkboxSuccess1">
                       <label for="checkboxSuccess1">
                         Status (On & Off)
                       </label>
