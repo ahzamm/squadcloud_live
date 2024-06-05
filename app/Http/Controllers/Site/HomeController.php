@@ -21,8 +21,8 @@ class HomeController extends Controller
     {
 
         $home_sliders = HomeSlider::where('is_active', 1)->get();
-        // dd($home_sliders[0]->heading);
-        // $services = Service::where('is_active', 1)->first();
+        $service_menu = FrontMenu::where('menu', 'Services')->first();
+        $services = Service::where('is_active', 1)->orderby("sortIds" , "asc")->get();
         // $front_menu = FrontMenu::where('is_active', 1)->first();
         // $portfolios = Portfolio::where('is_active', 1)->first();
         // $products = Product::where('is_active', 1)->first();
@@ -34,8 +34,8 @@ class HomeController extends Controller
 
         return view('frontend.index', compact(
             'home_sliders',
-            // 'front_menu',
-            // 'services',
+            'service_menu',
+            'services',
             // 'portfolios',
             // 'products',
             // 'clients',
