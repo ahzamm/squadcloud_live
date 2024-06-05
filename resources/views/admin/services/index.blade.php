@@ -24,7 +24,6 @@
                   <thead>
                     <tr>
                       <th>Serial#</th>
-                      <th></th>
                       <th>Service Name</th>
                       <th>Logo</th>
                       <th>TagLine</th>
@@ -39,20 +38,11 @@
                   <tbody id="sortfrontMenu" class="move">
                     @foreach ($services as $key=> $item)
                     <tr class="table-row">
-                    <td>
-                        {{ $key + 1 }}
-                        <i class="fas fa-sort" id="sort-serial"></i>
-                        <input type="hidden" class="order-id"
-                            value="{{ $item->id }}">
-                    </td>
-
+                    <td>{{ $key + 1 }}<i class="fas fa-sort" id="sort-serial"></i><input type="hidden" class="order-id"value="{{ $item->id }}"></td>
                       <td>{{ $item->service}}</td>
-                      <td>
-                          <img width="40px" height="40px" src="{{ asset('frontend_assets/images/services/' . $item->logo) }}" alt="internet service provider in karachi/Clifton/pakistan" />
-                      </td>
+                      <td><img width="40px" height="40px" src="{{ asset('frontend_assets/images/services/' . $item->logo) }}" alt="internet service provider in karachi/Clifton/pakistan" />                      </td>
                       <td>{{ $item->tagline}}</td>
                       <td>{!! substr($item->description, 0, 100) !!}</td>
-                      {{-- <td>{!! $item->description !!}</td> --}}
                       <td>{{ $item->slug}}</td>
                       <td>
                         <img width="40px" height="40px" src="{{ asset('frontend_assets/images/services/' . $item->background_image) }}" alt="internet service provider in karachi/Clifton/pakistan" />
@@ -296,7 +286,7 @@
                   <td> <img width="40px" height="40px" src="{{ asset('frontend_assets/images/services/') }}/${value.background_image}" alt="service logo" /></td>
                   <td>${value.is_active == 1?'active':'deactive'}</td>
                   <td>
-                  <a href="` + editUrlFront + "/" + value.id + `" class="btn btn-sm btn-info"><i class="fa fa-edit"></i></a>
+                  <a href="` + editUrlFront + "/" + value.id + `" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></a>
                   <button class="btn btn-danger btn-sm deleteRecord" data-id="${value.id}">
                   <i class="fa fa-trash"></i> </button>
                   </td>
