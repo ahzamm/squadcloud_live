@@ -62,7 +62,7 @@
     </style>
 
 
-    {{-- <div id="loading">
+    <div id="loading">
         <div class="position-relative loading-inner">
             <div class="svg_path">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="-8.1 -0.1 50.31 18.34">
@@ -72,7 +72,7 @@
                 </svg>
             </div>
         </div>
-    </div> --}}
+    </div>
 
     <!-- End Social Links -->
     <section id="home" class="iq-main-slider p-0">
@@ -297,6 +297,112 @@
  </section>
 
 
+  <!-- -------Contact Us------- -->
+  <section id="portfolio-section" class="contact position-relative pb-5">
+    <div class="contact-bg"></div>
+    <div class="container pb-1">
+       <div class="text-center" data-aos="zoom-in-down">
+          <h2 class="section-heading text-uppercase">CONTACT US</h2>
+          <h3 class="section-subheading text-muted2">{!! $contact_menu->tagline !!}</h3>
+       </div>
+       <div class="main-form">
+
+        <form class="contact-form" action="{{route('site.contact.request')}}" method="post" id="contactForm">
+            @csrf
+            <div class="row mb-3">
+               <div class="col" data-aos="fade-right" data-aos-duration="1000">
+                  <input type="text" id="full_name" class="form-control name" name="full_name" value="{{ old('full_name') }}" placeholder="Full Name*">
+                  <span class="error-message" id="name-error">This field is required</span>
+               </div>
+               <div class="col" data-aos="fade-left" data-aos-duration="1000">
+                  <input type="text" id="email" class="form-control email" name="email" value="{{ old('email') }}" placeholder="Email*">
+                  <span class="error-message" id="email-error">This field is required</span>
+               </div>
+            </div>
+            <div class="row mb-3">
+               <div class="col" data-aos="fade-right" data-aos-duration="1000">
+                  <input type="text" id="phone_number" class="form-control phone" name="phone" value="{{ old('phone') }}" placeholder="Phone Number*">
+                  <span class="error-message" id="phone-error">This field is required</span>
+               </div>
+               <div class="col" data-aos="fade-left" data-aos-duration="1000">
+                  <input type="text" id="service_required" class="form-control service" name="service_required" value="{{ old('service_required') }}" placeholder="Service Required*">
+                  <span class="error-message" id="service-error">This field is required</span>
+               </div>
+            </div>
+            <div class="row" style="margin-top: 25px; z-index: 9;">
+               <div class="col position-relative" data-aos="fade-up" data-aos-duration="1000">
+                  <div class="overlay"></div>
+                  <textarea class="form-control custom-textarea" name="message" id="message" placeholder="Message*" cols="30" rows="5" style="height: 350px; background-color: #71030f;color: #fff; z-index: 9;border-bottom-left-radius: 20px;
+                  border-bottom-right-radius: 20px;">{{ old('message') }}</textarea>
+                  <span class="error-message" id="message-error">This field is required</span>
+                  <div class="d-flex align-items-center justify-content-center">
+                     <button type="submit" id="send" value="send me" class="" style="background: #fff; margin: auto; width: 250px; margin-top: -60px; height: 60px; color: #71030f; border-top-left-radius: 20px; border-top-right-radius: 20px; border:none; z-index: 9;">Send Message</button>
+                  </div>
+               </div>
+            </div>
+         </form>
+       </div>
+    </div>
+ </section>
+
+<style>
+    .error-message {
+    display: none;
+    color: red;
+    font-size: 0.875rem;
+}
+
+</style>
+ <script>
+    document.getElementById('contactForm').addEventListener('submit', function(event) {
+        let valid = true;
+
+        // Clear previous error states
+        document.querySelectorAll('.error-message').forEach(function(el) {
+            el.style.display = 'none';
+        });
+
+        // Validate Full Name
+        const fullName = document.getElementById('full_name').value.trim();
+        if (!fullName) {
+            valid = false;
+            document.getElementById('name-error').style.display = 'inline';
+        }
+
+        // Validate Email
+        const email = document.getElementById('email').value.trim();
+        if (!email) {
+            valid = false;
+            document.getElementById('email-error').style.display = 'inline';
+        }
+
+        // Validate Phone Number
+        const phone = document.getElementById('phone_number').value.trim();
+        if (!phone) {
+            valid = false;
+            document.getElementById('phone-error').style.display = 'inline';
+        }
+
+        // Validate Service Required
+        const serviceRequired = document.getElementById('service_required').value.trim();
+        if (!serviceRequired) {
+            valid = false;
+            document.getElementById('service-error').style.display = 'inline';
+        }
+
+        // Validate Message
+        const message = document.getElementById('message').value.trim();
+        if (!message) {
+            valid = false;
+            document.getElementById('message-error').style.display = 'inline';
+        }
+
+        // Prevent form submission if validation fails
+        if (!valid) {
+            event.preventDefault();
+        }
+    });
+</script>
 
 
 @endsection()

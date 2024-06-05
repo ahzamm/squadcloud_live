@@ -30,6 +30,9 @@ class HomeController extends Controller
         $client_menu = FrontMenu::where('menu', 'Client')->first();
         $Clients = Client::where('is_active', 1)->orderby("sortIds", "asc")->get();
 
+        $contact_menu = FrontMenu::where('menu', 'Contact')->first();
+        $Contact = Contact::first();
+
         return view(
             'frontend.index',
             compact(
@@ -41,7 +44,9 @@ class HomeController extends Controller
                 'client_menu',
                 'Clients',
                 'product_menu',
-                'products'
+                'products',
+                'contact_menu',
+                'Contact'
             )
         );
     }

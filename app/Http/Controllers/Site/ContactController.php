@@ -40,10 +40,10 @@ class ContactController extends Controller
             "message" => "required",
         ];
         $validate = Validator::make($request->all(), $validatedData);
-
         if ($validate->fails()) {
             return redirect()->back()->with('error', 'All Fields are required');
         }
+
         $contact_request = new ContactRequest();
         $contact_request->full_name = $request['full_name'];
         $contact_request->email = $request['email'];
