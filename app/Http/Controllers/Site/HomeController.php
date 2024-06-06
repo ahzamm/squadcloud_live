@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Site;
 
+use App\Models\BottomSlider;
 use App\Models\Contact;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -29,6 +30,7 @@ class HomeController extends Controller
         $products = Product::where('is_active', 1)->get();
         $client_menu = FrontMenu::where('menu', 'Client')->first();
         $Clients = Client::where('is_active', 1)->orderby("sortIds", "asc")->get();
+        $bottom_sliders = BottomSlider::where('is_active', 1)->orderby("sortIds", "asc")->get();
 
         $contact_menu = FrontMenu::where('menu', 'Contact')->first();
         $Contact = Contact::first();
@@ -46,7 +48,7 @@ class HomeController extends Controller
                 'product_menu',
                 'products',
                 'contact_menu',
-                'Contact'
+                'Contact', 'bottom_sliders'
             )
         );
     }

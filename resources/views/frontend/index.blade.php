@@ -296,6 +296,22 @@
  </section>
 
 
+  <!-- -------SLIDER------- -->
+  <section id="section-slider" class="slider m-0 p-0 position-relative">
+
+    <div class="strategy-bg"></div>
+    <div class="strategy-slider" data-aos="fade" data-aos-delay="300">
+       @foreach($bottom_sliders as $bottom_slider)
+       <div class="slider-1 d-flex align-items-center justify-content-center py-3">
+          <img src="frontend_assets/images/bottom_sliders/{{$bottom_slider->image}}" style="width: 1200px;" class="w-50" alt="{{$bottom_slider->title}}">
+       </div>
+
+       @endforeach
+
+    </div>
+ </section>
+
+
   <!-- -------Contact Us------- -->
   <section id="portfolio-section" class="contact position-relative pb-5">
     <div class="contact-bg"></div>
@@ -343,6 +359,7 @@
        </div>
     </div>
  </section>
+
 
 <style>
     .error-message {
