@@ -129,37 +129,33 @@ class BottomSliderController extends Controller
         }
 
         $validatedData = [
-            "link" => "required",
             "title" => "required",
-            "description" => "required",
         ];
         $valdiate = Validator::make($request->all(), $validatedData);
         if ($valdiate->fails()) {
             return redirect()->back()->withInput()->with('error', 'All Fields are required');
         }
 
-        if ($request->hasFile('logo')) {
-            if (!$request->file('logo')->isValid() || !in_array($request->file('logo')->extension(), ['jpeg', 'png', 'jpg'])) {
+        if ($request->hasFile('image')) {
+            if (!$request->file('image')->isValid() || !in_array($request->file('image')->extension(), ['jpeg', 'png', 'jpg'])) {
                 return redirect()->back()->withInput()->with('error', 'Please provide a valid background image file of type: jpeg, png, or jpg.');
             }
         }
 
         $bottom_slider = BottomSlider::findOrFail($id);
 
-        if ($request->hasFile('logo')) {
-            if ($bottom_slider->logo && file_exists(public_path('frontend_assets/images/bottom_sliders/' . $bottom_slider->logo))) {
-                unlink(public_path('frontend_assets/images/bottom_sliders/' . $bottom_slider->logo));
+        if ($request->hasFile('image')) {
+            if ($bottom_slider->logo && file_exists(public_path('frontend_assets/images/bottom_sliders/' . $bottom_slider->image))) {
+                unlink(public_path('frontend_assets/images/bottom_sliders/' . $bottom_slider->image));
             }
-            $file = $request->file('logo');
+            $file = $request->file('image');
             $extension = $file->getClientOriginalExtension();
             $filename = Str::random(40) . '.' . $extension;
             $file->move(public_path('frontend_assets/images/bottom_sliders'), $filename);
-            $bottom_slider->logo = $filename;
+            $bottom_slider->image = $filename;
         }
 
         $bottom_slider->title = $request['title'];
-        $bottom_slider->description = $request['description'];
-        $bottom_slider->link = $request['link'];
         $bottom_slider->is_active = $request->has('is_active') ? 1 : 0;
         $bottom_slider->save();
 
