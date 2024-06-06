@@ -61,7 +61,7 @@
         }
     </style>
 
-{{--
+
     <div id="loading">
         <div class="position-relative loading-inner">
             <div class="svg_path">
@@ -72,7 +72,7 @@
                 </svg>
             </div>
         </div>
-    </div> --}}
+    </div>
 
     <!-- End Social Links -->
     <section id="home" class="iq-main-slider p-0">
