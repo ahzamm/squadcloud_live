@@ -312,6 +312,24 @@
  </section>
 
 
+ <!-- -------New projects------- -->
+ <div id="portfolio-section" class="project position-relative py-5">
+    <div class="project-bg"></div>
+    <div class="container">
+       <div class="text-center" data-aos="zoom-in-down">
+        <h2 class="section-heading">Got New Project?</h2>
+        <h5 class="text-white">Contact us using the following links.</h3>
+       </div>
+       <div class="d-flex align-items-center justify-content-center mt-4" style="column-gap: 12px">
+          <a href="{{$general_configuration->email_url}}" class="social-btn" data-aos="fade-up" data-aos-duration="1000"><i class="far fa-envelope"></i></a>
+          <a href="{{$general_configuration->whatsapp_url}}" class="social-btn" data-aos="fade-down" data-aos-duration="1000"><i class="fab fa-whatsapp"></i></a>
+          <a href="{{$general_configuration->skype_url}}" class="social-btn" data-aos="fade-up" data-aos-duration="1000"><i class="fab fa-skype"></i></a>
+          <a href="{{$general_configuration->phone_url}}" class="social-btn" data-aos="fade-down" data-aos-duration="1000"><i class="fa fa-phone"></i></a>
+       </div>
+    </div>
+ </div>
+
+
   <!-- -------Contact Us------- -->
   <section id="portfolio-section" class="contact position-relative pb-5">
     <div class="contact-bg"></div>

@@ -31,7 +31,7 @@ class HomeController extends Controller
         $client_menu = FrontMenu::where('menu', 'Client')->first();
         $Clients = Client::where('is_active', 1)->orderby("sortIds", "asc")->get();
         $bottom_sliders = BottomSlider::where('is_active', 1)->orderby("sortIds", "asc")->get();
-
+        $general_configuration = GeneralConfiguration::first();
         $contact_menu = FrontMenu::where('menu', 'Contact')->first();
         $Contact = Contact::first();
 
@@ -48,7 +48,9 @@ class HomeController extends Controller
                 'product_menu',
                 'products',
                 'contact_menu',
-                'Contact', 'bottom_sliders'
+                'Contact',
+                'bottom_sliders',
+                'general_configuration'
             )
         );
     }
