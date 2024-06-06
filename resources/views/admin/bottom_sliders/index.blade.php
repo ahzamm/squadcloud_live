@@ -39,7 +39,7 @@
                                 value="{{ $item->id }}">
                         </td>
                       <td>
-                        <img width="40px" height="40px" src="{{ asset('frontend_assets/images/bottom_sliders/' . $item->image) }}" alt="internet product provider in karachi/Clifton/pakistan" />
+                        <img width="100px" height="40px" src="{{ asset('frontend_assets/images/bottom_sliders/' . $item->image) }}" alt="internet product provider in karachi/Clifton/pakistan" />
                     </td>
                       <td>{{$item->title}}</td>
                       <td>{{$item->is_active == 1?'active':'deactive'}}</td>
@@ -270,7 +270,7 @@
                   <td>${index + 1 } <i class="fas fa-sort" id="sort-serial"></i>
                   <input type="hidden" class="order-id" value="${value.id}">
                   </td>
-                  <td> <img width="40px" height="40px" src="{{ asset('frontend_assets/images/bottom_sliders/') }}/${value.image}" alt="service logo" /></td>
+                  <td> <img width="100px" height="40px" src="{{ asset('frontend_assets/images/bottom_sliders/') }}/${value.image}" alt="service logo" /></td>
                    <td>${value.title}</td>
                   <td>${value.is_active == 1?'active':'deactive'}</td>
                   <td>
