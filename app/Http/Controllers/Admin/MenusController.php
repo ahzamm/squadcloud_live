@@ -94,7 +94,7 @@ class MenusController extends Controller
                 }
             }
         },3);
-        return redirect()->route("menus.index");
+        return redirect()->route("menus.index")->with('success', 'Menu Created successfully!');;
     }
 
     /**
