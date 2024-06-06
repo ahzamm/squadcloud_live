@@ -38,6 +38,7 @@
                                         <table id="example" class="table table-bordered table-striped">
                                             <thead>
                                                 <tr>
+                                                    <th>Sort</th>
                                                     <th>Serial#</th>
                                                     <th>Main Menus</th>
                                                     <th>Route</th>
@@ -53,6 +54,7 @@
                                             <tbody id="sortfrontMenu" class="move">
                                                 @foreach ($collection as $key => $menu)
                                                     <tr>
+                                                        <td><i class="fas fa-sort" id="sort-serial"></i></td>
                                                         <td>
                                                             {{ $key + 1 }}
                                                             <input type="hidden" class="order-id"
@@ -189,6 +191,7 @@
                     let table = "";
                     $(response).each(function(index, value) {
                         table += ` <tr>
+                  <td><i class="fas fa-sort" id="sort-serial"></i></td>
                   <td>${index + 1 }
                   <input type="hidden" class="order-id" value="${value.id}">
                   </td>
