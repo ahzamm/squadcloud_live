@@ -27,7 +27,6 @@
                       <th>Service Name</th>
                       <th>Logo</th>
                       <th>TagLine</th>
-                      <th>Description</th>
                       <th>Slug</th>
                       <th>Background Image</th>
                       <th>Status</th>
@@ -42,7 +41,6 @@
                       <td>{{ $item->service}}</td>
                       <td><img width="40px" height="40px" src="{{ asset('frontend_assets/images/services/' . $item->logo) }}" alt="internet service provider in karachi/Clifton/pakistan" />                      </td>
                       <td>{{ $item->tagline}}</td>
-                      <td>{!! substr($item->description, 0, 100) !!}</td>
                       <td>{{ $item->slug}}</td>
                       <td>
                         <img width="40px" height="40px" src="{{ asset('frontend_assets/images/services/' . $item->background_image) }}" alt="internet service provider in karachi/Clifton/pakistan" />
