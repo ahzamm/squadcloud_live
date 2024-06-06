@@ -41,9 +41,11 @@
                                         </tr>
                                     </thead>
                                     <tbody id="sortfrontMenu" class="move">
-                                        @foreach ($data['social'] as $item)
+                                        @foreach ($socials as $key => $item)
                                         <tr>
-                                            <td>{{$loop->iteration}}</td>
+                                            <td>{{$key+1}}
+                                            <input type="hidden" class="order-id" value="{{$item->id}}">
+                                            </td>
                                             <td>{{$item->name}}</td>
                                             <td><i class="{{$item->icon}}"></i></td>
                                             <td>{{$item->url}}</td>
@@ -130,5 +132,53 @@
         })
         //delete menu end
     })
+    // Sorting Data
+   let sortTable = $("#sortfrontMenu");
+   let sortingFrontUrl = "{{route('sort.social')}}";
+   let csrfToken = $(".csrf_token");
+   var editUrlFront = "{{route('social.edit')}}";
+   $(sortTable).sortable({
+      update: function(event, ui) {
+         var SortIds = $(this).find('.order-id').map(function() {
+            return $(this).val().trim();
+         }).get();
+         // Getting The Order id of each sortIds
+         $(this).find('.order-id').each(function(index) {
+            $(this).text(SortIds[index]);
+         });
+         //Sending Ajax to update the sort ids and change the data sorting
+         $.ajax({
+            url: sortingFrontUrl,
+            type: "post",
+            data: {
+               sort_Ids: SortIds
+            },
+            headers: {
+               "X-CSRF-TOKEN": csrfToken.val()
+            },
+            success: function(response) {
+               let table = "";
+               $(response).each(function(index, value) {
+                  table += ` <tr>
+                  <td>${index + 1 }
+                  <input type="hidden" class="order-id" value="${value.id}">
+                  </td>
+                  <td >${value.name}</td>
+                  <td>${value.icon}</td>
+                  <td>${value.url}</td>
+                  <td>${value.color}</td>
+                  <td>${value.status}</td>
+                  <td>
+                  <a href="` + editUrlFront + "/" + value.id + `" class="btn btn-sm btn-info"><i class="fa fa-edit"></i></a>
+                  <button class="btn btn-danger btn-sm deleteRecord" data-id="${value.id}">
+                  <i class="fa fa-trash"></i> </button>
+                  </td>
+                  </tr>`;
+               });
+               $(sortTable).html(table);
+            }
+         })
+      }
+   });
 </script>
 @endpush

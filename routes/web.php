@@ -1,16 +1,5 @@
 <?php
 
-        /*
-        |--------------------------------------------------------------------------
-        | Web Routes
-        |--------------------------------------------------------------------------
-        |
-        | Here is where you can register web routes for your application. These
-        | routes are loaded by the RouteServiceProvider within a group which
-        | contains the "web" middleware group. Now create something great!
-        |
-        */
-
 use App\Http\Controllers\Admin\FrontMenuController;
 use App\Http\Controllers\Admin\HomeSliderController;
 use App\Http\Controllers\Admin\HomeVideoController;
@@ -180,6 +169,7 @@ use App\Http\Controllers\Admin\AuthController;
         Route::post("sortClient" , [AdminClientController::class , 'updateSorting'])->name("sort.client");
         Route::post("sortProduct" , [AdminProductController::class , 'updateSorting'])->name("sort.product");
         Route::post("sortBottomSlider" , [AdminBottomSliderController::class , 'updateSorting'])->name("sort.bottom_slider");
+        Route::post("sortSocial" , [SocialController::class , 'updateSorting'])->name("sort.social");
 
 
 
@@ -276,7 +266,7 @@ use App\Http\Controllers\Admin\AuthController;
         Route::put("/general_configuration-update" , [AdminGeneralConfigurationController::class ,"update"])->name("general-configurations.update");
 
         Route::resource('bottom_sliders','App\Http\Controllers\Admin\BottomSliderController');
-        Route::get("/bottom_slider/destroy/{id?}" , [AdminBottomSliderController::class ,"destroy"])->name("bottom_slider.destroy");
+        Route::get("/bottom_sliders/destroy/{id?}" , [AdminBottomSliderController::class ,"destroy"])->name("bottom_slider.destroy");
 
     });
 });
