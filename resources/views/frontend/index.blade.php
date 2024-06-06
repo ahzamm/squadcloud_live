@@ -61,7 +61,7 @@
         }
     </style>
 
-
+{{--
     <div id="loading">
         <div class="position-relative loading-inner">
             <div class="svg_path">
@@ -72,7 +72,7 @@
                 </svg>
             </div>
         </div>
-    </div>
+    </div> --}}
 
     <!-- End Social Links -->
     <section id="home" class="iq-main-slider p-0">
@@ -159,8 +159,7 @@
                       <p style="height:auto;" class="p-3 d-inline-block mb-0" style="transform: translate(7px, 6px);">{{$list->service}}</p>
                    </a>
                    <div class="card-body">
-                      {{-- <p class="para-text">{!!$list->description!!} --}}
-                      <p class="para-text">{!! substr($list->description, 0, 100) !!}
+                      <p class="para-text">{!! substr($list->tagline, 0, 100) !!}
                          <span>[<a href="/services/{{$list->slug}}" class="button">...</a>]</span>
                       </p>
                    </div>
