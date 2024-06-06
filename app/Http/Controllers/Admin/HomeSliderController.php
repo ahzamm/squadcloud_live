@@ -22,7 +22,7 @@ class HomeSliderController extends Controller
      */
     public function index()
     {
-        $homesliders = HomeSlider::all();
+        $homesliders = HomeSlider::orderby("sortIds", "asc")->get();
         return view('admin.homesliders.index', compact('homesliders'));
     }
 
@@ -299,5 +299,19 @@ class HomeSliderController extends Controller
                 return false;
             }
         }
+    }
+
+    public function updateSorting(Request $request)
+    {
+        $sortIds = $request->sort_Ids;
+        foreach ($sortIds as $key => $value) {
+            $menu = HomeSlider::find($value);
+            if ($menu) {
+                $menu->sortIds = $key;
+                $menu->save();
+            }
+        }
+        $frontValue = HomeSlider::orderby("sortIds", 'asc')->get();
+        return response()->json($frontValue);
     }
 }

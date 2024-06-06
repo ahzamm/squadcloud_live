@@ -125,6 +125,7 @@ use App\Http\Controllers\Admin\AuthController;
         Route::get('client/edit/{id?}', [AdminClientController::class , 'edit'])->name('client.edit');
         Route::get('product/edit/{id?}', [AdminProductController::class , 'edit'])->name('product.edit');
         Route::get('bottom_slider/edit/{id?}', [AdminBottomSliderController::class , 'edit'])->name('bottom_slider.edit');
+        Route::get('homeslider/edit/{id?}', [HomeSliderController::class , 'edit'])->name('homeslider.edit');
 
 
         Route::resource('cities','App\Http\Controllers\Admin\CitiesController');
@@ -170,6 +171,7 @@ use App\Http\Controllers\Admin\AuthController;
         Route::post("sortProduct" , [AdminProductController::class , 'updateSorting'])->name("sort.product");
         Route::post("sortBottomSlider" , [AdminBottomSliderController::class , 'updateSorting'])->name("sort.bottom_slider");
         Route::post("sortSocial" , [SocialController::class , 'updateSorting'])->name("sort.social");
+        Route::post("sortHomeSlider" , [HomeSliderController::class , 'updateSorting'])->name("sort.homeslider");
 
 
 

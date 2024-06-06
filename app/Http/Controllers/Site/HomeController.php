@@ -22,7 +22,7 @@ class HomeController extends Controller
     public function index()
     {
 
-        $home_sliders = HomeSlider::where('is_active', 1)->get();
+        $home_sliders = HomeSlider::where('is_active', 1)->orderby("sortIds", "asc")->get();
         $service_menu = FrontMenu::where('menu', 'Services')->first();
         $services = Service::where('is_active', 1)->orderby("sortIds", "asc")->get();
         $portfolio_menu = FrontMenu::where('menu', 'Portfolio')->first();

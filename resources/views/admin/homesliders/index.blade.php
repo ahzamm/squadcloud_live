@@ -23,6 +23,7 @@
                 <table class="table table-bordered table-striped" id="example1">
                   <thead>
                     <tr>
+                      <th>Sort</th>
                       <th>Serial#</th>
                       <th>Heading</th>
                       <th>Subheading</th>
@@ -35,10 +36,12 @@
                       <th>Action</th>
                     </tr>
                   </thead>
-                  <tbody>
+                  <input type="hidden" class="csrf_token" value="{{ csrf_token() }}">
+                  <tbody id="sortfrontMenu" class="move">
                     @foreach ($homesliders as $key=> $item)
                     <tr class="table-row">
-                      <td>{{ $item->id }}</td>
+                        <td><i class="fas fa-sort" id="sort-serial"></i></td>
+                        <td>{{ $key + 1 }}<input type="hidden" class="order-id"value="{{ $item->id }}"></td>
                       <td>{{ $item->heading}}</td>
                       <td>{{ $item->subheading}}</td>
                       <td>{{ $item->description}}</td>
@@ -81,6 +84,12 @@
 <script src="{{asset('backend/plugins/datatables-responsive/js/dataTables.responsive.min.js')}}"></script>
 <script src="{{asset('backend/plugins/datatables-responsive/js/responsive.bootstrap4.min.js')}}"></script>
 <script src="{{asset('site/sweet-alert/sweetalert2.min.js')}}"></script>
+<script>
+    $(function() {
+        $("#sortable").sortable();
+        $("#sortable").disableSelection();
+    });
+</script>
 <script>
   let packageDeleteUrl  = "{{route('homeslider.destroy')}}";
   $(document).on('click' ,'.btnDeleteMenu' ,function(){
@@ -247,5 +256,59 @@
       }
     })
   })
+
+  // Sorting Data
+  let sortTable = $("#sortfrontMenu");
+    let sortingFrontUrl = "{{ route('sort.homeslider') }}";
+    let csrfToken = $(".csrf_token");
+    var editUrlFront = "{{ route('front.edit') }}";
+    $(sortTable).sortable({
+        update: function(event, ui) {
+            var SortIds = $(this).find('.order-id').map(function() {
+                return $(this).val().trim();
+            }).get();
+            // Getting The Order id of each sortIds
+            $(this).find('.order-id').each(function(index) {
+                $(this).text(SortIds[index]);
+            });
+            //Sending Ajax to update the sort ids and change the data sorting
+            $.ajax({
+                url: sortingFrontUrl,
+                type: "post",
+                data: {
+                    sort_Ids: SortIds
+                },
+                headers: {
+                    "X-CSRF-TOKEN": csrfToken.val()
+                },
+                success: function(response) {
+                    let table = "";
+                    $(response).each(function(index, value) {
+                        table += ` <tr>
+                  <td><i class="fas fa-sort" id="sort-serial"></i></td>
+                  <td>${index + 1 }
+                  <input type="hidden" class="order-id" value="${value.id}">
+                  </td>
+                  <td >${value.heading}</td>
+                  <td>${value.subheading}</td>
+                  <td>${value.description}</td>
+                  <td> <img width="40px" height="40px" src="{{ asset('frontend_assets/images/home_sliders/') }}/${value.image_1}" alt="service logo" /></td>
+                  <td> <img width="40px" height="40px" src="{{ asset('frontend_assets/images/home_sliders/') }}/${value.image_2}" alt="service logo" /></td>
+                  <td> <img width="40px" height="40px" src="{{ asset('frontend_assets/images/home_sliders/') }}/${value.image_3}" alt="service logo" /></td>
+                  <td> <img width="40px" height="40px" src="{{ asset('frontend_assets/images/home_sliders/') }}/${value.image_4}" alt="service logo" /></td>
+                  <td>${value.is_active == 1?'active':'deactive'}</td>
+                  <td>
+                  <a href="` + editUrlFront + "/" + value.id + `" class="btn btn-sm btn-info"><i class="fa fa-edit"></i></a>
+                  <button class="btn btn-danger btn-sm deleteRecord" data-id="${value.id}">
+                  <i class="fa fa-trash"></i> </button>
+                  </td>
+                  </tr>`;
+                    });
+                    $(sortTable).html(table);
+                }
+            })
+        }
+    });
+
 </script>
 @endpush
