@@ -59,8 +59,6 @@ class HomeSliderController extends Controller
         ];
         $valdiate = Validator::make($request->all(), $validatedData);
         if ($valdiate->fails()) {
-            dd("==");
-            dd($valdiate->errors());
             return redirect()->back()->withInput()->with('error', 'All Fields are required');
         }
 
@@ -176,77 +174,81 @@ class HomeSliderController extends Controller
         }
 
         $validatedData = [
-            'homeslider' => 'required',
-            'tagline' => 'required',
+            'heading' => 'required',
+            'subheading' => 'required',
             'description' => 'required',
-            'slug' => 'required',
         ];
         $valdiate = Validator::make($request->all(), $validatedData);
         if ($valdiate->fails()) {
             return redirect()->back()->withInput()->with('error', 'All Fields are required');
         }
 
-        if ($request->hasFile('logo')) {
-            if (!$request->file('logo')->isValid() || !in_array($request->file('logo')->extension(), ['jpeg', 'png', 'jpg'])) {
-                return redirect()->back()->withInput()->with('error', 'Please provide a valid image file of type: jpeg, png, or jpg.');
-            }
+        if ($request->hasFile('image_1')) {
+        if (!$request->file('image_1')->isValid() || !in_array($request->file('image_1')->extension(), ['jpeg', 'png', 'jpg'])) {
+            return redirect()->back()->withInput()->with('error', 'Please provide a valid image file of type: jpeg, png, or jpg.');
         }
+    }
 
-        if ($request->hasFile('background_image')) {
-            if (!$request->file('background_image')->isValid() || !in_array($request->file('background_image')->extension(), ['jpeg', 'png', 'jpg'])) {
-                return redirect()->back()->withInput()->with('error', 'Please provide a valid background image file of type: jpeg, png, or jpg.');
-            }
-        }
+    if ($request->hasFile('image_2')) {
+    if (!$request->file('image_2')->isValid() || !in_array($request->file('image_2')->extension(), ['jpeg', 'png', 'jpg'])) {
+        return redirect()->back()->withInput()->with('error', 'Please provide a valid image file of type: jpeg, png, or jpg.');
+    }}
 
-        $validator = Validator::make($request->all(), [
-            'slug' => 'required|regex:/^[a-zA-Z0-9\-]+$/'
-        ]);
-        if ($validator->fails()) {
-            return redirect()->back()->withInput()->with('error', 'Please provide a valid slug');
-        }
+    if ($request->hasFile('image_3')) {
+    if (!$request->file('image_3')->isValid() || !in_array($request->file('image_3')->extension(), ['jpeg', 'png', 'jpg'])) {
+        return redirect()->back()->withInput()->with('error', 'Please provide a valid image file of type: jpeg, png, or jpg.');
+    }}
 
-        $isDuplicateSlugExists = Homeslider::where('slug', $request->slug)->where('id', '!=', $id)->first();
-        if ($isDuplicateSlugExists) {
-            return redirect()->back()->withInput()->with('error', "Provided slug is already used");
-        }
-
-        $isDuplicateNameExists = Homeslider::where('homeslider', $request->homeslider)->where('id', '!=', $id)->first();
-        if ($isDuplicateNameExists) {
-            return redirect()->back()->withInput()->with('error', "Provided homeslider name is already in use");
-        }
+    if ($request->hasFile('image_4')) {
+    if (!$request->file('image_4')->isValid() || !in_array($request->file('image_4')->extension(), ['jpeg', 'png', 'jpg'])) {
+        return redirect()->back()->withInput()->with('error', 'Please provide a valid image file of type: jpeg, png, or jpg.');
+    }}
 
         $homeslider = Homeslider::findOrFail($id);
 
-        if ($request->hasFile('logo')) {
-            if ($homeslider->logo && file_exists(public_path('frontend_assets/images/homesliders/' . $homeslider->logo))) {
-                unlink(public_path('frontend_assets/images/homesliders/' . $homeslider->logo));
-            }
-
-            $file = $request->file('logo');
-            $extension = $file->getClientOriginalExtension();
-            $filename = Str::random(40) . '.' . $extension;
-            $file->move(public_path('frontend_assets/images/homesliders'), $filename);
-            $homeslider->logo = $filename;
+        if ($request->hasFile('image_1')) {
+        $image_1_filename = "";
+        $file = $request->file('image_1');
+        $extension = $file->getClientOriginalExtension();
+        $image_1_filename = Str::random(40) . '.' . $extension;
+        $file->move(public_path('frontend_assets/images/home_sliders'), $image_1_filename);
+        $homeslider->image_1 = $image_1_filename;
         }
 
-        if ($request->hasFile('background_image')) {
-            if ($homeslider->background_image && file_exists(public_path('frontend_assets/images/homesliders/' . $homeslider->background_image))) {
-                unlink(public_path('frontend_assets/images/homesliders/' . $homeslider->background_image));
-            }
-
-            $file = $request->file('background_image');
-            $extension = $file->getClientOriginalExtension();
-            $filename = Str::random(40) . '.' . $extension;
-            $file->move(public_path('frontend_assets/images/homesliders'), $filename);
-            $homeslider->background_image = $filename;
+        if ($request->hasFile('image_2')) {
+        $image_2_filename = "";
+        $file = $request->file('image_2');
+        $extension = $file->getClientOriginalExtension();
+        $image_2_filename = Str::random(40) . '.' . $extension;
+        $file->move(public_path('frontend_assets/images/home_sliders'), $image_2_filename);
+        $homeslider->image_2 = $image_2_filename;
         }
 
-        $homeslider->homeslider = $request['homeslider'];
-        $homeslider->tagline = $request['tagline'];
+        if ($request->hasFile('image_3')) {
+        $image_3_filename = "";
+        $file = $request->file('image_3');
+        $extension = $file->getClientOriginalExtension();
+        $image_3_filename = Str::random(40) . '.' . $extension;
+        $file->move(public_path('frontend_assets/images/home_sliders'), $image_3_filename);
+        $homeslider->image_3 = $image_3_filename;
+        }
+
+        if ($request->hasFile('image_4')) {
+        $image_4_filename = "";
+        $file = $request->file('image_4');
+        $extension = $file->getClientOriginalExtension();
+        $image_4_filename = Str::random(40) . '.' . $extension;
+        $file->move(public_path('frontend_assets/images/home_sliders'), $image_4_filename);
+        $homeslider->image_4 = $image_4_filename;
+        }
+
+        $homeslider->heading = $request['heading'];
+        $homeslider->subheading = $request['subheading'];
         $homeslider->description = $request['description'];
-        $homeslider->slug = $request['slug'];
         $homeslider->is_active = $request->has('is_active') ? 1 : 0;
         $homeslider->save();
+
+
 
         return redirect()->route('homesliders.index')->with('success', 'Homeslider updated successfully!');
     }

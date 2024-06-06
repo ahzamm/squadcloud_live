@@ -21,8 +21,8 @@ use App\Http\Controllers\Admin\PortfolioController as AdminPortfolioController;
 use App\Http\Controllers\Admin\ClientController as AdminClientController;
 use App\Http\Controllers\Admin\AboutController as AdminAboutController;
 use App\Http\Controllers\Admin\ContactController as AdminContactController;
-use App\Http\Controllers\Admin\HomeSlideController as AdminHomeSlideController;
-// use App\Http\Controllers\Admin\SlideritemController as AdminSlideritemController;
+use App\Http\Controllers\Admin\HomeSliderController as AdminHomeSlideController;
+use App\Http\Controllers\Admin\BottomSliderController as AdminBottomSliderController;
 use App\Http\Controllers\Admin\HomeController as AdminHomeController;
 use App\Http\Controllers\Admin\GeneralConfigurationController as AdminGeneralConfigurationController;
 use App\Http\Controllers\Admin\AllowedIpController;
@@ -135,6 +135,7 @@ use App\Http\Controllers\Admin\AuthController;
         Route::get('portfolio/edit/{id?}', [AdminPortfolioController::class , 'edit'])->name('portfolio.edit');
         Route::get('client/edit/{id?}', [AdminClientController::class , 'edit'])->name('client.edit');
         Route::get('product/edit/{id?}', [AdminProductController::class , 'edit'])->name('product.edit');
+        Route::get('bottomslider/edit/{id?}', [AdminProductController::class , 'edit'])->name('bottom_slider.edit');
 
 
         Route::resource('cities','App\Http\Controllers\Admin\CitiesController');
@@ -178,6 +179,7 @@ use App\Http\Controllers\Admin\AuthController;
         Route::post("sortPortfolio" , [AdminPortfolioController::class , 'updateSorting'])->name("sort.portfolio");
         Route::post("sortClient" , [AdminClientController::class , 'updateSorting'])->name("sort.client");
         Route::post("sortProduct" , [AdminProductController::class , 'updateSorting'])->name("sort.product");
+        Route::post("sortBottomSlider" , [AdminBottomSliderController::class , 'updateSorting'])->name("sort.bottom_slider");
 
 
 
@@ -270,8 +272,11 @@ use App\Http\Controllers\Admin\AuthController;
         Route::resource('homesliders','App\Http\Controllers\Admin\HomeSliderController');
         Route::get("/homesliders/destroy/{id?}" , [AdminHomeSlideController::class ,"destroy"])->name("homeslider.destroy");
 
-        Route::get("/general-configurations" , [AdminGeneralConfigurationController::class ,"index"])->name("general_configurations.index");
-        Route::put("/general-configuration-update" , [AdminGeneralConfigurationController::class ,"update"])->name("general-configurations.update");
+        Route::get("/general_configurations" , [AdminGeneralConfigurationController::class ,"index"])->name("general_configurations.index");
+        Route::put("/general_configuration-update" , [AdminGeneralConfigurationController::class ,"update"])->name("general-configurations.update");
+
+        Route::resource('bottom_sliders','App\Http\Controllers\Admin\BottomSliderController');
+        Route::get("/bottom_sliders/destroy/{id?}" , [AdminBottomSliderController::class ,"destroy"])->name("bottom_slider.destroy");
 
     });
 });

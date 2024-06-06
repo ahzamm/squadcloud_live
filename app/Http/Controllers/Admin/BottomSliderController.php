@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Client;
+use App\Models\BottomSlider;
 use DB;
 use App\Models\SubMenu;
 use App\Models\UserMenuAccess;
@@ -12,7 +12,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
 use Auth;
 
-class ClientController extends Controller
+class BottomSliderController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -21,8 +21,8 @@ class ClientController extends Controller
      */
     public function index()
     {
-        $clients = Client::all();
-        return view('admin.clients.index', compact('clients'));
+        $bottom_sliders = BottomSlider::orderby("sortIds", "asc")->get();
+        return view('admin.bottom_sliders.index', compact('bottom_sliders'));
     }
 
     /**
@@ -32,7 +32,7 @@ class ClientController extends Controller
      */
     public function create()
     {
-        return view('admin.clients.create');
+        return view('admin.bottom_sliders.create');
     }
 
     /**
@@ -43,12 +43,12 @@ class ClientController extends Controller
      */
     public function store(Request $request)
     {
-        $subMenuid = SubMenu::where('route_name', 'clients.index')->first();
+        $subMenuid = SubMenu::where('route_name', 'bottom_sliders.index')->first();
         $userOperation = "create_status";
         $userId = Auth::guard('admin', 'user')->user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
         if (!$crudAccess) {
-            return redirect()->route('clients.index')->with('error', 'No right to add Client');
+            return redirect()->route('bottom_sliders.index')->with('error', 'No right to add BottomSlider');
         }
 
         $validatedData = [
@@ -76,18 +76,18 @@ class ClientController extends Controller
             $file = $request->file('logo');
             $extension = $file->getClientOriginalExtension();
             $filename = Str::random(40) . '.' . $extension;
-            $file->move(public_path('frontend_assets/images/clients'), $filename);
+            $file->move(public_path('frontend_assets/images/bottom_sliders'), $filename);
         }
 
-        $client = new Client();
-        $client->logo = $filename;
-        $client->link = $request['link'];
-        $client->title = $request['title'];
-        $client->description = $request['description'];
-        $client->is_active = $request->has('is_active') ? 1 : 0;
-        $client->save();
+        $bottom_slider = new BottomSlider();
+        $bottom_slider->logo = $filename;
+        $bottom_slider->link = $request['link'];
+        $bottom_slider->title = $request['title'];
+        $bottom_slider->description = $request['description'];
+        $bottom_slider->is_active = $request->has('is_active') ? 1 : 0;
+        $bottom_slider->save();
 
-        return redirect()->route('clients.index')->with('success', 'Client Added successfully');
+        return redirect()->route('bottom_sliders.index')->with('success', 'BottomSlider Added successfully');
 
     }
 
@@ -100,8 +100,8 @@ class ClientController extends Controller
 
     public function show($id)
     {
-        $packageData = Client::find($id);
-        return view('admin.clients.show-modal', compact('packageData'));
+        $packageData = BottomSlider::find($id);
+        return view('admin.bottom_sliders.show-modal', compact('packageData'));
     }
     /**
      * Show the form for editing the specified resource.
@@ -111,8 +111,8 @@ class ClientController extends Controller
      */
     public function edit($id)
     {
-        $client = Client::find($id);
-        return view('admin.clients.edit', compact('client'));
+        $bottom_slider = BottomSlider::find($id);
+        return view('admin.bottom_sliders.edit', compact('bottom_slider'));
     }
 
     /**
@@ -124,12 +124,12 @@ class ClientController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $subMenuid = SubMenu::where('route_name', 'clients.index')->first();
+        $subMenuid = SubMenu::where('route_name', 'bottom_sliders.index')->first();
         $userOperation = "update_status";
         $userId = Auth::guard('admin', 'user')->user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
         if (!$crudAccess) {
-            return redirect()->back()->withInput()->with('error', 'No Access To Update Clients');
+            return redirect()->back()->withInput()->with('error', 'No Access To Update Bottom Sliders');
         }
 
         $validatedData = [
@@ -148,26 +148,26 @@ class ClientController extends Controller
             }
         }
 
-        $client = Client::findOrFail($id);
+        $bottom_slider = BottomSlider::findOrFail($id);
 
         if ($request->hasFile('logo')) {
-            if ($client->logo && file_exists(public_path('frontend_assets/images/clients/' . $client->logo))) {
-                unlink(public_path('frontend_assets/images/clients/' . $client->logo));
+            if ($bottom_slider->logo && file_exists(public_path('frontend_assets/images/bottom_sliders/' . $bottom_slider->logo))) {
+                unlink(public_path('frontend_assets/images/bottom_sliders/' . $bottom_slider->logo));
             }
             $file = $request->file('logo');
             $extension = $file->getClientOriginalExtension();
             $filename = Str::random(40) . '.' . $extension;
-            $file->move(public_path('frontend_assets/images/clients'), $filename);
-            $client->logo = $filename;
+            $file->move(public_path('frontend_assets/images/bottom_sliders'), $filename);
+            $bottom_slider->logo = $filename;
         }
 
-        $client->title = $request['title'];
-        $client->description = $request['description'];
-        $client->link = $request['link'];
-        $client->is_active = $request->has('is_active') ? 1 : 0;
-        $client->save();
+        $bottom_slider->title = $request['title'];
+        $bottom_slider->description = $request['description'];
+        $bottom_slider->link = $request['link'];
+        $bottom_slider->is_active = $request->has('is_active') ? 1 : 0;
+        $bottom_slider->save();
 
-        return redirect()->route('clients.index')->with('success', 'Client updated successfully!');
+        return redirect()->route('bottom_sliders.index')->with('success', 'BottomSlider updated successfully!');
 
 
     }
@@ -181,23 +181,23 @@ class ClientController extends Controller
      */
     public function destroy($id = null)
     {
-        $subMenuid = SubMenu::where('route_name', 'clients.index')->first();
+        $subMenuid = SubMenu::where('route_name', 'bottom_sliders.index')->first();
         $userOperation = "delete_status";
         $userId = Auth::guard('admin', 'user')->user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
         if ($crudAccess == true) {
-            $client = Client::find($id);
-            if ($client) {
-                $imagePath = public_path('frontend_assets/images/clients/' . $client->logo);
+            $bottom_slider = BottomSlider::find($id);
+            if ($bottom_slider) {
+                $imagePath = public_path('frontend_assets/images/bottom_sliders/' . $bottom_slider->logo);
                 if (file_exists($imagePath)) {
                     unlink($imagePath);
                 }
 
-                $client->delete();
+                $bottom_slider->delete();
 
                 return response()->json(["status" => true]);
             } else {
-                return response()->json(["status" => false, "message" => "Client not found."]);
+                return response()->json(["status" => false, "message" => "BottomSlider not found."]);
             }
         } else {
             return response()->json(["unauthorized" => true]);
@@ -220,13 +220,13 @@ class ClientController extends Controller
     {
         $sortIds = $request->sort_Ids;
         foreach ($sortIds as $key => $value) {
-            $menu = Client::find($value);
+            $menu = BottomSlider::find($value);
             if ($menu) {
                 $menu->sortIds = $key;
                 $menu->save();
             }
         }
-        $frontValue = Client::orderby("sortIds", 'asc')->get();
+        $frontValue = BottomSlider::orderby("sortIds", 'asc')->get();
         return response()->json($frontValue);
     }
 }
