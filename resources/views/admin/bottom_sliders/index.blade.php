@@ -32,12 +32,8 @@
                   <tbody id="sortfrontMenu" class="move">
                     @foreach ($bottom_sliders as $key=> $item)
                     <tr class="table-row">
-                        <td>
-                            {{ $key + 1 }}
-                            <i class="fas fa-sort" id="sort-serial"></i>
-                            <input type="hidden" class="order-id"
-                                value="{{ $item->id }}">
-                        </td>
+                        <td><i class="fas fa-sort" id="sort-serial"></i></td>
+                        <td>{{ $key + 1 }}<input type="hidden" class="order-id"value="{{ $item->id }}"></td>
                       <td>
                         <img width="100px" height="40px" src="{{ asset('frontend_assets/images/bottom_sliders/' . $item->image) }}" alt="internet product provider in karachi/Clifton/pakistan" />
                     </td>
@@ -267,9 +263,8 @@
                     let table = "";
                     $(response).each(function(index, value) {
                         table += ` <tr>
-                  <td>${index + 1 } <i class="fas fa-sort" id="sort-serial"></i>
-                  <input type="hidden" class="order-id" value="${value.id}">
-                  </td>
+                            <td><i class="fas fa-sort" id="sort-serial"></i></td>
+                  <td>${index + 1 }<input type="hidden" class="order-id" value="${value.id}"></td>
                   <td> <img width="100px" height="40px" src="{{ asset('frontend_assets/images/bottom_sliders/') }}/${value.image}" alt="service logo" /></td>
                    <td>${value.title}</td>
                   <td>${value.is_active == 1?'active':'deactive'}</td>
