@@ -173,6 +173,7 @@ class BottomSliderController extends Controller
      */
     public function destroy($id = null)
     {
+        // dd("==");
         $subMenuid = SubMenu::where('route_name', 'bottom_sliders.index')->first();
         $userOperation = "delete_status";
         $userId = Auth::guard('admin', 'user')->user()->id;
@@ -180,7 +181,7 @@ class BottomSliderController extends Controller
         if ($crudAccess == true) {
             $bottom_slider = BottomSlider::find($id);
             if ($bottom_slider) {
-                $imagePath = public_path('frontend_assets/images/bottom_sliders/' . $bottom_slider->logo);
+                $imagePath = public_path('frontend_assets/images/bottom_sliders/' . $bottom_slider->image);
                 if (file_exists($imagePath)) {
                     unlink($imagePath);
                 }
