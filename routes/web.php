@@ -135,7 +135,7 @@ use App\Http\Controllers\Admin\AuthController;
         Route::get('portfolio/edit/{id?}', [AdminPortfolioController::class , 'edit'])->name('portfolio.edit');
         Route::get('client/edit/{id?}', [AdminClientController::class , 'edit'])->name('client.edit');
         Route::get('product/edit/{id?}', [AdminProductController::class , 'edit'])->name('product.edit');
-        Route::get('bottomslider/edit/{id?}', [AdminProductController::class , 'edit'])->name('bottom_slider.edit');
+        Route::get('bottom_slider/edit/{id?}', [AdminBottomSliderController::class , 'edit'])->name('bottom_slider.edit');
 
 
         Route::resource('cities','App\Http\Controllers\Admin\CitiesController');
@@ -276,7 +276,7 @@ use App\Http\Controllers\Admin\AuthController;
         Route::put("/general_configuration-update" , [AdminGeneralConfigurationController::class ,"update"])->name("general-configurations.update");
 
         Route::resource('bottom_sliders','App\Http\Controllers\Admin\BottomSliderController');
-        Route::get("/bottom_sliders/destroy/{id?}" , [AdminBottomSliderController::class ,"destroy"])->name("bottom_slider.destroy");
+        Route::get("/bottom_slider/destroy/{id?}" , [AdminBottomSliderController::class ,"destroy"])->name("bottom_slider.destroy");
 
     });
 });

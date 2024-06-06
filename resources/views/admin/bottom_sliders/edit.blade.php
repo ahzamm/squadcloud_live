@@ -28,7 +28,7 @@
                     width="120" alt="" srcset="" >
                     @endisset
                     <br><br>
-                    <input type="file" value="{{ $bottom_slider->image }}" name="logo">
+                    <input type="file" value="{{ $bottom_slider->image }}" name="image">
                     @error('image')
                     <p class="text-danger mt-2 mb-0 text-sm">{{$message}}</p>
                     @enderror
