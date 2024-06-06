@@ -272,10 +272,8 @@
                     let table = "";
                     $(response).each(function(index, value) {
                         table += ` <tr>
-                            <td><i class="fas fa-sort" id="sort-serial"></i></td>
-                  <td>${index + 1 }
-                  <input type="hidden" class="order-id" value="${value.id}">
-                  </td>
+                <td><i class="fas fa-sort" id="sort-serial"></i></td>
+                  <td>${index + 1 }<input type="hidden" class="order-id" value="${value.id}"></td>
                   <td >${value.title}</td>
                   <td>${value.description}</td>
                   <td> <img width="40px" height="40px" src="{{ asset('frontend_assets/images/portfolio/') }}/${value.image}" alt="internet service provider in karachi/Clifton/pakistan" /></td>
