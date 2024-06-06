@@ -51,7 +51,7 @@ class GeneralConfigurationController extends Controller
 
         $general_configuration = GeneralConfiguration::first();
         if ($request->hasFile('brand_logo')) {
-            if ($general_configuration->background_image && file_exists(public_path('frontend_assets/images/' . $general_configuration->brand_logo))) {
+            if ($general_configuration->brand_logo && file_exists(public_path('frontend_assets/images/' . $general_configuration->brand_logo))) {
                 unlink(public_path('frontend_assets/images/' . $general_configuration->brand_logo));
             }
             $file = $request->file('brand_logo');

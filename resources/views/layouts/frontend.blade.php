@@ -56,6 +56,7 @@
           @php
             $GeneralConfiguration = DB::table('general_configurations')->where('is_active', 1)->first();
             $menus = DB::table('front_menus')->where('is_active', 1)->orderby("sortIds" , "asc")->get();
+            $socials =  DB::table('socials')->where('status', 1)->orderby("sortIds" , "asc")->get();
            @endphp
 
     <header id="main-header">
@@ -122,15 +123,9 @@
                         <span style="padding-left:-420px;"> All Rights Reserved. Designed and Developed by <a class="text-primary" target="_blank" href="/index"> SquadCloud.</a>
                     </p>
                     <div class="footer-links">
-                        @if(!empty($GeneralConfiguration->facebook_url))
-                            <a href="{{ $GeneralConfiguration->facebook_url }}"><i class="fab fa-facebook"></i></a>
-                        @endif
-                        @if(!empty($GeneralConfiguration->linkedin_url))
-                            <a href="{{ $GeneralConfiguration->linkedin_url }}"><i class="fab fa-linkedin-in"></i></a>
-                        @endif
-                        @if(!empty($GeneralConfiguration->twitter_url))
-                            <a href="{{ $GeneralConfiguration->twitter_url }}"><i class="fab fa-twitter"></i></a>
-                        @endif
+                        @foreach ($socials as $social)
+                            <a href="{{ $social->url }}"><i class="{{$social->icon}}"></i></a>
+                            @endforeach
                     </div>
                  </div>
               </div>

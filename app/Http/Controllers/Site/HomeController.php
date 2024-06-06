@@ -15,6 +15,7 @@ use App\Models\Portfolio;
 use App\Models\Product;
 use App\Models\ProjectInquiries;
 use App\Models\Service;
+use App\Models\Social;
 
 class HomeController extends Controller
 {
