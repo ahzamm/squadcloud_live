@@ -17,9 +17,7 @@ class SocialController extends Controller
 {
         public $parentModel =  Social::class;
         public function index() {
-            // $data['social'] = $this->parentModel::all();
-            $socials = $this->parentModel::all();
-            // return view("admin.social.index")->with("data" , $data);
+        $socials = $this->parentModel::orderby("sortIds", "asc")->get();
             return view("admin.social.index", compact('socials'));
         }
         public function create() {

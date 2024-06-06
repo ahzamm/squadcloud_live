@@ -109,7 +109,7 @@
                                 $(row).parents('tr').remove();
                                 swal('Updated!', 'Social Link Has been deleted', 'success');
                                 // console.log("delete record");
-                            } 
+                            }
                             else if(res.status == "no Access"){
                                 swal('Error!', 'You have no access to delete social links', 'error');
                             }
@@ -166,7 +166,7 @@
                   <td >${value.name}</td>
                   <td>${value.icon}</td>
                   <td>${value.url}</td>
-                  <td>${value.color}</td>
+                  <td><center><button class="rounded" disabled style="width: 50px; height:20px; background-color:${value.color};box-shadow:0 0 10px grey ; border:none"></button></center></td>
                   <td>${value.status}</td>
                   <td>
                   <a href="` + editUrlFront + "/" + value.id + `" class="btn btn-sm btn-info"><i class="fa fa-edit"></i></a>
