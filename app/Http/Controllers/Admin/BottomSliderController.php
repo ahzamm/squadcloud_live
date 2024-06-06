@@ -52,42 +52,38 @@ class BottomSliderController extends Controller
         }
 
         $validatedData = [
-            "link" => "required",
             "title" => "required",
-            "description" => "required",
         ];
         $valdiate = Validator::make($request->all(), $validatedData);
         if ($valdiate->fails()) {
             return redirect()->back()->withInput()->with('error', 'All Fields are required');
         }
 
-        if (!$request->hasFile('logo')) {
+        if (!$request->hasFile('image')) {
             return redirect()->back()->withInput()->with('error', 'Image is required');
         }
 
-        if ($request->hasFile('logo')) {
-            if (!$request->file('logo')->isValid() || !in_array($request->file('logo')->extension(), ['jpeg', 'png', 'jpg'])) {
+        if ($request->hasFile('image')) {
+            if (!$request->file('image')->isValid() || !in_array($request->file('image')->extension(), ['jpeg', 'png', 'jpg'])) {
                 return redirect()->back()->withInput()->with('error', 'Please provide a valid image file of type: jpeg, png, or jpg.');
             }
         }
 
         $filename = "";
-        if ($request->hasFile('logo')) {
-            $file = $request->file('logo');
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
             $extension = $file->getClientOriginalExtension();
             $filename = Str::random(40) . '.' . $extension;
             $file->move(public_path('frontend_assets/images/bottom_sliders'), $filename);
         }
 
         $bottom_slider = new BottomSlider();
-        $bottom_slider->logo = $filename;
-        $bottom_slider->link = $request['link'];
+        $bottom_slider->image = $filename;
         $bottom_slider->title = $request['title'];
-        $bottom_slider->description = $request['description'];
         $bottom_slider->is_active = $request->has('is_active') ? 1 : 0;
         $bottom_slider->save();
 
-        return redirect()->route('bottom_sliders.index')->with('success', 'BottomSlider Added successfully');
+        return redirect()->route('bottom_sliders.index')->with('success', 'Bottom Slider Added successfully');
 
     }
 
