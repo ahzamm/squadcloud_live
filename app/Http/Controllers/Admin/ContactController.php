@@ -19,8 +19,15 @@ class ContactController extends Controller
 
     public function index()
     {
+        $subMenuid = SubMenu::where('route_name', 'contacts.index')->first();
+        $userOperation = "view_status";
+        $userId = Auth::user()->id;
+        $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
+        if (!$crudAccess) {
+            return redirect()->back()->withInput()->with("error", "No rights To View Contacts");
+        }
+
         $contact = Contact::first();
-        // dd($contact->background_image);
         return view('admin.contacts.edit', compact('contact'));
     }
 
@@ -94,6 +101,14 @@ class ContactController extends Controller
 
     public function messageRequest()
     {
+        $subMenuid = SubMenu::where('route_name', 'contacts.message_request')->first();
+        $userOperation = "view_status";
+        $userId = Auth::user()->id;
+        $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
+        if (!$crudAccess) {
+            return redirect()->back()->withInput()->with("error", "No rights To View Messages");
+        }
+
         $contacts = ContactRequest::all();
         return view('admin.contacts.message_requests', compact('contacts'));
     }

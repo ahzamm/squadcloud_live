@@ -17,6 +17,14 @@ class SocialController extends Controller
 {
         public $parentModel =  Social::class;
         public function index() {
+            $subMenuid = SubMenu::where('route_name', 'social.index')->first();
+        $userOperation = "view_status";
+        $userId = Auth::user()->id;
+        $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
+        if (!$crudAccess) {
+            return redirect()->back()->withInput()->with("error", "No rights To View Socials");
+        }
+
         $socials = $this->parentModel::orderby("sortIds", "asc")->get();
             return view("admin.social.index", compact('socials'));
         }

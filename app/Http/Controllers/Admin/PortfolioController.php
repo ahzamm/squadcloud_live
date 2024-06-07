@@ -27,6 +27,14 @@ class PortfolioController extends Controller
      */
     public function index()
     {
+        $subMenuid = SubMenu::where('route_name', 'portfolios.index')->first();
+        $userOperation = "view_status";
+        $userId = Auth::user()->id;
+        $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
+        if (!$crudAccess) {
+            return redirect()->back()->withInput()->with("error", "No rights To View Portfolios");
+        }
+
         $portfolios = Portfolio::orderby("sortIds", "asc")->get();
         return view('admin.portfolios.index', compact('portfolios'));
     }

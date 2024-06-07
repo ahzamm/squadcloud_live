@@ -22,6 +22,14 @@ class AboutUsController extends Controller
      */
     public function index()
     {
+        $subMenuid = SubMenu::where('route_name', 'abouts.index')->first();
+        $userOperation = "view_status";
+        $userId = Auth::user()->id;
+        $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
+        if (!$crudAccess) {
+            return redirect()->back()->withInput()->with("error", "No rights To View About");
+        }
+
         $about_us = AboutUS::all();
         return view('admin.about-us.index',compact('about_us'));
     }
@@ -41,17 +49,17 @@ class AboutUsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {  
+    {
         $subMenuid     =  SubMenu::where('route_name' , 'aboutus.index')->first();
         $userOperation =  "create_status" ;
-        $userId        =  Auth::user()->id ;   
+        $userId        =  Auth::user()->id ;
         $crudAccess    =  $this->crud_access($subMenuid->id ,  $userOperation , $userId );
         if ($crudAccess) {
           $request->validate([
             'description' => 'required',
             'images' => 'required',
             'images.*' => 'image|max:2000',
-        ]); 
+        ]);
         // try {
           DB::transaction(function () use ($request){
             $about_us_store = new AboutUS();
@@ -64,8 +72,8 @@ class AboutUsController extends Controller
                 foreach($request->file('images') as $file)
                 {
                     $name = time().rand(1,100).'.'.$file->extension();
-                    $file->move(public_path('about-us'), $name);  
-                    $files[] = $name;     
+                    $file->move(public_path('about-us'), $name);
+                    $files[] = $name;
                     $about_us_store->images = $files;
                     $about_us_store->save();
                 }
@@ -110,7 +118,7 @@ class AboutUsController extends Controller
     {
         $subMenuid     =  SubMenu::where('route_name' , 'aboutus.index')->first();
         $userOperation =  "update_status" ;
-        $userId        =  Auth::user()->id ;   
+        $userId        =  Auth::user()->id ;
         $crudAccess    = $this->crud_access($subMenuid->id ,  $userOperation , $userId );
         if ($crudAccess) {
             $request->validate([
@@ -138,8 +146,8 @@ class AboutUsController extends Controller
                     foreach($request->file('images') as $file)
                     {
                         $name = time().rand(1,100).'.'.$file->extension();
-                        $file->move(public_path('about-us'), $name);  
-                        $files[] = $name;     
+                        $file->move(public_path('about-us'), $name);
+                        $files[] = $name;
                         $about_us_update->images = $files;
                         $about_us_update->save();
                     }
@@ -160,7 +168,7 @@ class AboutUsController extends Controller
     {
         $subMenuid     =  SubMenu::where('route_name' , 'aboutus.index')->first();
         $userOperation =  "delete_status" ;
-        $userId        =  Auth::user()->id ;   
+        $userId        =  Auth::user()->id ;
         $crudAccess    = $this->crud_access($subMenuid->id ,  $userOperation , $userId );
         if ($crudAccess) {
             AboutUS::find($request->aboutus)->delete();
@@ -170,7 +178,7 @@ class AboutUsController extends Controller
             }
         }
         public function crud_access($submenuId = null , $operation = null , $uId = null) {
-            if (!$submenuId == null) { 
+            if (!$submenuId == null) {
                 $CheckData = UserMenuAccess::where(["user_id" => $uId , "sub_menu_Id" => $submenuId , $operation => 1 , 'view_status' => 1])->count();
                 if($CheckData > 0 ){
                     return true;

@@ -19,6 +19,14 @@ class UserMenuAccessController extends Controller
     public $MenuModel = Menu::class;
     public function index()
     {
+        $subMenuid = SubMenu::where('route_name', 'user.index')->first();
+        $userOperation = "view_status";
+        $userId = Auth::user()->id;
+        $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
+        if (!$crudAccess) {
+            return redirect()->back()->withInput()->with("error", "No rights To View User Management");
+        }
+
         $data['users'] = $this->parentModel::all();
         return view('admin.users.index')->with('data' , $data);
     }

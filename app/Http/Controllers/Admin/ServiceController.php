@@ -22,6 +22,14 @@ class ServiceController extends Controller
      */
     public function index()
     {
+        $subMenuid = SubMenu::where('route_name', 'services.index')->first();
+        $userOperation = "view_status";
+        $userId = Auth::user()->id;
+        $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
+        if (!$crudAccess) {
+            return redirect()->back()->withInput()->with("error", "No rights To View Services");
+        }
+
         $services = Service::orderby("sortIds", "asc")->get();
         return view('admin.services.index', compact('services'));
     }

@@ -21,6 +21,14 @@ class ClientController extends Controller
      */
     public function index()
     {
+        $subMenuid = SubMenu::where('route_name', 'clients.index')->first();
+        $userOperation = "view_status";
+        $userId = Auth::user()->id;
+        $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
+        if (!$crudAccess) {
+            return redirect()->back()->withInput()->with("error", "No rights To View Clients");
+        }
+
         $clients = Client::all();
         return view('admin.clients.index', compact('clients'));
     }

@@ -20,9 +20,14 @@ class ProductController extends Controller
      */
     public function index()
     {
-        // dd("df");
+        $subMenuid = SubMenu::where('route_name', 'products.index')->first();
+        $userOperation = "view_status";
+        $userId = Auth::user()->id;
+        $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
+        if (!$crudAccess) {
+            return redirect()->back()->withInput()->with("error", "No rights To View Products");
+        }
         $products = Product::all();
-        // dd($Products);
         return view('admin.products.index',compact('products'));
     }
 
