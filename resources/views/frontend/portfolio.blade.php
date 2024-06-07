@@ -104,7 +104,7 @@
                </div>
                <div class="product-btns d-flex mt-2" style="column-gap:5px">
                   <button><a href="{{$portfolio->link}}">Request Demo</a></button>
-                  <button><a href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#portfolio-detail-modal">More Info</a></button>
+                  <button data-description="{{ $portfolio->description }}" data-bs-toggle="modal" data-bs-target="#portfolio-detail-modal">More Info</button>
                </div>
             </div>
             @empty
@@ -123,9 +123,9 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
-        <p>Modal body text goes here.</p>
-      </div>
+      <div class="modal-body" id="portfolio-detail-modal-body">
+        <p> </p>
+     </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary">Save changes</button>
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -133,4 +133,20 @@
     </div>
   </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+       var modalBody = document.getElementById('portfolio-detail-modal-body');
+       var moreInfoButtons = document.querySelectorAll('[data-bs-toggle="modal"]');
+
+       moreInfoButtons.forEach(function(button) {
+          button.addEventListener('click', function() {
+             var description = this.getAttribute('data-description');
+             modalBody.innerHTML = description;
+          });
+       });
+    });
+ </script>
+
+
 @endsection
