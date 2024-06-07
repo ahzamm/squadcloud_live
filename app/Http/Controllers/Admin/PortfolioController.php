@@ -137,11 +137,16 @@ class PortfolioController extends Controller
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
         // dd($request->all());
         if ($crudAccess == true) {
-            $request->validate([
+
+            $validatedData = [
                 "title" => "required",
                 "description" => "required",
                 "link" => "required",
-            ]);
+            ];
+            $valdiate = Validator::make($request->all(), $validatedData);
+            if ($valdiate->fails()) {
+                return redirect()->back()->withInput()->with('error', 'All Fields are required');
+            }
 
             $portfolio = Portfolio::findOrFail($id);
 
@@ -169,7 +174,7 @@ class PortfolioController extends Controller
             return redirect()->route('portfolios.index');
 
         } else {
-            return redirect()->back()->with('error', 'No Access To Update Portfolios');
+            return redirect()->back()->withInput()->with('error', 'No Access To Update Portfolios');
         }
 
     }

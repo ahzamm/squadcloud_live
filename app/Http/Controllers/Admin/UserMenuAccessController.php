@@ -27,9 +27,8 @@ class UserMenuAccessController extends Controller
         return view("admin.users.create")->with("data",$data);
     }
     public function edit($id = null){
-        $data['action'] = "edit";
-        $data['user']   = $this->parentModel::where('id' , $id)->first();
-        return view("admin.users.create")->with("data",$data);
+        $user   = $this->parentModel::where('id' , $id)->first();
+        return view("admin.users.edit", compact('user'));
     }
 
     public function store(Request $request){
@@ -48,13 +47,13 @@ class UserMenuAccessController extends Controller
     $userNamecheck   = $this->parentModel::where("name","=", $userName)->count();
     $userCniccheck   = $this->parentModel::where("cnic","=", $cnic)->count();
     if($userEmailcheck > 0 ){
-        return redirect()->back()->with('error' , 'User Email Already Used');
+        return redirect()->back()->withInput()->with('error' , 'User Email Already Used');
     }
     if($userNamecheck){
-        return redirect()->back()->with('error' , 'User Name Already Used');
+        return redirect()->back()->withInput()->with('error' , 'User Name Already Used');
     }
     if($userCniccheck){
-        return redirect()->back()->with('error' , 'User Cnic Already Used');
+        return redirect()->back()->withInput()->with('error' , 'User Cnic Already Used');
     }
     $subMenuid     =  SubMenu::where('route_name' , 'user.index')->first();
     $userOperation =  "create_status" ;
@@ -92,32 +91,58 @@ class UserMenuAccessController extends Controller
     else
 
     {
-        return redirect()->back()->with('error','Failed To Create User');
+        return redirect()->back()->withInput()->with('error','Failed To Create User');
     }
         }
         else{
-            return redirect()->back()->with('error' , "No Rights To create Users");
+            return redirect()->back()->withInput()->with('error' , "No Rights To create Users");
         }
     }
 
     public function update( Request $request , $id = null  ){
-        $userName   = $request->user_name ;
-        $last_name  = $request->last_name;
-        $first_name = $request->first_name;
-        $email      = $request->email ;
-        $cnic       = $request->cnic ;
-        $address    = $request->address ;
-        $phone      = $request->phone ;
-        $department = $request->department ;
+
         $subMenuid     =  SubMenu::where('route_name' , 'user.index')->first();
         $userOperation =  "update_status" ;
         $userId        =  Auth::guard('admin' , 'user')->user()->id;
         $crudAccess    =  $this->crud_access($subMenuid->id ,  $userOperation , $userId );
-       if($crudAccess == true) {
+       if($crudAccess == false) {  return redirect()->back()->withInput()->with('error' , 'No Access to Update Your Profile');}
+
+       $userName   = $request->user_name ;
+       $last_name  = $request->last_name;
+       $first_name = $request->first_name;
+       $email      = $request->email ;
+       $cnic       = $request->cnic ;
+       $address    = $request->address ;
+       $phone      = $request->phone ;
+       $department = $request->department ;
+
+       $isDuplicateEmailPresent  = $this->parentModel::where('email' , $email )->where('id', '!=', $id)->first();
+       if($isDuplicateEmailPresent){  return redirect()->back()->withInput()->with('error' , 'User with this email already exists'); }
+
+       $isDuplicateCnicPresent  = $this->parentModel::where('cnic' , $cnic )->where('id', '!=', $id)->first();
+       if($isDuplicateCnicPresent){ return redirect()->back()->withInput()->with('error' , 'User with this CNIC already exists'); }
+
         if($request->hasFile("profileImage")){
             $fileName =  time().".".$request->file('profileImage')->getClientOriginalExtension();
             $request->file('profileImage')->move('UserProfiles/' , $fileName);
             $updateImage  = $this->parentModel::where("id" , $id)->update(['image' => $fileName]);
+        }
+
+
+        if ($request->filled('password')) {
+            if (!$request->filled('confirm_password')) {
+                return redirect()->back()->withInput()->with('error', 'Confirm Password is required');
+            }
+
+            $password = $request->password;
+            $confirmPassword = $request->confirm_password;
+
+            if ($password !== $confirmPassword) {
+                return redirect()->back()->withInput()->with('error', 'Passwords do not match');
+            }
+
+            $hashedPassword =  Hash::make($password);
+            $this->parentModel::where('id', $id)->update(['password' => $hashedPassword]);
         }
         $updateUser  = $this->parentModel::where('id' , $id )->update([
             'name'       => $userName ,
@@ -130,14 +155,10 @@ class UserMenuAccessController extends Controller
             'department' => $department , //It Department
         ]);
 
-
-            return redirect()->back()->with('success' , 'User Profile Has been Updated');
-
-       }
-       else{
-        return redirect()->back()->with('error' , 'No Access to Update Your Profile');
-       }
+            return redirect()->route('user.index')->with('success' , 'User Profile Has been Updated');
     }
+
+
     public function change_status(Request $request){
 
         $subMenuid     =  SubMenu::where('route_name' , 'user.index')->first();
