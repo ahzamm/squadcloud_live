@@ -29,10 +29,11 @@
                     @enderror
                   </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-12">
                   <div class="form-group">
                     <label for="">Description <span style="color: red">*</span></label>
-                    <input type="text" class="form-control" name="description"  value="{{old('description') == NULL?$portfolio->description:old('description') }}">
+                    {{-- <input type="text" class="form-control" name="description"  value="{{old('description') == NULL?$portfolio->description:old('description') }}"> --}}
+                    <textarea name="description" rows="4" class="form-control summernote">{{$portfolio->description}}</textarea>
                     @error('mbps')
                     <p class="text-danger mt-2 mb-0 text-sm">{{$message}}</p>
                     @enderror
