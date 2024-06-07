@@ -185,7 +185,8 @@
                     $userProfile  = Auth::user()->image ;
                     @endphp
                     @if(  $userProfile == null )
-                    <img src="https://bestprofilepictures.com/wp-content/uploads/2021/08/Amazing-Profile-Picture-945x1024.jpg" style="height: 220px;object-fit:cover;" alt="Your Name" class="img-fluid img-thumbnail rounded">
+                    <img src="{{ asset('backend/dist/img/default_uesr_pic.png') }}" style="height: 150px; object-fit: cover;" alt="Your Name" class="img-fluid img-thumbnail rounded">
+
                     @else
                     <img src="{{asset('UserProfiles/' . $userProfile )}}" alt="Your Name" class="img-fluid img-thumbnail rounded" style="height: 220px;object-fit:cover;">
                     @endif
