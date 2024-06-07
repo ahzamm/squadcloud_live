@@ -44,15 +44,6 @@ class ContactController extends Controller
             return redirect()->back()->with('error', 'All Fields are required');
         }
 
-        $contact_request = new ContactRequest();
-        $contact_request->full_name = $request['full_name'];
-        $contact_request->email = $request['email'];
-        $contact_request->phone = $request['phone'];
-        $contact_request->service_required = $request['service_required'];
-        $contact_request->message = $request['message'];
-
-        $contact_request->save();
-
         $adminEmails = Admin::where('active', 1)->pluck('email')->toArray();
         $email_settings = FrontEmail::where('status', 1)->First();
 
@@ -67,7 +58,7 @@ class ContactController extends Controller
             "email" => $email,
             "phone" => $phone,
             "service_required" => $service_required,
-            "message" => $message
+            "message" => $message,
         ]);
         if ($storeMessage) {
 

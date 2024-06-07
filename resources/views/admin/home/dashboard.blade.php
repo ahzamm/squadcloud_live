@@ -34,11 +34,11 @@
         <!-- ./col -->
         <div class="col-lg-3 col-6">
           <!-- small box -->
-          <a href="{{route('contact.index')}}" class="small-box-footer">
+          <a href="{{route('services.index')}}" class="small-box-footer">
             <div class="small-box bg-warning">
               <div class="inner">
-                <h3>{{$contactRequest}}</h3>
-                <p>Contact Request</p>
+                <h3>{{$serviceCount}}</h3>
+                <p>Services</p>
               </div>
               <div class="icon">
                 <i class="ion ion-person-add"></i>
@@ -49,11 +49,11 @@
         <!-- ./col -->
         <div class="col-lg-3 col-6">
           <!-- small box -->
-          <a href="{{route('cities.index')}}" class="small-box-footer">
+          <a href="{{route('portfolios.index')}}" class="small-box-footer">
             <div class="small-box bg-orange">
               <div class="inner">
-                <h3>{{$cities}}</h3>
-                <p>Cities</p>
+                <h3>{{$portfolioCount}}</h3>
+                <p>Portfolios</p>
               </div>
               <div class="icon">
                 <i class="ion ion-location"></i>
@@ -64,11 +64,11 @@
         <!-- ./col -->
         <div class="col-lg-3 col-6">
           <!-- small box -->
-          <a href="{{route('front-faqs.index')}}" class="small-box-footer">
+          <a href="{{route('clients.index')}}" class="small-box-footer">
             <div class="small-box bg-danger">
               <div class="inner">
-                <h3>{{$faqs}}</h3>
-                <p>Faqs</p>
+                <h3>{{$clientCount}}</h3>
+                <p>Clients</p>
               </div>
               <div class="icon">
                 <i class="ion ion-help"></i>
@@ -78,11 +78,11 @@
         </div>
         <div class="col-lg-3 col-6">
           <!-- small box -->
-          <a href="{{ route('coveragerequest.index')}}">
+          <a href="{{ route('products.index')}}">
             <div class="small-box bg-info">
               <div class="inner">
-                <h3>{{$requestCount}}</h3>
-                <p>Covrage Request</p>
+                <h3>{{$productCount}}</h3>
+                <p>Products</p>
               </div>
               <div class="icon">
                 <i class="ion ion-navigate"></i>
@@ -178,18 +178,16 @@
                     <th>Email Address</th>
                     <th>Phone Number</th>
                     <th>Message</th>
-                    <th>Date & time</th>
                   </tr>
                 </thead>
                 <tbody>
-                  @foreach ($frontContact as $key=> $item)
+                  @foreach ($todaysContactRequests as $key=> $item)
                   <tr onclick="openInNewTab('contact');">
                     <td>{{++$key}}</td>
-                    <td>{{$item->name}}</td>
+                    <td>{{$item->full_name}}</td>
                     <td>{{$item->email}}</td>
                     <td>{{$item->phone}}</td>
                     <td>{{$item->message}}</td>
-                    <td>{{$item->created_at}}</td>
                   </tr>
                   @endforeach
                 </tbody>
