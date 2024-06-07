@@ -15,21 +15,29 @@ class AuthController extends Controller
     {
         return view('admin.auth.login');
     }
+
     public function login(Request $request)
     {
-        // Validate form data
         $this->validate($request, [
             'email' => 'required|email',
             'password' => 'required|min:6'
         ]);
+
         if(Auth::guard('admin')->attempt(['email' => $request->email, 'password' => $request->password]))
         {
-            return redirect()->intended(route('admin.dashboard'));
+            $user = Auth::guard('admin')->user();
+            if($user->active == 1)
+            {
+                return redirect()->intended(route('admin.dashboard'));
+            }
+            Auth::guard('admin')->logout();
+            return redirect()->back()->withInput($request->only('email', 'remember'))->withMessage("User account is not active.");
         }
-        else{
-            return redirect()->back()->withInput($request->only('email','remember'))->withMessage("Invalid User name or Passowrd");
-        }
+
+        return redirect()->back()->withInput($request->only('email', 'remember'))->withMessage("Invalid username or password.");
     }
+
+
     public function logout(Request $request)
     {
         Auth::guard()->logout();
