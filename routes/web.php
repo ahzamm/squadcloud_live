@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\HomeSliderController as AdminHomeSlideController;
 use App\Http\Controllers\Admin\BottomSliderController as AdminBottomSliderController;
 use App\Http\Controllers\Admin\HomeController as AdminHomeController;
 use App\Http\Controllers\Admin\GeneralConfigurationController as AdminGeneralConfigurationController;
+use App\Http\Controllers\Admin\OTPConfigurationController as AdminOTPConfigurationController;
 use App\Http\Controllers\Admin\AllowedIpController;
 use App\Http\Controllers\Admin\SocialController;
 use App\Http\Controllers\Admin\UserMenuAccessController;
@@ -89,6 +90,8 @@ use App\Http\Controllers\Admin\AuthController;
         Route::prefix('admin')->group(function () {
         Route::get('/', [AuthController::class, 'showLoginForm'])->name('admin.login')->middleware('guest:admin');
         Route::post('/login', [AuthController::class, 'login'])->name('admin.login.post')->middleware('guest:admin');
+        Route::get('/verify-otp', [AuthController::class, 'showVerifyOTPForm'])->name('admin.verifyOTP')->middleware('guest:admin');
+        Route::post('/verify-otp', [AuthController::class, 'verifyOTP'])->name('admin.verifyOTP.post')->middleware('guest:admin');
 
 
         Route::middleware('auth:admin')->group(function () {
@@ -269,6 +272,9 @@ use App\Http\Controllers\Admin\AuthController;
 
         Route::resource('bottom_sliders','App\Http\Controllers\Admin\BottomSliderController');
         Route::get("/bottom_sliders/destroy/{id?}" , [AdminBottomSliderController::class ,"destroy"])->name("bottom_slider.destroy");
+
+        Route::get("/otp_configuration" , [AdminOTPConfigurationController::class ,"index"])->name("otp_configuration.index");
+        Route::post("/otp_configuration" , [AdminOTPConfigurationController::class ,"change_status"])->name("otp_configuration.update");
 
     });
 });
