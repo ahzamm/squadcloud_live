@@ -146,12 +146,20 @@ class UserMenuAccessController extends Controller
             return redirect()->back()->withInput()->with('error', 'User with this CNIC already exists');
         }
 
+        $user = $this->parentModel::where('id', $id)->first();
         if ($request->hasFile("profileImage")) {
+            if (!$request->file('profileImage')->isValid() || !in_array($request->file('profileImage')->extension(), ['jpeg', 'png', 'jpg'])) {
+                return redirect()->back()->withInput()->with('error', 'Please provide a valid background image file of type: jpeg, png, or jpg.');
+            }
+            if ($user->image && file_exists(public_path('backend/dist/img/user_profiles/' . $user->image))) {
+                // dd("Deleting the profile image");
+                unlink(public_path('backend/dist/img/user_profiles/' . $user->image));
+            }
             $fileName = time() . "." . $request->file('profileImage')->getClientOriginalExtension();
-            $request->file('profileImage')->move('UserProfiles/', $fileName);
-            $updateImage = $this->parentModel::where("id", $id)->update(['image' => $fileName]);
+            $request->file('profileImage')->move('backend/dist/img/user_profiles/', $fileName);
+            $user->image = $fileName;
+            $user->save();
         }
-
 
         if ($request->filled('password')) {
             if (!$request->filled('confirm_password')) {

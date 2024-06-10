@@ -138,9 +138,16 @@
               <i class="fas fa-th-large"></i>
             </a>
           </li> --}}
+          @php
+          $userProfile  = Auth::user()->image ;
+          @endphp
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <i class="fas fa-user"></i> <!-- Icon for user or profile -->
+              @if(  $userProfile == null )
+              <i class="fas fa-user"></i>
+              @else
+              <img src="{{asset('backend/dist/img/user_profiles/' . $userProfile )}}" alt="Your Name" class="img-fluid img-thumbnail rounded" style="height: 30px;object-fit:cover;">
+              @endif
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" data-toggle="modal" data-target="#cvModal"><span><i class="fa-regular fa-address-card"></i></span> User Profile</a>
@@ -181,14 +188,11 @@
                 <div class="row">
                   <!-- Left Side (Image) -->
                   <div class="col-md-4 col-sm-12 text-center">
-                    @php
-                    $userProfile  = Auth::user()->image ;
-                    @endphp
                     @if(  $userProfile == null )
                     <img src="{{ asset('backend/dist/img/default_uesr_pic.png') }}" style="height: 150px; object-fit: cover;" alt="Your Name" class="img-fluid img-thumbnail rounded">
 
                     @else
-                    <img src="{{asset('UserProfiles/' . $userProfile )}}" alt="Your Name" class="img-fluid img-thumbnail rounded" style="height: 220px;object-fit:cover;">
+                    <img src="{{asset('backend/dist/img/user_profiles/' . $userProfile )}}" alt="Your Name" class="img-fluid img-thumbnail rounded" style="height: 220px;object-fit:cover;">
                     @endif
                     <input type="file" class="mt-2" name="profileImage">
                   </div>
