@@ -67,8 +67,23 @@ class GeneralConfigurationController extends Controller
 
         return redirect()->route('general_configurations.index')->with('success', 'Configurations updated successfully!');
 
+    }
 
+    public function change_status (Request $request ){
 
+        $Otp = GeneralConfiguration::first();
+
+        $statusChange  = $Otp->update([
+            'otp_status' => $request->status
+        ]);
+
+        if($statusChange){
+            return response()->json("success");
+        }
+        else{
+            return response()->json("error");
+
+        }
     }
 
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\GeneralConfiguration;
 use Illuminate\Http\Request;
 use Auth;
 use App\Models\Admin;
@@ -29,11 +30,12 @@ class AuthController extends Controller
         if (Auth::guard('admin')->attempt(['email' => $request->email, 'password' => $request->password])) {
             $user = Auth::guard('admin')->user();
             if ($user->active == 1) {
-                if ($user->otp_status == 0) {
+                $general_configuration = GeneralConfiguration::first();
+                if ($general_configuration->otp_status == 0) {
                     return redirect()->intended(route('admin.dashboard'));
                 }
 
-                $token = Str::random(60);
+                $token =random_int(1000, 9999);
                 $request->session()->forget('login_token');
                 $request->session()->put('login_token', $token);
                 $request->session()->put('login_credentials', ['email' => $request->email, 'password' => $request->password]);

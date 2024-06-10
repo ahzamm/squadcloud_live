@@ -15,11 +15,7 @@ background-color: #1716161c;
 padding: 20px;
 border-radius: 8px;
 box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
-<div class="header" style="  text-align: center;
-margin-bottom: 20px;
-background-color: #33333342;
-border-radius: 5px;
-box-shadow: 1px 1px 3px #333;">
+<div class="header" style="  text-align: center;">
 
 @php
     $general_configuration = DB::table('general_configurations')->first();

@@ -269,12 +269,10 @@ use App\Http\Controllers\Admin\AuthController;
 
         Route::get("/general_configurations" , [AdminGeneralConfigurationController::class ,"index"])->name("general_configurations.index");
         Route::put("/general_configuration-update" , [AdminGeneralConfigurationController::class ,"update"])->name("general-configurations.update");
+        Route::post("/otp_configuration" , [AdminGeneralConfigurationController::class ,"change_status"])->name("general-configurations.otp_configuration.update");
 
         Route::resource('bottom_sliders','App\Http\Controllers\Admin\BottomSliderController');
         Route::get("/bottom_sliders/destroy/{id?}" , [AdminBottomSliderController::class ,"destroy"])->name("bottom_slider.destroy");
-
-        Route::get("/otp_configuration" , [AdminOTPConfigurationController::class ,"index"])->name("otp_configuration.index");
-        Route::post("/otp_configuration" , [AdminOTPConfigurationController::class ,"change_status"])->name("otp_configuration.update");
 
     });
 });
