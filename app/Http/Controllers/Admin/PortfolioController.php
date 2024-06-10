@@ -81,6 +81,18 @@ class PortfolioController extends Controller
             return redirect()->back()->withInput()->with('error', 'All Fields are required');
         }
 
+        $validator = Validator::make($request->all(), [
+            'route' => 'required|regex:/^[a-zA-Z0-9\-]+$/'
+        ]);
+        if ($validator->fails()) {
+            return redirect()->back()->withInput()->with('error', 'Please provide a valid route');
+        }
+
+        $isDuplicateRouteExists = Portfolio::where('route', $request->route)->first();
+        if ($isDuplicateRouteExists) {
+            return redirect()->back()->withInput()->with('error', "Provided route is already used");
+        }
+
         $imageFields = ['image', 'screenshot_1', 'screenshot_2', 'screenshot_3', 'background_image'];
         $savedFiles = [];
 
@@ -189,8 +201,19 @@ class PortfolioController extends Controller
         ];
         $valdiate = Validator::make($request->all(), $validatedData);
         if ($valdiate->fails()) {
-            // dd($valdiate->errors());
             return redirect()->back()->withInput()->with('error', 'All Fields are required');
+        }
+
+        $validator = Validator::make($request->all(), [
+            'slug' => 'required|regex:/^[a-zA-Z0-9\-]+$/'
+        ]);
+        if ($validator->fails()) {
+            return redirect()->back()->withInput()->with('error', 'Please provide a valid route');
+        }
+
+        $isDuplicateRouteExists = Portfolio::where('slug', $request->route)->where('id', '!=', $id)->first();
+        if ($isDuplicateRouteExists) {
+            return redirect()->back()->withInput()->with('error', "Provided route is already used");
         }
 
         $portfolio = Portfolio::findOrFail($id);
