@@ -57,7 +57,7 @@
 </head>
 <body>
           @php
-            $GeneralConfiguration = DB::table('general_configurations')->where('is_active', 1)->first();
+            $GeneralConfiguration = DB::table('general_configurations')->first();
             $menus = DB::table('front_menus')->where('is_active', 1)->orderby("sortIds" , "asc")->get();
             $socials =  DB::table('socials')->where('status', 1)->orderby("sortIds" , "asc")->get();
            @endphp
