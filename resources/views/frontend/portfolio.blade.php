@@ -58,12 +58,10 @@
    }
    .product {
       height: 230px;
-      /* padding-bottom: 20px; */
       border-radius: 10px;
       background-color: #fff;
       display: flex;
       flex-direction: column;
-      /* justify-content: space-between; */
       align-items: center;
       transition: filter 0.1s ease-in-out, opacity 0.1s ease-in-out;
    }
@@ -86,7 +84,6 @@
    <div class="container">
       <div class="title-img d-flex align-items-center justify-content-center flex-column mb-5" data-aos="zoom-in-down">
          <img src="frontend_assets/images/title/{{$portfolio_menu->title_image}}" alt="" style="width: 50%;">
-         {{-- <p class="text-center">{{ $portfolio_menu->tagline }}</p> --}}
       </div>
 
       <div class="product_container">
@@ -99,12 +96,11 @@
                   </div>
                   <div class="info">
                      <h5>{{ $portfolio->title }}</h5>
-                     <!-- <p><i class="fa fa-heart"></i></p> -->
                   </div>
                </div>
                <div class="product-btns d-flex mt-2" style="column-gap:5px">
                   <button><a href="{{$portfolio->link}}">Request Demo</a></button>
-                  <button data-description="{{ $portfolio->description }}" data-bs-toggle="modal" data-bs-target="#portfolio-detail-modal">More Info</button>
+                  <button data-title="{{ $portfolio->title }}" data-description="{{ $portfolio->description }}" data-bs-toggle="modal" data-bs-target="#portfolio-detail-modal">More Info</button>
                </div>
             </div>
             @empty
@@ -114,20 +110,17 @@
       </div>
    </div>
 </section>
+
 <div class="modal" tabindex="-1" role="dialog" id="portfolio-detail-modal">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Modal title</h5>
-        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+        <h5 class="modal-title" id="portfolio-detail-modal-title">Modal title</h5>
       </div>
       <div class="modal-body" id="portfolio-detail-modal-body">
-        <p> </p>
-     </div>
+        <p></p>
+      </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary">Save changes</button>
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
       </div>
     </div>
@@ -135,18 +128,20 @@
 </div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-       var modalBody = document.getElementById('portfolio-detail-modal-body');
-       var moreInfoButtons = document.querySelectorAll('[data-bs-toggle="modal"]');
+  document.addEventListener('DOMContentLoaded', function() {
+    var modalBody = document.getElementById('portfolio-detail-modal-body');
+    var modalTitle = document.getElementById('portfolio-detail-modal-title');
+    var moreInfoButtons = document.querySelectorAll('[data-bs-toggle="modal"]');
 
-       moreInfoButtons.forEach(function(button) {
-          button.addEventListener('click', function() {
-             var description = this.getAttribute('data-description');
-             modalBody.innerHTML = description;
-          });
-       });
+    moreInfoButtons.forEach(function(button) {
+      button.addEventListener('click', function() {
+        var description = this.getAttribute('data-description');
+        var title = this.getAttribute('data-title');
+        modalBody.innerHTML = description;
+        modalTitle.innerHTML = title;
+      });
     });
- </script>
-
+  });
+</script>
 
 @endsection

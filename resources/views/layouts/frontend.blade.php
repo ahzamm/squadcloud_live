@@ -7,10 +7,13 @@
    <meta http-equiv="X-UA-Compatible" content="ie=edge">
    <title>@yield('page_title')</title>
    <!-- Favicon -->
-   <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('frontend_assets/images/favicon/apple-touch-icon.png') }}">
-   <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('frontend_assets/images/favicon/favicon-32x32.png') }}">
-   <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('frontend_assets/images/favicon/favicon-16x16.png') }}">
-   <link rel="shortcut icon" href="{{ asset('frontend_assets/images/favicon/favicon.ico') }}" />
+   @php
+   $general_configuration = DB::table('general_configurations')->first();
+    @endphp
+   <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('frontend_assets/images/' . $general_configuration->brand_logo) }}">
+   <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('frontend_assets/images/' . $general_configuration->brand_logo) }}">
+   <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('frontend_assets/images/' . $general_configuration->brand_logo) }}">
+   <link rel="shortcut icon" href="{{ asset('frontend_assets/images/' . $general_configuration->brand_logo) }}" />
    <!-- Fav end -->
    <link rel="stylesheet" href="{{ asset('frontend_assets/css/all.min.css') }}" />
    <link rel="stylesheet" href="{{ asset('frontend_assets/css/bootstrap.min.css?v=3') }}" />
