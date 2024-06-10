@@ -67,6 +67,12 @@ class PortfolioController extends Controller
 
         $validatedData = [
             'title' => 'required',
+            'link' => 'required',
+            'route' => 'required',
+            'rating' => 'required',
+            'rating_number' => 'required',
+            'price' => 'required',
+            'price_description' => 'required',
             'description' => 'required',
         ];
         $valdiate = Validator::make($request->all(), $validatedData);
@@ -75,34 +81,59 @@ class PortfolioController extends Controller
             return redirect()->back()->withInput()->with('error', 'All Fields are required');
         }
 
-        if (!$request->hasFile('image')) {
-            return redirect()->back()->withInput()->with('error', 'Image is required');
+        $imageFields = ['image', 'screenshot_1', 'screenshot_2', 'screenshot_3', 'background_image'];
+        $savedFiles = [];
+
+        DB::beginTransaction();
+
+        try {
+            foreach ($imageFields as $field) {
+                if (!$request->hasFile($field)) {
+                    return redirect()->back()->withInput()->with('error', ucfirst(str_replace('_', ' ', $field)) . ' is required.');
+                }
+
+                $file = $request->file($field);
+
+                if (!$file->isValid() || !in_array($file->extension(), ['jpeg', 'png', 'jpg'])) {
+                    return redirect()->back()->withInput()->with('error', 'Please provide a valid ' . ucfirst(str_replace('_', ' ', $field)) . ' file of type: jpeg, png, or jpg.');
+                }
+
+                $filename = Str::random(40) . '.' . $file->getClientOriginalExtension();
+                $file->move(public_path('frontend_assets/images/portfolio'), $filename);
+
+                $savedFiles[$field] = $filename;
+            }
+
+            $portfolio = new Portfolio();
+            $portfolio->title = $request['title'];
+            $portfolio->description = $request['description'];
+            $portfolio->link = $request['link'];
+            $portfolio->route = $request['route'];
+            $portfolio->rating = $request['rating'];
+            $portfolio->rating_number = $request['rating_number'];
+            $portfolio->price = $request['price'];
+            $portfolio->price_description = $request['price_description'];
+            $portfolio->image = $savedFiles['image'] ?? null;
+            $portfolio->screenshot_1 = $savedFiles['screenshot_1'] ?? null;
+            $portfolio->screenshot_2 = $savedFiles['screenshot_2'] ?? null;
+            $portfolio->screenshot_3 = $savedFiles['screenshot_3'] ?? null;
+            $portfolio->background_image = $savedFiles['background_image'] ?? null;
+            $portfolio->is_active = $request->has('status') ? 1 : 0;
+            $portfolio->save();
+
+            DB::commit();
+
+            return redirect()->route('portfolios.index')->with('success', 'Portfolio and files have been uploaded successfully.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            // Delete any files that were uploaded before the error occurred
+            foreach ($savedFiles as $file) {
+                @unlink(public_path('frontend_assets/images/portfolio/' . $file));
+            }
+
+            return redirect()->back()->withInput()->with('error', 'An error occurred while saving the portfolio. Please try again.');
         }
-
-        if ($request->hasFile('image')) {
-        if (!$request->file('image')->isValid() || !in_array($request->file('image')->extension(), ['jpeg', 'png', 'jpg'])) {
-            return redirect()->back()->withInput()->with('error', 'Please provide a valid background image file of type: jpeg, png, or jpg.');
-        }
-    }
-
-        $filename = "";
-        if ($request->hasFile('image')) {
-            $file = $request->file('image');
-            $extension = $file->getClientOriginalExtension();
-            $filename = Str::random(40) . '.' . $extension;
-            $file->move(public_path('frontend_assets/images/portfolio'), $filename);
-        }
-
-        $portfolio = new Portfolio();
-        $portfolio->title = $request['title'];
-        $portfolio->description = $request['description'];
-        $portfolio->link = $request['link'];
-        $portfolio->image = $filename;
-        $portfolio->is_active = $request->has('status') ? 1 : 0;
-        $portfolio->save();
-
-        return redirect()->route('portfolios.index');
-
     }
 
     /**
@@ -138,53 +169,91 @@ class PortfolioController extends Controller
      */
     public function update(Request $request, $id)
     {
-
         $subMenuid = SubMenu::where('route_name', 'portfolios.index')->first();
         $userOperation = "update_status";
         $userId = Auth::guard('admin', 'user')->user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
-        // dd($request->all());
-        if ($crudAccess == true) {
-
-            $validatedData = [
-                "title" => "required",
-                "description" => "required",
-                "link" => "required",
-            ];
-            $valdiate = Validator::make($request->all(), $validatedData);
-            if ($valdiate->fails()) {
-                return redirect()->back()->withInput()->with('error', 'All Fields are required');
-            }
-
-            $portfolio = Portfolio::findOrFail($id);
-
-            if ($request->hasFile('image')) {
-                if ($portfolio->image && file_exists(public_path('frontend_assets/images/portfolio/' . $portfolio->image))) {
-                    unlink(public_path('frontend_assets/images/portfolio/' . $portfolio->image));
-                }
-
-                $file = $request->file('image');
-                $extension = $file->getClientOriginalExtension();
-                $filename = Str::random(40) . '.' . $extension;
-                $file->move(public_path('frontend_assets/images/portfolio'), $filename);
-
-                $portfolio->image = $filename;
-            }
-
-
-            $portfolio->title = $request['title'];
-            $portfolio->description = $request['description'];
-            $portfolio->link = $request['link'];
-            $portfolio->is_active = $request->has('status') ? 1 : 0;
-
-            $portfolio->save();
-
-            return redirect()->route('portfolios.index');
-
-        } else {
+        if ($crudAccess == false) {
             return redirect()->back()->withInput()->with('error', 'No Access To Update Portfolios');
         }
 
+        $validatedData = [
+            'title' => 'required',
+            'link' => 'required',
+            'route' => 'required',
+            'rating' => 'required',
+            'rating_number' => 'required',
+            'price' => 'required',
+            'price_description' => 'required',
+            'description' => 'required',
+        ];
+        $valdiate = Validator::make($request->all(), $validatedData);
+        if ($valdiate->fails()) {
+            // dd($valdiate->errors());
+            return redirect()->back()->withInput()->with('error', 'All Fields are required');
+        }
+
+        $portfolio = Portfolio::findOrFail($id);
+        $imageFields = ['image', 'screenshot_1', 'screenshot_2', 'screenshot_3', 'background_image'];
+        $savedFiles = [];
+        $oldFiles = [];
+
+        DB::beginTransaction();
+
+        try {
+            foreach ($imageFields as $field) {
+                if ($request->hasFile($field)) {
+                    // Store the old file path to delete later
+                    if ($portfolio->$field && file_exists(public_path('frontend_assets/images/portfolio/' . $portfolio->$field))) {
+                        $oldFiles[$field] = public_path('frontend_assets/images/portfolio/' . $portfolio->$field);
+                    }
+
+                    $file = $request->file($field);
+                    if (!$file->isValid() || !in_array($file->extension(), ['jpeg', 'png', 'jpg'])) {
+                        return redirect()->back()->withInput()->with('error', 'Please provide a valid ' . ucfirst(str_replace('_', ' ', $field)) . ' file of type: jpeg, png, or jpg.');
+                    }
+
+                    $filename = Str::random(40) . '.' . $file->getClientOriginalExtension();
+                    $savedFiles[$field] = $filename;
+                }
+            }
+
+            // Update portfolio details
+            $portfolio->title = $request['title'];
+            $portfolio->description = $request['description'];
+            $portfolio->link = $request['link'];
+            $portfolio->route = $request['route'];
+            $portfolio->rating = $request['rating'];
+            $portfolio->rating_number = $request['rating_number'];
+            $portfolio->price = $request['price'];
+            $portfolio->price_description = $request['price_description'];
+            $portfolio->is_active = $request->has('status') ? 1 : 0;
+
+            // Update image fields
+            foreach ($savedFiles as $field => $filename) {
+                $portfolio->$field = $filename;
+            }
+
+            $portfolio->save();
+
+            // If portfolio save is successful, move files to the filesystem
+            foreach ($savedFiles as $field => $filename) {
+                $request->file($field)->move(public_path('frontend_assets/images/portfolio'), $filename);
+            }
+
+            // Delete old files
+            foreach ($oldFiles as $oldFile) {
+                @unlink($oldFile);
+            }
+
+            DB::commit();
+
+            return redirect()->route('portfolios.index')->with("success", "Portfolio Updated Successfully");
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return redirect()->back()->withInput()->with('error', 'An error occurred while updating the portfolio. Please try again.');
+        }
     }
 
 

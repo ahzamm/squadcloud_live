@@ -62,6 +62,116 @@
                     @enderror
                   </div>
                 </div>
+
+
+
+
+
+
+
+
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="">Route <span style="color: red">*</span></label>
+                      <input type="text" class="form-control" name="route"  value="{{old('route') == NULL?$portfolio->route:old('route') }}">
+                      @error('route')
+                      <p class="text-danger mt-2 mb-0 text-sm">{{$message}}</p>
+                      @enderror
+                    </div>
+                  </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="">Rating <span style="color: red">*</span></label>
+                      <input type="text" class="form-control" name="rating"  value="{{old('rating') == NULL?$portfolio->rating:old('rating') }}">
+                      @error('rating')
+                      <p class="text-danger mt-2 mb-0 text-sm">{{$message}}</p>
+                      @enderror
+                    </div>
+                  </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="">Rating Number<span style="color: red">*</span></label>
+                      <input type="text" class="form-control" name="rating_number"  value="{{old('rating_number') == NULL?$portfolio->rating_number:old('rating_number') }}">
+                      @error('rating_number')
+                      <p class="text-danger mt-2 mb-0 text-sm">{{$message}}</p>
+                      @enderror
+                    </div>
+                  </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="">Price<span style="color: red">*</span></label>
+                      <input type="text" class="form-control" name="price"  value="{{old('price') == NULL?$portfolio->price:old('price') }}">
+                      @error('price')
+                      <p class="text-danger mt-2 mb-0 text-sm">{{$message}}</p>
+                      @enderror
+                    </div>
+                  </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="">Price Description<span style="color: red">*</span></label>
+                      <input type="text" class="form-control" name="price_description"  value="{{old('price_description') == NULL?$portfolio->price_description:old('price_description') }}">
+                      @error('price_description')
+                      <p class="text-danger mt-2 mb-0 text-sm">{{$message}}</p>
+                      @enderror
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="">Screenshot 1 <span style="color: red">*</span></label> <br>
+                      @isset($portfolio->screenshot_1)
+                      <img src="{{ asset('frontend_assets/images/portfolio/'. $portfolio->screenshot_1) }}" height="60"
+                      width="120" alt="" srcset="" >
+                      @endisset
+                      <br><br>
+                      <input type="file" value="{{ $portfolio->screenshot_1 }}" name="screenshot_1">
+                      @error('screenshot_1')
+                      <p class="text-danger mt-2 mb-0 text-sm">{{$message}}</p>
+                      @enderror
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="">Screenshot 2 <span style="color: red">*</span></label> <br>
+                      @isset($portfolio->screenshot_2)
+                      <img src="{{ asset('frontend_assets/images/portfolio/'. $portfolio->screenshot_2) }}" height="60"
+                      width="120" alt="" srcset="" >
+                      @endisset
+                      <br><br>
+                      <input type="file" value="{{ $portfolio->screenshot_2 }}" name="screenshot_2">
+                      @error('screenshot_2')
+                      <p class="text-danger mt-2 mb-0 text-sm">{{$message}}</p>
+                      @enderror
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="">Screenshot 3 <span style="color: red">*</span></label> <br>
+                      @isset($portfolio->screenshot_3)
+                      <img src="{{ asset('frontend_assets/images/portfolio/'. $portfolio->screenshot_3) }}" height="60"
+                      width="120" alt="" srcset="" >
+                      @endisset
+                      <br><br>
+                      <input type="file" value="{{ $portfolio->screenshot_3 }}" name="screenshot_3">
+                      @error('screenshot_3')
+                      <p class="text-danger mt-2 mb-0 text-sm">{{$message}}</p>
+                      @enderror
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="">Background Image <span style="color: red">*</span></label> <br>
+                      @isset($portfolio->background_image)
+                      <img src="{{ asset('frontend_assets/images/portfolio/'. $portfolio->background_image) }}" height="60"
+                      width="120" alt="" srcset="" >
+                      @endisset
+                      <br><br>
+                      <input type="file" value="{{ $portfolio->background_image }}" name="background_image">
+                      @error('background_image')
+                      <p class="text-danger mt-2 mb-0 text-sm">{{$message}}</p>
+                      @enderror
+                    </div>
+                  </div>
                 <div class="col-md-6">
                   <div class="form-group clearfix">
                     <div class="icheck-success d-inline">

@@ -29,9 +29,18 @@
                   </div>
                 </div>
                 <div class="col-md-6">
+                    <div class="form-group">
+                      <label for=""> Image <span style="color: red">*</span></label> <br>
+                      <input type="file" name="image">
+                      @error('package_slider_img')
+                      <p class="text-danger mt-2 mb-0 text-sm">{{$message}}</p>
+                      @enderror
+                    </div>
+                  </div>
+                <div class="col-md-12">
                   <div class="form-group">
                     <label for="">Description <span style="color: red">*</span></label>
-                    <input type="text" class="form-control" name="description" placeholder="Example : 15 Mbps" required value="{{old('description')}}">
+                    <textarea name="description" rows="4" placeholder="Example : How are you"  class="form-control summernote">{{old('description')}}</textarea>
                     @error('mbps')
                     <p class="text-danger mt-2 mb-0 text-sm">{{$message}}</p>
                     @enderror
@@ -46,15 +55,89 @@
                     @enderror
                   </div>
                 </div>
+
+
                 <div class="col-md-6">
-                  <div class="form-group">
-                    <label for=""> Image <span style="color: red">*</span></label> <br>
-                    <input type="file" name="image">
-                    @error('package_slider_img')
-                    <p class="text-danger mt-2 mb-0 text-sm">{{$message}}</p>
-                    @enderror
+                    <div class="form-group">
+                      <label for="">Route <span style="color: red">*</span></label>
+                      <input type="text" class="form-control" name="route" placeholder="Example : Green" required value="{{old('route')}}">
+                      @error('color')
+                      <p class="text-danger mt-2 mb-0 text-sm">{{$message}}</p>
+                      @enderror
+                    </div>
                   </div>
-                </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="">Rating <span style="color: red">*</span></label>
+                      <input type="text" class="form-control" name="rating" placeholder="Example : Green" required value="{{old('rating')}}">
+                      @error('color')
+                      <p class="text-danger mt-2 mb-0 text-sm">{{$message}}</p>
+                      @enderror
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="">Rating Numbers <span style="color: red">*</span></label>
+                      <input type="text" class="form-control" name="rating_number" placeholder="Example : Green" required value="{{old('rating_number')}}">
+                      @error('color')
+                      <p class="text-danger mt-2 mb-0 text-sm">{{$message}}</p>
+                      @enderror
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="">Price <span style="color: red">*</span></label>
+                      <input type="text" class="form-control" name="price" placeholder="Example : Green" required value="{{old('price')}}">
+                      @error('color')
+                      <p class="text-danger mt-2 mb-0 text-sm">{{$message}}</p>
+                      @enderror
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="">Price Description <span style="color: red">*</span></label>
+                      <input type="text" class="form-control" name="price_description" placeholder="Example : Green" required value="{{old('price_description')}}">
+                      @error('color')
+                      <p class="text-danger mt-2 mb-0 text-sm">{{$message}}</p>
+                      @enderror
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for=""> Screenshot 1 <span style="color: red">*</span></label> <br>
+                      <input type="file" name="screenshot_1">
+                      @error('screenshot_1')
+                      <p class="text-danger mt-2 mb-0 text-sm">{{$message}}</p>
+                      @enderror
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for=""> Screenshot 2 <span style="color: red">*</span></label> <br>
+                      <input type="file" name="screenshot_2">
+                      @error('screenshot_2')
+                      <p class="text-danger mt-2 mb-0 text-sm">{{$message}}</p>
+                      @enderror
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for=""> Screenshot 3 <span style="color: red">*</span></label> <br>
+                      <input type="file" name="screenshot_3">
+                      @error('screenshot_3')
+                      <p class="text-danger mt-2 mb-0 text-sm">{{$message}}</p>
+                      @enderror
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for=""> Background Image <span style="color: red">*</span></label> <br>
+                      <input type="file" name="background_image">
+                      @error('background_image')
+                      <p class="text-danger mt-2 mb-0 text-sm">{{$message}}</p>
+                      @enderror
+                    </div>
+                  </div>
                 <div class="col-md-6">
                   <div class="form-group clearfix">
                     <div class="icheck-success d-inline">

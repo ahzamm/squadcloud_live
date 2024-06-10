@@ -29,6 +29,15 @@
                       <th>Description</th>
                       <th>Image</th>
                       <th>Link</th>
+                      <th>Route</th>
+                      <th>Rating</th>
+                      <th>Rating Number</th>
+                      <th>Price</th>
+                      <th>Price Description</th>
+                      <th>Screen Shot 1</th>
+                      <th>Screen Shot 2</th>
+                      <th>Screen Shot 3</th>
+                      <th>Background Image</th>
                       <th>Status</th>
                       <th>Action</th>
                     </tr>
@@ -42,9 +51,26 @@
                       <td>{{$item->title}}</td>
                       <td>{{$item->description}}</td>
                       <td>
-                        <img width="40px" height="40px" src="{{ asset('frontend_assets/images/portfolio/' . $item->image) }}" alt="internet service provider in karachi/Clifton/pakistan" />
+                        <img width="40px" height="40px" src="{{ asset('frontend_assets/images/portfolio/' . $item->image) }}" alt="" />
                     </td>
                       <td>{{$item->link}}</td>
+                      <td>{{$item->route}}</td>
+                      <td>{{$item->rating}}</td>
+                      <td>{{$item->rating_number}}</td>
+                      <td>{{$item->price}}</td>
+                      <td>{{$item->price_description}}</td>
+                      <td>
+                        <img width="40px" height="40px" src="{{ asset('frontend_assets/images/portfolio/' . $item->screenshot_1) }}" alt="" />
+                    </td>
+                    <td>
+                        <img width="40px" height="40px" src="{{ asset('frontend_assets/images/portfolio/' . $item->screenshot_2) }}" alt="" />
+                    </td>
+                    <td>
+                        <img width="40px" height="40px" src="{{ asset('frontend_assets/images/portfolio/' . $item->screenshot_3) }}" alt="" />
+                    </td>
+                    <td>
+                        <img width="40px" height="40px" src="{{ asset('frontend_assets/images/portfolio/' . $item->background_image) }}" alt="" />
+                    </td>
                       <td>{{$item->is_active == 1?'active':'deactive'}}</td>
                       <td class="d-flex justify-content-center" style="gap: 5px;">
                         <a class="btn btn-primary btn-sm" href="{{ route('portfolios.edit', $item->id) }}"><i class="fa fa-edit"></i></a>
@@ -276,7 +302,7 @@
                   <td>${index + 1 }<input type="hidden" class="order-id" value="${value.id}"></td>
                   <td >${value.title}</td>
                   <td>${value.description}</td>
-                  <td> <img width="40px" height="40px" src="{{ asset('frontend_assets/images/portfolio/') }}/${value.image}" alt="internet service provider in karachi/Clifton/pakistan" /></td>
+                  <td> <img width="40px" height="40px" src="{{ asset('frontend_assets/images/portfolio/') }}/${value.image}" alt="" /></td>
                   <td>${value.link}</td>
                   <td>${value.is_active == 1?'active':'deactive'}</td>
                   <td>
