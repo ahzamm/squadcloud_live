@@ -42,7 +42,7 @@ class TeamController extends Controller
      */
     public function create()
     {
-        return view('admin.services.create');
+        return view('admin.teams.create');
     }
 
     /**
@@ -53,7 +53,7 @@ class TeamController extends Controller
      */
     public function store(Request $request)
     {
-        $subMenuid = SubMenu::where('route_name', 'services.index')->first();
+        $subMenuid = SubMenu::where('route_name', 'teams.index')->first();
         $userOperation = "create_status";
         $userId = Auth::guard('admin', 'user')->user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
@@ -62,71 +62,35 @@ class TeamController extends Controller
         }
 
         $validatedData = [
-            'service' => 'required',
-            'tagline' => 'required',
-            'description' => 'required',
-            'slug' => 'required',
+            'name' => 'required',
+            'designation' => 'required',
         ];
         $valdiate = Validator::make($request->all(), $validatedData);
         if ($valdiate->fails()) {
             return redirect()->back()->withInput()->with('error', 'All Fields are required');
         }
 
-        $validator = Validator::make($request->all(), [
-            'slug' => 'required|regex:/^[a-zA-Z0-9\-]+$/'
-        ]);
-        if ($validator->fails()) {
-            return redirect()->back()->withInput()->with('error', 'Please provide a valid slug');
-        }
-
-        $isDuplicateSlugExists = Service::where('slug', $request->slug)->first();
-        if ($isDuplicateSlugExists) {
-            return redirect()->back()->withInput()->with('error', "Provided slug is already used");
-        }
-
-        $isDuplicateNameExists = Service::where('service', $request->service)->first();
-        if ($isDuplicateNameExists) {
-            return redirect()->back()->withInput()->with('error', "Provided service name is already in use");
-        }
-
-        if (!$request->hasFile('logo')) {
+        if (!$request->hasFile('image')) {
             return redirect()->back()->withInput()->with('error', 'Please provide an image.');
         }
-        if (!$request->file('logo')->isValid() || !in_array($request->file('logo')->extension(), ['jpeg', 'png', 'jpg'])) {
+        if (!$request->file('image')->isValid() || !in_array($request->file('image')->extension(), ['jpeg', 'png', 'jpg'])) {
             return redirect()->back()->withInput()->with('error', 'Please provide a valid image file of type: jpeg, png, or jpg.');
         }
 
-        if (!$request->hasFile('background_image')) {
-            return redirect()->back()->withInput()->with('error', 'Please provide a background image.');
-        }
-        if (!$request->file('background_image')->isValid() || !in_array($request->file('background_image')->extension(), ['jpeg', 'png', 'jpg'])) {
-            return redirect()->back()->withInput()->with('error', 'Please provide a valid background image file of type: jpeg, png, or jpg.');
-        }
-
-
         $filename = "";
-        $file = $request->file('logo');
+        $file = $request->file('image');
         $extension = $file->getClientOriginalExtension();
         $filename = Str::random(40) . '.' . $extension;
-        $file->move(public_path('frontend_assets/images/services'), $filename);
+        $file->move(public_path('frontend_assets/images/teams'), $filename);
 
-        $backgroundImageFileName = "";
-        $file = $request->file('background_image');
-        $extension = $file->getClientOriginalExtension();
-        $backgroundImageFileName = Str::random(40) . '.' . $extension;
-        $file->move(public_path('frontend_assets/images/services'), $backgroundImageFileName);
+        $team = new Team();
+        $team->name = $request['name'];
+        $team->designation = $request['designation'];
+        $team->image = $filename;
+        $team->is_active = $request->has('is_active') ? 1 : 0;
+        $team->save();
 
-        $service = new Service();
-        $service->service = $request['service'];
-        $service->tagline = $request['tagline'];
-        $service->description = $request['description'];
-        $service->slug = $request['slug'];
-        $service->logo = $filename;
-        $service->background_image = $backgroundImageFileName;
-        $service->is_active = $request->has('is_active') ? 1 : 0;
-        $service->save();
-
-        return redirect()->route('services.index')->with('success', 'Service created successfully!');
+        return redirect()->route('teams.index')->with('success', 'Team member added successfully!');
     }
 
     /**
@@ -149,8 +113,8 @@ class TeamController extends Controller
      */
     public function edit($id)
     {
-        $service = Service::find($id);
-        return view('admin.services.edit', compact('service'));
+        $team = Team::find($id);
+        return view('admin.teams.edit', compact('team'));
     }
 
     /**
@@ -162,7 +126,7 @@ class TeamController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $subMenuid = SubMenu::where('route_name', 'services.index')->first();
+        $subMenuid = SubMenu::where('route_name', 'teams.index')->first();
         $userOperation = "update_status";
         $userId = Auth::guard('admin', 'user')->user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
@@ -172,79 +136,40 @@ class TeamController extends Controller
         }
 
         $validatedData = [
-            'service' => 'required',
-            'tagline' => 'required',
-            'description' => 'required',
-            'slug' => 'required',
+            'name' => 'required',
+            'designation' => 'required',
         ];
         $valdiate = Validator::make($request->all(), $validatedData);
         if ($valdiate->fails()) {
             return redirect()->back()->withInput()->with('error', 'All Fields are required');
         }
 
-        if ($request->hasFile('logo')) {
-            if (!$request->file('logo')->isValid() || !in_array($request->file('logo')->extension(), ['jpeg', 'png', 'jpg'])) {
+        if ($request->hasFile('image')) {
+            if (!$request->file('image')->isValid() || !in_array($request->file('image')->extension(), ['jpeg', 'png', 'jpg'])) {
                 return redirect()->back()->withInput()->with('error', 'Please provide a valid image file of type: jpeg, png, or jpg.');
             }
         }
 
-        if ($request->hasFile('background_image')) {
-            if (!$request->file('background_image')->isValid() || !in_array($request->file('background_image')->extension(), ['jpeg', 'png', 'jpg'])) {
-                return redirect()->back()->withInput()->with('error', 'Please provide a valid background image file of type: jpeg, png, or jpg.');
-            }
-        }
+        $team = Team::findOrFail($id);
 
-        $validator = Validator::make($request->all(), [
-            'slug' => 'required|regex:/^[a-zA-Z0-9\-]+$/'
-        ]);
-        if ($validator->fails()) {
-            return redirect()->back()->withInput()->with('error', 'Please provide a valid slug');
-        }
-
-        $isDuplicateSlugExists = Service::where('slug', $request->slug)->where('id', '!=', $id)->first();
-        if ($isDuplicateSlugExists) {
-            return redirect()->back()->withInput()->with('error', "Provided slug is already used");
-        }
-
-        $isDuplicateNameExists = Service::where('service', $request->service)->where('id', '!=', $id)->first();
-        if ($isDuplicateNameExists) {
-            return redirect()->back()->withInput()->with('error', "Provided service name is already in use");
-        }
-
-        $service = Service::findOrFail($id);
-
-        if ($request->hasFile('logo')) {
-            if ($service->logo && file_exists(public_path('frontend_assets/images/services/' . $service->logo))) {
-                unlink(public_path('frontend_assets/images/services/' . $service->logo));
+        if ($request->hasFile('image')) {
+            if ($team->image && file_exists(public_path('frontend_assets/images/teams/' . $team->image))) {
+                unlink(public_path('frontend_assets/images/teams/' . $team->image));
             }
 
-            $file = $request->file('logo');
+            $file = $request->file('image');
             $extension = $file->getClientOriginalExtension();
             $filename = Str::random(40) . '.' . $extension;
-            $file->move(public_path('frontend_assets/images/services'), $filename);
-            $service->logo = $filename;
+            $file->move(public_path('frontend_assets/images/teams'), $filename);
+            $team->image = $filename;
         }
 
-        if ($request->hasFile('background_image')) {
-            if ($service->background_image && file_exists(public_path('frontend_assets/images/services/' . $service->background_image))) {
-                unlink(public_path('frontend_assets/images/services/' . $service->background_image));
-            }
+        $team->name = $request['name'];
+        $team->designation = $request['designation'];
+        $team->is_active = $request->has('is_active') ? 1 : 0;
+        $team->save();
 
-            $file = $request->file('background_image');
-            $extension = $file->getClientOriginalExtension();
-            $filename = Str::random(40) . '.' . $extension;
-            $file->move(public_path('frontend_assets/images/services'), $filename);
-            $service->background_image = $filename;
-        }
-
-        $service->service = $request['service'];
-        $service->tagline = $request['tagline'];
-        $service->description = $request['description'];
-        $service->slug = $request['slug'];
-        $service->is_active = $request->has('is_active') ? 1 : 0;
-        $service->save();
-
-        return redirect()->route('services.index')->with('success', 'Service updated successfully!');
+        return redirect()->route('teams.index')->with('success', 'Team Member updated successfully!');
     }
 
 
@@ -256,26 +181,26 @@ class TeamController extends Controller
      */
     public function destroy($id = null)
     {
-        $subMenuid = SubMenu::where('route_name', 'services.index')->first();
+        $subMenuid = SubMenu::where('route_name', 'teams.index')->first();
         $userOperation = "delete_status";
         $userId = Auth::guard('admin', 'user')->user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
 
         if ($crudAccess == true) {
-            $service = Service::find($id);
-            if ($service) {
-                if ($service->logo) {
-                    $imagePath = public_path('frontend_assets/images/services/' . $service->logo);
+            $team = Team::find($id);
+            if ($team) {
+                if ($team->logo) {
+                    $imagePath = public_path('frontend_assets/images/teams/' . $team->logo);
                     if (file_exists($imagePath)) {
                         unlink($imagePath);
                     }
                 }
 
-                $service->delete();
+                $team->delete();
 
                 return response()->json(["status" => true]);
             } else {
-                return response()->json(["status" => false, "message" => "Service not found."]);
+                return response()->json(["status" => false, "message" => "Team member not found not found."]);
             }
         } else {
             return response()->json(["unauthorized" => true]);
@@ -299,13 +224,13 @@ class TeamController extends Controller
     {
         $sortIds = $request->sort_Ids;
         foreach ($sortIds as $key => $value) {
-            $menu = Service::find($value);
+            $menu = Team::find($value);
             if ($menu) {
                 $menu->sortIds = $key;
                 $menu->save();
             }
         }
-        $frontValue = Service::orderby("sortIds", 'asc')->get();
+        $frontValue = Team::orderby("sortIds", 'asc')->get();
         return response()->json($frontValue);
     }
 }
