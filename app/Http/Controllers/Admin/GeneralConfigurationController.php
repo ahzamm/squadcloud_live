@@ -17,8 +17,17 @@ class GeneralConfigurationController extends Controller
 
     public function index()
     {
+        $subMenuid = SubMenu::where('route_name', 'general_configurations.index')->first();
+        $userOperation = "view_status";
+        $userId = Auth::guard('admin', 'user')->user()->id;
+        $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
+
+        if ($crudAccess == false) {
+            return redirect()->back()->with('error', 'No Access To View General Configurations');
+        }
+
         $general_configuration = GeneralConfiguration::first();
-        return view('admin.general_configurations.edit', compact('general_configuration'));
+        return view('admin.general_configurations.index', compact('general_configuration'));
     }
 
 
@@ -37,6 +46,7 @@ class GeneralConfigurationController extends Controller
         $validatedData = [
             "brand_name" => "required",
             "site_footer" => "required",
+            "description" => "required",
         ];
         $validate = Validator::make($request->all(), $validatedData);
         if ($validate->fails()) {
@@ -63,6 +73,7 @@ class GeneralConfigurationController extends Controller
 
         $general_configuration->brand_name = $request['brand_name'];
         $general_configuration->site_footer = $request['site_footer'];
+        $general_configuration->site_footer_description = $request['description'];
         $general_configuration->save();
 
         return redirect()->route('general_configurations.index')->with('success', 'Configurations updated successfully!');

@@ -130,6 +130,15 @@
                                         @enderror
                                     </div>
                                 </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                      <label for="">Description <span style="color: red">*</span></label>
+                                      <textarea name="description" rows="4" placeholder="Example : How are you" required class="form-control summernote">{{$general_configuration->site_footer_description}}</textarea>
+                                      @error('description')
+                                      <p class="text-danger mt-2 mb-0 text-sm">{{$message}}</p>
+                                      @enderror
+                                    </div>
+                                  </div>
                             </div>
                             </div>
                     </div>

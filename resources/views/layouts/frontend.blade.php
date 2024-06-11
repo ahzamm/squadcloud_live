@@ -112,29 +112,53 @@
     </div>
 
     @yield('content')
-
-    <footer class="mb-0">
+    <footer class="footer custom-svg">
+    <div class="footer__bottom">
         <div class="container">
-           <div class="py-2">
-              <div class="container">
-                 <div class="footer-wrapper" style="text-align:center; font-size:14px;">
-                    @if(!empty($GeneralConfiguration->site_footer))
-                        {!! $GeneralConfiguration->site_footer !!}
-                    @endif
-                    <p class="mb-0 font-size-14 text-body text-center">
-                        <img src="{{ asset('frontend_assets/images/copyright.png') }}" alt="Copyright" style="width: 16px;">
-                        <span style="padding-left:-420px;"> All Rights Reserved. Designed and Developed by <a class="text-primary" target="_blank" href="/index"> SquadCloud.</a>
-                    </p>
-                    <div class="footer-links">
-                        @foreach ($socials as $social)
-                            <a href="{{ $social->url }}"><i class="{{$social->icon}}"></i></a>
-                            @endforeach
-                    </div>
-                 </div>
-              </div>
-           </div>
+            <div class="d-flex align-items-start" style="padding: 30px 0 10px">
+                <div style="flex: 1 1 30%">
+                    <p class="text-left"><img src="{{ asset('frontend_assets/images/' . $general_configuration->brand_logo) }}" alt="" class="footer--logo mb-20" style="width: 250px"></p>
+                    <p class="text-gray pe-5" style="text-align:justify">{!!$general_configuration->site_footer_description!!}</p>
+                </div>
+                <div style="flex: 1 1 20%">
+                    <h6 class="text-white text-left p-3" style="font-size:1rem">Quick Links</h6>
+                    <ul class="list-style-none">
+                        <li><a href="" class="nav nav-link text-left text-gray">Portfolio</a></li>
+                        <li><a href="" class="nav nav-link text-left text-gray">Services</a></li>
+                        <li><a href="" class="nav nav-link text-left text-gray">Promotions</a></li>
+                        <li><a href="" class="nav nav-link text-left text-gray">Contact</a></li>
+                    </ul>
+                </div>
+                <div style="flex: 1 1 20%">
+                    <h6 class="text-white text-left p-3" style="font-size:1rem">Helpful Links</h6>
+                    <ul>
+                        <li><a href="" class="nav nav-link text-left text-gray">Terms &amp; Conditions</a></li>
+                        <li><a href="" class="nav nav-link text-left text-gray">Privacy Policy</a></li>
+                        <li><a href="" class="nav nav-link text-left text-gray">Promotions</a></li>
+                        <li><a href="" class="nav nav-link text-left text-gray">FAQs</a></li>
+                    </ul>
+                </div>
+                <div style="flex: 1 1 auto">
+                    <h6 class="text-white text-left">Subscribe for updates</h6>
+                    <form class="text-left">
+                        <div class="form-group">
+                            <input type="text" class="form-control text-white" placeholder="Enter your email" style="background-color: transparent; border:1px solid #b9c9c8;box-shadow:none;margin:20px 0">
+                            <button type="submit" class="btn btn-sm text-dark" style="background: #d6d2cb;float: right;border-radius: 10px !important;">Subscribe</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <hr style="margin:5px 0">
+            <div class="rowjustify-content-center">
+                <!-- <div class="col-sm-6"> -->
+                    <div class="footer__copyright">
+                        <p class="m-0 text-center">© Copyright 2024 <a class="" href="http://squadcloud.co/" onmouseenter="mouseEnter()" onmouseleave="mouseLeave()">SquadCloud</a> All rights reserved.</p>
+                    <!-- </div> -->
+                </div>
+            </div>
         </div>
-     </footer>
+    </div>
+</footer>
 
      <script src="{{ asset('frontend_assets/js/jquery-3.6.0.min.js') }}"></script>
      <script src="{{ asset('frontend_assets/js/popper.min.js') }}"></script>
