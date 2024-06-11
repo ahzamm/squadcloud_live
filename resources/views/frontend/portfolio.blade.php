@@ -92,7 +92,7 @@
             <div>
                <div class="product" data-price="50">
                   <div class="img">
-                     <img src="frontend_assets/images/portfolio/{{$portfolio->image}}" alt="{{ $portfolio->title }}">
+                     <img src="{{ asset('frontend_assets/images/portfolio/' . $portfolio->image) }}" alt="{{ $portfolio->title }}">
                   </div>
                   <div class="info">
                      <h5>{{ $portfolio->title }}</h5>
@@ -100,7 +100,9 @@
                </div>
                <div class="product-btns d-flex mt-2" style="column-gap:5px">
                   <button><a href="{{$portfolio->link}}">Request Demo</a></button>
-                  <button data-title="{{ $portfolio->title }}" data-description="{{ $portfolio->description }}" data-bs-toggle="modal" data-bs-target="#portfolio-detail-modal">More Info</button>
+
+
+                  <button> <a href="/portfolio/{{ $portfolio->route }}">More Info</a></button>
                </div>
             </div>
             @empty

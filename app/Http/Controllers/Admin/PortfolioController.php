@@ -205,13 +205,13 @@ class PortfolioController extends Controller
         }
 
         $validator = Validator::make($request->all(), [
-            'slug' => 'required|regex:/^[a-zA-Z0-9\-]+$/'
+            'route' => 'required|regex:/^[a-zA-Z0-9\-]+$/'
         ]);
         if ($validator->fails()) {
             return redirect()->back()->withInput()->with('error', 'Please provide a valid route');
         }
 
-        $isDuplicateRouteExists = Portfolio::where('slug', $request->route)->where('id', '!=', $id)->first();
+        $isDuplicateRouteExists = Portfolio::where('route', $request->route)->where('id', '!=', $id)->first();
         if ($isDuplicateRouteExists) {
             return redirect()->back()->withInput()->with('error', "Provided route is already used");
         }
