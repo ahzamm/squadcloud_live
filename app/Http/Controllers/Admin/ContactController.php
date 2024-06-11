@@ -9,6 +9,7 @@ use DB;
 use App\Models\SubMenu;
 use App\Models\ContactRequest;
 use App\Models\UserMenuAccess;
+use App\Models\email_contact;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
 use Auth;
@@ -110,7 +111,45 @@ class ContactController extends Controller
         }
 
         $contacts = ContactRequest::all();
-        return view('admin.contacts.message_requests', compact('contacts'));
+        $data['email_contacts'] = email_contact::orderBy('id','DESC')->get();
+        return view('admin.contacts.message_requests', compact('contacts', 'data'));
+    }
+
+    public function EmailFormSubmit(Request $request) {
+        email_contact::truncate();
+
+        // Retrieve the array of emails from the request or an empty array if not present
+        $adminEmails = $request->input('adminemail', []);
+
+        // Ensure $adminEmails is an array
+        if (!is_array($adminEmails)) {
+            $adminEmails = [$adminEmails];
+        }
+
+        // Filter out empty emails
+        $adminEmails = array_filter($adminEmails, function($email) {
+            return !empty($email);
+        });
+
+        // Iterate through the emails and save each one as a new record
+        foreach ($adminEmails as $email) {
+            // Prepare the data for saving
+            $emails = [
+                'adminemail' => $email,
+            ];
+            // Save the email to the database
+            email_contact::create($emails);
+        }
+        return redirect('admin/contact/message-requests')->with('success','Emails Updated successfully');
+    }
+
+    public function destroyEmail($id) {
+        $email_contacts = email_contact::findorfail($id);
+        if ($email_contacts) {
+            $email_contacts->delete();
+        }
+        return redirect('admin/contact/message-requests')->with('success','Email has been deleted successfully');
+
     }
 
 

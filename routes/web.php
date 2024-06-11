@@ -191,6 +191,7 @@ use App\Http\Controllers\Admin\AuthController;
         Route::get('/contact/' , [ContactController::class ,'index'])->name('contact.index');
         Route::get('/contactrequest/{id}', [ContactController::class,'showFrontContact'])->name('frontcontactrequest.show');
 
+
         // User Managment Section
         Route::get('/user/' , [UserMenuAccessController::class ,'index'])->name('user.index');
         Route::get('/user/create' , [UserMenuAccessController::class ,'create'])->name('user.create');
@@ -261,6 +262,8 @@ use App\Http\Controllers\Admin\AuthController;
 
         Route::get("/contacts" , [AdminContactController::class ,"index"])->name("contacts.index");
         Route::put("/contacts" , [AdminContactController::class ,"update"])->name("contacts.update");
+        Route::post('/contact/' , [AdminContactController::class ,'EmailFormSubmit'])->name('emailcontact.store');
+        Route::get('/contact/delete/{id}' , [AdminContactController::class ,'destroyEmail'])->name('emailcontact.destroy');
 
         Route::get("/contact/message-requests" , [AdminContactController::class ,"messageRequest"])->name("contacts.message_request");
         Route::get("/contact/destroy/{id?}" , [AdminContactController::class ,"destroy"])->name("contact.destroy");

@@ -8,6 +8,7 @@ use App\Models\FrontMenu;
 use App\Models\Contact;
 use App\Models\ContactRequest;
 use App\Models\FrontEmail;
+use App\Models\email_contact;
 use App\Models\Admin;
 use Illuminate\Support\Facades\Validator;
 
@@ -44,7 +45,7 @@ class ContactController extends Controller
             return redirect()->back()->with('error', 'All Fields are required');
         }
 
-        $adminEmails = Admin::where('active', 1)->pluck('email')->toArray();
+        $adminEmails = email_contact::get()->pluck('adminemail')->toArray();
         $email_settings = FrontEmail::where('status', 1)->First();
 
         $full_name = $request->full_name;

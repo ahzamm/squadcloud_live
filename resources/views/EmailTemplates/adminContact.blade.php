@@ -6,7 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin</title>
 </head>
-
+@php
+    $general_configuration = DB::table('general_configurations')->first();
+@endphp
 <body style="font-family: Arial, sans-serif;">
   <p>Dear <span style="font-weight: 900;">Admin</span>,</p>
   <p>A contact message was sent by <b>
