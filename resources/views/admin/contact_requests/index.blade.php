@@ -16,7 +16,7 @@
                             <div class="card-header">
                                 <h3 class="card-title"><span><i class="fa-solid fa-box-open"></i></span> Contacts</h3>
                                 <div class="float-right">
-                                    <a href="#" class="btn btn-info btn-sm" data-toggle="modal" data-target="#emailModal">Add Recipient</a>
+                                    <a href="#" class="btn btn-info btn-sm" data-toggle="modal" data-target="#emailModal">Add Email</a>
                                 </div>
                             </div>
                             <!-- /.card-header -->
@@ -160,31 +160,54 @@
             return re.test(String(email).toLowerCase());
         }
 
-        $('#emailForm').on('submit', function(e) {
-            let isValid = true;
-            let invalidEmails = false;
-            $('input[name="adminemail[]"]').each(function() {
-                if ($(this).val().trim() === '') {
-                    isValid = false;
-                    $(this).addClass('is-invalid');
-                } else if (!validateEmail($(this).val().trim())) {
-                    isValid = false;
-                    invalidEmails = true;
-                    $(this).addClass('is-invalid');
-                } else {
-                    $(this).removeClass('is-invalid');
+        function checkDuplicates(emails) {
+            let emailSet = new Set();
+            for (let email of emails) {
+                if (emailSet.has(email)) {
+                    return true; // Duplicate found
                 }
-            });
-
-            if (!isValid) {
-                e.preventDefault();
-                if (invalidEmails) {
-                    toastr.error('Please enter valid email addresses.');
-                } else {
-                    toastr.error('Please fill out all email fields.');
-                }
+                emailSet.add(email);
             }
-        });
+            return false; // No duplicates
+        }
+
+        $('#emailForm').on('submit', function(e) {
+    let isValid = true;
+    let invalidEmails = false;
+    let emails = [];
+    let hasEmptyField = false;
+
+    $('input[name="adminemail[]"]').each(function() {
+        let email = $(this).val().trim();
+        if (email === '') {
+            isValid = false;
+            hasEmptyField = true;
+            $(this).addClass('is-invalid');
+        } else if (!validateEmail(email)) {
+            isValid = false;
+            invalidEmails = true;
+            $(this).addClass('is-invalid');
+        } else {
+            $(this).removeClass('is-invalid');
+            emails.push(email);
+        }
+    });
+
+    if (isValid && checkDuplicates(emails)) {
+        isValid = false;
+        toastr.error('Duplicate email addresses found.');
+    }
+
+    if (!isValid) {
+        e.preventDefault();
+        if (hasEmptyField) {
+            toastr.error('Please fill out all email fields.');
+        } else if (invalidEmails) {
+            toastr.error('Please enter valid email addresses.');
+        }
+    }
+});
+
 
         $(function () {
             $("#example1").DataTable({
@@ -199,15 +222,14 @@
             id = $(this).attr('data-value');
             $.ajax({
                 method: 'get',
-                url: '/admin/front-emails/edit',
-                dataType: 'html',
-                success: function(res) {
-                    $('#frontPagesModal').find('.modal-content').html(res);
+                url: '/admin/front_faq/edit/' + id,
+                success: function(result) {
+                    $('#frontPagesModal').modal('show').find('.modal-content').html(result);
                 },
-                error: function(jhxr, err, status) {
-                    console.log(jhxr);
+                error: function(xhr) {
+                    console.log(xhr);
                 }
-            })
-        })
+            });
+        });
     </script>
 @endpush
