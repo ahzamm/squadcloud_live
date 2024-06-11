@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin\BottomSliderController as AdminBottomSliderContro
 use App\Http\Controllers\Admin\HomeController as AdminHomeController;
 use App\Http\Controllers\Admin\GeneralConfigurationController as AdminGeneralConfigurationController;
 use App\Http\Controllers\Admin\TeamController as AdminTeamController;
+use App\Http\Controllers\Admin\ContactRequestController;
 use App\Http\Controllers\Admin\AllowedIpController;
 use App\Http\Controllers\Admin\SocialController;
 use App\Http\Controllers\Admin\UserMenuAccessController;
@@ -190,8 +191,8 @@ use App\Http\Controllers\Admin\AuthController;
         Route::post('/social/update/{id?}' , [SocialController::class , 'update'])->name('social.update');
         Route::get('/social/destroy/{id?}' , [SocialController::class , 'destroy'])->name('social.destroy');
         // Contact Section Data Started
-        Route::get('/contact/' , [ContactController::class ,'index'])->name('contact.index');
-        Route::get('/contactrequest/{id}', [ContactController::class,'showFrontContact'])->name('frontcontactrequest.show');
+        // Route::get('/contact/' , [ContactController::class ,'index'])->name('contact.index');
+        // Route::get('/contactrequest/{id}', [ContactController::class,'showFrontContact'])->name('frontcontactrequest.show');
 
 
         // User Managment Section
@@ -264,11 +265,11 @@ use App\Http\Controllers\Admin\AuthController;
 
         Route::get("/contacts" , [AdminContactController::class ,"index"])->name("contacts.index");
         Route::put("/contacts" , [AdminContactController::class ,"update"])->name("contacts.update");
-        Route::post('/contact/' , [AdminContactController::class ,'EmailFormSubmit'])->name('emailcontact.store');
-        Route::get('/contact/delete/{id}' , [AdminContactController::class ,'destroyEmail'])->name('emailcontact.destroy');
 
-        Route::get("/contact/message-requests" , [AdminContactController::class ,"messageRequest"])->name("contacts.message_request");
-        Route::get("/contact/destroy/{id?}" , [AdminContactController::class ,"destroy"])->name("contact.destroy");
+        Route::get("/contact_requests" , [ContactRequestController::class ,"index"])->name("contact_requests.index");
+        Route::post('/contact_requests/' , [ContactRequestController::class ,'EmailFormSubmit'])->name('emailcontact.store');
+        Route::get('/contact_requests/delete/{id}' , [ContactRequestController::class ,'destroyEmail'])->name('emailcontact.destroy');
+        Route::get("/contact_requests/destroy/{id?}" , [ContactRequestController::class ,"destroy"])->name("contact_request.destroy");
 
         Route::resource('homesliders','App\Http\Controllers\Admin\HomeSliderController');
         Route::get("/homesliders/destroy/{id?}" , [AdminHomeSlideController::class ,"destroy"])->name("homeslider.destroy");
