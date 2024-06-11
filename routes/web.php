@@ -14,7 +14,7 @@ use App\Http\Controllers\Admin\HomeSliderController as AdminHomeSlideController;
 use App\Http\Controllers\Admin\BottomSliderController as AdminBottomSliderController;
 use App\Http\Controllers\Admin\HomeController as AdminHomeController;
 use App\Http\Controllers\Admin\GeneralConfigurationController as AdminGeneralConfigurationController;
-use App\Http\Controllers\Admin\OTPConfigurationController as AdminOTPConfigurationController;
+use App\Http\Controllers\Admin\TeamController as AdminTeamController;
 use App\Http\Controllers\Admin\AllowedIpController;
 use App\Http\Controllers\Admin\SocialController;
 use App\Http\Controllers\Admin\UserMenuAccessController;
@@ -130,6 +130,7 @@ use App\Http\Controllers\Admin\AuthController;
         Route::get('product/edit/{id?}', [AdminProductController::class , 'edit'])->name('product.edit');
         Route::get('bottom_slider/edit/{id?}', [AdminBottomSliderController::class , 'edit'])->name('bottom_slider.edit');
         Route::get('homeslider/edit/{id?}', [HomeSliderController::class , 'edit'])->name('homeslider.edit');
+        Route::get('team/edit/{id?}', [AdminTeamController::class , 'edit'])->name('team.edit');
 
 
         Route::resource('cities','App\Http\Controllers\Admin\CitiesController');
@@ -176,6 +177,7 @@ use App\Http\Controllers\Admin\AuthController;
         Route::post("sortBottomSlider" , [AdminBottomSliderController::class , 'updateSorting'])->name("sort.bottom_slider");
         Route::post("sortSocial" , [SocialController::class , 'updateSorting'])->name("sort.social");
         Route::post("sortHomeSlider" , [HomeSliderController::class , 'updateSorting'])->name("sort.homeslider");
+        Route::post("sortTeam" , [AdminTeamController::class , 'updateSorting'])->name("sort.team");
 
 
 
@@ -277,6 +279,9 @@ use App\Http\Controllers\Admin\AuthController;
 
         Route::resource('bottom_sliders','App\Http\Controllers\Admin\BottomSliderController');
         Route::get("/bottom_sliders/destroy/{id?}" , [AdminBottomSliderController::class ,"destroy"])->name("bottom_slider.destroy");
+
+        Route::resource('teams','App\Http\Controllers\Admin\TeamController');
+        Route::get("/teams/destroy/{id?}" , [AdminTeamController::class ,"destroy"])->name("team.destroy");
 
     });
 });
