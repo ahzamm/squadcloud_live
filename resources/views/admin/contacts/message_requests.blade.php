@@ -162,9 +162,14 @@
 
         $('#emailForm').on('submit', function(e) {
             let isValid = true;
+            let invalidEmails = false;
             $('input[name="adminemail[]"]').each(function() {
                 if ($(this).val().trim() === '') {
                     isValid = false;
+                    $(this).addClass('is-invalid');
+                } else if (!validateEmail($(this).val().trim())) {
+                    isValid = false;
+                    invalidEmails = true;
                     $(this).addClass('is-invalid');
                 } else {
                     $(this).removeClass('is-invalid');
@@ -173,7 +178,11 @@
 
             if (!isValid) {
                 e.preventDefault();
-                toastr.error('Please fill out all email fields.');
+                if (invalidEmails) {
+                    toastr.error('Please enter valid email addresses.');
+                } else {
+                    toastr.error('Please fill out all email fields.');
+                }
             }
         });
 
@@ -199,20 +208,6 @@
                     console.log(jhxr);
                 }
             })
-        });
-
-        $(document).on('click', '.removeMail', function() {
-            $(this).parents('li').remove();
-        });
-
-        $(document).on('click', '#addEmail', function() {
-            email = $('#email').val();
-            if (email != '' && validateEmail(email)) {
-                $('#emailWrapper').append('<li>' + email + '<input type="hidden" name="emails[]" value="' + email + '"><span class="removeMail">X</span></li>');
-                $('#email').val('');
-            } else {
-                toastr.error('Please enter a valid email.');
-            }
-        });
+        })
     </script>
 @endpush
