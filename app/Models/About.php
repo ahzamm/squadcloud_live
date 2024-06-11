@@ -11,15 +11,7 @@ class About extends Model
     protected $table = 'about';
     protected $fillable = [
         'video_url',
-        'icon_1',
-        'heading_1',
-        'description_1',
-        'icon_2',
-        'heading_2',
-        'description_2',
-        'icon_3',
-        'heading_3',
-        'description_3',
+        'description',
         'closing_remarks'
     ];
 }

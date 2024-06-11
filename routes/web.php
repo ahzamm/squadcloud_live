@@ -260,8 +260,8 @@ use App\Http\Controllers\Admin\AuthController;
         Route::resource('clients','App\Http\Controllers\Admin\ClientController');
         Route::get("/clients/destroy/{id?}" , [AdminClientController::class ,"destroy"])->name("client.destroy");
 
-        Route::resource('abouts','App\Http\Controllers\Admin\AboutController');
-        Route::get("/abouts/destroy/{id?}" , [AdminAboutController::class ,"destroy"])->name("about.destroy");
+        Route::get("about" , [AdminAboutController::class ,"index"])->name("about.index");
+        Route::put("about" , [AdminAboutController::class ,"update"])->name("about.update");
 
         Route::get("/contacts" , [AdminContactController::class ,"index"])->name("contacts.index");
         Route::put("/contacts" , [AdminContactController::class ,"update"])->name("contacts.update");
