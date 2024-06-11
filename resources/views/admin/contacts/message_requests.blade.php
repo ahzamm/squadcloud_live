@@ -16,8 +16,8 @@
                             <div class="card-header">
                                 <h3 class="card-title"><span><i class="fa-solid fa-box-open"></i></span> Contacts</h3>
                                 <div class="float-right">
-                                    <a href="#" class="btn btn-info btn-sm" data-toggle="modal" data-target="#emailModal">Add Email</a>
-                                    </div>
+                                    <a href="#" class="btn btn-info btn-sm" data-toggle="modal" data-target="#emailModal">Add Recipient</a>
+                                </div>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
@@ -31,8 +31,6 @@
                                                 <th>Phone</th>
                                                 <th>Service Required</th>
                                                 <th>Message</th>
-                                                <!-- <th>Location URL</th> -->
-                                                <!-- <th>Status </th> -->
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -46,10 +44,9 @@
                                                     <td>{{ $item->service_required }}</td>
                                                     <td>{{ $item->message }}</td>
                                                     <td>
-
-                                                    <button class="btn btn-danger btn-sm btnDeleteMenu"
-                                                        data-value="{{ $item->id }}"><i
-                                                            class="fa fa-trash"></i></button>
+                                                        <button class="btn btn-danger btn-sm btnDeleteMenu"
+                                                            data-value="{{ $item->id }}"><i
+                                                                class="fa fa-trash"></i></button>
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -64,45 +61,40 @@
         </section>
     </div>
     <!-- Add Email Modal -->
-<div class="modal fade" id="emailModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-md" role="document">
-      <div class="modal-content">
-        <!-- Modal Header -->
-        <div class="modal-header">
-          <h4>Add Email</h4>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
+    <div class="modal fade" id="emailModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4>Add Email</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
 
+                <!-- Modal Body -->
+                <form action="{{route('emailcontact.store')}}" method="POST" id="emailForm">
+                    @csrf
+                    <div class="modal-body" id="emailContainer">
+                        @foreach ($data['email_contacts'] as $key => $contact)
+                            <div class="d-flex gap-5 mb-2 email-row" id="row_{{ $key }}">
+                                <input type="text" class="form-control" name="adminemail[]" value="{{$contact->adminemail}}" placeholder="Enter Email">
+                                <button class="btn btn-danger btn-sm deleteRow" type="button" onclick="removeRow(this)"><i class="fa fa-minus"></i></button>
+                            </div>
+                        @endforeach
 
-        <!-- Modal Body -->
-        <form action="{{route('emailcontact.store')}}" method="POST">
-        @csrf
-        <div class="modal-body" id="emailContainer">
-
-          @foreach ($data['email_contacts'] as $key=> $contact)
-            <div class="d-flex gap-5 mb-2" id="row_1">
-              <input type="text" class="form-control" name="adminemail[]" value="{{$contact->adminemail}}" placeholder="Enter Email">
-              <button class="btn btn-danger btn-sm deleteRow" onclick="removeRow()"><i class="fa fa-minus"></i></button>
+                        <!-- Add Email Button Alone -->
+                        <div class="d-flex gap-5 mb-2" id="addEmailButton">
+                            <button type="button" class="btn btn-success" onclick="addRow()"><i class="fa fa-plus"></i></button>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success">Save</button>
+                    </div>
+                </form>
             </div>
-          @endforeach
-
-          <div class="d-flex gap-5 mb-2" id="row_1">
-            <input type="text" class="form-control" name="adminemail[]" placeholder="Enter Email">
-            <button type="button" class="btn btn-success" onclick="addRow()"><i class="fa fa-plus"></i></button>
-          </div>
-
         </div>
-        <div class="modal-footer">
-          <button type="submit" class="btn btn-success" >Save</button>
-        </div>
-
-        </form>
-      </div>
     </div>
-  </div>
-</div>
     @include('admin.front-faq._modal')
 @endsection
 @push('scripts')
@@ -133,7 +125,6 @@
                 reverseButtons: true
             }).then(function(result) {
                 if (result.value) {
-                console.log("Delete URL: " + packageDeleteUrl + '/' + id,);
                     $.ajax({
                         url: packageDeleteUrl + '/' + id,
                         method: 'get',
@@ -145,112 +136,83 @@
                             if (res.status) {
                                 swal('Updated!', 'Contact deleted', 'success');
                                 location.reload();
-                                // console.log("delete record");
-                            } else {
-                                //$(secondInput).siblings('span').removeClass('d-none');
                             }
                         },
                         error: function(jhxr, status, err) {
                             console.log(jhxr);
                         }
                     })
-                } else if (result.dismiss === 'cancel') {
-                    //  swal(
-                    //      'Cancelled',
-                    //      'Your imaginary data is safe :)',
-                    //      'error'
-                    //  )
                 }
             })
         })
 
         function addRow() {
-    let htmlRow = '<div class="d-flex gap-5 mb-2"><input type="text" class="form-control" name="adminemail[]" placeholder="Enter Email"><button class="btn btn-danger btn-sm deleteRow" onclick="removeRow()"><i class="fa fa-minus"></i></button></div>';
-    $('#emailContainer').append(htmlRow);
-  }
-  $(document).on('click','.deleteRow',function(){
-                $(this).parent().closest('div').remove();
-        });
-  function validateEmail(email) {
-    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(String(email).toLowerCase());
-  }
-  $(function () {
-    $("#example1").DataTable({
-      "responsive": true
-    //   "autoWidth": false,
-  });
-  });
-  $(document).on('click','#emailEdit',function(){
-    $('#frontPagesModal').modal('show').find('.modal-content').html(`<div class="modal-body">
-      <div class="overlay text-center"><i class="fas fa-2x fa-sync-alt fa-spin text-light"></i></div>
-      </div>`);
-    id = $(this).attr('data-value');
-    $.ajax({
-      method:'get',
-      url:'/admin/front-emails/edit',
-      dataType: 'html',
-      success:function(res){
-        $('#frontPagesModal').find('.modal-content').html(res);
-      },
-      error:function(jhxr,err,status)
-      {
-        console.log(jhxr);
-      }
-    })
-  })
-  $(document).on('click','.removeMail',function(){
-    $(this).parents('li').remove();
-  });
-  $(document).on('click','#addEmail',function(){
-    email = $('#email').val();
-    if(email != '' && validateEmail(email) )
-    {
-      $('.todo-list').append(`<li>
-        <span class="text">${email}</span>
-        <span class="float-right removeMail" style="cursor: pointer">
-        <i class="fas fa-times"></i>
-        </span>
-        <input type="hidden" name="emails[]" value="${email}">
-        </li>`);
-      $('#email').removeClass('is-invalid').val('');
-    }
-    else
-    {
-      $('#email').addClass('is-invalid')
-    }
-  })
-  // changeContactEmail
-  $(document).on('click','#updateEmails',function(){
-    $.ajax({
-      url: "/admin/front-emails/edit",
-      type: "POST",
-      data:  new FormData(document.forms.namedItem("changeContactEmail")),
-      contentType: false,
-      cache: false,
-      processData:false,
-      dataType:'JSON',
-      beforeSend:function(){
-            // $('#loader-img').css('display','block');
-          },
-          success:function(res){
-           if(res.status)
-           {
-            $('#frontPagesModal').modal('hide');
-            toastr.info('Emails Updated Successfully');
-          }
-        },
-        error:function(jhxr,status,err)
-        {
-         console.log(jhxr);
-       },
-       complete:function()
-       {
-              //  $('#loader-img').css('display','none');
+            let htmlRow = '<div class="d-flex gap-5 mb-2 email-row"><input type="text" class="form-control" name="adminemail[]" placeholder="Enter Email"><button class="btn btn-danger btn-sm deleteRow" type="button" onclick="removeRow(this)"><i class="fa fa-minus"></i></button></div>';
+            $('#addEmailButton').before(htmlRow);
+        }
+
+        function removeRow(button) {
+            $(button).closest('div.email-row').remove();
+        }
+
+        function validateEmail(email) {
+            const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            return re.test(String(email).toLowerCase());
+        }
+
+        $('#emailForm').on('submit', function(e) {
+            let isValid = true;
+            $('input[name="adminemail[]"]').each(function() {
+                if ($(this).val().trim() === '') {
+                    isValid = false;
+                    $(this).addClass('is-invalid');
+                } else {
+                    $(this).removeClass('is-invalid');
+                }
+            });
+
+            if (!isValid) {
+                e.preventDefault();
+                toastr.error('Please fill out all email fields.');
             }
-          });
-  })
+        });
 
+        $(function () {
+            $("#example1").DataTable({
+                "responsive": true
+            });
+        });
 
-           </script>
+        $(document).on('click', '#emailEdit', function() {
+            $('#frontPagesModal').modal('show').find('.modal-content').html(`<div class="modal-body">
+                <div class="overlay text-center"><i class="fas fa-2x fa-sync-alt fa-spin text-light"></i></div>
+                </div>`);
+            id = $(this).attr('data-value');
+            $.ajax({
+                method: 'get',
+                url: '/admin/front-emails/edit',
+                dataType: 'html',
+                success: function(res) {
+                    $('#frontPagesModal').find('.modal-content').html(res);
+                },
+                error: function(jhxr, err, status) {
+                    console.log(jhxr);
+                }
+            })
+        });
+
+        $(document).on('click', '.removeMail', function() {
+            $(this).parents('li').remove();
+        });
+
+        $(document).on('click', '#addEmail', function() {
+            email = $('#email').val();
+            if (email != '' && validateEmail(email)) {
+                $('#emailWrapper').append('<li>' + email + '<input type="hidden" name="emails[]" value="' + email + '"><span class="removeMail">X</span></li>');
+                $('#email').val('');
+            } else {
+                toastr.error('Please enter a valid email.');
+            }
+        });
+    </script>
 @endpush
