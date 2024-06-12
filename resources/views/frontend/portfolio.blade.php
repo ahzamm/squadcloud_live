@@ -1,5 +1,5 @@
 @extends('layouts/frontend')
-@section('page_title', 'SquadCloud | Digital Company')
+@section('page_title', $portfolio_menu->page_title)
 @section('home_select', 'active')
 @section('content')
 

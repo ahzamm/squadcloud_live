@@ -23,6 +23,7 @@
                 <table class="table table-bordered table-striped" id="example1">
                   <thead>
                     <tr>
+                      <th>Sort</th>
                       <th>Serial#</th>
                       <th>Client Logo</th>
                       <th>Link</th>

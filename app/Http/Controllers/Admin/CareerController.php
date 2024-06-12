@@ -17,11 +17,6 @@ use Auth;
 
 class CareerController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $subMenuid = SubMenu::where('route_name', 'careers.index')->first();
@@ -99,37 +94,18 @@ class CareerController extends Controller
         return redirect()->route('careers.index')->with('success', 'Jop Added member added successfully!');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-
     public function show($id)
     {
         $packageData = Service::find($id);
         return view('admin.services.show-modal', compact('packageData'));
     }
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function edit($id)
     {
         $career = Career::find($id);
         return view('admin.careers.edit', compact('career'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         $subMenuid = SubMenu::where('route_name', 'careers.index')->first();
@@ -182,12 +158,6 @@ class CareerController extends Controller
     }
 
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id = null)
     {
         $subMenuid = SubMenu::where('route_name', 'careers.index')->first();

@@ -22,6 +22,7 @@ class HomeController extends Controller
     public function index()
     {
 
+        $home_menu = FrontMenu::where('menu', 'Home')->first();
         $home_sliders = HomeSlider::where('is_active', 1)->orderby("sortIds", "asc")->get();
         $service_menu = FrontMenu::where('menu', 'Services')->first();
         $services = Service::where('is_active', 1)->orderby("sortIds", "asc")->get();
@@ -39,6 +40,7 @@ class HomeController extends Controller
         return view(
             'frontend.index',
             compact(
+                'home_menu',
                 'home_sliders',
                 'service_menu',
                 'services',

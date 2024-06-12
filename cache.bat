@@ -21,3 +21,5 @@ REM Reoptimize the application
 php artisan optimize:clear
 
 echo All caches have been cleared...
+
+php artisan serve

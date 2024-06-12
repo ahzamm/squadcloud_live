@@ -16,6 +16,7 @@ use App\Http\Controllers\Admin\HomeController as AdminHomeController;
 use App\Http\Controllers\Admin\GeneralConfigurationController as AdminGeneralConfigurationController;
 use App\Http\Controllers\Admin\TeamController as AdminTeamController;
 use App\Http\Controllers\Admin\CareerController as AdminCareerController;
+use App\Http\Controllers\Admin\PageTitleController as AdminPageTitleController;
 use App\Http\Controllers\Admin\ContactRequestController;
 use App\Http\Controllers\Admin\AllowedIpController;
 use App\Http\Controllers\Admin\SocialController;
@@ -289,6 +290,12 @@ use App\Http\Controllers\Admin\AuthController;
 
         Route::resource('careers','App\Http\Controllers\Admin\CareerController');
         Route::get("/careers/destroy/{id?}" , [AdminCareerController::class ,"destroy"])->name("career.destroy");
+
+        // Route::resource('page_titles','App\Http\Controllers\Admin\PageTitleController');
+        Route::get("/page_titles" , [AdminPageTitleController::class ,"index"])->name("page_titles.index");
+        Route::put('/page_titles', [AdminPageTitleController::class, 'update'])->name('page_titles.update');
+
+
 
     });
 });
