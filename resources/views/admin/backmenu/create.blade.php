@@ -35,7 +35,7 @@
                       <div class="col-lg-12 col-sm-12 col-xs-12">
                         <div class="form-group">
                           <label>Main Menu Name <span style="color: red">*</span></label>
-                          <input name="parentMenu" type="text" class="form-control" placeholder="Example : About Us" required>
+                          <input name="parentMenu" type="text" class="form-control" placeholder="Example : About Us" value="{{old('parentMenu')}}">
                         </div>
                       </div>
                       <div class="col-md-12">
@@ -44,7 +44,7 @@
                           <select name="menuicon" class="form-control" id="selectIcon">
                             <option value></option>
                             @foreach ($icons as $item)
-                            <option value="{{$item}}">{{$item}}</option>
+                            <option value="{{$item}}" {{ old('menuicon') == $item ? 'selected' : '' }}>{{$item}}</option>
                             @endforeach
                           </select>
                           @error('icon')
@@ -64,18 +64,24 @@
                             </tr>
                           </thead>
                           <tbody id="submenu-list">
-                            <tr>
-                              <td class="td-first">
-                                <input type="" name="submenu[]" placeholder="Example : View Detail" class="form-control" required/>
-                              </td>
-                              <td class="td-second">
-                                <input type="" name="submenuroute[]" placeholder="Example : viewdetail.index" class="form-control" required/>
-                                <span class="text-danger text-sm d-none">Route name not exist in database</span>
-                              </td>
-                              <td><button class="btn btn-success btn-sm my-1" type="button" id="btnAddSubMenu"><i class="fa fa-plus"></i></button></td>
-                            </tr>
+                            @if(old('submenu'))
+                                @foreach(old('submenu') as $index => $submenu)
+                                    <tr>
+                                    <td class="td-first">
+                                        <input type="text" name="submenu[]" placeholder="Sub Menu Name" class="form-control" value="{{ old('submenu')[$index] }}"/>
+                                    </td>
+                                    <td class="td-second">
+                                        <input type="text" name="submenuroute[]" placeholder="Sub Menu Route" class="form-control" value="{{ old('submenuroute')[$index] }}"/>
+                                        <span class="text-danger text-sm d-none">Route name not exist in database</span>
+                                    </td>
+                                    <td><button class="btn btn-danger btn-sm my-1 btnDeleteSubMenu" type="button"><i class="fa fa-trash"></i></button></td>
+                                    </tr>
+                                @endforeach
+                                @endif
+
                           </tbody>
                         </table>
+                        <button class="btn btn-success btn-sm my-1" type="button" id="btnAddSubMenu"><i class="fa fa-plus"></i></button>
                       </div>
                       <div class="col-md-12">
                         <div class="form-group">
@@ -96,21 +102,41 @@
 </section>
 </div>
 <script type="text/html" id="data-row">
-  <tr>
-    <td class="td-first">
-      <input type="" name="submenu[]" placeholder="Sub Menu Name" class="form-control" required/>
-    </td>
-    <td class="td-second">
-      <input type="" name="submenuroute[]" placeholder="Sub Menu Route" class="form-control" required/>
-      <span class="text-danger text-sm d-none">Route name not exist in database</span>
-    </td>
-    <td><button class="btn btn-success btn-sm my-1" type="button" id="btnAddSubMenu"><i class="fa fa-plus"></i></button></td>
-  </tr>
-</script>
+    <tr>
+      <td class="td-first">
+        <input type="text" name="submenu[]" placeholder="Sub Menu Name" class="form-control" value=""/>
+      </td>
+      <td class="td-second">
+        <input type="text" name="submenuroute[]" placeholder="Sub Menu Route" class="form-control" value=""/>
+        <span class="text-danger text-sm d-none">Route name not exist in database</span>
+      </td>
+      <td><button class="btn btn-danger btn-sm my-1 btnDeleteSubMenu" type="button"><i class="fa fa-trash"></i></button></td>
+    </tr>
+  </script>
+
+  <script>
+    function setDefaultValues() {
+      $('#submenu-list tr:last-child').find('input[name="submenu[]"]').val('{{ old('submenu') ? old('submenu')[count(old('submenu')) - 1] : '' }}');
+      $('#submenu-list tr:last-child').find('input[name="submenuroute[]"]').val('{{ old('submenuroute') ? old('submenuroute')[count(old('submenuroute')) - 1] : '' }}');
+    }
+
+    $(document).on('click', '#btnAddSubMenu', function() {
+      let dataRow = $('#data-row').html();
+      $('#submenu-list').append(dataRow);
+      setDefaultValues();
+    });
+
+    // Delegate the event for dynamically added elements
+    $(document).on('click', '.btnDeleteSubMenu', function() {
+      $(this).closest('tr').remove();
+    });
+  </script>
+
+
 <script type="text/html" id="singleMenubody">
   <div class="form-group">
     <label>Route Name</label>
-    <input name="parentroutename" type="text" class="form-control" required>
+    <input name="parentroutename" type="text" class="form-control" value="{{old('parentroutename')}}">
   </div>
 </script>
 <script type="text/html" id="subMenubody">
@@ -123,18 +149,9 @@
       </tr>
     </thead>
     <tbody id="submenu-list">
-      <tr>
-        <td class="td-first">
-          <input type="" name="submenu[]" placeholder="Sub Menu Name" class="form-control" required/>
-        </td>
-        <td class="td-second">
-          <input type="" name="submenuroute[]" placeholder="Sub Menu Route" class="form-control" required/>
-          <span class="text-danger text-sm d-none">Route name not exist in database</span>
-        </td>
-        <td><button class="btn btn-success btn-sm my-1" type="button" id="btnAddSubMenu"><i class="fa fa-plus"></i></button></td>
-      </tr>
     </tbody>
   </table>
+  <button class="btn btn-success btn-sm my-1" type="button" id="btnAddSubMenu"><i class="fa fa-plus"></i></button>
 </script>
 @endsection
 @push('scripts')
@@ -146,9 +163,10 @@
     }
     var $state = $(
       "<i class='"+state.element.value+"''></i> <span style='color:black;margin-left:10px'>"+state.element.value+"</span>"
-      );
+    );
     return $state;
   }
+
   $(function(){
     $('.selectList').select2({
       theme: 'bootstrap4'
@@ -160,76 +178,38 @@
     });
     $('.select2.select2-container').css('width','auto');
   })
-  function checkinput(input)
-  {
-    if(input.val() == "")
-    {
-      $(input).css('border','1px solid red');
+
+  function checkinput(input) {
+    if (input.val() == "") {
+      $(input).css('border', '1px solid red');
       return false;
-    }
-    else
-    {
-      $(input).css('border','1px solid #444951');
+    } else {
+      $(input).css('border', '1px solid #444951');
       return true;
     }
   }
-  $(document).on('click','#btnAddSubMenu',function(){
-    fristInput = $(this).parents('tr').find('td.td-first > input');
-    secondInput = $(this).parents('tr').find('td.td-second > input');
-    button = $(this);
-    if(checkinput(fristInput) && checkinput(secondInput))
-    {
-      $.ajax({
-        url:'{{route("menus.checkroute")}}',
-        method:'post',
-        data:{
-          routename: secondInput.val()
-        },
-        dataType:'json',
-        success:function(res){
-          if(res.status)
-          {
-            $(secondInput).siblings('span').addClass('d-none');
-            fristInput.prop('readonly',true);
-            secondInput.prop('readonly',true);
-            let dataRow = $('#data-row').html();
-            $('#submenu-list').append(dataRow);
-            $(button).removeClass("btn-success").addClass("btn-danger").html("<i class='fa fa-trash'></i>").attr('id','btnDeleteSubMenu');
-          }
-          else
-          {
-            $(secondInput).siblings('span').removeClass('d-none');
-          }
-        },
-        error:function(jhxr,status,err){
-                    //console.log(jhxr);
-                  }
-                })
-    }
-  })
-  $(document).on('click','#btnDeleteSubMenu',function(){
-    $(this).parents('tr').remove();
-  })
-  $(document).on('submit','#AddMenusForm',function(e){
-    // e.preventDefault();
-    // $('#AddMenusForm input').each(function(index,val){
-    //     //alert($(val).val());
-    // })
-    // $(this).submit;
-  })
-  $(document).on('change','#hassubmenu',function(){
+
+  $(document).on('click', '#btnAddSubMenu', function() {
+    let dataRow = $('#data-row').html();
+    $('#submenu-list').append(dataRow);
+  });
+
+  // Delegate the event for dynamically added elements
+  $(document).on('click', '.btnDeleteSubMenu', function() {
+    $(this).closest('tr').remove();
+  });
+
+  $(document).on('change', '#hassubmenu', function() {
     datavalue = $(this).attr('data-value');
-    if(datavalue == "true")
-    {
-      $('#singleRoute').css('display','none').html("");
-      $('#subRoute').css('display','block').html($('#subMenubody').html());
-      $(this).attr('data-value',false);
+    if (datavalue == "true") {
+      $('#singleRoute').css('display', 'none').html("");
+      $('#subRoute').css('display', 'block').html($('#subMenubody').html());
+      $(this).attr('data-value', false);
+    } else {
+      $('#singleRoute').css('display', 'block').html($('#singleMenubody').html());;
+      $('#subRoute').css('display', 'none').html("");
+      $(this).attr('data-value', true);
     }
-    else{
-      $('#singleRoute').css('display','block').html($('#singleMenubody').html());;
-      $('#subRoute').css('display','none').html("");
-      $(this).attr('data-value',true);
-    }
-  })
+  });
 </script>
 @endpush
