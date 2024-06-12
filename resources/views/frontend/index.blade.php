@@ -61,7 +61,7 @@
         }
     </style>
 
-
+{{--
     <div id="loading">
         <div class="position-relative loading-inner">
             <div class="svg_path">
@@ -72,7 +72,7 @@
                 </svg>
             </div>
         </div>
-    </div>
+    </div> --}}
 
     <!-- End Social Links -->
     <section id="home" class="iq-main-slider p-0">
@@ -134,47 +134,32 @@
     </section>
 
 
+
 <!-- -------SERVICES------- -->
 <section id="service-section" class="position-relative">
     <div class="container">
        <div class="text-center" data-aos="zoom-in-down">
           <div style="margin-bottom:11rem;">
           <h2  class="section-heading text-uppercase" >Services</h2>
-          <h3 class="section-subheading text-muted" >{{$service_menu->tagline}}</h3>
+          <h3 class="section-subheading text-muted" style="margin-bottom: 1rem;">{{$service_menu->tagline}}</h3>
             </div>
        </div>
-
-
-       <div class="row">
-
-          @foreach ($services->take(6) as $list)
-
-          <div class="col-lg-4 col-md-6" style="margin-top:-105px; height:300px;">
-
-                <div class="card" data-aos="flip-left" data-aos-duration="1000">
-                   <a href="/services/{{$list->slug}}" class="card-service" style='background-color: white'>
-                      <div style="display:inline-block; width: 70px; height: 70px;">
-                         <img src="frontend_assets/images/services/{{$list->logo}}" alt="" class="p-2" style="width:100%;height: 100%;">
-                      </div>
-                      <p style="height:auto;" class="p-3 d-inline-block mb-0" style="transform: translate(7px, 6px);">{{$list->service}}</p>
-                   </a>
-                   <div class="card-body">
-                      <p class="para-text">{!! substr($list->tagline, 0, 100) !!}
-                         <span>[<a href="/services/{{$list->slug}}" class="button">...</a>]</span>
-                      </p>
-                   </div>
-                </div>
-
-          </div>
-          @endforeach
+       <div class="hexagon-container" style="display: flex; flex-wrap: wrap; justify-content: center;">
+           @foreach ($services->take(4) as $service)
+               <div class="position-relative hex-container">
+                <a href="{{ url('/services/' . $service->slug) }}" data-aos="zoom-in" data-aos-duration="1000" class="d-block hex-anchor">
+                   <div class="hex"></div>
+                      <img src="frontend_assets/images/services/{{$service->logo}}" alt="{{$service->service}}" class="svg--img">
+                </a>
+               </div>
+           @endforeach
        </div>
     </div>
-    <div style="display: flex; justify-content: center">
+    <div style="display: flex; justify-content: center; margin-top: 5rem;">
        <a href="services" class="more_action">
           View All
        </a>
     </div>
-
  </section>
 
 

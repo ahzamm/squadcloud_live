@@ -10,13 +10,14 @@
    /* Client Section */
    section#our-client {
       padding-top: 150px;
+      min-height: 100vh;
    }
    .client-list {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-        }
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap; /* Add this line */
+}
         .client-list .hex-container {
             position: relative;
             width: 175px;
@@ -102,40 +103,47 @@
 
 
       <div class="row">
-      <div class="client-list">
-         @forelse ($clients as $client)
-         {{-- <div class="col-lg-4 col-md-6">
-            <div class="card" data-aos="flip-left" data-aos-duration="1000">
-              <a href="{{ $client->link }}" target="_blank" class="card-client d-flex justify-content-center align-items-center" style="height: 100px">
-                <div class="clients-logo">
-                  <img src="frontend_assets/images/clients/{{$client->logo}}" class="p-2 d-inline-block">
-                </div>
-              </a>
-              <div class="card-body" style=" display: flex;
-              justify-content: center;
-              align-items: center;
-              height: 100%;">
-                <!-- <p><b><h5>{!! substr($client->title, 0, 20) !!}</h5></b></p> -->
-              </div>
-            </div>
-          </div> --}}
-
-            <div class="position-relative hex-container">
-               <div class="hex"></div>
-               <img src="frontend_assets/images/clients/{{$client->logo}}" alt="App" class="svg--img">
-               <div class="client-btn">
-                  <a href="{{ $client->link }}" class="client_links">Visit Site</a>
-                  <a href="#" class="client_links">More Info</a>
-               </div>
-            </div>
 
 
 
-         @empty
-         <div class="alert alert-danger">No Record Found!</div>
-         @endforelse
-         </div>
-      </div>
+
+        @php
+    $row = 0;
+@endphp
+
+@foreach($clients as $index => $client)
+    @if($index % 9 == 0 || $index % 9 == 5)
+        @php
+            $row++;
+        @endphp
+        <div class="client-list"> <!-- Start new row for indices 0, 5, 9, 14, etc. -->
+    @endif
+
+    <div class="position-relative hex-container">
+        <div class="hex"></div>
+        <img src="frontend_assets/images/clients/{{ $client->logo }}" alt="App" class="svg--img">
+        <div class="client-btn">
+            <a href="#" class="client_links">Visit Site</a>
+            <a href="#" class="client_links">More Info</a>
+        </div>
+    </div>
+
+    @if($index % 9 == 4 || $index % 9 == 8)
+        </div> <!-- Close row for indices 4, 8, 13, 18, etc. -->
+    @endif
+@endforeach
+
+@if(count($clients) % 9 != 4 && count($clients) % 9 != 8)
+    </div> <!-- Close the client-list div if there are remaining clients -->
+@endif
+
+
+
+
+
+
+
+
    </div>
 </section>
 
