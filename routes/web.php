@@ -17,6 +17,7 @@ use App\Http\Controllers\Admin\GeneralConfigurationController as AdminGeneralCon
 use App\Http\Controllers\Admin\TeamController as AdminTeamController;
 use App\Http\Controllers\Admin\CareerController as AdminCareerController;
 use App\Http\Controllers\Admin\PageTitleController as AdminPageTitleController;
+use App\Http\Controllers\Admin\JobApplicationController as AdminJobApplicationController;
 use App\Http\Controllers\Admin\ContactRequestController;
 use App\Http\Controllers\Admin\AllowedIpController;
 use App\Http\Controllers\Admin\SocialController;
@@ -291,11 +292,11 @@ use App\Http\Controllers\Admin\AuthController;
         Route::resource('careers','App\Http\Controllers\Admin\CareerController');
         Route::get("/careers/destroy/{id?}" , [AdminCareerController::class ,"destroy"])->name("career.destroy");
 
-        // Route::resource('page_titles','App\Http\Controllers\Admin\PageTitleController');
         Route::get("/page_titles" , [AdminPageTitleController::class ,"index"])->name("page_titles.index");
         Route::put('/page_titles', [AdminPageTitleController::class, 'update'])->name('page_titles.update');
 
-
+        Route::get('/job_applications', [AdminJobApplicationController::class, 'index'])->name('job_applications.index');
+        Route::get("/job_applications/destroy/{id?}" , [AdminJobApplicationController::class ,"destroy"])->name("job_application.destroy");
 
     });
 });
