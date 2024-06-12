@@ -29,7 +29,7 @@ class ContactController extends Controller
         }
 
         $contact = Contact::first();
-        return view('admin.contacts.edit', compact('contact'));
+        return view('admin.contacts.index', compact('contact'));
     }
 
 
