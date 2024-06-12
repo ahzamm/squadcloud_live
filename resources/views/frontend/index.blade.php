@@ -224,7 +224,7 @@
 
 
  <!-- -------PRODUCTS------- -->
- <section id="product-section" class="position-relative">
+ {{-- <section id="product-section" class="position-relative">
     <div class="product-bg"></div>
 
     <div class="container">
@@ -257,7 +257,7 @@
        </div>
 
     </div>
- </section>
+ </section> --}}
 
  <!-- -------CLIENTS------- -->
  <section id="service-section" class="clients position-relative">

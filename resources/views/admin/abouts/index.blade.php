@@ -39,6 +39,54 @@
                     @enderror
                   </div>
                 </div>
+
+
+
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                      @php
+                      $image = explode('","',$about->images);
+                      $image= str_ireplace( array( '\'', '"',',' , ';', '<', '>' ,'[',']',), ' ', $image);
+                      for($i=0; $i < Count($image); $i++)
+                      {
+                        $ages = $image[$i];
+                      }
+                      @endphp
+
+
+                      <label for="">Upload Image <span style="color: red">*</span></label>
+                      <table class="table table-bordered" id="dynamicTable">
+                        <tr>
+                          <td colspan="7">
+                          <input type="hidden" name="imagesToDelete" id="imagesToDelete">
+                            @php
+                              $images = json_decode($about->images, true) ?? [];
+                            @endphp
+                            @foreach ($images as $key => $image)
+                              <div class="image-container" data-image-key="{{ $key }}">
+                                <img src="{{ asset('frontend_assets/images/abouts/' . trim($image)) }}" height="60" width="120" alt="" class="mb-3">
+                                <button type="button" class="btn btn-danger delete-image-btn">Delete</button>
+                              </div>
+                            @endforeach
+                            <input type="file" class="form-control-file" name="images[]" id="image-about">
+                            <td colspan="3">
+                              <button type="button" name="addmore[0][add]" id="add" class="btn btn-success"><i class="fa fa-plus"></i></button>
+                            </td>
+                          </tr>
+                        </table>
+                        @error('image')
+                        <p class="text-danger mt-2 mb-0 text-sm">{{$message}}</p>
+                        @enderror
+                      </div>
+                    </div>
+
+
+
+
+
+
+
               </div>
             </div>
             <div class="card-footer">
@@ -61,4 +109,36 @@
     });
   });
 </script>
+<script type="text/javascript">
+    var i = 0;
+    $("#add").click(function(){
+      ++i;
+      $html = '<tr><td colspan="7"><input type="file" name="images[]" class="" /></td><td colspan="3"><button type="button" class="btn btn-danger remove-tr">X</button></td></tr>';
+      $("#dynamicTable").append($html);
+    });
+    $(document).on('click', '.remove-tr', function(){
+     $(this).parents('tr').remove();
+   });
+
+   $(document).ready(function() {
+var imagesToDelete = [];
+
+$('.delete-image-btn').click(function() {
+  var container = $(this).closest('.image-container');
+  var imageKey = container.data('image-key');
+  imagesToDelete.push(imageKey);
+  $('#imagesToDelete').val(imagesToDelete.join(','));
+  container.remove();
+});
+
+$('#updateAboutUsForm').submit(function() {
+  // Remove empty file inputs before submitting the form
+  $(this).find('input[type="file"]').each(function() {
+    if (!$(this).val()) {
+      $(this).remove();
+    }
+  });
+  });
+});
+ </script>
 @endpush

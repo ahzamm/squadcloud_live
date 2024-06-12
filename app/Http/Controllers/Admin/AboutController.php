@@ -31,6 +31,7 @@ class AboutController extends Controller
         $validatedData = [
             "description"=>"required",
             "closing_remarks"=>"required",
+            'images.*' => 'image|max:2000',
         ];
         $valdiate = Validator::make($request->all(), $validatedData);
         if ($valdiate->fails()) {
@@ -38,15 +39,42 @@ class AboutController extends Controller
         }
 
         $about = About::first();
-
         $about->video_url = $request['video_url'];
         $about->description = $request['description'];
         $about->closing_remarks = $request['closing_remarks'];
 
+        $existingImages = json_decode($about->images, true) ?? [];
+
+        // Handle image deletion
+        if ($request->filled('imagesToDelete')) {
+            $imagesToDelete = explode(',', $request->input('imagesToDelete'));
+            foreach ($imagesToDelete as $key) {
+                if (isset($existingImages[$key])) {
+                    // Delete the image from storage
+                    // Storage::delete('about-us/' . $existingImages[$key]);
+                    unlink(public_path('frontend_assets/images/abouts/' .  $existingImages[$key]));
+                    unset($existingImages[$key]);
+                }
+            }
+
+            // Re-index the array to remove gaps
+            $existingImages = array_values($existingImages);
+        }
+
+        // Upload new images
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $file) {
+                $name = time() . rand(1, 100) . '.' . $file->extension();
+                $file->move(public_path('frontend_assets/images/abouts/'), $name);
+                $existingImages[] = $name;
+            }
+        }
+        $about->images = json_encode($existingImages);
         $about->save();
 
         return redirect()->route('about.index')->with('success', 'About updated successfully!');
     }
+
 
     public function crud_access($submenuId = null , $operation = null , $uId = null) {
         if (!$submenuId == null) {
