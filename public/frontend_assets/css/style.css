@@ -1,6 +1,6 @@
 
 .btn-primary {
-		color: #fff;
+	color: #fff;
 	  background-color: #007bff;
 	  border-color: #007bff;
 	  /* margin-left: 30px; */
@@ -1609,3 +1609,17 @@ transform: translateY(-50%);
 		height: 28px;
 	}
   }
+  .footer__bottom {
+    background-color: #64050f;
+    color: white;
+}
+.footer__bottom ul {
+	list-style: none;
+	padding: 0;
+}
+.footer__bottom ul li a {
+	color: #fff !important;
+}
+.footer__copyright {
+	padding: 10px 0;
+}
