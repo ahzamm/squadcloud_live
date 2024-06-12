@@ -59,8 +59,7 @@ class MenusController extends Controller
         if ($validator->fails()) {
             return redirect()->back()->withInput()->with('error', 'All Fields are required');
         }
-
-        if (!$request->has('submenu')) {
+        if (!$hassubmenu) {
             $validatedData = [
                 'parentroutename' => 'required',
             ];
@@ -70,7 +69,10 @@ class MenusController extends Controller
             }
         }
 
-        if ($hassubmenu && $request->has('submenu')) {
+        if ($hassubmenu) {
+            if($request->submenu == null) {
+                return redirect()->back()->withInput()->with('error', 'At least one Submenu is required');
+            }
             foreach ($request->submenu as $key => $value) {
                 $subMenuValidator = Validator::make(
                     ['submenu' => $value, 'submenuroute' => $request->submenuroute[$key]],
@@ -187,18 +189,6 @@ class MenusController extends Controller
             }
         }
 
-        if ($request->has('submenu')) {
-            foreach ($request->submenu as $key => $value) {
-                $subMenuValidator = Validator::make(
-                    ['submenu' => $value, 'submenuroute' => $request->submenuroute[$key]],
-                    ['submenu' => 'required', 'submenuroute' => 'required']
-                );
-                if ($subMenuValidator->fails()) {
-                    return redirect()->back()->withInput()->with('error', 'All Submenu Routes are required');
-                }
-            }
-
-        }
 
         DB::transaction(function () use ($request, $id) {
             $menu = Menu::find($id);
@@ -267,16 +257,6 @@ class MenusController extends Controller
             $menu->delete();
         }, 3);
         return response()->json(["status" => true]);
-    }
-
-
-    public function checkroute(Request $request)
-    {
-        // if (Route::has($request->routename)) {
-        //     return response()->json(['status' => true]);
-        // }
-        // return response()->json(['status' => false]);
-        return response()->json(['status' => true]);
     }
 
 
