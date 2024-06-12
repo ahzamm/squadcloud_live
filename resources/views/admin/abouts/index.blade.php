@@ -51,7 +51,7 @@
                       }
                       @endphp
 
-                      <label for="">Upload Image <span style="color: red">*</span></label>
+                      <label for="">Upload Images <span style="color: red">*</span></label>
                       <table class="table table-bordered" id="dynamicTable">
                         <tr>
                           <td colspan="7">
@@ -122,7 +122,7 @@ $('.delete-image-btn').click(function() {
 
 $('#updateAboutUsForm').submit(function(e) {
   var valid = true;
-  var imageInputs = $(this).find('input[type="file"]');
+  var imageInputs = $(this).find('input[type="file"]:visible'); // Only select visible file inputs
   var imageError = $('#image-error');
   imageError.hide();
 
@@ -137,6 +137,10 @@ $('#updateAboutUsForm').submit(function(e) {
         imageError.text('Please select only image files (JPEG/JPG/PNG).').show();
         return false; // Exit the loop if an invalid file type is found
       }
+    } else {
+      valid = false;
+      imageError.text('All image fields must have a selected file.').show();
+      return false; // Exit the loop if an empty field is found
     }
   });
 
@@ -144,6 +148,8 @@ $('#updateAboutUsForm').submit(function(e) {
     e.preventDefault(); // Prevent form submission if validation fails
   }
 });
+
+
 
 
 });
