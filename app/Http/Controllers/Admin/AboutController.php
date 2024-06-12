@@ -51,7 +51,6 @@ class AboutController extends Controller
             foreach ($imagesToDelete as $key) {
                 if (isset($existingImages[$key])) {
                     // Delete the image from storage
-                    // Storage::delete('about-us/' . $existingImages[$key]);
                     unlink(public_path('frontend_assets/images/abouts/' .  $existingImages[$key]));
                     unset($existingImages[$key]);
                 }

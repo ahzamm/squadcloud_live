@@ -9,7 +9,7 @@
           <div class="card-header d-flex justify-content-between align-items-center">
             <h3 class="card-title mb-0"><span><i class="fa-solid fa-box-open"></i></span> Update About Page</h3>
           </div>
-          <form action="{{route('about.update')}}" method="POST" enctype="multipart/form-data">
+          <form id="updateAboutUsForm" action="{{route('about.update')}}" method="POST" enctype="multipart/form-data">
             @method('PUT')
             <!-- /.card-header -->
             <div class="card-body pad">
@@ -40,9 +40,6 @@
                   </div>
                 </div>
 
-
-
-
                 <div class="col-md-4">
                     <div class="form-group">
                       @php
@@ -53,7 +50,6 @@
                         $ages = $image[$i];
                       }
                       @endphp
-
 
                       <label for="">Upload Image <span style="color: red">*</span></label>
                       <table class="table table-bordered" id="dynamicTable">
@@ -69,24 +65,17 @@
                                 <button type="button" class="btn btn-danger delete-image-btn">Delete</button>
                               </div>
                             @endforeach
-                            <input type="file" class="form-control-file" name="images[]" id="image-about">
                             <td colspan="3">
                               <button type="button" name="addmore[0][add]" id="add" class="btn btn-success"><i class="fa fa-plus"></i></button>
                             </td>
                           </tr>
                         </table>
+                        <p id="image-error" class="text-danger mt-2 mb-0 text-sm" style="display:none;"></p>
                         @error('image')
                         <p class="text-danger mt-2 mb-0 text-sm">{{$message}}</p>
                         @enderror
                       </div>
                     </div>
-
-
-
-
-
-
-
               </div>
             </div>
             <div class="card-footer">
@@ -113,7 +102,7 @@
     var i = 0;
     $("#add").click(function(){
       ++i;
-      $html = '<tr><td colspan="7"><input type="file" name="images[]" class="" /></td><td colspan="3"><button type="button" class="btn btn-danger remove-tr">X</button></td></tr>';
+      $html = '<tr><td colspan="7"><input type="file" name="images[]" class="image-input" /></td><td colspan="3"><button type="button" class="btn btn-danger remove-tr">X</button></td></tr>';
       $("#dynamicTable").append($html);
     });
     $(document).on('click', '.remove-tr', function(){
@@ -131,14 +120,32 @@ $('.delete-image-btn').click(function() {
   container.remove();
 });
 
-$('#updateAboutUsForm').submit(function() {
-  // Remove empty file inputs before submitting the form
-  $(this).find('input[type="file"]').each(function() {
-    if (!$(this).val()) {
-      $(this).remove();
+$('#updateAboutUsForm').submit(function(e) {
+  var valid = true;
+  var imageInputs = $(this).find('input[type="file"]');
+  var imageError = $('#image-error');
+  imageError.hide();
+
+  imageInputs.each(function() {
+    if ($(this).val()) {
+      var file = $(this).prop('files')[0];
+      var fileType = file.type;
+      var validExtensions = ['image/jpeg', 'image/png', 'image/jpg'];
+      var validFile = validExtensions.includes(fileType.toLowerCase());
+      if (!validFile) {
+        valid = false;
+        imageError.text('Please select only image files (JPEG/JPG/PNG).').show();
+        return false; // Exit the loop if an invalid file type is found
+      }
     }
   });
-  });
+
+  if (!valid) {
+    e.preventDefault(); // Prevent form submission if validation fails
+  }
+});
+
+
 });
  </script>
 @endpush
