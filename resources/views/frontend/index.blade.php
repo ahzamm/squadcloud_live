@@ -4,10 +4,10 @@
 @section('content')
 
 
-    <style>
-        section {
-            padding-top: 100px;
-        }
+   <style>
+      section {
+         padding-top: 100px;
+      }
 
         .more_action {
             display: inline-block;
@@ -61,7 +61,7 @@
         }
     </style>
 
-{{--
+<!--
     <div id="loading">
         <div class="position-relative loading-inner">
             <div class="svg_path">
@@ -72,7 +72,7 @@
                 </svg>
             </div>
         </div>
-    </div> --}}
+    </div> -->
 
     <!-- End Social Links -->
     <section id="home" class="iq-main-slider p-0">
@@ -81,44 +81,37 @@
             <div class="slide slick-slide slick-bg s-bg-1">
                 <div class="container-fluid position-relative h-100">
                     <div class="slider-inner h-100">
+                        <div class="row align-items-center h-100">
+                           <div class="col-lg-6 zIndex">
+                              <h1 class="slider-text title" data-animation-in="fadeInLeft" data-delay-in="0.6">
+                                    {{ $home_slider->heading }}</h1>
 
+                              <h4 class="text-white" data-animation-in="fadeInLeft" data-delay-in="0.6">
+                                    {{ $home_slider->subheading }}</h4>
+                              <div class="d-flex align-items-center" data-animation-in="fadeInUp" data-delay-in="1">
+                              </div>
+                              <p data-animation-in="fadeInUp" data-delay-in="1.2">{{ $home_slider->description }}
+                              </p>
 
-                            <div class="row align-items-center h-100">
+                           </div>
+                           <div class="col-lg-6 minusZindex">
+                              <div class="position-relative">
+                                    <img src="{{ asset('frontend_assets/images/home_sliders/' . $home_slider->image_1) }}"
+                                       class="position-absolute sub-img-1" alt=""
+                                       data-animation-in="fadeInDown" data-delay-in="0.6">
+                                    <img src="{{ asset('frontend_assets/images/home_sliders/' . $home_slider->image_2) }}"
+                                       class="position-absolute sub-img-2" alt=""
+                                       data-animation-in="fadeInDown" data-delay-in="1">
+                                    <img src="{{ asset('frontend_assets/images/home_sliders/' . $home_slider->image_3) }}"
+                                       class="position-absolute sub-img-3" alt=""
+                                       data-animation-in="fadeInDown" data-delay-in="1.4">
+                                    <img src="{{ asset('frontend_assets/images/home_sliders/' . $home_slider->image_4) }}"
+                                       class="position-absolute sub-img-4" alt=""
+                                       data-animation-in="fadeInDown" data-delay-in="1.6">
+                              </div>
+                           </div>
 
-
-                                <div class="col-lg-6 zIndex">
-                                    <h1 class="slider-text title" data-animation-in="fadeInLeft" data-delay-in="0.6">
-                                        {{ $home_slider->heading }}</h1>
-
-                                    <h4 class="text-white" data-animation-in="fadeInLeft" data-delay-in="0.6">
-                                        {{ $home_slider->subheading }}</h4>
-                                    <div class="d-flex align-items-center" data-animation-in="fadeInUp" data-delay-in="1">
-                                    </div>
-                                    <p data-animation-in="fadeInUp" data-delay-in="1.2">{{ $home_slider->description }}
-                                    </p>
-
-                                </div>
-                                <div class="col-lg-6 minusZindex">
-                                    <div class="position-relative">
-                                        <img src="{{ asset('frontend_assets/images/home_sliders/' . $home_slider->image_1) }}"
-                                            class="position-absolute sub-img-1" alt=""
-                                            data-animation-in="fadeInDown" data-delay-in="0.6">
-                                        <img src="{{ asset('frontend_assets/images/home_sliders/' . $home_slider->image_2) }}"
-                                            class="position-absolute sub-img-2" alt=""
-                                            data-animation-in="fadeInDown" data-delay-in="1">
-                                        <img src="{{ asset('frontend_assets/images/home_sliders/' . $home_slider->image_3) }}"
-                                            class="position-absolute sub-img-3" alt=""
-                                            data-animation-in="fadeInDown" data-delay-in="1.4">
-                                        <img src="{{ asset('frontend_assets/images/home_sliders/' . $home_slider->image_4) }}"
-                                            class="position-absolute sub-img-4" alt=""
-                                            data-animation-in="fadeInDown" data-delay-in="1.6">
-                                    </div>
-                                </div>
-
-                            </div>
-
-
-
+                        </div>
                     </div>
                 </div>
             </div>
@@ -134,33 +127,52 @@
     </section>
 
 
-
 <!-- -------SERVICES------- -->
 <section id="service-section" class="position-relative">
-    <div class="container">
+    <div class="container mb-5">
        <div class="text-center" data-aos="zoom-in-down">
-          <div style="margin-bottom:11rem;">
+          <div style="margin-bottom:2rem;">
           <h2  class="section-heading text-uppercase" >Services</h2>
-          <h3 class="section-subheading text-muted" style="margin-bottom: 1rem;">{{$service_menu->tagline}}</h3>
+          <h3 class="section-subheading text-muted" >{{$service_menu->tagline}}</h3>
             </div>
        </div>
-       <div class="hexagon-container" style="display: flex; flex-wrap: wrap; justify-content: center;">
-           @foreach ($services->take(4) as $service)
-               <div class="position-relative hex-container">
-                <a href="{{ url('/services/' . $service->slug) }}" data-aos="zoom-in" data-aos-duration="1000" class="d-block hex-anchor">
-                   <div class="hex"></div>
-                      <img src="frontend_assets/images/services/{{$service->logo}}" alt="{{$service->service}}" class="svg--img">
-                </a>
-               </div>
-           @endforeach
-       </div>
+       <div class="d-lg-flex d-block justify-content-center position-relative">
+         @foreach ($services->take(4) as $list)
+         <div class="position-relative hex-container">
+            <a href="/services/{{$list->slug}}" data-aos="zoom-in" data-aos-duration="1000" class="d-block hex-anchor aos-init aos-animate">
+               <span class="span aos-init aos-animate" style="display:block;width:100%;text-align:center;z-index:1;color: #961b04;top: 30px;font-size:26px" data-aos="fade-down" data-aos-delay="600" data-aos-duration="1000">{{$list->service}}</span>
+               <div class="hex"></div>
+               <img src="frontend_assets/images/services/{{$list->logo}}" alt="App" class="svg--img" style="width:40%;top:60%">
+            </a>
+         </div>
+         @endforeach
+      </div>
+       {{-- <div class="row">
+          @foreach ($services->take(6) as $list)
+          <div class="col-lg-4 col-md-6" style="margin-top:-105px; height:300px;">
+                <div class="card" data-aos="flip-left" data-aos-duration="1000">
+                   <a href="/services/{{$list->slug}}" class="card-service" style='background-color: white'>
+                      <div style="display:inline-block; width: 70px; height: 70px;">
+                         <img src="frontend_assets/images/services/{{$list->logo}}" alt="" class="p-2" style="width:100%;height: 100%;">
+                      </div>
+                      <p style="height:auto;" class="p-3 d-inline-block mb-0" style="transform: translate(7px, 6px);">{{$list->service}}</p>
+                   </a>
+                   <div class="card-body">
+                      <p class="para-text">{!! substr($list->tagline, 0, 100) !!}
+                         <span>[<a href="/services/{{$list->slug}}" class="button">...</a>]</span>
+                      </p>
+                   </div>
+                </div>
+          </div>
+          @endforeach
+       </div> --}}
     </div>
-    <div style="display: flex; justify-content: center; margin-top: 5rem;">
+    <div style="display: flex; justify-content: center">
        <a href="services" class="more_action">
           View All
        </a>
     </div>
- </section>
+</section>
 
 
 <!-- -------PORTFOLIO------- -->
