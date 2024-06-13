@@ -14,7 +14,7 @@
         <div class="col-12">
           <div class="card mt-3 card-outline card-info">
             <div class="card-header">
-              <h3 class="card-title"><span><i class="fa-solid fa-box-open"></i></span> Subscribers</h3>
+              <h3 class="card-title"><span><i class="fa-solid fa-box-open"></i></span> Newsletter Subscribers</h3>
             </div>
             <!-- /.card-header -->
             <div class="card-body">

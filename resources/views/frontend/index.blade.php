@@ -318,10 +318,10 @@
         <h5 class="text-white">Contact us using the following links.</h3>
        </div>
        <div class="d-flex align-items-center justify-content-center mt-4" style="column-gap: 12px">
-          <a href="{{$general_configuration->email_url}}" class="social-btn" data-aos="fade-up" data-aos-duration="1000"><i class="far fa-envelope"></i></a>
-          <a href="{{$general_configuration->whatsapp_url}}" class="social-btn" data-aos="fade-down" data-aos-duration="1000"><i class="fab fa-whatsapp"></i></a>
-          <a href="{{$general_configuration->skype_url}}" class="social-btn" data-aos="fade-up" data-aos-duration="1000"><i class="fab fa-skype"></i></a>
-          <a href="{{$general_configuration->phone_url}}" class="social-btn" data-aos="fade-down" data-aos-duration="1000"><i class="fa fa-phone"></i></a>
+          <a href="{{$socials->where('name', 'email')->first()->url;}}" class="social-btn" data-aos="fade-up" data-aos-duration="1000"><i class="far fa-envelope"></i></a>
+          <a href="{{$socials->where('name', 'whatsapp')->first()->url;}}" class="social-btn" data-aos="fade-down" data-aos-duration="1000"><i class="fab fa-whatsapp"></i></a>
+          <a href="{{$socials->where('name', 'skype')->first()->url;}}" class="social-btn" data-aos="fade-up" data-aos-duration="1000"><i class="fab fa-skype"></i></a>
+          <a href="{{$socials->where('name', 'phone')->first()->url;}}" class="social-btn" data-aos="fade-down" data-aos-duration="1000"><i class="fa fa-phone"></i></a>
        </div>
     </div>
  </div>
