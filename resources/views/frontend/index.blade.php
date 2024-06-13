@@ -62,7 +62,7 @@
     </style>
 
 
-    {{-- <div id="loading">
+    <div id="loading">
         <div class="position-relative loading-inner">
             <div class="svg_path">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="-8.1 -0.1 50.31 18.34">
@@ -72,7 +72,7 @@
                 </svg>
             </div>
         </div>
-    </div> --}}
+    </div>
 
     <!-- End Social Links -->
     <section id="home" class="iq-main-slider p-0">

@@ -165,10 +165,10 @@
                     <td><i class="fas fa-sort" id="sort-serial"></i></td>
                   <td>${index + 1 }<input type="hidden" class="order-id" value="${value.id}"></td>
                   <td >${value.name}</td>
-                  <td>${value.icon}</td>
+                  <td><i class="${value.icon}"></i></td>
                   <td>${value.url}</td>
                   <td><center><button class="rounded" disabled style="width: 50px; height:20px; background-color:${value.color};box-shadow:0 0 10px grey ; border:none"></button></center></td>
-                  <td>${value.status}</td>
+                  <td>${value.status == 1 ? 'active' : 'deactive'}</td>
                   <td>
                   <a href="` + editUrlFront + "/" + value.id + `" class="btn btn-sm btn-info"><i class="fa fa-edit"></i></a>
                   <button class="btn btn-danger btn-sm deleteRecord" data-id="${value.id}">
