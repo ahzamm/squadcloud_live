@@ -34,10 +34,6 @@
                       <th>Rating Number</th>
                       <th>Price</th>
                       <th>Price Description</th>
-                      <th>Screen Shot 1</th>
-                      <th>Screen Shot 2</th>
-                      <th>Screen Shot 3</th>
-                      <th>Background Image</th>
                       <th>Status</th>
                       <th>Action</th>
                     </tr>
@@ -59,18 +55,6 @@
                       <td>{{$item->rating_number}}</td>
                       <td>{{$item->price}}</td>
                       <td>{{$item->price_description}}</td>
-                      <td>
-                        <img width="40px" height="40px" src="{{ asset('frontend_assets/images/portfolio/' . $item->screenshot_1) }}" alt="" />
-                    </td>
-                    <td>
-                        <img width="40px" height="40px" src="{{ asset('frontend_assets/images/portfolio/' . $item->screenshot_2) }}" alt="" />
-                    </td>
-                    <td>
-                        <img width="40px" height="40px" src="{{ asset('frontend_assets/images/portfolio/' . $item->screenshot_3) }}" alt="" />
-                    </td>
-                    <td>
-                        <img width="40px" height="40px" src="{{ asset('frontend_assets/images/portfolio/' . $item->background_image) }}" alt="" />
-                    </td>
                       <td>{{$item->is_active == 1?'active':'deactive'}}</td>
                       <td class="d-flex justify-content-center" style="gap: 5px;">
                         <a class="btn btn-primary btn-sm" href="{{ route('portfolios.edit', $item->id) }}"><i class="fa fa-edit"></i></a>
