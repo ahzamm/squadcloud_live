@@ -62,7 +62,7 @@
     </style>
 
 
-    <div id="loading">
+    {{-- <div id="loading">
         <div class="position-relative loading-inner">
             <div class="svg_path">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="-8.1 -0.1 50.31 18.34">
@@ -72,7 +72,7 @@
                 </svg>
             </div>
         </div>
-    </div>
+    </div> --}}
 
     <!-- End Social Links -->
     <section id="home" class="iq-main-slider p-0">
@@ -318,10 +318,10 @@
         <h5 class="text-white">Contact us using the following links.</h3>
        </div>
        <div class="d-flex align-items-center justify-content-center mt-4" style="column-gap: 12px">
-          <a href="{{$socials->where('name', 'email')->first()->url;}}" class="social-btn" data-aos="fade-up" data-aos-duration="1000"><i class="far fa-envelope"></i></a>
-          <a href="{{$socials->where('name', 'whatsapp')->first()->url;}}" class="social-btn" data-aos="fade-down" data-aos-duration="1000"><i class="fab fa-whatsapp"></i></a>
-          <a href="{{$socials->where('name', 'skype')->first()->url;}}" class="social-btn" data-aos="fade-up" data-aos-duration="1000"><i class="fab fa-skype"></i></a>
-          <a href="{{$socials->where('name', 'phone')->first()->url;}}" class="social-btn" data-aos="fade-down" data-aos-duration="1000"><i class="fa fa-phone"></i></a>
+        @foreach ($socials as $index => $social)
+            <a href="{{$social->url}}" class="social-btn" data-aos="fade-{{ $index % 2 == 0 ? 'up' : 'down' }}" data-aos-duration="1000"><i class="{{$social->icon}}"></i></a>
+        @endforeach
+
        </div>
     </div>
  </div>

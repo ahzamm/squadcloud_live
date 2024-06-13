@@ -34,7 +34,7 @@ class HomeController extends Controller
         $Clients = Client::where('is_active', 1)->orderby("sortIds", "asc")->get();
         $bottom_sliders = BottomSlider::where('is_active', 1)->orderby("sortIds", "asc")->get();
         $general_configuration = GeneralConfiguration::first();
-        $socials = Social::where('status', 1)->get();
+        $socials = Social::where('status', 1)->orderby("sortIds", "asc")->get();
         $contact_menu = FrontMenu::where('menu', 'Contact')->first();
         $Contact = Contact::first();
 
