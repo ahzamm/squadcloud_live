@@ -31,10 +31,10 @@ class AboutController extends Controller
         $validatedData = [
             "description"=>"required",
             "closing_remarks"=>"required",
-            'images.*' => 'image|max:2000',
+            'images.*' => 'image',
         ];
-        $valdiate = Validator::make($request->all(), $validatedData);
-        if ($valdiate->fails()) {
+        $validate = Validator::make($request->all(), $validatedData);
+        if ($validate->fails()) {
             return redirect()->back()->with('error' , 'All Fields are required');
         }
 
