@@ -57,6 +57,16 @@
                 </div>
 
                 <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="">Linkedin <span style="color: red">*</span></label>
+                    <input type="text" class="form-control" name="linkedin"  value="{{old('linkedin') == NULL?$team->linkedin:old('linkedin') }}">
+                    @error('linkedin')
+                    <p class="text-danger mt-2 mb-0 text-sm">{{$message}}</p>
+                    @enderror
+                  </div>
+                </div>
+
+                <div class="col-md-6">
                   <div class="form-group clearfix">
                     <div class="icheck-success d-inline">
                       <input type="checkbox"  {{ $team->is_active == 1? 'checked' :'unchecked' }} name="is_active" id="checkboxSuccess1">

@@ -40,11 +40,20 @@
                     </div>
                   </div>
 
-                  <div class="col-md-12">
+                  <div class="col-md-6">
                     <div class="form-group">
                       <label for="">Designation <span style="color: red">*</span></label>
-                      <input type="text" class="form-control" name="designation" placeholder="Transforming Ideas into Innovative Mobile Experiences" required value="{{old('designation')}}">
+                      <input type="text" class="form-control" name="designation" placeholder="Transforming Ideas into Innovative Mobile Experiences" value="{{old('designation')}}">
                       @error('designation')
+                      <p class="text-danger mt-2 mb-0 text-sm">{{$message}}</p>
+                      @enderror
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="">Linkedin <span style="color: red">*</span></label>
+                      <input type="text" class="form-control" name="linkedin" placeholder="Transforming Ideas into Innovative Mobile Experiences" value="{{old('linkedin')}}">
+                      @error('linkedin')
                       <p class="text-danger mt-2 mb-0 text-sm">{{$message}}</p>
                       @enderror
                     </div>

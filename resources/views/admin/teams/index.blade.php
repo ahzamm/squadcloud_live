@@ -28,6 +28,7 @@
                       <th>Name</th>
                       <th>Photo</th>
                       <th>Designation</th>
+                      <th>Linkedin</th>
                       <th>Status</th>
                       <th>Action</th>
                     </tr>
@@ -41,6 +42,7 @@
                       <td>{{ $item->name}}</td>
                       <td><img width="40px" height="40px" src="{{ asset('frontend_assets/images/teams/' . $item->image) }}" alt="internet team provider in karachi/Clifton/pakistan" />                      </td>
                       <td>{{ $item->designation}}</td>
+                      <td>{{ $item->linkedin}}</td>
                       <td>{{$item->is_active == 1?'active':'deactive'}}</td>
                       <td class="d-flex justify-content-center" style="gap: 5px;">
                         <a class="btn btn-primary btn-sm" href="{{ route('team.edit', $item->id) }}"><i class="fa fa-edit"></i></a>

@@ -64,6 +64,7 @@ class TeamController extends Controller
         $validatedData = [
             'name' => 'required',
             'designation' => 'required',
+            'linkedin' => 'required',
         ];
         $valdiate = Validator::make($request->all(), $validatedData);
         if ($valdiate->fails()) {
@@ -86,6 +87,7 @@ class TeamController extends Controller
         $team = new Team();
         $team->name = $request['name'];
         $team->designation = $request['designation'];
+        $team->linkedin = $request['linkedin'];
         $team->image = $filename;
         $team->is_active = $request->has('is_active') ? 1 : 0;
         $team->save();
@@ -138,6 +140,7 @@ class TeamController extends Controller
         $validatedData = [
             'name' => 'required',
             'designation' => 'required',
+            'linkedin' => 'required',
         ];
         $valdiate = Validator::make($request->all(), $validatedData);
         if ($valdiate->fails()) {
@@ -166,6 +169,7 @@ class TeamController extends Controller
 
         $team->name = $request['name'];
         $team->designation = $request['designation'];
+        $team->linkedin = $request['linkedin'];
         $team->is_active = $request->has('is_active') ? 1 : 0;
         $team->save();
 
