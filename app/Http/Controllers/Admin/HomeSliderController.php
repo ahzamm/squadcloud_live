@@ -10,16 +10,10 @@ use App\Models\SubMenu;
 use App\Models\UserMenuAccess;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Redirect;
 use Auth;
 
 class HomeSliderController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $subMenuid = SubMenu::where('route_name', 'homesliders.index')->first();
@@ -34,22 +28,12 @@ class HomeSliderController extends Controller
         return view('admin.homesliders.index', compact('homesliders'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function create()
     {
         return view('admin.homesliders.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $subMenuid = SubMenu::where('route_name', 'homesliders.index')->first();
@@ -70,106 +54,57 @@ class HomeSliderController extends Controller
             return redirect()->back()->withInput()->with('error', 'All Fields are required');
         }
 
-        if (!$request->hasFile('image_1')) {
-            return redirect()->back()->withInput()->with('error', 'Please provide an image.');
-        }
-        if (!$request->file('image_1')->isValid() || !in_array($request->file('image_1')->extension(), ['jpeg', 'png', 'jpg'])) {
-            return redirect()->back()->withInput()->with('error', 'Please provide a valid image file of type: jpeg, png, or jpg.');
-        }
+        $images = ['image_1', 'image_2', 'image_3', 'image_4'];
 
-        if (!$request->hasFile('image_2')) {
-            return redirect()->back()->withInput()->with('error', 'Please provide an image.');
-        }
-        if (!$request->file('image_2')->isValid() || !in_array($request->file('image_2')->extension(), ['jpeg', 'png', 'jpg'])) {
-            return redirect()->back()->withInput()->with('error', 'Please provide a valid image file of type: jpeg, png, or jpg.');
+        foreach ($images as $imageField) {
+            if (!$request->hasFile($imageField)) {
+                return redirect()->back()->withInput()->with('error', 'Please provide an image for ' . str_replace('_', ' ', $imageField) . '.');
+            }
+            $file = $request->file($imageField);
+            if (!$file->isValid() || !in_array($file->extension(), ['jpeg', 'png', 'jpg'])) {
+                return redirect()->back()->withInput()->with('error', 'Please provide a valid image file for ' . str_replace('_', ' ', $imageField) . ' of type: jpeg, png, or jpg.');
+            }
         }
 
-        if (!$request->hasFile('image_3')) {
-            return redirect()->back()->withInput()->with('error', 'Please provide an image.');
+        $image_filenames = [];
+
+        foreach ($images as $imageField) {
+            $file = $request->file($imageField);
+            $extension = $file->getClientOriginalExtension();
+            $image_filename = Str::random(40) . '.' . $extension;
+            $file->move(public_path('frontend_assets/images/home_sliders'), $image_filename);
+            $image_filenames[$imageField] = $image_filename;
         }
-        if (!$request->file('image_3')->isValid() || !in_array($request->file('image_3')->extension(), ['jpeg', 'png', 'jpg'])) {
-            return redirect()->back()->withInput()->with('error', 'Please provide a valid image file of type: jpeg, png, or jpg.');
-        }
-
-        if (!$request->hasFile('image_4')) {
-            return redirect()->back()->withInput()->with('error', 'Please provide an image.');
-        }
-        if (!$request->file('image_4')->isValid() || !in_array($request->file('image_4')->extension(), ['jpeg', 'png', 'jpg'])) {
-            return redirect()->back()->withInput()->with('error', 'Please provide a valid image file of type: jpeg, png, or jpg.');
-        }
-
-
-        $image_1_filename = "";
-        $file = $request->file('image_1');
-        $extension = $file->getClientOriginalExtension();
-        $image_1_filename = Str::random(40) . '.' . $extension;
-        $file->move(public_path('frontend_assets/images/home_sliders'), $image_1_filename);
-
-        $image_2_filename = "";
-        $file = $request->file('image_2');
-        $extension = $file->getClientOriginalExtension();
-        $image_2_filename = Str::random(40) . '.' . $extension;
-        $file->move(public_path('frontend_assets/images/home_sliders'), $image_2_filename);
-
-        $image_3_filename = "";
-        $file = $request->file('image_3');
-        $extension = $file->getClientOriginalExtension();
-        $image_3_filename = Str::random(40) . '.' . $extension;
-        $file->move(public_path('frontend_assets/images/home_sliders'), $image_3_filename);
-
-        $image_4_filename = "";
-        $file = $request->file('image_4');
-        $extension = $file->getClientOriginalExtension();
-        $image_4_filename = Str::random(40) . '.' . $extension;
-        $file->move(public_path('frontend_assets/images/home_sliders'), $image_4_filename);
-
-
 
         $homeslider = new Homeslider();
         $homeslider->heading = $request['heading'];
         $homeslider->subheading = $request['subheading'];
         $homeslider->description = $request['description'];
-        $homeslider->image_1 = $image_1_filename;
-        $homeslider->image_2 = $image_2_filename;
-        $homeslider->image_3 = $image_3_filename;
-        $homeslider->image_4 = $image_4_filename;
+        $homeslider->image_1 = $image_filenames['image_1'];
+        $homeslider->image_2 = $image_filenames['image_2'];
+        $homeslider->image_3 = $image_filenames['image_3'];
+        $homeslider->image_4 = $image_filenames['image_4'];
         $homeslider->is_active = $request->has('is_active') ? 1 : 0;
         $homeslider->save();
 
         return redirect()->route('homesliders.index')->with('success', 'Homeslider created successfully!');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
 
     public function show($id)
     {
         $packageData = Homeslider::find($id);
         return view('admin.homesliders.show-modal', compact('packageData'));
     }
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function edit($id)
     {
         $homeslider = Homeslider::find($id);
         return view('admin.homesliders.edit', compact('homeslider'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(Request $request, $id)
     {
         $subMenuid = SubMenu::where('route_name', 'homesliders.index')->first();
@@ -186,68 +121,37 @@ class HomeSliderController extends Controller
             'subheading' => 'required',
             'description' => 'required',
         ];
-        $valdiate = Validator::make($request->all(), $validatedData);
-        if ($valdiate->fails()) {
+        $validate = Validator::make($request->all(), $validatedData);
+        if ($validate->fails()) {
             return redirect()->back()->withInput()->with('error', 'All Fields are required');
         }
 
-        if ($request->hasFile('image_1')) {
-        if (!$request->file('image_1')->isValid() || !in_array($request->file('image_1')->extension(), ['jpeg', 'png', 'jpg'])) {
-            return redirect()->back()->withInput()->with('error', 'Please provide a valid image file of type: jpeg, png, or jpg.');
-        }
-    }
-
-    if ($request->hasFile('image_2')) {
-    if (!$request->file('image_2')->isValid() || !in_array($request->file('image_2')->extension(), ['jpeg', 'png', 'jpg'])) {
-        return redirect()->back()->withInput()->with('error', 'Please provide a valid image file of type: jpeg, png, or jpg.');
-    }}
-
-    if ($request->hasFile('image_3')) {
-    if (!$request->file('image_3')->isValid() || !in_array($request->file('image_3')->extension(), ['jpeg', 'png', 'jpg'])) {
-        return redirect()->back()->withInput()->with('error', 'Please provide a valid image file of type: jpeg, png, or jpg.');
-    }}
-
-    if ($request->hasFile('image_4')) {
-    if (!$request->file('image_4')->isValid() || !in_array($request->file('image_4')->extension(), ['jpeg', 'png', 'jpg'])) {
-        return redirect()->back()->withInput()->with('error', 'Please provide a valid image file of type: jpeg, png, or jpg.');
-    }}
-
         $homeslider = Homeslider::findOrFail($id);
 
-        if ($request->hasFile('image_1')) {
-        $image_1_filename = "";
-        $file = $request->file('image_1');
-        $extension = $file->getClientOriginalExtension();
-        $image_1_filename = Str::random(40) . '.' . $extension;
-        $file->move(public_path('frontend_assets/images/home_sliders'), $image_1_filename);
-        $homeslider->image_1 = $image_1_filename;
-        }
+        $images = ['image_1', 'image_2', 'image_3', 'image_4'];
 
-        if ($request->hasFile('image_2')) {
-        $image_2_filename = "";
-        $file = $request->file('image_2');
-        $extension = $file->getClientOriginalExtension();
-        $image_2_filename = Str::random(40) . '.' . $extension;
-        $file->move(public_path('frontend_assets/images/home_sliders'), $image_2_filename);
-        $homeslider->image_2 = $image_2_filename;
-        }
+        foreach ($images as $imageField) {
+            if ($request->hasFile($imageField)) {
+                $file = $request->file($imageField);
+                if (!$file->isValid() || !in_array($file->extension(), ['jpeg', 'png', 'jpg'])) {
+                    return redirect()->back()->withInput()->with('error', 'Please provide a valid image file for ' . str_replace('_', ' ', $imageField) . ' of type: jpeg, png, or jpg.');
+                }
 
-        if ($request->hasFile('image_3')) {
-        $image_3_filename = "";
-        $file = $request->file('image_3');
-        $extension = $file->getClientOriginalExtension();
-        $image_3_filename = Str::random(40) . '.' . $extension;
-        $file->move(public_path('frontend_assets/images/home_sliders'), $image_3_filename);
-        $homeslider->image_3 = $image_3_filename;
-        }
+                // Delete existing image file
+                $existingImage = $homeslider->$imageField;
+                if ($existingImage) {
+                    $imagePath = public_path('frontend_assets/images/home_sliders/' . $existingImage);
+                    if (file_exists($imagePath)) {
+                        unlink($imagePath);
+                    }
+                }
 
-        if ($request->hasFile('image_4')) {
-        $image_4_filename = "";
-        $file = $request->file('image_4');
-        $extension = $file->getClientOriginalExtension();
-        $image_4_filename = Str::random(40) . '.' . $extension;
-        $file->move(public_path('frontend_assets/images/home_sliders'), $image_4_filename);
-        $homeslider->image_4 = $image_4_filename;
+                // Upload new image file
+                $extension = $file->getClientOriginalExtension();
+                $image_filename = Str::random(40) . '.' . $extension;
+                $file->move(public_path('frontend_assets/images/home_sliders'), $image_filename);
+                $homeslider->$imageField = $image_filename;
+            }
         }
 
         $homeslider->heading = $request['heading'];
@@ -256,18 +160,9 @@ class HomeSliderController extends Controller
         $homeslider->is_active = $request->has('is_active') ? 1 : 0;
         $homeslider->save();
 
-
-
         return redirect()->route('homesliders.index')->with('success', 'Homeslider updated successfully!');
     }
 
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id = null)
     {
         $subMenuid = SubMenu::where('route_name', 'homesliders.index')->first();
@@ -275,26 +170,29 @@ class HomeSliderController extends Controller
         $userId = Auth::guard('admin', 'user')->user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
 
-        if ($crudAccess == true) {
-            $homeslider = Homeslider::find($id);
-            if ($homeslider) {
-                if ($homeslider->logo) {
-                    $imagePath = public_path('frontend_assets/images/homesliders/' . $homeslider->logo);
-                    if (file_exists($imagePath)) {
-                        unlink($imagePath);
-                    }
-                }
-
-                $homeslider->delete();
-
-                return response()->json(["status" => true]);
-            } else {
-                return response()->json(["status" => false, "message" => "Homeslider not found."]);
-            }
-        } else {
+        if ($crudAccess == false) {
             return response()->json(["unauthorized" => true]);
         }
+
+        $homeslider = Homeslider::find($id);
+        if (!$homeslider) {
+            return response()->json(["status" => false, "message" => "Homeslider not found."]);
+        }
+
+        $imageFields = ['image_1', 'image_2', 'image_3', 'image_4'];
+        foreach ($imageFields as $imageField) {
+            if ($homeslider->$imageField) {
+                $imagePath = public_path('frontend_assets/images/home_sliders/' . $homeslider->$imageField);
+                if (file_exists($imagePath)) {
+                    unlink($imagePath);
+                }
+            }
+        }
+
+        $homeslider->delete();
+        return response()->json(["status" => true]);
     }
+
 
     public function crud_access($submenuId = null, $operation = null, $uId = null)
     {

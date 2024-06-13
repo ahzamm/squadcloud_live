@@ -15,11 +15,6 @@ use Illuminate\Support\Facades\Validator;
 
 class FrontMenuController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $subMenuid = SubMenu::where('route_name', 'frontmenu.index')->first();
@@ -34,23 +29,13 @@ class FrontMenuController extends Controller
         return view('admin.frontmenu.index', compact('collection'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
 
         return view('admin.frontmenu.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(Request $request)
     {
         $subMenuid = SubMenu::where('route_name', 'frontmenu.index')->first();
@@ -107,23 +92,12 @@ class FrontMenuController extends Controller
         return redirect()->route("frontmenu.index")->with("success", "Menu Added successfulyl");
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
 
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id?
-     * @return \Illuminate\Http\Response
-     */
+
     public function edit($id = null)
     {
         $menus = FrontMenu::find($id);
@@ -131,13 +105,7 @@ class FrontMenuController extends Controller
         return view("admin.frontmenu.edit", compact('menus'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(Request $request, $id)
     {
 
@@ -183,7 +151,6 @@ class FrontMenuController extends Controller
             $filename = Str::random(40) . '.' . $extension;
             $file->move(public_path('frontend_assets/images/title'), $filename);
             $front_menu->title_image = $filename;
-            $front_menu->title_image = $filename;
         }
 
         $front_menu->menu = $request['menu'];
@@ -195,26 +162,28 @@ class FrontMenuController extends Controller
         return redirect()->route('frontmenu.index')->with('success', 'Menu Updated successfully');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy(Request $request)
     {
         $subMenuid = SubMenu::where('route_name', 'frontmenu.index')->first();
         $userOperation = "delete_status";
         $userId = Auth::user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
-        if ($crudAccess) {
-            $menu = FrontMenu::find($request->frontmenu);
-            $menu->delete();
-
-            return response()->json(["status" => true]);
-        } else {
+        if (!$crudAccess) {
             return response()->json(["unauthorized" => true]);
         }
+
+        $menu = FrontMenu::find($request->frontmenu);
+        if ($menu) {
+            if ($menu->title_image) {
+                $imagePath = public_path('frontend_assets/images/title/' . $menu->title_image);
+                if (file_exists($imagePath)) {
+                    unlink($imagePath);
+                }
+            }
+            $menu->delete();
+        }
+        return response()->json(["status" => true]);
     }
 
 
@@ -225,6 +194,7 @@ class FrontMenuController extends Controller
         }
         return response()->json(['status' => false]);
     }
+
     public function updateSorting(Request $request)
     {
         $sortIds = $request->sort_Ids;
@@ -232,7 +202,7 @@ class FrontMenuController extends Controller
             $menu = FrontMenu::find($value);
             if ($menu) {
                 $menu->sortIds = $key;
-                $menu->save(); // Save the changes to the database
+                $menu->save();
             }
         }
         $frontValue = FrontMenu::orderby("sortIds", 'asc')->get();
