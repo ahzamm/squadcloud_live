@@ -15,6 +15,7 @@
    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('frontend_assets/images/' . $general_configuration->brand_logo) }}">
    <link rel="shortcut icon" href="{{ asset('frontend_assets/images/' . $general_configuration->brand_logo) }}" />
    <!-- Fav end -->
+   <link rel="stylesheet" href="{{ asset('site/sweet-alert/sweetalert2.css') }}">
    <link rel="stylesheet" href="{{ asset('frontend_assets/css/all.min.css') }}" />
    <link rel="stylesheet" href="{{ asset('frontend_assets/css/bootstrap.min.css?v=3') }}" />
    <link rel="stylesheet" href="{{ asset('frontend_assets/css/typography.css?v=1') }}">
@@ -160,6 +161,7 @@
     </div>
 </footer>
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
      <script src="{{ asset('frontend_assets/js/jquery-3.6.0.min.js') }}"></script>
      <script src="{{ asset('frontend_assets/js/popper.min.js') }}"></script>
      <script src="{{ asset('frontend_assets/js/bootstrap.min.js') }}"></script>
@@ -224,6 +226,32 @@
     })();
     </script>
     <!--End of Tawk.to Script-->
+
+    <script>
+        $(document).ready(function() {
+            let errorMessage = "{{ session('error') }}";
+
+            if (errorMessage) {
+                Swal.fire({
+                    title: 'Error!',
+                    text: errorMessage,
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
+            }
+            let infoMessage = "{{ session('message') }}";
+
+            if (infoMessage) {
+                Swal.fire({
+                    title: 'Message!',
+                    text: infoMessage,
+                    icon: 'info',
+                    confirmButtonText: 'OK'
+                });
+            }
+        });
+    </script>
+
 
   </body>
 </html>

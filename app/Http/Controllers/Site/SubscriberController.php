@@ -13,12 +13,12 @@ class SubscriberController extends Controller
     {
         $validate = Validator::make($request->all(), ['email' => 'required|email']);
         if ($validate->fails()) {
-            return redirect()->back();
+            return redirect()->back()->with("error", "Please provide a valid email address.");
         }
 
         $alreadySubscribed = Subscriber::where('email', $request->email)->exists();
         if ($alreadySubscribed) {
-            return redirect()->back();
+            return redirect()->back()->with("message", "You are already subscribed to our newsletter using this email address.");
         }
 
         Subscriber::create(['email' => $request->email]);
