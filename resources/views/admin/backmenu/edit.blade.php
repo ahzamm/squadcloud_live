@@ -29,6 +29,8 @@
                 <div class="card-body">
                   <form action="{{route('menus.update',$menus->id)}}" method="POST" id="AddMenusForm">
                     @csrf
+                    <input type="hidden" name="deletedSubmenus" id="deletedSubmenus" value="">
+
                     <div class="row">
                       <div class="col-lg-12 col-sm-12 col-xs-12">
                         <div class="form-group">
@@ -76,7 +78,9 @@
                                 {{-- @if(($key+1) == $menus->submenus->count())
                                 <button class="btn btn-success btn-sm my-1" type="button" id="btnAddSubMenu"><i class="fa fa-plus"></i></button> --}}
                                 {{-- @else --}}
-                                <button class="btn btn-danger btn-sm my-1 btnDeleteSubMenu" type="button"><i class="fa fa-trash"></i></button>
+                                <button class="btn btn-danger btn-sm my-1 btnDeleteSubMenu" type="button" data-delete="true">
+                                    <i class="fa fa-trash"></i>
+                                </button>
                                 {{-- @endif --}}
                               </td>
                             </tr>
@@ -115,7 +119,9 @@
       <input type="" name="submenuroute[]" placeholder="Sub Menu Route" class="form-control"/>
       <span class="text-danger text-sm d-none">Route name not exist in database</span>
     </td>
-    <td><button class="btn btn-danger btn-sm my-1 btnDeleteSubMenu" type="button"><i class="fa fa-trash"></i></button></td>
+    <td><button class="btn btn-danger btn-sm my-1 btnDeleteSubMenu" type="button" data-delete="true">
+        <i class="fa fa-trash"></i>
+    </button></td>
   </tr>
 </script>
 @endsection
@@ -205,9 +211,20 @@
 //                 })
 //     }
 //   })
-  $(document).on('click', '.btnDeleteSubMenu', function() {
-      $(this).closest('tr').remove();
-    });
+$(document).on('click', '.btnDeleteSubMenu', function() {
+    let submenuId = $(this).closest('tr').find('input[name="submenuId[]"]').val();
+    if (submenuId !== '0') {
+        // Mark submenu for deletion by adding its ID to an array
+        let deletedSubmenus = $('#deletedSubmenus').val().split(',').filter(Boolean);
+        deletedSubmenus.push(submenuId);
+        $('#deletedSubmenus').val(deletedSubmenus.join(','));
+    }
+
+    // Remove the row visually
+    $(this).closest('tr').remove();
+});
+
+
 //   $(document).on('click','.btnDeleteSubMenu',function(){
 //     subMenuId = $(this).parents('tr').find('td.d-none input').val();
 //     row = $(this);

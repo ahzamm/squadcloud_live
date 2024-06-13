@@ -239,6 +239,11 @@ class MenusController extends Controller
                     ]);
                 }
             }
+            // dd($request->all());
+            if ($request->has('deletedSubmenus')) {
+                $deletedSubmenus = explode(',', $request->deletedSubmenus);
+                SubMenu::whereIn('id', $deletedSubmenus)->delete();
+            }
         }, 3);
         return redirect()->route("menus.index")->with('success', 'Menu Updated successfully');
         ;
