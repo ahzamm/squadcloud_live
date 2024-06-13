@@ -19,10 +19,12 @@ use App\Models\Admin;
 use App\Models\Service;
 use App\Models\City;
 use App\Models\Reseller;
-use App\Models\Social ;
-use App\Models\Package ;
+use App\Models\Subscriber;
+use App\Models\Social;
+use App\Models\Package;
 use App\Models\UserMenuAccess;
 use Illuminate\Support\Facades\Auth;
+
 class HomeController extends Controller
 {
     // public function dashboard()
@@ -70,14 +72,14 @@ class HomeController extends Controller
         // dd($coverageMembers);
 
         $contactRequest = FrontContact::count();
-        $faqs         = FrontFaq::where('active',1)->count();
-        $contacts     = FrontContact::whereRaw('date(created_at) = date(now())')->get();
-        $employees    = Admin::where('role','employee')->count();
-        $cities       = City::where(['active' => 1 ])->count();
-        $resellers    = Reseller::where(["active"=>1])->count();
-        $user        = Admin::where(["active"=>1])->count();
-        $social       = Social::where(["status"=>1])->count();
-        $package      = Package::where(["active"=>1])->count();
+        $faqs = FrontFaq::where('active', 1)->count();
+        $contacts = FrontContact::whereRaw('date(created_at) = date(now())')->get();
+        $employees = Admin::where('role', 'employee')->count();
+        $cities = City::where(['active' => 1])->count();
+        $resellers = Reseller::where(["active" => 1])->count();
+        $user = Admin::where(["active" => 1])->count();
+        $social = Social::where(["status" => 1])->count();
+        $package = Package::where(["active" => 1])->count();
         $requestCount = CoverageRequest::count();
 
 
@@ -85,6 +87,7 @@ class HomeController extends Controller
         $portfolioCount = Portfolio::count();
         $clientCount = Client::count();
         $productCount = Product::count();
+        $subscriberCount = Subscriber::count();
         $todaysContactRequests = ContactRequest::whereDate('created_at', Carbon::today())->get();
 
 
@@ -94,22 +97,29 @@ class HomeController extends Controller
 
 
 
-        return view("admin.home.dashboard",
+        return view(
+            "admin.home.dashboard",
             compact(
-                'serviceCount', 'portfolioCount', 'clientCount', 'productCount', 'todaysContactRequests',
+                'serviceCount',
+                'portfolioCount',
+                'clientCount',
+                'productCount',
+                'subscriberCount',
+                'todaysContactRequests',
                 "contacts",
-            "coverageMembers",
-            "coverageUsers",
-            'contactRequest',
-            'faqs',
-            'frontContact',
-            'employees',
-            'cities',
-            'resellers',
-            'user',
-            'package',
-            'social' ,
-            'requestCount')
+                "coverageMembers",
+                "coverageUsers",
+                'contactRequest',
+                'faqs',
+                'frontContact',
+                'employees',
+                'cities',
+                'resellers',
+                'user',
+                'package',
+                'social',
+                'requestCount'
+            )
         );
     }
 

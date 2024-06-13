@@ -18,6 +18,7 @@ use App\Http\Controllers\Admin\TeamController as AdminTeamController;
 use App\Http\Controllers\Admin\CareerController as AdminCareerController;
 use App\Http\Controllers\Admin\PageTitleController as AdminPageTitleController;
 use App\Http\Controllers\Admin\JobApplicationController as AdminJobApplicationController;
+use App\Http\Controllers\Admin\SubscriberController as AdminSubscriberController;
 use App\Http\Controllers\Admin\ContactRequestController;
 use App\Http\Controllers\Admin\AllowedIpController;
 use App\Http\Controllers\Admin\SocialController;
@@ -41,6 +42,7 @@ use App\Http\Controllers\Site\ClientController;
 use App\Http\Controllers\Site\AboutController;
 use App\Http\Controllers\Admin\ServiceController as AdminServiceController;
 use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\Site\SubscriberController;
 
         // dd('Boot Not Found! Please Insert Media & Try Again Lator');
         Cache::forget('key');
@@ -78,18 +80,16 @@ use App\Http\Controllers\Admin\AuthController;
 
          // SquadCloud Site Routes
          Route::get('/maintenance', [MaintenanceController::class, 'index'])->name('site.maintenance');
-        //  Route::get('/index', [HomeController::class, 'index'])->name('site.index');
          Route::get('/services', [ServiceController::class, 'index'])->name('site.services');
          Route::get('/services/{slug}', [ServiceController::class, 'serviceDetail'])->where('id', '[0-9]+')->name('site.service.detail');
          Route::get('/portfolio', [PortfolioController::class, 'index'])->name('site.portfolio');
          Route::get('/portfolio/{route}', [PortfolioController::class, 'detail'])->name('site.portfolio.detail');
-        //  Route::get('/product', [ProductController::class, 'index'])->name('site.product');
-        //  Route::get('/product/{id}', [ProductController::class, 'productDetail'])->name('site.product.detail');
          Route::get('/client', [ClientController::class, 'index'])->name('site.client');
          Route::get('/about', [AboutController::class, 'index'])->name('site.about');
          Route::get('/contact', [ContactController::class, 'index'])->name('site.contact');
          Route::post('/contact-request', [ContactController::class, 'store'])->name('site.contact.request');
          Route::post('/manage_contacts', [ContactController::class, 'index'])->name('contact.manage_contact_forms_process');
+         Route::post('/subscribe', [SubscriberController::class, 'store'])->name('subscribers.store');
 
         // End Of Contact Routes From Site section
         Route::prefix('admin')->group(function () {
@@ -297,6 +297,9 @@ use App\Http\Controllers\Admin\AuthController;
 
         Route::get('/job_applications', [AdminJobApplicationController::class, 'index'])->name('job_applications.index');
         Route::get("/job_applications/destroy/{id?}" , [AdminJobApplicationController::class ,"destroy"])->name("job_application.destroy");
+
+        Route::get('/subscribers', [AdminSubscriberController::class, 'index'])->name('subscribers.index');
+        Route::get("/subscribers/destroy/{id?}" , [AdminSubscriberController::class ,"destroy"])->name("subscriber.destroy");
 
     });
 });

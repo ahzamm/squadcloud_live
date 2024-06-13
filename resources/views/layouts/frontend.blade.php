@@ -123,10 +123,9 @@
                 <div style="flex: 1 1 20%">
                     <h6 class="text-white text-left p-3" style="font-size:1rem">Quick Links</h6>
                     <ul class="list-style-none">
-                        <li><a href="" class="nav nav-link text-left text-gray">Portfolio</a></li>
-                        <li><a href="" class="nav nav-link text-left text-gray">Services</a></li>
-                        <li><a href="" class="nav nav-link text-left text-gray">Promotions</a></li>
-                        <li><a href="" class="nav nav-link text-left text-gray">Contact</a></li>
+                        @foreach ($menus as $item)
+                        <li><a href="{{ url($item->slug) }}" class="nav nav-link text-left text-gray">{{ $item->menu }}</a></li>
+                        @endforeach
                     </ul>
                 </div>
                 <div style="flex: 1 1 20%">
@@ -140,9 +139,10 @@
                 </div>
                 <div style="flex: 1 1 auto">
                     <h6 class="text-white text-left">Subscribe for updates</h6>
-                    <form class="text-left">
+                    <form class="text-left"  action="{{route('subscribers.store')}}" method="POST">
+                        @csrf
                         <div class="form-group">
-                            <input type="text" class="form-control text-white" placeholder="Enter your email" style="background-color: transparent; border:1px solid #b9c9c8;box-shadow:none;margin:20px 0">
+                            <input type="text" name="email" class="form-control text-white" placeholder="Enter your email" style="background-color: transparent; border:1px solid #b9c9c8;box-shadow:none;margin:20px 0">
                             <button type="submit" class="btn btn-sm text-dark" style="background: #d6d2cb;float: right;border-radius: 10px !important;">Subscribe</button>
                         </div>
                     </form>

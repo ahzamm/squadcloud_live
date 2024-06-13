@@ -92,13 +92,13 @@
         </div>
         <!-- ./col -->
         <div class="col-lg-3 col-6">
-          <a href="{{route('reseller.index')}}" class="small-box-footer">
+          <a href="{{route('subscribers.index')}}" class="small-box-footer">
             <!-- small box -->
             <div class="small-box bg-purple">
               <div class="inner">
-                <h3>{{$resellers}}</h3>
+                <h3>{{$subscriberCount}}</h3>
                 <p>
-                  Resellers & Partners
+                    Subscribers
                 </p>
               </div>
               <div class="icon">
