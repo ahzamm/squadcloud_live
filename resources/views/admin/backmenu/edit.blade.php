@@ -73,16 +73,17 @@
                                 <span class="text-danger text-sm d-none">Route name not exist in database</span>
                               </td>
                               <td>
-                                @if(($key+1) == $menus->submenus->count())
-                                <button class="btn btn-success btn-sm my-1" type="button" id="btnAddSubMenu"><i class="fa fa-plus"></i></button>
-                                @else
+                                {{-- @if(($key+1) == $menus->submenus->count())
+                                <button class="btn btn-success btn-sm my-1" type="button" id="btnAddSubMenu"><i class="fa fa-plus"></i></button> --}}
+                                {{-- @else --}}
                                 <button class="btn btn-danger btn-sm my-1 btnDeleteSubMenu" type="button"><i class="fa fa-trash"></i></button>
-                                @endif
+                                {{-- @endif --}}
                               </td>
                             </tr>
                             @endforeach
                           </tbody>
                         </table>
+                        <button class="btn btn-success btn-sm my-1" type="button" id="btnAddSubMenu"><i class="fa fa-plus"></i></button>
                       </div>
                       <div class="col-md-12">
                         <div class="form-group">
@@ -114,7 +115,7 @@
       <input type="" name="submenuroute[]" placeholder="Sub Menu Route" class="form-control"/>
       <span class="text-danger text-sm d-none">Route name not exist in database</span>
     </td>
-    <td><button class="btn btn-success btn-sm my-1" type="button" id="btnAddSubMenu"><i class="fa fa-plus"></i></button></td>
+    <td><button class="btn btn-danger btn-sm my-1 btnDeleteSubMenu" type="button"><i class="fa fa-trash"></i></button></td>
   </tr>
 </script>
 @endsection
@@ -122,6 +123,17 @@
 <script src="{{asset('backend/plugins/select2/js/select2.full.min.js')}}"></script>
 <script src="{{asset('site/sweet-alert/sweetalert2.min.js')}}"></script>
 <script>
+     function setDefaultValues() {
+      $('#submenu-list tr:last-child').find('input[name="submenu[]"]').val('{{ old('submenu') ? old('submenu')[count(old('submenu')) - 1] : '' }}');
+      $('#submenu-list tr:last-child').find('input[name="submenuroute[]"]').val('{{ old('submenuroute') ? old('submenuroute')[count(old('submenuroute')) - 1] : '' }}');
+    }
+
+    $(document).on('click', '#btnAddSubMenu', function() {
+      let dataRow = $('#data-row').html();
+      $('#submenu-list').append(dataRow);
+      setDefaultValues();
+    });
+
   function formatState(state) {
     if (!state.id) {
       return state.text;
@@ -154,98 +166,105 @@
       $(input).css('border','1px solid #444951');
       return true;
     }
+    $(document).on('click', '#btnAddSubMenu', function() {
+    let dataRow = $('#data-row').html();
+    $('#submenu-list').append(dataRow);
+  });
   }
-  $(document).on('click','#btnAddSubMenu',function(){
-    fristInput = $(this).parents('tr').find('td.td-first > input');
-    secondInput = $(this).parents('tr').find('td.td-second > input');
-    button = $(this);
-    if(checkinput(fristInput) && checkinput(secondInput))
-    {
-      $.ajax({
-        url:'{{route("menus.checkroute")}}',
-        method:'post',
-        data:{
-          routename: secondInput.val()
-        },
-        dataType:'json',
-        success:function(res){
-          if(res.status)
-          {
-            $(secondInput).siblings('span').addClass('d-none');
-            fristInput.prop('readonly',true);
-            secondInput.prop('readonly',true);
-            let dataRow = $('#data-row').html();
-            $('#submenu-list').append(dataRow);
-            $(button).removeClass("btn-success").addClass("btn-danger").html("<i class='fa fa-trash'></i>").attr('id','btnDeleteSubMenu');
-          }
-          else
-          {
-            $(secondInput).siblings('span').removeClass('d-none');
-          }
-        },
-        error:function(jhxr,status,err){
-                    //console.log(jhxr);
-                  }
-                })
-    }
-  })
-  $(document).on('click','.btnDeleteSubMenu',function(){
-    subMenuId = $(this).parents('tr').find('td.d-none input').val();
-    row = $(this);
-    swal({
-      title: 'Are you sure?',
-      text: "You want to delete this record",
-      animation: false,
-      customClass: 'animated pulse',
-      type: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, Delete it!',
-      cancelButtonText: 'No, cancel!',
-      confirmButtonClass: 'btn btn-success',
-      cancelButtonClass: 'btn btn-danger',
-      buttonsStyling: true,
-      reverseButtons: true
-    }).then( function(result) {
-      if (result.value) {
-        if(subMenuId ==0)
-        {
-          $(row).parents('tr').remove();
-        }else{
-          $.ajax({
-            url:'{{ route("submenus.delete") }}',
-            method:'post',
-            data:{
-              subMenuId: subMenuId
-            },
-            dataType:'json',
-            success:function(res){
-              if(res.status)
-              {
-                $(row).parents('tr').remove();
-                        // console.log("delete record");
-                      }
-                      else
-                      {
-                        //$(secondInput).siblings('span').removeClass('d-none');
-                      }
-                    },
-                    error:function(jhxr,status,err){
-                      console.log(jhxr);
-                    }
-                  })
-        }
-      } else if (result.dismiss === 'cancel') {
-               //  swal(
-               //      'Cancelled',
-               //      'Your imaginary data is safe :)',
-               //      'error'
-               //  )
-             }
-           })
-    // $(this).parents('tr').remove();
-  })
+//   $(document).on('click','#btnAddSubMenu',function(){
+//     fristInput = $(this).parents('tr').find('td.td-first > input');
+//     secondInput = $(this).parents('tr').find('td.td-second > input');
+//     button = $(this);
+//     if(checkinput(fristInput) && checkinput(secondInput))
+//     {
+//       $.ajax({
+//         url:'{{route("menus.checkroute")}}',
+//         method:'post',
+//         data:{
+//           routename: secondInput.val()
+//         },
+//         dataType:'json',
+//         success:function(res){
+//           if(res.status)
+//           {
+//             $(secondInput).siblings('span').addClass('d-none');
+//             fristInput.prop('readonly',true);
+//             secondInput.prop('readonly',true);
+//             let dataRow = $('#data-row').html();
+//             $('#submenu-list').append(dataRow);
+//             $(button).removeClass("btn-success").addClass("btn-danger").html("<i class='fa fa-trash'></i>").attr('id','btnDeleteSubMenu');
+//           }
+//           else
+//           {
+//             $(secondInput).siblings('span').removeClass('d-none');
+//           }
+//         },
+//         error:function(jhxr,status,err){
+//                     //console.log(jhxr);
+//                   }
+//                 })
+//     }
+//   })
+  $(document).on('click', '.btnDeleteSubMenu', function() {
+      $(this).closest('tr').remove();
+    });
+//   $(document).on('click','.btnDeleteSubMenu',function(){
+//     subMenuId = $(this).parents('tr').find('td.d-none input').val();
+//     row = $(this);
+//     swal({
+//       title: 'Are you sure?',
+//       text: "You want to delete this record",
+//       animation: false,
+//       customClass: 'animated pulse',
+//       type: 'warning',
+//       showCancelButton: true,
+//       confirmButtonColor: '#3085d6',
+//       cancelButtonColor: '#d33',
+//       confirmButtonText: 'Yes, Delete it!',
+//       cancelButtonText: 'No, cancel!',
+//       confirmButtonClass: 'btn btn-success',
+//       cancelButtonClass: 'btn btn-danger',
+//       buttonsStyling: true,
+//       reverseButtons: true
+//     }).then( function(result) {
+//       if (result.value) {
+//         if(subMenuId ==0)
+//         {
+//           $(row).parents('tr').remove();
+//         }else{
+//           $.ajax({
+//             url:'{{ route("submenus.delete") }}',
+//             method:'post',
+//             data:{
+//               subMenuId: subMenuId
+//             },
+//             dataType:'json',
+//             success:function(res){
+//               if(res.status)
+//               {
+//                 $(row).parents('tr').remove();
+//                         // console.log("delete record");
+//                       }
+//                       else
+//                       {
+//                         //$(secondInput).siblings('span').removeClass('d-none');
+//                       }
+//                     },
+//                     error:function(jhxr,status,err){
+//                       console.log(jhxr);
+//                     }
+//                   })
+//         }
+//       } else if (result.dismiss === 'cancel') {
+//                //  swal(
+//                //      'Cancelled',
+//                //      'Your imaginary data is safe :)',
+//                //      'error'
+//                //  )
+//              }
+//            })
+//     // $(this).parents('tr').remove();
+//   })
 // $(document).on('submit','#AddMenusForm',function(e){
 //     // e.preventDefault();
 //     // $('#AddMenusForm input').each(function(index,val){

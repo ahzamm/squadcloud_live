@@ -178,13 +178,17 @@ class MenusController extends Controller
         if ($validator->fails()) {
             return redirect()->back()->withInput()->with('error', 'All Fields are required');
         }
+        // dd($request->has('submenu'));
 
-        if (!$request->has('submenu')) {
-            $validatedData = [
-                'parentroutename' => 'required',
-            ];
-            $validator = Validator::make($request->all(), $validatedData);
-            if ($validator->fails()) {
+        if($request->submenu == null) {
+            return redirect()->back()->withInput()->with('error', 'At least one Submenu is required');
+        }
+        foreach ($request->submenu as $key => $value) {
+            $subMenuValidator = Validator::make(
+                ['submenu' => $value, 'submenuroute' => $request->submenuroute[$key]],
+                ['submenu' => 'required', 'submenuroute' => 'required']
+            );
+            if ($subMenuValidator->fails()) {
                 return redirect()->back()->withInput()->with('error', 'All Fields are required');
             }
         }
