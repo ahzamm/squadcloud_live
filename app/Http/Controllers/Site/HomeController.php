@@ -4,16 +4,13 @@ namespace App\Http\Controllers\Site;
 
 use App\Models\BottomSlider;
 use App\Models\Contact;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Client;
 use App\Models\FrontMenu;
 use App\Models\GeneralConfiguration;
-use App\Models\HomeBottomSlider;
 use App\Models\HomeSlider;
 use App\Models\Portfolio;
 use App\Models\Product;
-use App\Models\ProjectInquiries;
 use App\Models\Service;
 use App\Models\Social;
 
@@ -21,6 +18,12 @@ class HomeController extends Controller
 {
     public function index()
     {
+        if (!request()->cookie('first_load')) {
+            cookie()->queue(cookie('first_load', '1', 60));
+            $showAnimation = true;
+        } else {
+            $showAnimation = false;
+        }
 
         $home_menu = FrontMenu::where('menu', 'Home')->first();
         $home_sliders = HomeSlider::where('is_active', 1)->orderby("sortIds", "asc")->get();
@@ -41,6 +44,7 @@ class HomeController extends Controller
         return view(
             'frontend.index',
             compact(
+                'showAnimation',
                 'home_menu',
                 'home_sliders',
                 'service_menu',

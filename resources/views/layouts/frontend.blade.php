@@ -140,7 +140,7 @@
                 </div>
                 <div style="flex: 1 1 auto">
                     <h6 class="text-white text-left">Subscribe for updates</h6>
-                    <form class="text-left"  action="{{route('subscribers.store')}}" method="POST">
+                    <form id="subscribeForm" class="text-left" action="{{route('subscribers.store')}}" method="POST">
                         @csrf
                         <div class="form-group">
                             <input type="text" name="email" class="form-control text-white" placeholder="Enter your email" style="background-color: transparent; border:1px solid #b9c9c8;box-shadow:none;margin:20px 0">
@@ -229,36 +229,49 @@
 
     <script>
         $(document).ready(function() {
-            let errorMessage = "{{ session('error') }}";
-            let infoMessage = "{{ session('message') }}";
-            let successMessage = "{{ session('success') }}";
+            $('#subscribeForm').on('submit', function(e) {
+                e.preventDefault();
 
-            if (errorMessage) {
-                Swal.fire({
-                    title: 'Error!',
-                    text: errorMessage,
-                    icon: 'error',
-                    confirmButtonText: 'OK'
+                $.ajax({
+                    url: $(this).attr('action'),
+                    method: $(this).attr('method'),
+                    data: $(this).serialize(),
+                    success: function(response) {
+                        if (response.status === 'error') {
+                            Swal.fire({
+                                title: 'Error!',
+                                text: response.message,
+                                icon: 'error',
+                                confirmButtonText: 'OK'
+                            });
+                        } else if (response.status === 'info') {
+                            Swal.fire({
+                                title: 'Message!',
+                                text: response.message,
+                                icon: 'info',
+                                confirmButtonText: 'OK'
+                            });
+                        } else if (response.status === 'success') {
+                            Swal.fire({
+                                title: 'Success!',
+                                text: response.message,
+                                icon: 'success',
+                                confirmButtonText: 'OK'
+                            }).then(() => {
+                                $('#subscribeForm')[0].reset();
+                            });
+                        }
+                    },
+                    error: function(xhr) {
+                        Swal.fire({
+                            title: 'Error!',
+                            text: 'An unexpected error occurred. Please try again later.',
+                            icon: 'error',
+                            confirmButtonText: 'OK'
+                        });
+                    }
                 });
-            }
-
-            if (infoMessage) {
-                Swal.fire({
-                    title: 'Message!',
-                    text: infoMessage,
-                    icon: 'info',
-                    confirmButtonText: 'OK'
-                });
-            }
-
-            if (successMessage) {
-                Swal.fire({
-                    title: 'Success!',
-                    text: successMessage,
-                    icon: 'success',
-                    confirmButtonText: 'OK'
             });
-        }
         });
     </script>
 
