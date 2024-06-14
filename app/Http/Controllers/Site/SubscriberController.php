@@ -22,7 +22,7 @@ class SubscriberController extends Controller
         }
 
         Subscriber::create(['email' => $request->email]);
-        return redirect()->back();
+        return redirect()->back()->with("success", "Thank you for subscribing to our newsletter.");
     }
 
 }

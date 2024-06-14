@@ -230,6 +230,8 @@
     <script>
         $(document).ready(function() {
             let errorMessage = "{{ session('error') }}";
+            let infoMessage = "{{ session('message') }}";
+            let successMessage = "{{ session('success') }}";
 
             if (errorMessage) {
                 Swal.fire({
@@ -239,7 +241,6 @@
                     confirmButtonText: 'OK'
                 });
             }
-            let infoMessage = "{{ session('message') }}";
 
             if (infoMessage) {
                 Swal.fire({
@@ -249,6 +250,15 @@
                     confirmButtonText: 'OK'
                 });
             }
+
+            if (successMessage) {
+                Swal.fire({
+                    title: 'Success!',
+                    text: successMessage,
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+            });
+        }
         });
     </script>
 
