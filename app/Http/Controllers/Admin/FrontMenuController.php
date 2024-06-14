@@ -50,6 +50,7 @@ class FrontMenuController extends Controller
             "menu" => "required",
             "route" => "required",
             "tagline" => "required",
+            "page_title" => "required",
         ];
         $valdiate = Validator::make($request->all(), $validatedData);
         if ($valdiate->fails()) {
@@ -85,6 +86,7 @@ class FrontMenuController extends Controller
         $front_menu->menu = $request['menu'];
         $front_menu->slug = $request['route'];
         $front_menu->tagline = $request['tagline'];
+        $front_menu->page_title = $request['page_title'];
         $front_menu->title_image = $filename;
         $front_menu->is_active = $request->has('is_active') ? 1 : 0;
         $front_menu->save();
@@ -121,6 +123,7 @@ class FrontMenuController extends Controller
             "menu" => "required",
             "route" => "required",
             "tagline" => "required",
+            "page_title" => "required",
         ];
         $valdiate = Validator::make($request->all(), $validatedData);
         if ($valdiate->fails()) {
@@ -156,6 +159,7 @@ class FrontMenuController extends Controller
         $front_menu->menu = $request['menu'];
         $front_menu->slug = $request['route'];
         $front_menu->tagline = $request['tagline'];
+        $front_menu->page_title = $request['page_title'];
         $front_menu->is_active = $request->has('status') ? 1 : 0;
         $front_menu->save();
 

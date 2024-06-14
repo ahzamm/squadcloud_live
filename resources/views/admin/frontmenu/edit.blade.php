@@ -55,7 +55,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                               <label for="">Title Image<span style="color: red">*</span></label>
-                              @isset($menus->title_image)
+                              @if (isset($menu->title_image) && !empty($menu->title_image))
                               <img src="{{ asset('frontend_assets/images/title/'. $menus->title_image) }}" height="60"
                               width="120" alt="" srcset="" >
                               @endisset
@@ -64,6 +64,12 @@
                               @error('image')
                               <p class="text-danger mt-2 mb-0 text-sm">{{$message}}</p>
                               @enderror
+                            </div>
+                          </div>
+                          <div class="col-lg-12 col-sm-12 col-xs-12">
+                            <div class="form-group">
+                              <label>Page Title<span style="color: red">*</span></label>
+                              <input name="page_title" type="text" class="form-control" placeholder="Example : Contact Us" value="{{$menus->page_title}}" >
                             </div>
                           </div>
                           <div class="col-md-6">

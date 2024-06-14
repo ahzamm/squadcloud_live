@@ -44,6 +44,7 @@
                                                     <th>Route</th>
                                                     <th>Tagline</th>
                                                     <th>Title Image</th>
+                                                    <th>Page Title</th>
                                                     <th>Status</th>
                                                     <th>Action</th>
                                                 </tr>
@@ -63,14 +64,13 @@
                                                         <td>{{ $menu->menu }}</td>
                                                         <td>{{ $menu->slug }}</td>
                                                         <td>{{ $menu->tagline }}</td>
-                                                        {{-- <td>{{$menu->title_image}}</td> --}}
                                                         <td>
                                                             @if (isset($menu->title_image) && !empty($menu->title_image))
                                                                 <img width="100px" height="40px" src="{{ asset('frontend_assets/images/title/' . $menu->title_image) }}"
                                                                     alt="Title Image">
                                                             @endif
-                                                            {{-- <img width="40px" height="40px" src="{{ asset('frontend_assets/images/title/' .$menu->title_image) }}" alt="" /> --}}
                                                         </td>
+                                                        <td>{{ $menu->page_title }}</td>
                                                         <td>{{ $menu->is_active == 1 ? 'active' : 'deactive' }}</td>
                                                         <td>
                                                             <a href="{{ route('front.edit', $menu->id) }}"
