@@ -8,15 +8,11 @@ use App\Models\Portfolio;
 use DB;
 use App\Models\SubMenu;
 use App\Models\UserMenuAccess;
+use App\Models\PortfolioImage;
 use Auth;
-use App\Models\Admin;
-use App\Models\ActionLog;
-use App\Models\Menu;
-use Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
-use App\Models\Package;
-
+use Illuminate\Support\Facades\File;
 
 class PortfolioController extends Controller
 {
@@ -74,6 +70,7 @@ class PortfolioController extends Controller
             'price' => 'required',
             'price_description' => 'required',
             'description' => 'required',
+            'images.*' => 'image',
         ];
         $valdiate = Validator::make($request->all(), $validatedData);
 
@@ -93,7 +90,7 @@ class PortfolioController extends Controller
             return redirect()->back()->withInput()->with('error', "Provided route is already used");
         }
 
-        $imageFields = ['image', 'screenshot_1', 'screenshot_2', 'screenshot_3', 'background_image'];
+        $imageFields = ['image', 'background_image'];
         $savedFiles = [];
 
         DB::beginTransaction();
@@ -116,6 +113,16 @@ class PortfolioController extends Controller
                 $savedFiles[$field] = $filename;
             }
 
+            // // Upload new images
+            // if ($request->hasFile('images')) {
+            //     foreach ($request->file('images') as $file) {
+            //         $name = time() . rand(1, 100) . '.' . $file->extension();
+            //         $file->move(public_path('frontend_assets/images/abouts/'), $name);
+            //         $existingImages[] = $name;
+            //     }
+            // }
+
+
             $portfolio = new Portfolio();
             $portfolio->title = $request['title'];
             $portfolio->description = $request['description'];
@@ -126,12 +133,21 @@ class PortfolioController extends Controller
             $portfolio->price = $request['price'];
             $portfolio->price_description = $request['price_description'];
             $portfolio->image = $savedFiles['image'] ?? null;
-            $portfolio->screenshot_1 = $savedFiles['screenshot_1'] ?? null;
-            $portfolio->screenshot_2 = $savedFiles['screenshot_2'] ?? null;
-            $portfolio->screenshot_3 = $savedFiles['screenshot_3'] ?? null;
             $portfolio->background_image = $savedFiles['background_image'] ?? null;
             $portfolio->is_active = $request->has('status') ? 1 : 0;
-            $portfolio->save();
+
+            if ($portfolio->save()) {
+                if ($request->hasFile('images')) {
+                    foreach ($request->file('images') as $file) {
+                        $name = time() . rand(1, 100) . '.' . $file->extension();
+                        $file->move(public_path('frontend_assets/images/portfolio/'), $name);
+                        $image = new PortfolioImage();
+                        $image->portfolio_id = $portfolio->id;
+                        $image->images = $name;
+                        $image->save();
+                    }
+                }
+            }
 
             DB::commit();
 
@@ -160,27 +176,16 @@ class PortfolioController extends Controller
         $packageData = Portfolio::find($id);
         return view('admin.portfolios.show-modal', compact('packageData'));
     }
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function edit($id)
     {
-        $portfolio = Portfolio::find($id);
+         $portfolio = Portfolio::with('images')->findOrFail($id);
         return view('admin.portfolios.edit', compact('portfolio'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
+        // dd($request->all());
         $subMenuid = SubMenu::where('route_name', 'portfolios.index')->first();
         $userOperation = "update_status";
         $userId = Auth::guard('admin', 'user')->user()->id;
@@ -198,6 +203,7 @@ class PortfolioController extends Controller
             'price' => 'required',
             'price_description' => 'required',
             'description' => 'required',
+            // 'images.*' => 'image',
         ];
         $valdiate = Validator::make($request->all(), $validatedData);
         if ($valdiate->fails()) {
@@ -217,7 +223,7 @@ class PortfolioController extends Controller
         }
 
         $portfolio = Portfolio::findOrFail($id);
-        $imageFields = ['image', 'screenshot_1', 'screenshot_2', 'screenshot_3', 'background_image'];
+        $imageFields = ['image', 'background_image'];
         $savedFiles = [];
         $oldFiles = [];
 
@@ -269,11 +275,36 @@ class PortfolioController extends Controller
                 @unlink($oldFile);
             }
 
+
+            if( $request->imagesToDelete != null){
+            $array = explode(",", $request->imagesToDelete);
+            foreach ($array as $imageId) {
+                $image = PortfolioImage::find($imageId);
+                if ($image) {
+                    File::delete(public_path('frontend_assets/images/portfolio/' . $image->image));
+                    $image->delete();
+                }
+            }
+        }
+            if ($request->hasFile('images')) {
+                foreach ($request->file('images') as $file) {
+                    $name = time() . rand(1, 100) . '.' . $file->extension();
+                    $file->move(public_path('frontend_assets/images/portfolio/'), $name);
+                    $portfolioImage = new PortfolioImage();
+                    $portfolioImage->portfolio_id = $portfolio->id;
+                    $portfolioImage->images = $name;
+                    $portfolioImage->save();
+                }
+            }
+
+
+
             DB::commit();
 
             return redirect()->route('portfolios.index')->with("success", "Portfolio Updated Successfully");
         } catch (\Exception $e) {
             DB::rollBack();
+            dd($e->getMessage());
 
             return redirect()->back()->withInput()->with('error', 'An error occurred while updating the portfolio. Please try again.');
         }
