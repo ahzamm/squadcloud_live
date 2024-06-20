@@ -56,12 +56,9 @@
                         <tr>
                           <td colspan="7">
                           <input type="hidden" name="imagesToDelete" id="imagesToDelete">
-                            @php
-                              $images = json_decode($about->images, true) ?? [];
-                            @endphp
-                            @foreach ($images as $key => $image)
-                              <div class="image-container" data-image-key="{{ $key }}">
-                                <img src="{{ asset('frontend_assets/images/abouts/' . trim($image)) }}" height="60" width="120" alt="" class="mb-3">
+                            @foreach ($gallary as $image)
+                              <div class="image-container" data-image-key="{{ $image->id }}">
+                                <img src="{{ asset('frontend_assets/images/gallary/' . $image->image) }}" height="60" width="120" alt="" class="mb-3">
                                 <button type="button" class="btn btn-danger delete-image-btn">Delete</button>
                               </div>
                             @endforeach

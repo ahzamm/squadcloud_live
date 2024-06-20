@@ -42,24 +42,55 @@
          @endif
       </div>
 
+      @if(isset($about))
       <div class="video-container" data-aos="zoom-in" data-aos-duration="1000">
-         @if(isset($about))
          <iframe width="100%" height="100%" src="{{$about->video_url}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+         </div>
+
          @else
             <p>No about data found.</p>
          @endif
-      </div>
    </div>
 </section>
+<section class="pb-5">
+<h2 class="text-center my-5">Gallery</h2>
+   <div class="screenshot-wrapper">
+    @foreach ($gallary as $image)
 
+
+          <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#imageModal" data-aos="zoom-in" data-aos-delay="50" data-aos-duration="1000">
+            <div class=" mt-3 screensht">
+               <div class="screensht-bg">
+                  <img src="{{ asset('frontend_assets/images/gallary/'. $image->image) }}" alt="" class="w-100 h-100">
+               </div>
+            </div>
+
+          </a>
+          @endforeach
+          {{-- <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#imageModal" data-aos="zoom-in" data-aos-delay="150" data-aos-duration="1000">
+            <div class=" mt-3 screensht">
+              <div class="screensht-bg">
+                <img src="{{ asset('https://www.gaditek.com/wp-content/themes/gaditek/assets/images/career-img-3.jpg') }}" alt="" class="w-100 h-100">
+              </div>
+            </div>
+         </a>
+         <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#imageModal" data-aos="zoom-in" data-aos-delay="250" data-aos-duration="1000">
+            <div class=" mt-3 screensht">
+              <div class="screensht-bg">
+                <img src="{{ asset('https://www.gaditek.com/wp-content/themes/gaditek/assets/images/career-img-2.jpg') }}" alt="" class="w-100 h-100">
+              </div>
+            </div>
+          </a> --}}
+   </div>
+</section>
 <section style="min-height: 430px; padding: 100px 0; background-image: url(frontend_assets/images/about-bg.jpg);" id="section-slider">
    <div class="container">
    <h2 class="text-white text-center mb-5">Meet Our Team</h2>
         <!-- -------SLIDER------- -->
 
-      <div class="strategy-slider" data-aos="fade" data-aos-delay="300">
+      <div class="team-slider" data-aos="fade" data-aos-delay="300">
         @foreach ($team as $member)
-         <div class="position-relative hex-container" style="height:340px">
+         <div class="position-relative hex-container" style="height:320px;">
             <img src="frontend_assets/images/teams/{{$member->image}}" alt="App" class="" style="width: 120px;
                border: 4px solid #64050f;border-radius: 50%;left: 50%;position: absolute;transform: translateX(-50%);z-index: 9;top:-3px;box-shadow:0 10px 30px rgb(100 5 15)">
             <div class="hex">

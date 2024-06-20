@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Site;
 
+use App\Models\Gallary;
 use Illuminate\Http\Request;
 use App\Models\About;
 use App\Models\FrontMenu;
@@ -20,7 +21,8 @@ class AboutController extends Controller
         $about->video_url = $this->extractYouTubeSrc($about->video_url);
         $about_menu = FrontMenu::where('menu', 'About')->first();
         $team = Team::where('is_active', 1)->orderby("sortIds" , "asc")->get();
+        $gallary = Gallary::all();
 
-        return view('frontend/about', compact('about', 'about_menu', 'team'));
+        return view('frontend/about', compact('about', 'about_menu', 'team', 'gallary'));
     }
 }
