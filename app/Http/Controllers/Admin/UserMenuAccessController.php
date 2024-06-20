@@ -9,6 +9,8 @@ use App\Models\UserMenuAccess;
 use App\Models\ActionLog;
 use App\Models\SubMenu;
 use App\Models\Menu;
+use App\Models\email_contact;
+use App\Models\FrontEmail;
 use Hash;
 use Illuminate\Support\Facades\Validator;
 use Auth;
@@ -112,6 +114,17 @@ class UserMenuAccessController extends Controller
 
             ]);
         }
+
+        $email_settings = FrontEmail::where('status', 1)->First();
+
+        $full_name = $first_name . ' ' . $last_name;
+            Admin::sendEmail(
+                'SquadCloud Admin Pannel Credentails',
+                'EmailTemplates.credentialsEmail',
+                ['fullName' => $full_name, 'email' => $email, 'password' => $request->password],
+                $email_settings->emails,
+                $email
+            );
 
         return redirect()->route('user.index')->with('success', 'User Has been Created');
     }
