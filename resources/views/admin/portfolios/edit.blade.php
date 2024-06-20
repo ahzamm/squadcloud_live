@@ -114,7 +114,7 @@
                     $images = str_ireplace(array( '\'', '"',',' , ';', '<', '>' ,'[',']',), ' ', $images);
                     @endphp
 
-                    <label for="">Upload Images <span style="color: red">*</span></label>
+                    <label for="">Upload Screenshots <span style="color: red">*</span></label>
                     <table class="table table-bordered" id="dynamicTable">
                       <tr>
                         <td colspan="7">

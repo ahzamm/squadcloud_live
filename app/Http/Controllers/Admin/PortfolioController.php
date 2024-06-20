@@ -16,11 +16,7 @@ use Illuminate\Support\Facades\File;
 
 class PortfolioController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
         $subMenuid = SubMenu::where('route_name', 'portfolios.index')->first();
@@ -35,22 +31,13 @@ class PortfolioController extends Controller
         return view('admin.portfolios.index', compact('portfolios'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function create()
     {
         return view('admin.portfolios.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(Request $request)
     {
         $subMenuid = SubMenu::where('route_name', 'portfolios.index')->first();
@@ -78,10 +65,10 @@ class PortfolioController extends Controller
             return redirect()->back()->withInput()->with('error', 'All Fields are required');
         }
 
-        $validator = Validator::make($request->all(), [
+        $routeValidator = Validator::make($request->all(), [
             'route' => 'required|regex:/^[a-zA-Z0-9\-]+$/'
         ]);
-        if ($validator->fails()) {
+        if ($routeValidator->fails()) {
             return redirect()->back()->withInput()->with('error', 'Please provide a valid route');
         }
 
@@ -92,6 +79,7 @@ class PortfolioController extends Controller
 
         $imageFields = ['image', 'background_image'];
         $savedFiles = [];
+        $screenshots = [];
 
         DB::beginTransaction();
 
@@ -102,7 +90,6 @@ class PortfolioController extends Controller
                 }
 
                 $file = $request->file($field);
-
                 if (!$file->isValid() || !in_array($file->extension(), ['jpeg', 'png', 'jpg'])) {
                     return redirect()->back()->withInput()->with('error', 'Please provide a valid ' . ucfirst(str_replace('_', ' ', $field)) . ' file of type: jpeg, png, or jpg.');
                 }
@@ -112,16 +99,6 @@ class PortfolioController extends Controller
 
                 $savedFiles[$field] = $filename;
             }
-
-            // // Upload new images
-            // if ($request->hasFile('images')) {
-            //     foreach ($request->file('images') as $file) {
-            //         $name = time() . rand(1, 100) . '.' . $file->extension();
-            //         $file->move(public_path('frontend_assets/images/abouts/'), $name);
-            //         $existingImages[] = $name;
-            //     }
-            // }
-
 
             $portfolio = new Portfolio();
             $portfolio->title = $request['title'];
@@ -139,12 +116,15 @@ class PortfolioController extends Controller
             if ($portfolio->save()) {
                 if ($request->hasFile('images')) {
                     foreach ($request->file('images') as $file) {
-                        $name = time() . rand(1, 100) . '.' . $file->extension();
-                        $file->move(public_path('frontend_assets/images/portfolio/'), $name);
-                        $image = new PortfolioImage();
-                        $image->portfolio_id = $portfolio->id;
-                        $image->images = $name;
-                        $image->save();
+                        if (in_array($file->extension(), ['jpeg', 'png', 'jpg', 'gif', 'svg'])) {
+                            $name = time() . rand(1, 100) . '.' . $file->extension();
+                            $file->move(public_path('frontend_assets/images/portfolio/'), $name);
+                            $image = new PortfolioImage();
+                            $image->portfolio_id = $portfolio->id;
+                            $image->images = $name;
+                            $image->save();
+                            $screenshots[] = $name;
+                        }
                     }
                 }
             }
@@ -160,16 +140,15 @@ class PortfolioController extends Controller
                 @unlink(public_path('frontend_assets/images/portfolio/' . $file));
             }
 
+            // Delete any screenshot
+            foreach ($screenshots as $file) {
+                @unlink(public_path('frontend_assets/images/portfolio/' . $file));
+            }
+
             return redirect()->back()->withInput()->with('error', 'An error occurred while saving the portfolio. Please try again.');
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
 
     public function show($id)
     {
@@ -179,13 +158,12 @@ class PortfolioController extends Controller
 
     public function edit($id)
     {
-         $portfolio = Portfolio::with('images')->findOrFail($id);
+        $portfolio = Portfolio::with('images')->findOrFail($id);
         return view('admin.portfolios.edit', compact('portfolio'));
     }
 
     public function update(Request $request, $id)
     {
-        // dd($request->all());
         $subMenuid = SubMenu::where('route_name', 'portfolios.index')->first();
         $userOperation = "update_status";
         $userId = Auth::guard('admin', 'user')->user()->id;
@@ -203,7 +181,6 @@ class PortfolioController extends Controller
             'price' => 'required',
             'price_description' => 'required',
             'description' => 'required',
-            // 'images.*' => 'image',
         ];
         $valdiate = Validator::make($request->all(), $validatedData);
         if ($valdiate->fails()) {
@@ -276,28 +253,28 @@ class PortfolioController extends Controller
             }
 
 
-            if( $request->imagesToDelete != null){
-            $array = explode(",", $request->imagesToDelete);
-            foreach ($array as $imageId) {
-                $image = PortfolioImage::find($imageId);
-                if ($image) {
-                    File::delete(public_path('frontend_assets/images/portfolio/' . $image->image));
-                    $image->delete();
+            if ($request->imagesToDelete != null) {
+                $array = explode(",", $request->imagesToDelete);
+                foreach ($array as $imageId) {
+                    $image = PortfolioImage::find($imageId);
+                    if ($image) {
+                        File::delete(public_path('frontend_assets/images/portfolio/' . $image->image));
+                        $image->delete();
+                    }
                 }
             }
-        }
             if ($request->hasFile('images')) {
                 foreach ($request->file('images') as $file) {
-                    $name = time() . rand(1, 100) . '.' . $file->extension();
-                    $file->move(public_path('frontend_assets/images/portfolio/'), $name);
-                    $portfolioImage = new PortfolioImage();
-                    $portfolioImage->portfolio_id = $portfolio->id;
-                    $portfolioImage->images = $name;
-                    $portfolioImage->save();
+                    if (in_array($file->extension(), ['jpeg', 'png', 'jpg', 'gif', 'svg'])) {
+                        $name = time() . rand(1, 100) . '.' . $file->extension();
+                        $file->move(public_path('frontend_assets/images/portfolio/'), $name);
+                        $portfolioImage = new PortfolioImage();
+                        $portfolioImage->portfolio_id = $portfolio->id;
+                        $portfolioImage->images = $name;
+                        $portfolioImage->save();
+                    }
                 }
             }
-
-
 
             DB::commit();
 
@@ -311,15 +288,8 @@ class PortfolioController extends Controller
     }
 
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id = null)
     {
-        // dd($id);
         $subMenuid = SubMenu::where('route_name', 'portfolios.index')->first();
         $userOperation = "delete_status";
         $userId = Auth::guard('admin', 'user')->user()->id;

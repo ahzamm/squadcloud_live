@@ -129,7 +129,7 @@
                             }
                           },
                           error:function(jhxr,status,err){
-                           console.log(jhxr);
+                        //    console.log(jhxr);
                          }
                        })
      } else if (result.dismiss === 'cancel') {
