@@ -4,14 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Contact;
-use DB;
 use App\Models\SubMenu;
 use App\Models\ContactRequest;
 use App\Models\UserMenuAccess;
 use App\Models\email_contact;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Validator;
 use Auth;
 
 

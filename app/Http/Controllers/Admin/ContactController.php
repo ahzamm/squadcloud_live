@@ -5,11 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Contact;
-use DB;
 use App\Models\SubMenu;
-use App\Models\ContactRequest;
 use App\Models\UserMenuAccess;
-use App\Models\email_contact;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
 use Auth;
@@ -98,40 +95,16 @@ class ContactController extends Controller
 
     public function show($id)
     {
-        // dd($id);
         $packageData = Contact::find($id);
         return view('admin.contacts.show-modal', compact('packageData'));
     }
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function edit($id)
     {
         $contact = Contact::find($id);
         dd($contact);
         return view('admin.contacts.edit', compact('contact'));
     }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-
-
-
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
 
     public function crud_access($submenuId = null, $operation = null, $uId = null)
     {

@@ -9,7 +9,6 @@ use DB;
 use App\Models\SubMenu;
 use App\Models\UserMenuAccess;
 use App\Models\Gallary;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
 
 use Auth;

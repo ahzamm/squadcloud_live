@@ -3,27 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Models\Service;
-use DB;
 use App\Models\SubMenu;
 use App\Models\UserMenuAccess;
-use App\Models\Career;
 use App\Models\JobApplication;
-use App\Models\FrontMenu;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Redirect;
-use App\Models\Team;
 use Auth;
 
 class JobApplicationController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $subMenuid = SubMenu::where('route_name', 'job_applications.index')->first();
@@ -63,8 +49,6 @@ class JobApplicationController extends Controller
             return response()->json(["status" => true]);
         }
     }
-
-
 
 
     public function crud_access($submenuId = null, $operation = null, $uId = null)
