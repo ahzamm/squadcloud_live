@@ -61,7 +61,7 @@
           <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#imageModal" data-aos="zoom-in" data-aos-delay="50" data-aos-duration="1000">
             <div class=" mt-3 screensht">
                <div class="screensht-bg">
-                  <img src="{{ asset('frontend_assets/images/gallary/'. $image->image) }}" alt="" class="w-100 h-100">
+                  <img src="{{ asset('frontend_assets/images/gallary/'. $image->image) }}" style="width: 200px; height: 200px;">
                </div>
             </div>
 
