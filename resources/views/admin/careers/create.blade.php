@@ -7,7 +7,7 @@
       <div class="col-md-12">
         <div class="card card-outline card-info mt-2">
           <div class="card-header d-flex justify-content-between align-items-center">
-            <h3 class="card-title mb-0"><span><i class="fa-solid fa-box-open"></i></span> Add Job</h3>
+            <h3 class="card-title mb-0"><span><i class="fa-solid fa-box-open"></i></span> Add Vacancy</h3>
             <div class="ml-auto">
               <a class="btn btn-outline-secondary btn-sm" href="{{route('careers.index')}}">
                 <i class="fa fa-arrow-left"></i> Back

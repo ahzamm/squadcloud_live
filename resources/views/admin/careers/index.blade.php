@@ -14,8 +14,8 @@
         <div class="col-12">
           <div class="card mt-3 card-outline card-info">
             <div class="card-header">
-              <h3 class="card-title"><span><i class="fa-solid fa-box-open"></i></span> Careers</h3>
-              <a class="btn btn-success btn-sm float-right" href="{{route('careers.create')}}"><i class="fa fa-plus"></i> Add Careers</a>
+              <h3 class="card-title"><span><i class="fa-solid fa-box-open"></i></span> Vacancies</h3>
+              <a class="btn btn-success btn-sm float-right" href="{{route('careers.create')}}"><i class="fa fa-plus"></i> Add Vacancy</a>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
