@@ -166,9 +166,6 @@ class MenusController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $hassubmenu = $request->has('hassubmenu') ? 1 : 0;
-        $lastmenu = Menu::orderBy('order_menu')->get()->last();
-        $lastmenuCount = $lastmenu != null ? $lastmenu->order_menu : 0;
 
         $validatedData = [
             'parentMenu' => 'required',
@@ -178,7 +175,6 @@ class MenusController extends Controller
         if ($validator->fails()) {
             return redirect()->back()->withInput()->with('error', 'All Fields are required');
         }
-        // dd($request->has('submenu'));
 
         if($request->submenu == null) {
             return redirect()->back()->withInput()->with('error', 'At least one Submenu is required');
@@ -197,13 +193,10 @@ class MenusController extends Controller
         DB::transaction(function () use ($request, $id) {
             $menu = Menu::find($id);
             if ($menu != null) {
-                // if($menu->menu != $request->parentMenu)
-                // {
                 $menu->menu = $request->parentMenu;
                 $menu->has_submenu = count($request->submenuId) > 1 ? 1 : 0;
                 $menu->icon = $request->menuicon;
                 $menu->save();
-                // }
                 $users = Admin::all();
                 if (count($request->submenuId) > 1) {
                     foreach ($request->submenuId as $key => $value) {
@@ -239,22 +232,17 @@ class MenusController extends Controller
                     ]);
                 }
             }
-            // dd($request->all());
             if ($request->has('deletedSubmenus')) {
                 $deletedSubmenus = explode(',', $request->deletedSubmenus);
                 SubMenu::whereIn('id', $deletedSubmenus)->delete();
+                UserMenuAccess::whereIn('sub_menu_id', $deletedSubmenus)->delete();
             }
         }, 3);
         return redirect()->route("menus.index")->with('success', 'Menu Updated successfully');
         ;
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy($id)
     {
         DB::transaction(function () use ($id) {
