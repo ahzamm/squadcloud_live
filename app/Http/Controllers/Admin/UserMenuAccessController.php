@@ -152,7 +152,6 @@ class UserMenuAccessController extends Controller
                 return redirect()->back()->withInput()->with('error', 'Please provide a valid background image file of type: jpeg, png, or jpg.');
             }
             if ($user->image && file_exists(public_path('backend/dist/img/user_profiles/' . $user->image))) {
-                // dd("Deleting the profile image");
                 unlink(public_path('backend/dist/img/user_profiles/' . $user->image));
             }
             $fileName = time() . "." . $request->file('profileImage')->getClientOriginalExtension();
@@ -184,7 +183,7 @@ class UserMenuAccessController extends Controller
             'cnic' => $cnic,
             'address' => $address,
             'phone' => $phone,
-            'department' => $department, //It Department
+            'department' => $department,
         ]);
 
         return redirect()->route('user.index')->with('success', 'User Profile Has been Updated');
@@ -230,7 +229,6 @@ class UserMenuAccessController extends Controller
 
         }
     }
-    // Updating Users
 
 
     public function menuAccess($id)
@@ -240,6 +238,14 @@ class UserMenuAccessController extends Controller
     }
     public function giveAccess(Request $request, $id = null)
     {
+
+        $subMenuid = SubMenu::where('route_name', 'user.index')->first();
+        $userOperation = "update_status";
+        $userId = Auth::guard('admin', 'user')->user()->id;
+        $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
+        if ($crudAccess == false) {
+            return response()->json(['status' => false]);
+        }
 
         $view_status = $request->view_id;
         $update_status = $request->update_id;

@@ -198,7 +198,15 @@
                       type: 'success',
                     });
                     location.reload();
-                  }
+                  } else {
+                    swal({
+                    title: 'Error occurred!',
+                    text: "Failed to Change User Access Status!",
+                    animation: false,
+                    customClass: 'animated pulse',
+                    type: 'error',
+                    });
+              }
                 }
               })
             })

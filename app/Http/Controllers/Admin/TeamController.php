@@ -40,7 +40,7 @@ class TeamController extends Controller
         $userId = Auth::guard('admin', 'user')->user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
         if ($crudAccess == false) {
-            return redirect()->back()->withInput()->with('error', 'No right to add a service');
+            return redirect()->back()->withInput()->with('error', 'No right to add a team member');
         }
 
         $validatedData = [

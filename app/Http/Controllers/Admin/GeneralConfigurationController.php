@@ -82,6 +82,15 @@ class GeneralConfigurationController extends Controller
 
     public function change_status (Request $request ){
 
+        $subMenuid = SubMenu::where('route_name', 'general_configurations.index')->first();
+        $userOperation = "update_status";
+        $userId = Auth::guard('admin', 'user')->user()->id;
+        $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
+
+        if ($crudAccess == false) {
+            return response()->json(['status' => false]);
+        }
+
         $Otp = GeneralConfiguration::first();
 
         $statusChange  = $Otp->update([
