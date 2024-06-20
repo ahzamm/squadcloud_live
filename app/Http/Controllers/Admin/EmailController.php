@@ -9,29 +9,53 @@ use DB;
 use App\Models\SubMenu;
 use App\Models\UserMenuAccess;
 use Mail;
-use App\Models\FrontEmail ; 
+use App\Models\FrontEmail ;
 class EmailController extends Controller
 {
-    public $parentModel =  FrontEmail::class; 
+    public $parentModel =  FrontEmail::class;
     public function index (){
-        $data['email']   = $this->parentModel::all(); 
+        $subMenuid     =  SubMenu::where('route_name' , 'email.index')->first();
+        $userOperation =  "view_status" ;
+        $userId        =  Auth::user()->id ;
+        $crudAccess  = $this->crud_access($subMenuid->id ,  $userOperation , $userId );
+        if(!$crudAccess){
+            return redirect()->back()->with('error','No rights to View SMTP Server Informations');
+        }
+
+        $data['email']   = $this->parentModel::all();
         return view('admin.Email.index')->with('data' , $data);
     }
     public function create(Request $request){
-        $data['action'] = "create" ; 
-        return view('admin.Email.create')->with('data' , $data);        
+        $subMenuid     =  SubMenu::where('route_name' , 'email.index')->first();
+        $userOperation =  "create_status" ;
+        $userId        =  Auth::user()->id ;
+        $crudAccess  = $this->crud_access($subMenuid->id ,  $userOperation , $userId );
+        if(!$crudAccess){
+            return redirect()->back()->with('error','No rights to Create SMTP Server Informations');
+        }
+
+        $data['action'] = "create" ;
+        return view('admin.Email.create')->with('data' , $data);
     }
-    
+
     public function edit($id = null ){
-        $data['action'] = "edit" ; 
-        $data['email']  = $this->parentModel::where('id' , $id)->first(); 
-        return view('admin.Email.create')->with('data' , $data);        
+        $subMenuid     =  SubMenu::where('route_name' , 'email.index')->first();
+        $userOperation =  "update_status" ;
+        $userId        =  Auth::user()->id ;
+        $crudAccess  = $this->crud_access($subMenuid->id ,  $userOperation , $userId );
+        if(!$crudAccess){
+            return redirect()->back()->with('error','No rights to Edit SMTP Server Informations');
+        }
+
+        $data['action'] = "edit" ;
+        $data['email']  = $this->parentModel::where('id' , $id)->first();
+        return view('admin.Email.create')->with('data' , $data);
     }
 
     public function store (Request $request){
         $subMenuid     =  SubMenu::where('route_name' , 'email.index')->first();
         $userOperation =  "create_status" ;
-        $userId        =  Auth::user()->id ;   
+        $userId        =  Auth::user()->id ;
         $crudAccess  = $this->crud_access($subMenuid->id ,  $userOperation , $userId );
         if($crudAccess){
         $smtp_password   =  $request->password ;
@@ -39,7 +63,7 @@ class EmailController extends Controller
         $port       =  $request->port ;
         $email           = $request->email ;
 
-   
+
         $createEmail  = $this->parentModel::create([
             'emails' => $email ,
             'smtp_password'  => $smtp_password ,
@@ -61,7 +85,7 @@ class EmailController extends Controller
     public function update (Request $request , $id = null){
         $subMenuid     =  SubMenu::where('route_name' , 'email.index')->first();
         $userOperation =  "update_status" ;
-        $userId        =  Auth::user()->id ;   
+        $userId        =  Auth::user()->id ;
         $crudAccess  = $this->crud_access($subMenuid->id ,  $userOperation , $userId );
         if($crudAccess){
         $smtp_password   =  $request->password ;
@@ -89,14 +113,14 @@ class EmailController extends Controller
     public function change_status (Request $request ){
         $subMenuid     =  SubMenu::where('route_name' , 'email.index')->first();
         $userOperation =  "update_status" ;
-        $userId        =  Auth::user()->id ;   
+        $userId        =  Auth::user()->id ;
         $crudAccess  = $this->crud_access($subMenuid->id ,  $userOperation , $userId );
         if($crudAccess){
         $status        =  $request->status ;
         $id            =  $request->id;
-    
+
         $statusChange  = $this->parentModel::where('id' , $id)->update([
-            'status' =>  $status ,            
+            'status' =>  $status ,
         ]);
         $changeOthersStatus =  $this->parentModel::where('id' , '!=' , $id)->update([
             'status' => 0  ,
@@ -117,7 +141,7 @@ class EmailController extends Controller
     public function destroy ($id = null){
         $subMenuid     =  SubMenu::where('route_name' , 'email.index')->first();
         $userOperation =  "delete_status" ;
-        $userId        =  Auth::user()->id ;   
+        $userId        =  Auth::user()->id ;
         $crudAccess  = $this->crud_access($subMenuid->id ,  $userOperation , $userId );
         if($crudAccess){
         $delete  = $this->parentModel::where('id' , $id)->delete();
@@ -130,14 +154,14 @@ class EmailController extends Controller
 
         }}
         else{
-            return response()->json(['unauthorized' => true]); 
+            return response()->json(['unauthorized' => true]);
         }
     }
-     // Access Function 
+     // Access Function
      public function crud_access($submenuId = null , $operation = null , $uId = null) {
-        if (!$submenuId == null) { 
+        if (!$submenuId == null) {
         $CheckData = UserMenuAccess::where(["user_id" => $uId , "sub_menu_Id" => $submenuId , $operation => 1 , 'view_status' => 1])->count();
-   
+
         if($CheckData > 0 ){
             return true;
         }

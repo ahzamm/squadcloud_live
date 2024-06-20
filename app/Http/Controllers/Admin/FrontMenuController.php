@@ -8,7 +8,6 @@ use App\Models\FrontMenu;
 use App\Models\SubMenu;
 use Route;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\DB;
 use App\Models\UserMenuAccess;
 use Auth;
 use Illuminate\Support\Facades\Validator;
@@ -31,7 +30,13 @@ class FrontMenuController extends Controller
 
     public function create()
     {
-
+        $subMenuid = SubMenu::where('route_name', 'frontmenu.index')->first();
+        $userOperation = "create_status";
+        $userId = Auth::user()->id;
+        $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
+        if (!$crudAccess) {
+            return redirect()->back()->withInput()->with("error", "No rights To Create Front Menus");
+        }
         return view('admin.frontmenu.create');
     }
 
@@ -102,15 +107,21 @@ class FrontMenuController extends Controller
 
     public function edit($id = null)
     {
-        $menus = FrontMenu::find($id);
+        $subMenuid = SubMenu::where('route_name', 'frontmenu.index')->first();
+        $userOperation = "update_status";
+        $userId = Auth::user()->id;
+        $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
+        if (!$crudAccess) {
+            return redirect()->back()->withInput()->with("error", "No rights To Edit Site Menus");
+        }
 
+        $menus = FrontMenu::find($id);
         return view("admin.frontmenu.edit", compact('menus'));
     }
 
 
     public function update(Request $request, $id)
     {
-
         $subMenuid = SubMenu::where('route_name', 'frontmenu.index')->first();
         $userOperation = "update_status";
         $userId = Auth::user()->id;

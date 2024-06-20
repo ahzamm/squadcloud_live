@@ -34,6 +34,14 @@ class PortfolioController extends Controller
 
     public function create()
     {
+        $subMenuid = SubMenu::where('route_name', 'portfolios.index')->first();
+        $userOperation = "create_status";
+        $userId = Auth::user()->id;
+        $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
+        if (!$crudAccess) {
+            return redirect()->back()->withInput()->with("error", "No rights To Create Portfolios");
+        }
+
         return view('admin.portfolios.create');
     }
 
@@ -158,6 +166,14 @@ class PortfolioController extends Controller
 
     public function edit($id)
     {
+        $subMenuid = SubMenu::where('route_name', 'portfolios.index')->first();
+        $userOperation = "update_status";
+        $userId = Auth::user()->id;
+        $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
+        if (!$crudAccess) {
+            return redirect()->back()->withInput()->with("error", "No rights To Edit Portfolios");
+        }
+
         $portfolio = Portfolio::with('images')->findOrFail($id);
         return view('admin.portfolios.edit', compact('portfolio'));
     }

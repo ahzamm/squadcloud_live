@@ -10,16 +10,11 @@ use App\Models\SubMenu;
 use App\Models\UserMenuAccess;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Redirect;
 use Auth;
 
 class ServiceController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
         $subMenuid = SubMenu::where('route_name', 'services.index')->first();
@@ -34,22 +29,20 @@ class ServiceController extends Controller
         return view('admin.services.index', compact('services'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
+        $subMenuid = SubMenu::where('route_name', 'services.index')->first();
+        $userOperation = "create_status";
+        $userId = Auth::user()->id;
+        $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
+        if (!$crudAccess) {
+            return redirect()->back()->withInput()->with("error", "No rights To Create Services");
+        }
+
         return view('admin.services.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(Request $request)
     {
         $subMenuid = SubMenu::where('route_name', 'services.index')->first();
@@ -128,37 +121,29 @@ class ServiceController extends Controller
         return redirect()->route('services.index')->with('success', 'Service created successfully!');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
 
     public function show($id)
     {
         $packageData = Service::find($id);
         return view('admin.services.show-modal', compact('packageData'));
     }
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
+
     public function edit($id)
     {
+        $subMenuid = SubMenu::where('route_name', 'services.index')->first();
+        $userOperation = "update_status";
+        $userId = Auth::user()->id;
+        $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
+        if (!$crudAccess) {
+            return redirect()->back()->withInput()->with("error", "No rights To Edit Services");
+        }
+
         $service = Service::find($id);
         return view('admin.services.edit', compact('service'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         $subMenuid = SubMenu::where('route_name', 'services.index')->first();
@@ -247,12 +232,6 @@ class ServiceController extends Controller
     }
 
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id = null)
     {
         $subMenuid = SubMenu::where('route_name', 'services.index')->first();

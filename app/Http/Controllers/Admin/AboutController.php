@@ -17,6 +17,15 @@ class AboutController extends Controller
 {
     public function index()
     {
+
+        $subMenuid = SubMenu::where('route_name', 'about.index')->first();
+        $userOperation = "view_status";
+        $userId = Auth::guard('admin', 'user')->user()->id;
+        $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
+        if ($crudAccess == false) {
+            return redirect()->back()->with('error', 'No Access To View Abouts');
+        }
+
         $about = About::first();
         $gallary = Gallary::all();
         return view('admin.abouts.index', compact('about', 'gallary'));

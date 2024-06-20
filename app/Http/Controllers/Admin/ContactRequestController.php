@@ -22,6 +22,7 @@ class ContactRequestController extends Controller
         if (!$crudAccess) {
             return redirect()->back()->withInput()->with("error", "No rights To View Messages");
         }
+
         $contacts = ContactRequest::all();
         $data['email_contacts'] = email_contact::get();
         return view('admin.contact_requests.index', compact('contacts', 'data'));
@@ -45,6 +46,15 @@ class ContactRequestController extends Controller
     }
 
     public function EmailFormSubmit(Request $request) {
+
+        $subMenuid = SubMenu::where('route_name', 'contact_requests.index')->first();
+        $userOperation = "update_status";
+        $userId = Auth::user()->id;
+        $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
+        if (!$crudAccess) {
+            return redirect()->back()->withInput()->with("error", "No rights To Add Recipent");
+        }
+
         email_contact::truncate();
 
         // Retrieve the array of emails from the request or an empty array if not present

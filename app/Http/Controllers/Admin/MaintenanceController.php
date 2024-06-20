@@ -18,6 +18,15 @@ class MaintenanceController extends Controller
     }
     public function index()
     {
+        $subMenuid = SubMenu::where('route_name', 'maintenance.index')->first();
+        $userOperation = "view_status";
+        $userId = Auth::guard('admin', 'user')->user()->id;
+        $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
+
+        if ($crudAccess == false) {
+            return redirect()->route('maintenance.index')->with("error", "No right to View Maintaince Mode");
+        }
+
         $mode = MaintenanceMode::first();
         return view('admin.maintenance.index',compact('mode'));
     }

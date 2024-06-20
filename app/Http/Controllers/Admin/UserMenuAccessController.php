@@ -34,11 +34,27 @@ class UserMenuAccessController extends Controller
     }
     public function create()
     {
+        $subMenuid = SubMenu::where('route_name', 'user.index')->first();
+        $userOperation = "create_status";
+        $userId = Auth::user()->id;
+        $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
+        if (!$crudAccess) {
+            return redirect()->back()->withInput()->with("error", "No rights To Create User Management");
+        }
+
         $data['action'] = "create";
         return view("admin.users.create")->with("data", $data);
     }
     public function edit($id = null)
     {
+        $subMenuid = SubMenu::where('route_name', 'user.index')->first();
+        $userOperation = "update_status";
+        $userId = Auth::user()->id;
+        $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
+        if (!$crudAccess) {
+            return redirect()->back()->withInput()->with("error", "No rights To Edit User Management");
+        }
+
         $user = $this->parentModel::where('id', $id)->first();
         return view("admin.users.edit", compact('user'));
     }
@@ -215,7 +231,6 @@ class UserMenuAccessController extends Controller
 
     public function change_status(Request $request)
     {
-
         $subMenuid = SubMenu::where('route_name', 'user.index')->first();
         $userOperation = "update_status";
         $userId = Auth::guard('admin', 'user')->user()->id;
@@ -256,12 +271,19 @@ class UserMenuAccessController extends Controller
 
     public function menuAccess($id)
     {
+        $subMenuid = SubMenu::where('route_name', 'user.index')->first();
+        $userOperation = "update_status";
+        $userId = Auth::user()->id;
+        $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
+        if (!$crudAccess) {
+            return redirect()->back()->withInput()->with("error", "No rights To Change User Menu Access");
+        }
+
         $data['submenus'] = $this->menuAccessModel::where('user_id', $id)->with('submenu')->get();
         return view('admin.users.manuaccess')->with("data", $data);
     }
     public function giveAccess(Request $request, $id = null)
     {
-
         $subMenuid = SubMenu::where('route_name', 'user.index')->first();
         $userOperation = "update_status";
         $userId = Auth::guard('admin', 'user')->user()->id;

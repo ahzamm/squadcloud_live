@@ -31,6 +31,14 @@ class HomeSliderController extends Controller
 
     public function create()
     {
+        $subMenuid = SubMenu::where('route_name', 'homesliders.index')->first();
+        $userOperation = "create_status";
+        $userId = Auth::user()->id;
+        $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
+        if (!$crudAccess) {
+            return redirect()->back()->withInput()->with("error", "No rights To Create Home Slider");
+        }
+
         return view('admin.homesliders.create');
     }
 
@@ -100,6 +108,14 @@ class HomeSliderController extends Controller
 
     public function edit($id)
     {
+        $subMenuid = SubMenu::where('route_name', 'homesliders.index')->first();
+        $userOperation = "update_status";
+        $userId = Auth::user()->id;
+        $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
+        if (!$crudAccess) {
+            return redirect()->back()->withInput()->with("error", "No rights To Update Home Slider");
+        }
+
         $homeslider = Homeslider::find($id);
         return view('admin.homesliders.edit', compact('homeslider'));
     }

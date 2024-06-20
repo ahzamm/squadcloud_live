@@ -99,12 +99,6 @@ class ContactController extends Controller
         return view('admin.contacts.show-modal', compact('packageData'));
     }
 
-    public function edit($id)
-    {
-        $contact = Contact::find($id);
-        dd($contact);
-        return view('admin.contacts.edit', compact('contact'));
-    }
 
     public function crud_access($submenuId = null, $operation = null, $uId = null)
     {

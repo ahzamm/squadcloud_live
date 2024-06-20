@@ -30,6 +30,14 @@ class ClientController extends Controller
 
     public function create()
     {
+        $subMenuid = SubMenu::where('route_name', 'clients.index')->first();
+        $userOperation = "create_status";
+        $userId = Auth::user()->id;
+        $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
+        if (!$crudAccess) {
+            return redirect()->back()->withInput()->with("error", "No rights To Create Clients");
+        }
+
         return view('admin.clients.create');
     }
 
@@ -93,6 +101,14 @@ class ClientController extends Controller
 
     public function edit($id)
     {
+        $subMenuid = SubMenu::where('route_name', 'clients.index')->first();
+        $userOperation = "update_status";
+        $userId = Auth::user()->id;
+        $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
+        if (!$crudAccess) {
+            return redirect()->back()->withInput()->with("error", "No rights To Edit Clients");
+        }
+
         $client = Client::find($id);
         return view('admin.clients.edit', compact('client'));
     }
