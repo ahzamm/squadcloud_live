@@ -6,10 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Admin;
 use App\Models\UserMenuAccess;
-use App\Models\ActionLog;
 use App\Models\SubMenu;
 use App\Models\Menu;
-use App\Models\email_contact;
 use App\Models\FrontEmail;
 use Hash;
 use Illuminate\Support\Facades\Validator;
@@ -187,8 +185,20 @@ class UserMenuAccessController extends Controller
 
             $hashedPassword = Hash::make($password);
             $this->parentModel::where('id', $id)->update(['password' => $hashedPassword]);
+
+            $email_settings = FrontEmail::where('status', 1)->First();
+
+             $full_name = $first_name . ' ' . $last_name;
+            Admin::sendEmail(
+                'SquadCloud Admin Pannel Credentails',
+                'EmailTemplates.credentialsEmail',
+                ['fullName' => $full_name, 'email' => $email, 'password' => $request->password],
+                $email_settings->emails,
+                $email
+            );
         }
-        $updateUser = $this->parentModel::where('id', $id)->update([
+
+        $this->parentModel::where('id', $id)->update([
             'name' => $userName,
             'first_name' => $first_name,
             'last_name' => $last_name,
