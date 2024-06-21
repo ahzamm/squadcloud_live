@@ -16,7 +16,6 @@
           </div>
           <form action="{{route('clients.update',$client->id)}}" method="POST" enctype="multipart/form-data">
             @method('PUT')
-            <!-- /.card-header -->
             <div class="card-body pad">
               @csrf
               <div class="row">
@@ -43,7 +42,6 @@
                     @enderror
                   </div>
                 </div>
-
                 <div class="col-md-6">
                   <div class="form-group">
                     <label for="">Title <span style="color: red">*</span></label>
@@ -81,9 +79,7 @@
           </form>
         </div>
       </div>
-      <!-- /.col-->
     </div>
-    <!-- ./row -->
   </section>
 </div>
 @endsection

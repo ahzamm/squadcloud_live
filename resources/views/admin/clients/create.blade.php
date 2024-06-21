@@ -15,7 +15,6 @@
             </div>
           </div>
           <form action="{{route('clients.store')}}" method="POST" enctype="multipart/form-data">
-            <!-- /.card-header -->
             <div class="card-body pad">
               @csrf
               <div class="row">
@@ -37,7 +36,6 @@
                     @enderror
                   </div>
                 </div>
-
                 <div class="col-md-6">
                     <div class="form-group">
                       <label for="">Title <span style="color: red">*</span></label>
@@ -47,8 +45,6 @@
                       @enderror
                     </div>
                   </div>
-
-
                 <div class="col-md-12">
                   <div class="form-group">
                     <label for="">Description <span style="color: red">*</span></label>
@@ -76,9 +72,7 @@
           </form>
         </div>
       </div>
-      <!-- /.col-->
     </div>
-    <!-- ./row -->
   </section>
 </div>
 @endsection
