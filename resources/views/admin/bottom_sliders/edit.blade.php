@@ -16,7 +16,6 @@
           </div>
           <form action="{{route('bottom_sliders.update',$bottom_slider->id)}}" method="POST" enctype="multipart/form-data">
             @method('PUT')
-            <!-- /.card-header -->
             <div class="card-body pad">
               @csrf
               <div class="row">
@@ -63,9 +62,7 @@
           </form>
         </div>
       </div>
-      <!-- /.col-->
     </div>
-    <!-- ./row -->
   </section>
 </div>
 @endsection
