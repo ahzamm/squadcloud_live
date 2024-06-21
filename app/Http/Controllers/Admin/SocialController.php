@@ -4,15 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\User;
-use App\Admin;
 use App\Models\Social;
-use Route;
-use Illuminate\Support\Facades\DB;
 use App\Models\UserMenuAccess;
 use App\Models\SubMenu;
 use Auth;
-use App\Helper\HelperFunctions\CrudAccess;
+
 class SocialController extends Controller
 {
         public $parentModel =  Social::class;
@@ -100,7 +96,6 @@ class SocialController extends Controller
             $color  = $request->color;
             $subMenuid     = SubMenu::where('route_name' , 'social.index')->first();
             $userOperation = "update_status" ;
-            // $userOperation = "social.index" ;
             $userId        = Auth::user()->id ;
             $crudAccess  = $this->crud_access($subMenuid->id ,  $userOperation , $userId );
             if($crudAccess == true){

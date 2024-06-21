@@ -25,7 +25,6 @@
                                 </a>
                             </div>
                         </div>
-                        <!-- /.card-header -->
                         <div class="card-body ">
                             <div class="table-responsive ">
                                 <table class="table table-bordered table-striped" id="">
@@ -110,25 +109,15 @@
                             if (res.status == true) {
                                 $(row).parents('tr').remove();
                                 swal('Updated!', 'Social Link Has been deleted', 'success');
-                                // console.log("delete record");
                             }
                             else if(res.status == "no Access"){
                                 swal('Error!', 'You have no access to delete social links', 'error');
-                            }
-                            else {
-                                //$(secondInput).siblings('span').removeClass('d-none');
                             }
                         },
                         error: function(jhxr, status, err) {
                             console.log(jhxr);
                         }
                     })
-                } else if (result.dismiss === 'cancel') {
-                    //  swal(
-                    //      'Cancelled',
-                    //      'Your imaginary data is safe :)',
-                    //      'error'
-                    //  )
                 }
             })
         })
