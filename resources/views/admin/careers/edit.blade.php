@@ -16,7 +16,6 @@
           </div>
           <form action="{{route('careers.update',$career->id)}}" method="POST" enctype="multipart/form-data">
             @method('PUT')
-            <!-- /.card-header -->
             <div class="card-body pad">
               @csrf
               <div class="row">
@@ -147,9 +146,7 @@
           </form>
         </div>
       </div>
-      <!-- /.col-->
     </div>
-    <!-- ./row -->
   </section>
 </div>
 @endsection

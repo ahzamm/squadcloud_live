@@ -15,7 +15,6 @@
             </div>
           </div>
           <form action="{{route('careers.store')}}" method="POST" enctype="multipart/form-data">
-            <!-- /.card-header -->
             <div class="card-body pad">
               @csrf
               <div class="row">
@@ -146,9 +145,7 @@
           </form>
         </div>
       </div>
-      <!-- /.col-->
     </div>
-    <!-- ./row -->
   </section>
 </div>
 @endsection
