@@ -5,12 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\About;
-use DB;
 use App\Models\SubMenu;
 use App\Models\UserMenuAccess;
 use App\Models\Gallary;
 use Illuminate\Support\Facades\Validator;
-
 use Auth;
 
 class AboutController extends Controller
