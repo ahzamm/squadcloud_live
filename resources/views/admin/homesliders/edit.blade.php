@@ -16,7 +16,6 @@
           </div>
           <form action="{{route('homesliders.update',$homeslider->id)}}" method="POST" enctype="multipart/form-data">
             @method('PUT')
-            <!-- /.card-header -->
             <div class="card-body pad">
               @csrf
               <div class="row">
@@ -29,7 +28,6 @@
                       @enderror
                     </div>
                   </div>
-
                   <div class="col-md-6">
                     <div class="form-group">
                       <label for="">Subheading <span style="color: red">*</span></label>
@@ -39,7 +37,6 @@
                       @enderror
                     </div>
                   </div>
-
                   <div class="col-md-6">
                     <div class="form-group">
                       <label for="">Description <span style="color: red">*</span></label>
@@ -49,8 +46,6 @@
                       @enderror
                     </div>
                   </div>
-
-
                   <div class="col-md-6">
                     <div class="form-group">
                       <label for="">Image 1 <span style="color: red">*</span></label>
@@ -65,7 +60,6 @@
                       @enderror
                     </div>
                   </div>
-
                   <div class="col-md-6">
                     <div class="form-group">
                       <label for="">Image 2 <span style="color: red">*</span></label>
@@ -80,7 +74,6 @@
                       @enderror
                     </div>
                   </div>
-
                   <div class="col-md-6">
                     <div class="form-group">
                       <label for="">Image 3 <span style="color: red">*</span></label>
@@ -95,7 +88,6 @@
                       @enderror
                     </div>
                   </div>
-
                   <div class="col-md-6">
                     <div class="form-group">
                       <label for="">Image 4 <span style="color: red">*</span></label>
@@ -110,7 +102,6 @@
                       @enderror
                     </div>
                   </div>
-
                 <div class="col-md-6">
                   <div class="form-group clearfix">
                     <div class="icheck-success d-inline">
@@ -129,9 +120,7 @@
           </form>
         </div>
       </div>
-      <!-- /.col-->
     </div>
-    <!-- ./row -->
   </section>
 </div>
 @endsection

@@ -15,7 +15,6 @@
             </div>
           </div>
           <form action="{{route('homesliders.store')}}" method="POST" enctype="multipart/form-data">
-            <!-- /.card-header -->
             <div class="card-body pad">
               @csrf
               <div class="row">
@@ -47,7 +46,6 @@
                       @enderror
                     </div>
                   </div>
-
                 <div class="col-md-6">
                     <div class="form-group">
                       <label for="">Image 1 <span style="color: red">*</span></label>
@@ -84,7 +82,6 @@
                       @enderror
                     </div>
                   </div>
-
                 <div class="col-md-6">
                   <div class="form-group clearfix">
                     <div class="icheck-success d-inline">
@@ -103,9 +100,7 @@
           </form>
         </div>
       </div>
-      <!-- /.col-->
     </div>
-    <!-- ./row -->
   </section>
 </div>
 @endsection
