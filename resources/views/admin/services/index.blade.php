@@ -17,7 +17,6 @@
               <h3 class="card-title"><span><i class="fa-solid fa-box-open"></i></span> Service</h3>
               <a class="btn btn-success btn-sm float-right" href="{{route('services.create')}}"><i class="fa fa-plus"></i> Add Service</a>
             </div>
-            <!-- /.card-header -->
             <div class="card-body">
               <div class="table-responsive">
                 <table class="table table-bordered table-striped" id="example">
@@ -114,24 +113,13 @@
           {
            swal('Updated!', 'Service deleted', 'success');
            location.reload();
-                              // console.log("delete record");
-                            }
-                            else
-                            {
-                              //$(secondInput).siblings('span').removeClass('d-none');
                             }
                           },
                           error:function(jhxr,status,err){
                            console.log(jhxr);
                          }
                        })
-     } else if (result.dismiss === 'cancel') {
-                     //  swal(
-                     //      'Cancelled',
-                     //      'Your imaginary data is safe :)',
-                     //      'error'
-                     //  )
-                   }else{
+     }else{
                     swal('Error!' , 'Something Went Wrong' , "error");}
                  })
   })
@@ -143,7 +131,6 @@
         $(function () {
           $("#example1").DataTable({
             "responsive": true
-    //   "autoWidth": false,
   });
         });
         $(document).on('click','.viewFrontPages',function(){
@@ -210,7 +197,6 @@
       processData:false,
       dataType:'JSON',
       beforeSend:function(){
-            // $('#loader-img').css('display','block');
           },
           success:function(res){
            if(res.status)
@@ -225,7 +211,6 @@
        },
        complete:function()
        {
-              //  $('#loader-img').css('display','none');
             }
           });
   });

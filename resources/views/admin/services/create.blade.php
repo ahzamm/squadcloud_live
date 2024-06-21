@@ -15,11 +15,9 @@
             </div>
           </div>
           <form action="{{route('services.store')}}" method="POST" enctype="multipart/form-data">
-            <!-- /.card-header -->
             <div class="card-body pad">
               @csrf
               <div class="row">
-
                 <div class="col-md-6">
                     <div class="form-group">
                       <label for="">Service Name <span style="color: red">*</span></label>
@@ -29,7 +27,6 @@
                       @enderror
                     </div>
                   </div>
-
                 <div class="col-md-6">
                     <div class="form-group">
                       <label for="">Service Logo <span style="color: red">*</span></label>
@@ -39,7 +36,6 @@
                       @enderror
                     </div>
                   </div>
-
                   <div class="col-md-12">
                     <div class="form-group">
                       <label for="">Tagline <span style="color: red">*</span></label>
@@ -49,7 +45,6 @@
                       @enderror
                     </div>
                   </div>
-
                   <div class="col-md-12">
                     <div class="form-group">
                       <label for="">Description <span style="color: red">*</span></label>
@@ -59,7 +54,6 @@
                       @enderror
                     </div>
                   </div>
-
                 <div class="col-md-6">
                     <div class="form-group">
                       <label for="">Slug <span style="color: red">*</span></label>
@@ -69,7 +63,6 @@
                       @enderror
                     </div>
                   </div>
-
                   <div class="col-md-6">
                     <div class="form-group">
                       <label for="">Background Image <span style="color: red">*</span></label>
@@ -79,7 +72,6 @@
                       @enderror
                     </div>
                   </div>
-
                 <div class="col-md-6">
                   <div class="form-group clearfix">
                     <div class="icheck-success d-inline">
@@ -98,9 +90,7 @@
           </form>
         </div>
       </div>
-      <!-- /.col-->
     </div>
-    <!-- ./row -->
   </section>
 </div>
 @endsection

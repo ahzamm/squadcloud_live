@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Service;
-use DB;
 use App\Models\SubMenu;
 use App\Models\UserMenuAccess;
 use Illuminate\Support\Str;

@@ -16,7 +16,6 @@
           </div>
           <form action="{{route('services.update',$service->id)}}" method="POST" enctype="multipart/form-data">
             @method('PUT')
-            <!-- /.card-header -->
             <div class="card-body pad">
               @csrf
               <div class="row">
@@ -29,7 +28,6 @@
                       @enderror
                     </div>
                   </div>
-
                   <div class="col-md-6">
                     <div class="form-group">
                       <label for="">Service Logo <span style="color: red">*</span></label>
@@ -44,8 +42,6 @@
                       @enderror
                     </div>
                   </div>
-
-
                 <div class="col-md-6">
                   <div class="form-group">
                     <label for="">Tagline <span style="color: red">*</span></label>
@@ -64,7 +60,6 @@
                       @enderror
                     </div>
                   </div>
-
                   <div class="col-md-6">
                     <div class="form-group">
                       <label for="">Slug <span style="color: red">*</span></label>
@@ -74,7 +69,6 @@
                       @enderror
                     </div>
                   </div>
-
                   <div class="col-md-6">
                     <div class="form-group">
                       <label for="">Background Image <span style="color: red">*</span></label>
@@ -89,7 +83,6 @@
                       @enderror
                     </div>
                   </div>
-
                 <div class="col-md-6">
                   <div class="form-group clearfix">
                     <div class="icheck-success d-inline">
@@ -108,9 +101,7 @@
           </form>
         </div>
       </div>
-      <!-- /.col-->
     </div>
-    <!-- ./row -->
   </section>
 </div>
 @endsection
