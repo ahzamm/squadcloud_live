@@ -64,13 +64,11 @@
                         <div class="card-header d-flex justify-content-between align-items-center">
                             <h3 class="card-title mb-0"><span><i class="fa-solid fa-box-open"></i></span> Update General Configurations</h3>
                             <div class="ml-auto">
-                                {{-- <a class="btn btn-success btn-sm float-right" href="{{route('contacts.message_request')}}">  Message Requests  </a> --}}
                             </div>
                         </div>
                         <form action="{{ route('general-configurations.update') }}" method="POST"
                             enctype="multipart/form-data">
                             @method('PUT')
-                            <!-- /.card-header -->
                             <div class="card-body pad">
                                 @csrf
                                 <div class="row">
@@ -148,9 +146,7 @@
                     </form>
                 </div>
             </div>
-            <!-- /.col-->
     </div>
-    <!-- ./row -->
     </section>
     </div>
 @endsection
