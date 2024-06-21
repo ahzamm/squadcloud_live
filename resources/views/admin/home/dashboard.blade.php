@@ -7,9 +7,7 @@
     overflow-y: auto;
   }
 </style>
-<!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
-  <!-- Content Header (Page header) -->
   <div class="content-header">
     <div class="container-fluid">
       <div class="row mb-2">
@@ -25,15 +23,10 @@
       </div>
     </div>
   </div>
-  <!-- /.content-header -->
-  <!-- Main content -->
   <section class="content">
     <div class="container-fluid">
-      <!-- Small boxes (Stat box) -->
       <div class="row">
-        <!-- ./col -->
         <div class="col-lg-3 col-6">
-          <!-- small box -->
           <a href="{{route('services.index')}}" class="small-box-footer">
             <div class="small-box bg-warning">
               <div class="inner">
@@ -46,9 +39,7 @@
             </div>
           </a>
         </div>
-        <!-- ./col -->
         <div class="col-lg-3 col-6">
-          <!-- small box -->
           <a href="{{route('portfolios.index')}}" class="small-box-footer">
             <div class="small-box bg-orange">
               <div class="inner">
@@ -61,9 +52,7 @@
             </div>
           </a>
         </div>
-        <!-- ./col -->
         <div class="col-lg-3 col-6">
-          <!-- small box -->
           <a href="{{route('clients.index')}}" class="small-box-footer">
             <div class="small-box bg-danger">
               <div class="inner">
@@ -77,7 +66,6 @@
           </a>
         </div>
         <div class="col-lg-3 col-6">
-          <!-- small box -->
           <a href="{{ route('products.index')}}">
             <div class="small-box bg-info">
               <div class="inner">
@@ -90,10 +78,8 @@
             </div>
           </a>
         </div>
-        <!-- ./col -->
         <div class="col-lg-3 col-6">
           <a href="{{route('subscribers.index')}}" class="small-box-footer">
-            <!-- small box -->
             <div class="small-box bg-purple">
               <div class="inner">
                 <h3>{{$subscriberCount}}</h3>
@@ -108,13 +94,12 @@
           </a>
         </div>
         <div class="col-lg-3 col-6">
-          <a href="{{route('packages.index')}}" class="small-box-footer">
-            <!-- small box -->
+          <a href="{{route('subscribers.index')}}" class="small-box-footer">
             <div class="small-box bg-blue">
               <div class="inner">
-                <h3>{{$package}}</h3>
+                <h3>{{$subscriberCount}}</h3>
                 <p>
-                  Internet Packages
+                    Subscribers
                 </p>
               </div>
               <div class="icon">
@@ -125,7 +110,6 @@
         </div>
         <div class="col-lg-3 col-6">
           <a href="{{route('social.index')}}" class="small-box-footer">
-            <!-- small box -->
             <div class="small-box bg-teal">
               <div class="inner">
                 <h3>{{$social}}</h3>
@@ -141,7 +125,6 @@
         </div>
         <div class="col-lg-3 col-6">
           <a href="{{route('user.index')}}" class="small-box-footer">
-            <!-- small box -->
             <div class="small-box bg-indigo">
               <div class="inner">
                 <h3>{{$user}}</h3>
@@ -156,12 +139,8 @@
           </a>
         </div>
       </div>
-      <!-- /.row -->
-      <!-- Main row -->
       <div class="row">
-        <!-- Left col -->
         <section class="col-lg-12 connectedSortable">
-          <!-- Custom tabs (Charts with tabs)-->
           <div class="card">
             <div class="card-header">
               <h3 class="card-title">
@@ -194,88 +173,46 @@
               </table>
             </div>
           </div>
-          <!-- /.card -->
         </section>
-        <!-- /.Left col -->
-        <!-- right col (We are only adding the ID to make the widgets sortable)-->
         <section class="col-lg-12 connectedSortable">
-          <!-- Custom tabs (Charts with tabs)-->
           <div class="card">
             <div class="card-header">
               <h3 class="card-title">
                 <i class="fa-solid fa-bell"></i>
-                Today's Requests
+                Today's Job Applications
               </h3>
             </div>
             <div class="card-body custom-card-height">
               <div class="row">
-                <div class="col-lg-12">
-                  <ul class="nav nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                    <li class="nav-item">
-                      <a class="nav-link active" id="v-pills-reseller-tab" data-toggle="pill" href="#revenue-chart" role="tab" aria-controls="v-pills-reseller" aria-selected="true"><i class="fa-solid fa-handshake"></i> Reseller & Partner Requests</a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" id="v-pills-consumer-tab" data-toggle="pill" href="#sales-chart" role="tab" aria-controls="v-pills-consumer" aria-selected="false"><i class="fa-solid fa-users"></i> Consumer's Requests</a>
-                    </li>
-                  </ul>
-                </div>
               </div>
               <div class="row">
                 <div class="col-lg-12">
                   <div class="tab-content" id="v-pills-tabContent">
-                    <!-- Reseller's Requests -->
                     <div class="tab-pane fade show active" id="revenue-chart" role="tabpanel" aria-labelledby="v-pills-reseller-tab">
                       <div class="table-responsive">
                         <table class="table table-bordered table-striped" style="cursor:pointer">
-                          <!-- Table content for Reseller's Requests -->
                           <thead>
                             <tr>
                               <th>Serial#</th>
                               <th>Name</th>
                               <th>Email Address</th>
                               <th>Contact Number</th>
-                              <th>Address</th>
+                              <th>Resume</th>
                               <th>Date & time</th>
                             </tr>
                           </thead>
                           <tbody>
-                            @foreach ($coverageMembers as $key => $item)
+                            @foreach ($job_applications as $key => $item)
                             <tr onclick="openInNewTab('coveragerequest');">
                               <td>{{++$key}}</td>
                               <td>{{$item->name}}</td>
                               <td>{{$item->email}}</td>
-                              <td>{{$item->mobile_no}}</td>
-                              <td>{{$item->address}}</td>
-                              <td>{{$item->created_at}}</td>
-                            </tr>
-                            @endforeach
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                    <!-- Consumer's Requests -->
-                    <div class="tab-pane fade" id="sales-chart" role="tabpanel" aria-labelledby="v-pills-consumer-tab">
-                      <div class="table-responsive">
-                        <table class="table table-bordered table-striped" style="cursor:pointer">
-                          <!-- Table content for Consumer's Requests -->
-                          <thead>
-                            <tr>
-                              <th>Serial#</th>
-                              <th>Name</th>
-                              <th>Email Address</th>
-                              <th>Contact Number</th>
-                              <th>Address</th>
-                              <th>Date & time</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            @foreach ($coverageUsers as $key => $item)
-                            <tr onclick="openInNewTab('coveragerequest');">
-                              <td>{{$key++}}</td>
-                              <td>{{$item->name}}</td>
-                              <td>{{$item->email}}</td>
-                              <td>{{$item->mobile_no}}</td>
-                              <td>{{$item->address}}</td>
+                              <td>{{$item->phone}}</td>
+                              <td>
+                                <a href="{{ asset('backend/resumes/' . $item->resume) }}" class="btn btn-primary btn-sm" download>
+                                  <i class="fa fa-download"></i> Download
+                                </a>
+                              </td>
                               <td>{{$item->created_at}}</td>
                             </tr>
                             @endforeach
@@ -287,16 +224,10 @@
                 </div>
               </div>
             </div>
-            <!-- /.card-body -->
           </div>
-          <!-- /.card -->
         </section>
-        <!-- right col -->
       </div>
-      <!-- /.row (main row) -->
-    </div><!-- /.container-fluid -->
+    </div>
   </section>
-  <!-- /.content -->
 </div>
-<!-- /.content-wrapper -->
 @endsection

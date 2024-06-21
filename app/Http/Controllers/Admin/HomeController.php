@@ -6,96 +6,27 @@ use App\Http\Controllers\Controller;
 use App\Models\Client;
 use App\Models\Portfolio;
 use App\Models\Product;
-use Illuminate\Http\Request;
-use App\Models\FrontContact;
 use Carbon\Carbon;
 use App\Models\ContactRequest;
-use App\Models\CoverageRequest;
-use App\Models\JobPost;
 use App\Models\JobApplication;
-use App\Models\FrontFaq;
-use App\Models\FrontPage;
 use App\Models\Admin;
 use App\Models\Service;
-use App\Models\City;
-use App\Models\Reseller;
 use App\Models\Subscriber;
 use App\Models\Social;
-use App\Models\Package;
-use App\Models\UserMenuAccess;
-use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
-    // public function dashboard()
-    // {
-    //     // dd(UserMenuAccess::where('user_id',Auth::id())->where('view_status',1));
-    //     $coverageUsers = CoverageRequest::whereRaw("date(created_at) = date(now()) and request_type = 'user'")->get();
-    //     $coverageMembers = CoverageRequest::whereRaw("date(created_at) = date(now()) and request_type = 'partner'")->get();
-    //     $frontContact = FrontContact::whereRaw("date(created_at) = date(now())")->get();
-
-    //     // dd($coverageMembers);
-
-    //     $contactRequest = FrontContact::count();
-    //     $faqs         = FrontFaq::where('active',1)->count();
-    //     $contacts     = FrontContact::whereRaw('date(created_at) = date(now())')->get();
-    //     $employees    = Admin::where('role','employee')->count();
-    //     $cities       = City::where(['active' => 1 ])->count();
-    //     $resellers    = Reseller::where(["active"=>1])->count();
-    //     $user        = Admin::where(["active"=>1])->count();
-    //     $social       = Social::where(["status"=>1])->count();
-    //     $package      = Package::where(["active"=>1])->count();
-    //     $requestCount = CoverageRequest::count();
-    //     return view("admin.home.dashboard",
-    //         compact("contacts",
-    //         "coverageMembers",
-    //         "coverageUsers",
-    //         'contactRequest',
-    //         'faqs',
-    //         'frontContact',
-    //         'employees',
-    //         'cities',
-    //         'resellers',
-    //         'user',
-    //         'package',
-    //         'social' ,
-    //         'requestCount')
-    //     );
-    // }
     public function dashboard()
     {
-        // dd(UserMenuAccess::where('user_id',Auth::id())->where('view_status',1));
-        $coverageUsers = CoverageRequest::whereRaw("date(created_at) = date(now()) and request_type = 'user'")->get();
-        $coverageMembers = CoverageRequest::whereRaw("date(created_at) = date(now()) and request_type = 'partner'")->get();
-        $frontContact = FrontContact::whereRaw("date(created_at) = date(now())")->get();
-
-        // dd($coverageMembers);
-
-        $contactRequest = FrontContact::count();
-        $faqs = FrontFaq::where('active', 1)->count();
-        $contacts = FrontContact::whereRaw('date(created_at) = date(now())')->get();
-        $employees = Admin::where('role', 'employee')->count();
-        $cities = City::where(['active' => 1])->count();
-        $resellers = Reseller::where(["active" => 1])->count();
         $user = Admin::where(["active" => 1])->count();
         $social = Social::where(["status" => 1])->count();
-        $package = Package::where(["active" => 1])->count();
-        $requestCount = CoverageRequest::count();
-
-
         $serviceCount = Service::count();
         $portfolioCount = Portfolio::count();
         $clientCount = Client::count();
         $productCount = Product::count();
         $subscriberCount = Subscriber::count();
         $todaysContactRequests = ContactRequest::whereDate('created_at', Carbon::today())->get();
-
-
-
-
-
-
-
+        $job_applications = JobApplication::whereDate('created_at', Carbon::today())->get();
 
         return view(
             "admin.home.dashboard",
@@ -106,19 +37,9 @@ class HomeController extends Controller
                 'productCount',
                 'subscriberCount',
                 'todaysContactRequests',
-                "contacts",
-                "coverageMembers",
-                "coverageUsers",
-                'contactRequest',
-                'faqs',
-                'frontContact',
-                'employees',
-                'cities',
-                'resellers',
                 'user',
-                'package',
                 'social',
-                'requestCount'
+                'job_applications'
             )
         );
     }
