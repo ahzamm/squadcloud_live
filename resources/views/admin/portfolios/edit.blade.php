@@ -16,7 +16,6 @@
           </div>
           <form action="{{route('portfolios.update',$portfolio->id)}}" method="POST" id="updatePortfolioForm" enctype="multipart/form-data">
             @method('PUT')
-            <!-- /.card-header -->
             <div class="card-body pad">
               @csrf
               <div class="row">
@@ -168,9 +167,7 @@
           </form>
         </div>
       </div>
-      <!-- /.col-->
     </div>
-    <!-- ./row -->
   </section>
 </div>
 @endsection

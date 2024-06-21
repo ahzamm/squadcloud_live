@@ -15,7 +15,6 @@
             </div>
           </div>
           <form action="{{route('portfolios.store')}}" method="POST" id="createPortfolioForm" enctype="multipart/form-data">
-            <!-- /.card-header -->
             <div class="card-body pad">
               @csrf
               <div class="row">
@@ -123,8 +122,6 @@
                       </div>
                     </div>
               </div>
-
-
                   <div class="col-md-6">
                     <div class="form-group">
                       <label for=""> Background Image <span style="color: red">*</span></label> <br>
@@ -152,9 +149,7 @@
           </form>
         </div>
       </div>
-      <!-- /.col-->
     </div>
-    <!-- ./row -->
   </section>
 </div>
 @endsection
