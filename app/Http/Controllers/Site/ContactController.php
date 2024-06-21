@@ -9,11 +9,18 @@ use App\Models\Contact;
 use App\Models\ContactRequest;
 use App\Models\FrontEmail;
 use App\Models\email_contact;
-use App\Models\Admin;
 use Illuminate\Support\Facades\Validator;
+use App\Services\EmailService;
 
 class ContactController extends Controller
 {
+    protected $emailService;
+
+    public function __construct(EmailService $emailService)
+    {
+        $this->emailService = $emailService;
+    }
+
     public function extractGoogleMapsSrc($iframeHtml)
     {
         preg_match('/<iframe.*?src=["\'](.*?)["\'].*?>/i', $iframeHtml, $matches);
@@ -40,9 +47,11 @@ class ContactController extends Controller
             "service_required" => "required",
             "message" => "required",
         ];
+
         $validate = Validator::make($request->all(), $validatedData);
+
         if ($validate->fails()) {
-            return redirect()->back()->with('error', 'All Fields are required');
+            return response()->json(['status' => 'error', 'message' => 'Validation errors', 'errors' => $validate->errors()], 422);
         }
 
         $adminEmails = email_contact::get()->pluck('adminemail')->toArray();
@@ -61,10 +70,10 @@ class ContactController extends Controller
             "service_required" => $service_required,
             "message" => $message,
         ]);
-        if ($storeMessage) {
 
+        if ($storeMessage) {
             // Send customer email
-            Admin::sendEmail(
+            $this->emailService->sendEmail(
                 'SquadCloud Contact Request',
                 'EmailTemplates.customerContact',
                 ['fullName' => $full_name, 'message' => $message],
@@ -74,7 +83,7 @@ class ContactController extends Controller
 
             // Send admin email
             foreach ($adminEmails as $adminEmail) {
-                Admin::sendEmail(
+                $this->emailService->sendEmail(
                     'Contact Message From ' . $full_name,
                     'EmailTemplates.adminContact',
                     [
@@ -88,6 +97,7 @@ class ContactController extends Controller
                 );
             }
         }
-        return redirect()->back();
+
+        return response()->json(['status' => 'success', 'message' => 'Message Sent Successfully']);
     }
 }

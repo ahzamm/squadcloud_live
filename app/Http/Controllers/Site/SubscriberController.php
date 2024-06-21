@@ -8,9 +8,17 @@ use App\Models\Subscriber;
 use App\Models\FrontEmail;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Admin;
+use App\Services\EmailService;
 
 class SubscriberController extends Controller
 {
+    protected $emailService;
+
+    public function __construct(EmailService $emailService)
+    {
+        $this->emailService = $emailService;
+    }
+
     public function store(Request $request)
     {
         $validate = Validator::make($request->all(), ['email' => 'required|email']);
@@ -29,7 +37,7 @@ class SubscriberController extends Controller
         }
 
         $email_settings = FrontEmail::where('status', 1)->First();
-        Admin::sendEmail(
+        $this->emailService->sendEmail(
             "Welcome to SquadCloud! Thank You for Subscribing!",
             'EmailTemplates.subscriberEmailTemplate',
             [],

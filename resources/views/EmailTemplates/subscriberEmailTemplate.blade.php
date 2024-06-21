@@ -21,7 +21,7 @@ box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
 <img src="https://squadcloud.co/frontend_assets/images/logo.png" alt="">
 </div>
 <center>
-  <h2>SquadCloud OTP</h2>
+  <h2>SquadCloud</h2>
 </center>
 <div class="content" style=" line-height: 1.6;
 color: #333;">
