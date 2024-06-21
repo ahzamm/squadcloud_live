@@ -279,7 +279,14 @@ class UserMenuAccessController extends Controller
             return redirect()->back()->withInput()->with("error", "No rights To Change User Menu Access");
         }
 
-        $data['submenus'] = $this->menuAccessModel::where('user_id', $id)->where('deleted', 0)->with('submenu')->get();
+        // $data['submenus'] = $this->menuAccessModel::where('user_id', $id)->where('deleted', 0)->with('submenu')->get();
+        $data['submenus'] = $this->menuAccessModel::where('user_menu_accesses.user_id', $id)
+                                          ->where('user_menu_accesses.deleted', 0)
+                                          ->join('menus', 'user_menu_accesses.menu_id', '=', 'menus.id')
+                                          ->orderBy('menus.order_menu', 'asc')
+                                          ->with('submenu')
+                                          ->get(['user_menu_accesses.*']);
+
         return view('admin.users.manuaccess')->with("data", $data);
     }
     public function giveAccess(Request $request, $id = null)
