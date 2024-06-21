@@ -16,7 +16,6 @@
             <div class="card-header">
               <h3 class="card-title"><span><i class="fa-solid fa-box-open"></i></span> Job Applications</h3>
             </div>
-            <!-- /.card-header -->
             <div class="card-body">
               <div class="table-responsive">
                 <table class="table table-bordered table-striped" id="example1">
@@ -104,17 +103,11 @@
               swal('Updated!', 'Job Application deleted', 'success');
               location.reload();
             }
-            else
-            {
-              // Handle other errors
-            }
           },
           error:function(jhxr,status,err){
             console.log(jhxr);
           }
         })
-      } else if (result.dismiss === 'cancel') {
-        // Handle cancel action
       }
     })
   })
