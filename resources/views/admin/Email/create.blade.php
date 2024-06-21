@@ -32,7 +32,6 @@ $parentTitle = "Update";
             </div>
           </div>
           <form action="{{$parentRoute}}" method="POST" id="submitForm" enctype="multipart/form-data">
-            <!-- /.card-header -->
             <div class="card-body pad">
               @csrf
               <div class="row">
@@ -68,9 +67,7 @@ $parentTitle = "Update";
           </form>
         </div>
       </div>
-      <!-- /.col-->
     </div>
-    <!-- ./row -->
   </section>
 </div>
 @endsection

@@ -76,7 +76,6 @@
                 </a>
               </div>
             </div>
-            <!-- /.card-header -->
             <div class="card-body ">
               <div class="table-responsive ">
                 <table class="table table-bordered table-striped" id="example">
@@ -85,7 +84,7 @@
                       <th>Serial#</th>
                       <th>SMTP Server</th>
                       <th>SMTP Port</th>
-                      <th>Email Address</th>                                           
+                      <th>Email Address</th>
                       <th>Email Password</th>
                       <th>Status</th>
                       <th>Action</th>
@@ -202,22 +201,13 @@
                   if (res.status) {
                     $(row).parents('tr').remove();
                     swal('Deleted!', 'Email Has been deleted', 'success');
-                                // console.log("delete record");
-                              } else {
-                                //$(secondInput).siblings('span').removeClass('d-none');
                               }
                             },
                             error: function(jhxr, status, err) {
                               console.log(jhxr);
                             }
                           })
-            } else if (result.dismiss === 'cancel') {
-                    //  swal(
-                    //      'Cancelled',
-                    //      'Your imaginary data is safe :)',
-                    //      'error'
-                    //  )
-                  }
+            }
                 })
         })
         //delete menu end

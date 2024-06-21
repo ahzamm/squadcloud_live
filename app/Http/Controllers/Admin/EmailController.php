@@ -5,10 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Auth;
-use DB;
 use App\Models\SubMenu;
 use App\Models\UserMenuAccess;
-use Mail;
 use App\Models\FrontEmail ;
 class EmailController extends Controller
 {
@@ -62,7 +60,6 @@ class EmailController extends Controller
         $server          =  $request->smtp_server ;
         $port       =  $request->port ;
         $email           = $request->email ;
-
 
         $createEmail  = $this->parentModel::create([
             'emails' => $email ,
