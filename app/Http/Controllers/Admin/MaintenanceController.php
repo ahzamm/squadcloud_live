@@ -14,7 +14,6 @@ class MaintenanceController extends Controller
 {
     public function __construct()
     {
-        // $this->middleware('checkuseraccess', ['only' => ['index']]);
     }
     public function index()
     {

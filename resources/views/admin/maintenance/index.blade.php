@@ -36,7 +36,6 @@
                                             </div>
                                             <p class="text-sm text-danger">
                                                 @error('maintenance_time')
-                                                {{-- {{$message}} --}}
                                                 @enderror
                                             </p>
                                         </div>
@@ -57,7 +56,6 @@
 <script>
     $(document).ready(function(){
         $('#timePicker').datetimepicker({
-            // dateFormat: 'dd-mm-yy',
             format:'YYYY-MM-DD HH:mm:ss',
             icons: {
               time: "fa fa-clock",

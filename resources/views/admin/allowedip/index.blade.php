@@ -1,7 +1,7 @@
 @extends('admin.layouts.app')
 @push('style')
 <link rel="stylesheet" href="{{asset('backend/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
-<link rel="stylesheet" href="{{asset('backend/plugins/datatables-responsive/css/responsive.bootstrap4.min.css')}}">    
+<link rel="stylesheet" href="{{asset('backend/plugins/datatables-responsive/css/responsive.bootstrap4.min.css')}}">
 @endpush
 @section('content')
 <div class="content-wrapper">
@@ -15,7 +15,6 @@
               <h3 class="card-title"><span><i class="fa-solid fa-network-wired"></i></span> Allowed IP Addresses</h3>
               <button class="btn btn-success btn-sm float-right" id="addIp"><i class="fa fa-plus"></i> Add IP Address</button>
             </div>
-            <!-- /.card-header -->
             <div class="card-body">
               <table class="table table-bordered table-striped" id="example1">
                 <thead>
@@ -58,7 +57,6 @@
   $(function () {
     $("#example1").DataTable({
       "responsive": true
-    //   "autoWidth": false,
   });
   });
   $(document).on('click','#addIp',function(){
