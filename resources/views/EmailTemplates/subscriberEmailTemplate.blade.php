@@ -25,8 +25,8 @@ box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
 </center>
 <div class="content" style=" line-height: 1.6;
 color: #333;">
-<p>Dear Administrator, provided below is your One-Time Password (OTP).</p>
-<p style="text-align: center; font-size: 24px; font-weight: bold; color: #000;"> {{$otp}}</p>
+<p>Thank you for subscribing to SquadCloud! We're excited to have you on board. Stay tuned for updates</p>
+<p style="text-align: center; font-size: 24px; font-weight: bold; color: #000;"></p>
 </div>
 <div class="footer" style="margin-top: 20px;
 text-align: center;
