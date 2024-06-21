@@ -26,7 +26,6 @@
                         <div class="col-lg-12">
                             <div class="card">
                                 <div class="card-header d-flex justify-content-between align-items-center">
-                                    <!-- <h3 class="card-title mb-0">Add Menu</h3> -->
                                     <div class="ml-auto">
                                         <a href="{{ route('frontmenu.create') }}" class="btn btn-success btn-sm">
                                             <i class="fa fa-plus"></i> Add Front Menu
@@ -49,9 +48,7 @@
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
-                                            <!-- Input Csrf Token -->
                                             <input type="hidden" class="csrf_token" value="{{ csrf_token() }}">
-                                            <!-- End Of Csrf Token -->
                                             <tbody id="sortfrontMenu" class="move">
                                                 @foreach ($collection as $key => $menu)
                                                     <tr>
@@ -145,21 +142,12 @@
                         if (res.status) {
                             $(row).parents('tr').remove();
                             swal('Updated!', 'Front Menu deleted', 'success');
-                            // console.log("delete record");
-                        } else {
-                            //$(secondInput).siblings('span').removeClass('d-none');
                         }
                     },
                     error: function(jhxr, status, err) {
                         console.log(jhxr);
                     }
                 })
-            } else if (result.dismiss === 'cancel') {
-                //  swal(
-                //      'Cancelled',
-                //      'Your imaginary data is safe :)',
-                //      'error'
-                //  )
             }
         })
     })
