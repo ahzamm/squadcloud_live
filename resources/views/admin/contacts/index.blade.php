@@ -118,20 +118,6 @@
                       @enderror
                     </div>
                   </div>
-                  {{-- <div class="col-md-6">
-                      <div class="form-group">
-                        <label for="">Background Image <span style="color: red">*</span></label>
-                        @isset($contact->background_image)
-                        <img src="{{ asset('frontend_assets/images/contacts/'. $contact->background_image) }}" height="60"
-                        width="120" alt="" srcset="" >
-                        @endisset
-                        <br><br>
-                        <input type="file" value="{{ $contact->background_image }}" name="background_image">
-                        @error('background_image')
-                        <p class="text-danger mt-2 mb-0 text-sm">{{$message}}</p>
-                        @enderror
-                      </div>
-                    </div> --}}
                 </div>
               </div>
             </div>

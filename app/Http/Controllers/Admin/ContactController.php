@@ -86,9 +86,6 @@ class ContactController extends Controller
             $contact->save();
 
             return redirect()->route('contacts.index')->with('success', 'Contact updated successfully!');
-
-
-
     }
 
 
@@ -98,7 +95,6 @@ class ContactController extends Controller
         $packageData = Contact::find($id);
         return view('admin.contacts.show-modal', compact('packageData'));
     }
-
 
     public function crud_access($submenuId = null, $operation = null, $uId = null)
     {
