@@ -15,7 +15,7 @@
           <div class="card mt-3 card-outline card-info">
             <div class="card-header">
               <h3 class="card-title"><span><i class="fa-solid fa-box-open"></i></span> Vacancies</h3>
-              <a class="btn btn-success btn-sm float-right" href="{{route('careers.create')}}"><i class="fa fa-plus"></i> Add Vacancy</a>
+              <a class="btn btn-success btn-sm float-right" href="{{route('jobs.create')}}"><i class="fa fa-plus"></i> Add Vacancy</a>
             </div>
             <div class="card-body">
               <div class="table-responsive">
@@ -41,7 +41,7 @@
                     </tr>
                   </thead>
                   <tbody id="sortfrontMenu" class="move">
-                    @foreach ($careers as $key=> $item)
+                    @foreach ($jobs as $key=> $item)
                     <tr class="table-row">
                         <td><i class="fas fa-sort" id="sort-serial"></i></td>
                         <td>{{ $key + 1 }}<input type="hidden" class="order-id"value="{{ $item->id }}"></td>
@@ -59,7 +59,7 @@
                       <td>{{ $item->date_posted }}</td>
                       <td>{{$item->is_active == 1?'active':'deactive'}}</td>
                       <td class="d-flex justify-content-center" style="gap: 5px;">
-                        <a class="btn btn-primary btn-sm" href="{{ route('career.edit', $item->id) }}"><i class="fa fa-edit"></i></a>
+                        <a class="btn btn-primary btn-sm" href="{{ route('job.edit', $item->id) }}"><i class="fa fa-edit"></i></a>
                         <button class="btn btn-danger btn-sm btnDeleteMenu" data-value="{{ $item->id }}"><i class="fa fa-trash"></i></button>
                       </td>
                     </td>
@@ -91,7 +91,7 @@
     });
 </script>
 <script>
-  let packageDeleteUrl  = "{{route('career.destroy')}}";
+  let packageDeleteUrl  = "{{route('job.destroy')}}";
   $(document).on('click' ,'.btnDeleteMenu' ,function(){
     id = $(this).attr('data-value');
     swal({
@@ -117,11 +117,11 @@
         dataType:'json',
         success:function(res){
           if(res.unauthorized){
-            swal('Error!' , 'No Rights To delete Career' , "error");
+            swal('Error!' , 'No Rights To delete Job' , "error");
           }
           if(res.status)
           {
-           swal('Updated!', 'Career deleted', 'success');
+           swal('Updated!', 'Job deleted', 'success');
            location.reload();
                             }
                           },
@@ -233,7 +233,7 @@
     id = $(this).attr('data-value');
     $.ajax({
       method: 'get',
-      url: '/admin/careers/' + id,
+      url: '/admin/jobs/' + id,
       dataType: 'html',
       success: function(res) {
         $('#frontPagesModal').find('.modal-content').html(res);
@@ -242,9 +242,9 @@
   })
 
   let sortTable = $("#sortfrontMenu");
-    let sortingFrontUrl = "{{ route('sort.career') }}";
+    let sortingFrontUrl = "{{ route('sort.job') }}";
     let csrfToken = $(".csrf_token");
-    var editUrlFront = "{{ route('career.edit') }}";
+    var editUrlFront = "{{ route('job.edit') }}";
     $(sortTable).sortable({
         update: function(event, ui) {
             var SortIds = $(this).find('.order-id').map(function() {

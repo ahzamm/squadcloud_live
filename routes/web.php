@@ -15,7 +15,7 @@ use App\Http\Controllers\Admin\BottomSliderController as AdminBottomSliderContro
 use App\Http\Controllers\Admin\HomeController as AdminHomeController;
 use App\Http\Controllers\Admin\GeneralConfigurationController as AdminGeneralConfigurationController;
 use App\Http\Controllers\Admin\TeamController as AdminTeamController;
-use App\Http\Controllers\Admin\CareerController as AdminCareerController;
+use App\Http\Controllers\Admin\JobController as AdminJobController;
 use App\Http\Controllers\Admin\PageTitleController as AdminPageTitleController;
 use App\Http\Controllers\Admin\JobApplicationController as AdminJobApplicationController;
 use App\Http\Controllers\Admin\SubscriberController as AdminSubscriberController;
@@ -135,7 +135,7 @@ use App\Http\Controllers\Site\SubscriberController;
         Route::get('bottom_slider/edit/{id?}', [AdminBottomSliderController::class , 'edit'])->name('bottom_slider.edit');
         Route::get('homeslider/edit/{id?}', [HomeSliderController::class , 'edit'])->name('homeslider.edit');
         Route::get('team/edit/{id?}', [AdminTeamController::class , 'edit'])->name('team.edit');
-        Route::get('career/edit/{id?}', [AdminCareerController::class , 'edit'])->name('career.edit');
+        Route::get('job/edit/{id?}', [AdminJobController::class , 'edit'])->name('job.edit');
 
 
         Route::resource('cities','App\Http\Controllers\Admin\CitiesController');
@@ -183,7 +183,7 @@ use App\Http\Controllers\Site\SubscriberController;
         Route::post("sortSocial" , [SocialController::class , 'updateSorting'])->name("sort.social");
         Route::post("sortHomeSlider" , [HomeSliderController::class , 'updateSorting'])->name("sort.homeslider");
         Route::post("sortTeam" , [AdminTeamController::class , 'updateSorting'])->name("sort.team");
-        Route::post("sortCareer" , [AdminCareerController::class , 'updateSorting'])->name("sort.career");
+        Route::post("sortCareer" , [AdminCareerController::class , 'updateSorting'])->name("sort.job");
 
 
 
@@ -289,11 +289,8 @@ use App\Http\Controllers\Site\SubscriberController;
         Route::resource('teams','App\Http\Controllers\Admin\TeamController');
         Route::get("/teams/destroy/{id?}" , [AdminTeamController::class ,"destroy"])->name("team.destroy");
 
-        Route::resource('careers','App\Http\Controllers\Admin\CareerController');
-        Route::get("/careers/destroy/{id?}" , [AdminCareerController::class ,"destroy"])->name("career.destroy");
-
-        Route::get("/page_titles" , [AdminPageTitleController::class ,"index"])->name("page_titles.index");
-        Route::put('/page_titles', [AdminPageTitleController::class, 'update'])->name('page_titles.update');
+        Route::resource('jobs','App\Http\Controllers\Admin\JobController');
+        Route::get("/jobs/destroy/{id?}" , [AdminJobController::class ,"destroy"])->name("job.destroy");
 
         Route::get('/job_applications', [AdminJobApplicationController::class, 'index'])->name('job_applications.index');
         Route::get("/job_applications/destroy/{id?}" , [AdminJobApplicationController::class ,"destroy"])->name("job_application.destroy");
