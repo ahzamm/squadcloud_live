@@ -66,22 +66,16 @@
                             <div class="ml-auto">
                             </div>
                         </div>
-                        <form action="{{ route('careers.update') }}" method="POST"
-                            enctype="multipart/form-data">
+                        <form action="{{ route('careers.update') }}" method="POST" enctype="multipart/form-data">
                             @method('PUT')
                             <div class="card-body pad">
                                 @csrf
                                 <div class="row">
 
-
-
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="">Top Heading <span style="color: red">*</span></label>
-                                        @isset($career->top_heading)
-                                            <input type="text" class="form-control" name="top_heading"
-                                                value="{{ old('top_heading') == null ? $career->top_heading : old('top_heading') }}">
-                                        @endisset
+                                        <textarea name="top_heading" rows="4" placeholder="Example : How are you" required class="form-control summernote">{{$career->top_heading}}</textarea>
                                         @error('top_heading')
                                             <p class="text-danger mt-2 mb-0 text-sm">{{ $message }}</p>
                                         @enderror
@@ -92,8 +86,7 @@
                                     <div class="form-group">
                                         <label for="">Middle Heading <span style="color: red">*</span></label>
                                         @isset($career->middle_heading)
-                                            <input type="text" class="form-control" name="middle_heading"
-                                                value="{{ old('middle_heading') == null ? $career->middle_heading : old('middle_heading') }}">
+                                        <textarea name="middle_heading" rows="4" placeholder="Example : How are you" required class="form-control summernote">{{$career->middle_heading}}</textarea>
                                         @endisset
                                         @error('middle_heading')
                                             <p class="text-danger mt-2 mb-0 text-sm">{{ $message }}</p>
@@ -106,8 +99,7 @@
                                     <div class="form-group">
                                         <label for="">Bottom Heading <span style="color: red">*</span></label>
                                         @isset($career->bottom_heading)
-                                            <input type="text" class="form-control" name="bottom_heading"
-                                                value="{{ old('bottom_heading') == null ? $career->bottom_heading : old('bottom_heading') }}">
+                                        <textarea name="bottom_heading" rows="4" placeholder="Example : How are you" required class="form-control summernote">{{$career->bottom_heading}}</textarea>
                                         @endisset
                                         @error('bottom_heading')
                                             <p class="text-danger mt-2 mb-0 text-sm">{{ $message }}</p>
@@ -119,7 +111,6 @@
 
                             </div>
                             </div>
-                    </div>
                     <div class="card-footer">
                         <button type="submit" class="btn btn-outline-primary float-right">Update</button>
                     </div>
@@ -138,57 +129,6 @@
             });
         });
     </script>
-    <script>
-        $(document).ready(function() {
-          $('#example').DataTable();
-          let changeStatusUrl  = "{{route('general-configurations.otp_configuration.update')}}";
-              // Changing Status
-              $(".status_check").on('change' , function(e){
-                let currentStatus  = "";
-                if($(this).prop('checked') == true){
-                 currentStatus   = 1;
-                 $(this).closest('tr').find('.status').text('active');
-               }
-               else{
-                currentStatus = 0 ;
-                $(this).closest('tr').find('.status').text('deactive');
-              }
-              var status =   $(this);
-              e.preventDefault();
-              $.ajax({
-                url: changeStatusUrl ,
-                type:"Post" ,
-                data: { status : currentStatus},
-                success:function(response){
-                  if( response == "unauthorized"){
-                    e.preventDefault();
-                    swal("Error!" , "Status Not Changed , Because You have No Rights To change status" , "error");
-                    status.prop('checked' , false);
-                  }
-                  if(response == "success"){
-                    swal({
-                      title: 'Status Changed!',
-                      text: "User Status Has been Changed!",
-                      animation: false,
-                      customClass: 'animated pulse',
-                      type: 'success',
-                    });
-                    location.reload();
-                  } else {
-                    swal({
-                    title: 'Error occurred!',
-                    text: "Failed to Change User Access Status!",
-                    animation: false,
-                    customClass: 'animated pulse',
-                    type: 'error',
-                    });
-              }
-                }
-              })
-            })
-           });
-          </script>
-
 <script src="{{asset('backend/plugins/datatables/jquery.dataTables.min.js')}}"></script>
 <script src="{{asset('backend/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js')}}"></script>
 <script src="{{asset('backend/plugins/datatables-responsive/js/dataTables.responsive.min.js')}}"></script>

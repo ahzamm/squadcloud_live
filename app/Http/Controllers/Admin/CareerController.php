@@ -4,13 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Service;
-use DB;
 use App\Models\SubMenu;
 use App\Models\UserMenuAccess;
 use App\Models\Career;
 use Illuminate\Support\Facades\Validator;
-use App\Models\Team;
 use Auth;
 
 class CareerController extends Controller
@@ -25,92 +22,12 @@ class CareerController extends Controller
             return redirect()->back()->withInput()->with("error", "No rights To View Vacency");
         }
 
-        $careers = Career::orderby("sortIds", "asc")->get();
-        return view('admin.careers.index', compact('careers'));
-    }
-
-    public function create()
-    {
-        $subMenuid = SubMenu::where('route_name', 'careers.index')->first();
-        $userOperation = "create_status";
-        $userId = Auth::user()->id;
-        $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
-        if (!$crudAccess) {
-            return redirect()->back()->withInput()->with("error", "No rights To Create Vacency");
-        }
-
-        return view('admin.careers.create');
+        $career = Career::first();
+        return view('admin.careers.index', compact('career'));
     }
 
 
-    public function store(Request $request)
-    {
-        $subMenuid = SubMenu::where('route_name', 'careers.index')->first();
-        $userOperation = "create_status";
-        $userId = Auth::guard('admin', 'user')->user()->id;
-        $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
-        if ($crudAccess == false) {
-            return redirect()->back()->withInput()->with('error', 'No right to add a Vacency');
-        }
-
-        $validatedData = [
-            "title"=>"required",
-            "description"=>"required",
-            "location"=>"required",
-            "employment_type"=>"required",
-            "education_level"=>"required",
-            "experience_level"=>"required",
-            "skills"=>"required",
-            "salary_range"=>"required",
-            "application_deadline"=>"required",
-            "email"=>"required",
-            "phone"=>"required",
-        ];
-        $valdiate = Validator::make($request->all(), $validatedData);
-        if ($valdiate->fails()) {
-            return redirect()->back()->withInput()->with('error', 'All Fields are required');
-        }
-
-        $career = new Career();
-        $career->job_title = $request['title'];
-        $career->job_description = $request['description'];
-        $career->location = $request['location'];
-        $career->employment_type = $request['employment_type'];
-        $career->education_level = $request['education_level'];
-        $career->experience_level = $request['experience_level'];
-        $career->skills = $request['skills'];
-        $career->salary_range = $request['salary_range'];
-        $career->application_deadline = $request['application_deadline'];
-        $career->email = $request['email'];
-        $career->phone = $request['phone'];
-        $career->date_posted = $request['date_posted'];
-        $career->is_active = $request->has('is_active') ? 1 : 0;
-        $career->save();
-
-        return redirect()->route('careers.index')->with('success', 'Jop Added member added successfully!');
-    }
-
-    public function show($id)
-    {
-        $packageData = Service::find($id);
-        return view('admin.services.show-modal', compact('packageData'));
-    }
-
-    public function edit($id)
-    {
-        $subMenuid = SubMenu::where('route_name', 'careers.index')->first();
-        $userOperation = "update_status";
-        $userId = Auth::user()->id;
-        $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
-        if (!$crudAccess) {
-            return redirect()->back()->withInput()->with("error", "No rights To Edit Vacency");
-        }
-
-        $career = Career::find($id);
-        return view('admin.careers.edit', compact('career'));
-    }
-
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         $subMenuid = SubMenu::where('route_name', 'careers.index')->first();
         $userOperation = "update_status";
@@ -122,17 +39,9 @@ class CareerController extends Controller
         }
 
         $validatedData = [
-            "job_title"=>"required",
-            "job_description"=>"required",
-            "location"=>"required",
-            "employment_type"=>"required",
-            "education_level"=>"required",
-            "experience_level"=>"required",
-            "skills"=>"required",
-            "salary_range"=>"required",
-            "application_deadline"=>"required",
-            "email"=>"required",
-            "phone"=>"required",
+            "top_heading"=>"required",
+            "middle_heading"=>"required",
+            "bottom_heading"=>"required",
         ];
         $valdiate = Validator::make($request->all(), $validatedData);
 
@@ -141,47 +50,13 @@ class CareerController extends Controller
             return redirect()->back()->withInput()->with('error', 'All Fields are required');
         }
 
-        $career = Career::findOrFail($id);
-
-        $career->job_title = $request['job_title'];
-        $career->job_description = $request['job_description'];
-        $career->location = $request['location'];
-        $career->employment_type = $request['employment_type'];
-        $career->education_level = $request['education_level'];
-        $career->experience_level = $request['experience_level'];
-        $career->skills = $request['skills'];
-        $career->salary_range = $request['salary_range'];
-        $career->application_deadline = $request['application_deadline'];
-        $career->email = $request['email'];
-        $career->phone = $request['phone'];
-        $career->date_posted = $request['date_posted'];
-        $career->is_active = $request->has('is_active') ? 1 : 0;
+        $career = Career::first();
+        $career->top_heading = $request['top_heading'];
+        $career->middle_heading = $request['middle_heading'];
+        $career->bottom_heading = $request['bottom_heading'];
         $career->save();
 
-        return redirect()->route('careers.index')->with('success', 'Job post updated successfully!');
-    }
-
-
-    public function destroy($id = null)
-    {
-        $subMenuid = SubMenu::where('route_name', 'careers.index')->first();
-        $userOperation = "delete_status";
-        $userId = Auth::guard('admin', 'user')->user()->id;
-        $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
-
-        if ($crudAccess == true) {
-            $career = Career::find($id);
-            if ($career) {
-
-                $career->delete();
-
-                return response()->json(["status" => true]);
-            } else {
-                return response()->json(["status" => false, "message" => "Team member not found not found."]);
-            }
-        } else {
-            return response()->json(["unauthorized" => true]);
-        }
+        return redirect()->route('careers.index')->with('success', 'Career updated successfully!');
     }
 
     public function crud_access($submenuId = null, $operation = null, $uId = null)
@@ -195,19 +70,5 @@ class CareerController extends Controller
                 return false;
             }
         }
-    }
-
-    public function updateSorting(Request $request)
-    {
-        $sortIds = $request->sort_Ids;
-        foreach ($sortIds as $key => $value) {
-            $menu = Team::find($value);
-            if ($menu) {
-                $menu->sortIds = $key;
-                $menu->save();
-            }
-        }
-        $frontValue = Team::orderby("sortIds", 'asc')->get();
-        return response()->json($frontValue);
     }
 }
