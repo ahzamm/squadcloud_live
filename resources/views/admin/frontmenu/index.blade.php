@@ -19,7 +19,7 @@
                 <div class="col-12">
                     <div class="card mt-3">
                         <div class="card-header">
-                            <h5 class="card-title"><span><i class="fa-solid fa-bars"></i></span> Front Menus</h5>
+                            <h5 class="card-title"><span><i class="fa-solid fa-bars"></i></span> Site Menus</h5>
                         </div>
                     </div>
                     <div class="row">
@@ -28,7 +28,7 @@
                                 <div class="card-header d-flex justify-content-between align-items-center">
                                     <div class="ml-auto">
                                         <a href="{{ route('frontmenu.create') }}" class="btn btn-success btn-sm">
-                                            <i class="fa fa-plus"></i> Add Front Menu
+                                            <i class="fa fa-plus"></i> Add Site Menu
                                         </a>
                                     </div>
                                 </div>
