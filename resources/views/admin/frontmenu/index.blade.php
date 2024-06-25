@@ -186,7 +186,8 @@
                   <td >${value.menu}</td>
                   <td>${value.slug}</td>
                   <td>${value.tagline}</td>
-                  <td>${value.title_image}</td>
+                  <td> <img width="100px" height="40px" src="{{ asset('frontend_assets/images/title/') }}/${value.title_image}" alt="service logo" /></td>
+                  <td>${value.page_title}</td>
                   <td>${value.is_active == 1?'active':'deactive'}</td>
                   <td>
                   <a href="` + editUrlFront + "/" + value.id + `" class="btn btn-sm btn-info"><i class="fa fa-edit"></i></a>
