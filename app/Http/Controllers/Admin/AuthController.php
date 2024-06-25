@@ -9,12 +9,18 @@ use Auth;
 use App\Models\Admin;
 use Illuminate\Support\Facades\Hash;
 use Validator;
-use Illuminate\Support\Str;
-
+use App\Services\EmailService;
 use App\Models\FrontEmail;
 
 class AuthController extends Controller
 {
+
+    protected $emailService;
+    public function __construct(EmailService $emailService)
+    {
+        $this->emailService = $emailService;
+    }
+
     public function showLoginForm()
     {
         return view('admin.auth.login');
@@ -41,7 +47,7 @@ class AuthController extends Controller
                 $request->session()->put('login_credentials', ['email' => $request->email, 'password' => $request->password]);
                 $email_settings = FrontEmail::where('status', 1)->first();
 
-                Admin::sendEmail(
+                $this->emailService->sendEmail(
                     'Squad Cloud OTP',
                     'EmailTemplates.otpEmailTemplate',
                     ['otp' => $token],

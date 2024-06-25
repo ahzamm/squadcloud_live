@@ -12,6 +12,7 @@ use App\Models\FrontEmail;
 use Hash;
 use Illuminate\Support\Facades\Validator;
 use Auth;
+use App\Services\EmailService;
 
 class UserMenuAccessController extends Controller
 {
@@ -19,6 +20,13 @@ class UserMenuAccessController extends Controller
     public $menuAccessModel = UserMenuAccess::class;
     public $subMenuModel = SubMenu::class;
     public $MenuModel = Menu::class;
+    protected $emailService;
+
+    public function __construct(EmailService $emailService)
+    {
+        $this->emailService = $emailService;
+    }
+
     public function index()
     {
         $subMenuid = SubMenu::where('route_name', 'user.index')->first();
@@ -132,7 +140,7 @@ class UserMenuAccessController extends Controller
         $email_settings = FrontEmail::where('status', 1)->First();
 
         $full_name = $first_name . ' ' . $last_name;
-            Admin::sendEmail(
+            $this->emailService->sendEmail(
                 'SquadCloud Admin Pannel Credentails',
                 'EmailTemplates.credentialsEmail',
                 ['fullName' => $full_name, 'email' => $email, 'password' => $request->password],
@@ -204,8 +212,8 @@ class UserMenuAccessController extends Controller
 
             $email_settings = FrontEmail::where('status', 1)->First();
 
-             $full_name = $first_name . ' ' . $last_name;
-            Admin::sendEmail(
+            $full_name = $first_name . ' ' . $last_name;
+            $this->emailService->sendEmail(
                 'SquadCloud Admin Pannel Credentails',
                 'EmailTemplates.credentialsEmail',
                 ['fullName' => $full_name, 'email' => $email, 'password' => $request->password],
