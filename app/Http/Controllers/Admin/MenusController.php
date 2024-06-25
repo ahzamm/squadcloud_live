@@ -38,15 +38,9 @@ class MenusController extends Controller
         return view('admin.backmenu.create', compact('icons'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(Request $request)
     {
-        // dd($request->has('submenu'));
         $hassubmenu = $request->has('hassubmenu') ? 1 : 0;
         $lastmenu = Menu::orderBy('order_menu')->get()->last();
         $lastmenuCount = $lastmenu != null ? $lastmenu->order_menu : 0;
@@ -157,13 +151,7 @@ class MenusController extends Controller
         return view("admin.backmenu.edit", compact('menus', 'icons'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(Request $request, $id)
     {
 
@@ -234,8 +222,11 @@ class MenusController extends Controller
             }
             if ($request->has('deletedSubmenus')) {
                 $deletedSubmenus = explode(',', $request->deletedSubmenus);
-                SubMenu::whereIn('id', $deletedSubmenus)->delete();
-                UserMenuAccess::whereIn('sub_menu_id', $deletedSubmenus)->delete();
+                $deletedSubmenus = array_filter($deletedSubmenus);
+                if (!empty($deletedSubmenus)) {
+                    SubMenu::whereIn('id', $deletedSubmenus)->delete();
+                    UserMenuAccess::whereIn('sub_menu_id', $deletedSubmenus)->delete();
+                }
             }
         }, 3);
         return redirect()->route("menus.index")->with('success', 'Menu Updated successfully');
