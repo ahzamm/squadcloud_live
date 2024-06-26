@@ -4,8 +4,8 @@
 #iq-relevent .slick-nav {top: calc(50% -  40px);}
 #watch-videos .slick-nav, #tv-shows-more .slick-nav{top: calc(50% -  50px);}
 #iq-music .slick-nav {top: calc(50% -  90px);}
-.slick-nav.prev-arrow { left: 2%; -webkit-transform: scaleX(-1); transform: scaleX(-1); z-index: 9; }
-.slick-nav.next-arrow { left: auto; right: 2%; }
+.slick-nav.prev-arrow { left: 2%; -webkit-transform: scaleX(-1) translateY(-50%); transform: scaleX(-1) translateY(-50%);top:50%; z-index: 9; }
+.slick-nav.next-arrow { left: auto; right: 2%;-webkit-transform: translateY(-50%); transform: translateY(-50%);top:50%; }
 /* .top-ten-slider .slick-nav.prev-arrow { left: -3%; } */
 /* .top-ten-slider .slick-nav.next-arrow { right: -3%; } */
 #video-suggest-slider .slick-nav {top: 0 !important; --border: rgba(255, 255, 255, 0)}

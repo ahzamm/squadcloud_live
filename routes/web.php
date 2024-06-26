@@ -43,6 +43,7 @@ use App\Http\Controllers\Site\AboutController;
 use App\Http\Controllers\Admin\ServiceController as AdminServiceController;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Site\SubscriberController;
+use App\Http\Controllers\Site\CareerController;
 
         // dd('Boot Not Found! Please Insert Media & Try Again Lator');
         Cache::forget('key');
@@ -87,6 +88,7 @@ use App\Http\Controllers\Site\SubscriberController;
          Route::get('/client', [ClientController::class, 'index'])->name('site.client');
          Route::get('/about', [AboutController::class, 'index'])->name('site.about');
          Route::get('/contact', [ContactController::class, 'index'])->name('site.contact');
+         Route::get('/career', [CareerController::class, 'index'])->name('site.career');
          Route::post('/contact-request', [ContactController::class, 'store'])->name('site.contact.request');
          Route::post('/manage_contacts', [ContactController::class, 'index'])->name('contact.manage_contact_forms_process');
          Route::post('/subscribe', [SubscriberController::class, 'store'])->name('subscribers.store');
@@ -183,6 +185,7 @@ use App\Http\Controllers\Site\SubscriberController;
         Route::post("sortSocial" , [SocialController::class , 'updateSorting'])->name("sort.social");
         Route::post("sortHomeSlider" , [HomeSliderController::class , 'updateSorting'])->name("sort.homeslider");
         Route::post("sortTeam" , [AdminTeamController::class , 'updateSorting'])->name("sort.team");
+        Route::post("sortJob" , [AdminJobController::class , 'updateSorting'])->name("sort.job");
 
 
 
