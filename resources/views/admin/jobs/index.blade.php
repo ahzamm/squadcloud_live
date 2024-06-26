@@ -25,17 +25,11 @@
                       <th>Sort</th>
                       <th>Serial#</th>
                       <th>Title</th>
+                      <th>Image</th>
                       <th>Description</th>
                       <th>Location</th>
                       <th>Employment Type</th>
-                      <th>Education Level</th>
-                      <th>Experience Level</th>
-                      <th>Skills</th>
                       <th>Salary Range</th>
-                      <th>Application Deadline</th>
-                      <th>Email</th>
-                      <th>Phone</th>
-                      <th>Date Posted</th>
                       <th>Status</th>
                       <th>Action</th>
                     </tr>
@@ -45,24 +39,17 @@
                     <tr class="table-row">
                         <td><i class="fas fa-sort" id="sort-serial"></i></td>
                         <td>{{ $key + 1 }}<input type="hidden" class="order-id"value="{{ $item->id }}"></td>
-                      <td>{{$item->job_title}}</td>
-                      <td>{{$item->job_description}}</td>
-                      <td>{{ $item->location }}</td>
-                      <td>{{ $item->employment_type }}</td>
-                      <td>{{ $item->education_level }}</td>
-                      <td>{{ $item->experience_level }}</td>
-                      <td>{{ $item->skills }}</td>
-                      <td>{{ $item->salary_range }}</td>
-                      <td>{{ $item->application_deadline }}</td>
-                      <td>{{ $item->email }}</td>
-                      <td>{{ $item->phone }}</td>
-                      <td>{{ $item->date_posted }}</td>
-                      <td>{{$item->is_active == 1?'active':'deactive'}}</td>
-                      <td class="d-flex justify-content-center" style="gap: 5px;">
-                        <a class="btn btn-primary btn-sm" href="{{ route('job.edit', $item->id) }}"><i class="fa fa-edit"></i></a>
-                        <button class="btn btn-danger btn-sm btnDeleteMenu" data-value="{{ $item->id }}"><i class="fa fa-trash"></i></button>
-                      </td>
-                    </td>
+                        <td>{{$item->job_title}}</td>
+                        <td><img width="40px" height="40px" src="{{ asset('frontend_assets/images/jobs/' . $item->image) }}"/></td>
+                        <td>{{$item->job_description}}</td>
+                        <td>{{ $item->location }}</td>
+                        <td>{{ $item->employment_type }}</td>
+                        <td>{{ $item->salary_range }}</td>
+                        <td>{{$item->is_active == 1?'active':'deactive'}}</td>
+                        <td class="d-flex justify-content-center" style="gap: 5px;">
+                            <a class="btn btn-primary btn-sm" href="{{ route('job.edit', $item->id) }}"><i class="fa fa-edit"></i></a>
+                            <button class="btn btn-danger btn-sm btnDeleteMenu" data-value="{{ $item->id }}"><i class="fa fa-trash"></i></button>
+                        </td>
                   </tr>
                   @endforeach
                 </tbody>
@@ -270,18 +257,12 @@
                         table += ` <tr>
                             <td><i class="fas fa-sort" id="sort-serial"></i></td>
                   <td>${index + 1 }<input type="hidden" class="order-id" value="${value.id}"></td>
-                   <td>${value.title}</td>
+                   <td>${value.job_title}</td>
+                   <td> <img width="40px" height="40px" src="{{ asset('frontend_assets/images/jobs/') }}/${value.image}"/></td>
                    <td>${value.description}</td>
                    <td>${value.location}</td>
                    <td>${value.employment_type}</td>
-                   <td>${value.education_level}</td>
-                   <td>${value.experience_level}</td>
-                   <td>${value.skills}</td>
                    <td>${value.salary_range}</td>
-                   <td>${value.application_deadline}</td>
-                   <td>${value.email}</td>
-                   <td>${value.phone}</td>
-                   <td>${value.date_posted}</td>
                   <td>${value.is_active == 1?'active':'deactive'}</td>
                   <td>
                   <a href="` + editUrlFront + "/" + value.id + `" class="btn btn-sm btn-info"><i class="fa fa-edit"></i></a>

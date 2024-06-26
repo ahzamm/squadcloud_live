@@ -115,7 +115,6 @@ $parentTitle = "Update";
                                             <option value="Content Writer" {{ old('department') == 'Content Writer' ? 'selected' : '' }}>Content Writer</option>
                                         </select>
                                     </div>
-
                                   </div>
                                   <div class="col-md-12">
                                     <div class="form-group">

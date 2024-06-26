@@ -10,6 +10,7 @@ use App\Models\SubMenu;
 use App\Models\UserMenuAccess;
 use App\Models\Job;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 use App\Models\Team;
 use Auth;
 
@@ -58,32 +59,41 @@ class JobController extends Controller
             "description"=>"required",
             "location"=>"required",
             "employment_type"=>"required",
-            "education_level"=>"required",
-            "experience_level"=>"required",
-            "skills"=>"required",
             "salary_range"=>"required",
-            "application_deadline"=>"required",
-            "email"=>"required",
-            "phone"=>"required",
         ];
+
         $valdiate = Validator::make($request->all(), $validatedData);
         if ($valdiate->fails()) {
+            dd($valdiate->errors());
             return redirect()->back()->withInput()->with('error', 'All Fields are required');
+        }
+
+        if (!$request->hasFile('image')) {
+            return redirect()->back()->withInput()->with('error', 'Image is required');
+        }
+
+        if ($request->hasFile('image')) {
+            if (!$request->file('image')->isValid() || !in_array($request->file('image')->extension(), ['jpeg', 'png', 'jpg'])) {
+                return redirect()->back()->withInput()->with('error', 'Please provide a valid image file of type: jpeg, png, or jpg.');
+            }
+        }
+
+        $filename = "";
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $extension = $file->getClientOriginalExtension();
+            $filename = Str::random(40) . '.' . $extension;
+            $file->move(public_path('frontend_assets/images/jobs/'), $filename);
         }
 
         $job = new Job();
         $job->job_title = $request['title'];
+        $job->image = $filename;
         $job->job_description = $request['description'];
         $job->location = $request['location'];
         $job->employment_type = $request['employment_type'];
-        $job->education_level = $request['education_level'];
-        $job->experience_level = $request['experience_level'];
-        $job->skills = $request['skills'];
         $job->salary_range = $request['salary_range'];
-        $job->application_deadline = $request['application_deadline'];
-        $job->email = $request['email'];
-        $job->phone = $request['phone'];
-        $job->date_posted = $request['date_posted'];
+        $job->tags = $request->input('tags');
         $job->is_active = $request->has('is_active') ? 1 : 0;
         $job->save();
 

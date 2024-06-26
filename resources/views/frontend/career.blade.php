@@ -225,6 +225,12 @@
 										<li>
 											<a href="#">Design</a>
 										</li>
+										<li>
+											<a href="#">Design</a>
+										</li>
+										<li>
+											<a href="#">Design</a>
+										</li>
 									</ul>
 								</div>
 								<div class="details">

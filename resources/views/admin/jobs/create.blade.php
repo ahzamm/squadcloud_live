@@ -1,5 +1,53 @@
 @extends('admin.layouts.app')
 @section('content')
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #f4f4f4;
+    }
+    .tag-container {
+        display: flex;
+        flex-wrap: wrap;
+        padding: 5px;
+        width: 300px;
+        border: 1px solid #ccc;
+        background-color: #fff;
+        border-radius: 5px;
+    }
+    .tag-container input {
+        flex-grow: 1;
+        border: none;
+        outline: none;
+        padding: 5px;
+        font-size: 16px;
+    }
+    .tag {
+        display: inline-flex;
+        align-items: center;
+        padding: 5px 10px;
+        margin: 2px;
+        background-color: #007bff;
+        color: #fff;
+        border-radius: 3px;
+        position: relative;
+    }
+    .tag:nth-child(odd) {
+        background-color: #28a745;
+    }
+    .tag .close {
+        display: none;
+        margin-left: 8px;
+        cursor: pointer;
+        font-weight: bold;
+    }
+    .tag:hover .close {
+        display: inline;
+    }
+</style>
 <div class="content-wrapper">
   <!-- Main content -->
   <section class="content">
@@ -27,6 +75,15 @@
                     @enderror
                   </div>
                 </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="">Image <span style="color: red">*</span></label>
+                      <input type="file" name="image">
+                      @error('image')
+                      <p class="text-danger mt-2 mb-0 text-sm">{{$message}}</p>
+                      @enderror
+                    </div>
+                  </div>
                 <div class="col-md-12">
                   <div class="form-group">
                     <label for="">Description <span style="color: red">*</span></label>
@@ -45,41 +102,15 @@
                       @enderror
                     </div>
                   </div>
-
                   <div class="col-md-6">
                     <div class="form-group">
-                      <label for="">Employement Type <span style="color: red">*</span></label>
-                      <input type="text" class="form-control" name="employment_type" placeholder="Example : 15 Mbps" required value="{{old('employment_type')}}">
-                      @error('employment_type')
-                      <p class="text-danger mt-2 mb-0 text-sm">{{$message}}</p>
-                      @enderror
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label for="">Education Level <span style="color: red">*</span></label>
-                      <input type="text" class="form-control" name="education_level" placeholder="Example : 15 Mbps" required value="{{old('education_level')}}">
-                      @error('education_level')
-                      <p class="text-danger mt-2 mb-0 text-sm">{{$message}}</p>
-                      @enderror
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label for="">Experience Level <span style="color: red">*</span></label>
-                      <input type="text" class="form-control" name="experience_level" placeholder="Example : 15 Mbps" required value="{{old('experience_level')}}">
-                      @error('experience_level')
-                      <p class="text-danger mt-2 mb-0 text-sm">{{$message}}</p>
-                      @enderror
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label for="">Skills <span style="color: red">*</span></label>
-                      <input type="text" class="form-control" name="skills" placeholder="Example : 15 Mbps" required value="{{old('skills')}}">
-                      @error('skills')
-                      <p class="text-danger mt-2 mb-0 text-sm">{{$message}}</p>
-                      @enderror
+                        <label for="employment_type">Employement Type <span style="color: red">*</span></label>
+                        <select class="form-control" id="employment_type" name="employment_type">
+                            <option value="">Select Employement Type</option>
+                            <option value="Full Time" {{ old('employment_type') == 'Full Time' ? 'selected' : '' }}>Full Time</option>
+                            <option value="Part Time" {{ old('employment_type') == 'Part Time' ? 'selected' : '' }}>Part Time</option>
+                            <option value="Intern" {{ old('employment_type') == 'Intern' ? 'selected' : '' }}>Intern</option>
+                        </select>
                     </div>
                   </div>
                   <div class="col-md-6">
@@ -92,41 +123,10 @@
                     </div>
                   </div>
                   <div class="col-md-6">
-                    <div class="form-group">
-                      <label for="">Application Deadline <span style="color: red">*</span></label>
-                      <input type="text" class="form-control" name="application_deadline" placeholder="Example : 15 Mbps" required value="{{old('application_deadline')}}">
-                      @error('application_deadline')
-                      <p class="text-danger mt-2 mb-0 text-sm">{{$message}}</p>
-                      @enderror
+                    <div class="tag-container">
+                        <input type="text" id="tag-input" placeholder="Add a tag and press Enter">
                     </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label for="">Email <span style="color: red">*</span></label>
-                      <input type="text" class="form-control" name="email" placeholder="Example : 15 Mbps" required value="{{old('email')}}">
-                      @error('email')
-                      <p class="text-danger mt-2 mb-0 text-sm">{{$message}}</p>
-                      @enderror
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label for="">Phone <span style="color: red">*</span></label>
-                      <input type="text" class="form-control" name="phone" placeholder="Example : 15 Mbps" required value="{{old('phone')}}">
-                      @error('phone')
-                      <p class="text-danger mt-2 mb-0 text-sm">{{$message}}</p>
-                      @enderror
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label for="">Date Posted <span style="color: red">*</span></label>
-                      <input type="text" class="form-control" name="date_posted" placeholder="Example : 15 Mbps" required value="{{old('date_posted')}}">
-                      @error('date_posted')
-                      <p class="text-danger mt-2 mb-0 text-sm">{{$message}}</p>
-                      @enderror
-                    </div>
-                  </div>
+                </div>
                 <div class="col-md-6">
                   <div class="form-group clearfix">
                     <div class="icheck-success d-inline">
@@ -156,5 +156,35 @@
       height: 300
     });
   });
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const tagContainer = document.querySelector('.tag-container');
+        const input = document.getElementById('tag-input');
+
+        input.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter' && input.value.trim() !== '') {
+                event.preventDefault();
+                addTag(input.value);
+                input.value = '';
+            }
+        });
+
+        function addTag(tag) {
+            const tagElement = document.createElement('span');
+            tagElement.classList.add('tag');
+            tagElement.textContent = tag;
+
+            const closeIcon = document.createElement('span');
+            closeIcon.classList.add('close');
+            closeIcon.textContent = '×';
+            closeIcon.addEventListener('click', () => {
+                tagElement.remove();
+            });
+
+            tagElement.appendChild(closeIcon);
+            tagContainer.insertBefore(tagElement, input);
+        }
+    });
 </script>
 @endpush
