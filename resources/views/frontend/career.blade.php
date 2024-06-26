@@ -26,14 +26,16 @@
 				<div class="container">
 					<div class="row fullscreen d-flex align-items-center justify-content-center" style="height: calc(100vh - 100px)">
 						<div class="banner-content col-lg-12">
-							<h1 class="text-white">
+							{{-- <h1 class="text-white">
 								<!-- <span>15</span>  -->
 								Take your
 								career to the
 								next level
 							</h1>
 
-							<p class="text-white"> <span>Jobs in:</span> Tecnology, Business, Consulting, IT Company, Design, Development</p>
+							<p class="text-white"> <span>Jobs in:</span> Tecnology, Business, Consulting, IT Company, Design, Development</p> --}}
+
+                            {!!$career->top_heading!!}
 						</div>
 					</div>
 				</div>
@@ -141,8 +143,7 @@
 					<div class="row d-flex justify-content-center">
 						<div class="menu-content pb-60 col-lg-10">
 							<div class="title text-center">
-								<h1 class="mb-10">Featured Job Categories</h1>
-								<p>Who are in extremely love with eco friendly system.</p>
+								{!!$career->middle_heading!!}
 							</div>
 						</div>
 					</div>
@@ -466,10 +467,7 @@
 					<div class="row d-flex justify-content-center">
 						<div class="menu-content col-lg-9">
 							<div class="title text-center">
-								<h1 class="mb-10 text-white">No job available according to your experience?</h1>
-								<p class="text-white">Send your resume to <code>hr@squadcloud.co</code> to be considered for future job.</p>
-								<!-- <a class="primary-btn" href="#">I am a Candidate</a>
-								<a class="primary-btn" href="#">Request Free Demo</a> -->
+								{!!$career->bottom_heading!!}
 							</div>
 						</div>
 					</div>
