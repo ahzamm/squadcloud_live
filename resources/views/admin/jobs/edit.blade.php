@@ -23,109 +23,47 @@
                   <div class="form-group">
                     <label for="">Job Title <span style="color: red">*</span></label>
                     <input type="text" class="form-control" name="job_title"  value="{{old('job_title') == NULL?$job->job_title:old('job_title') }}">
-                    @error('job_title')
-                    <p class="text-danger mt-2 mb-0 text-sm">{{$message}}</p>
-                    @enderror
                   </div>
                 </div>
                 </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="">Image <span style="color: red">*</span></label>
+                      @isset($job->image)
+                      <img src="{{ asset('frontend_assets/images/jobs/'. $job->image) }}" height="60"
+                      width="120" alt="" srcset="" >
+                      @endisset
+                      <br><br>
+                      <input type="file" value="{{ $job->image }}" name="image">
+                    </div>
+                  </div>
                 <div class="col-md-12">
                     <div class="form-group">
                       <label for="">Description <span style="color: red">*</span></label>
                       <textarea name="job_description" rows="4" placeholder="Example : How are you" required class="form-control summernote">{{$job->job_description}}</textarea>
-                      @error('job_description')
-                      <p class="text-danger mt-2 mb-0 text-sm">{{$message}}</p>
-                      @enderror
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
                       <label for="">Location <span style="color: red">*</span></label>
                       <input type="text" class="form-control" name="location"  value="{{old('location') == NULL?$job->location:old('location') }}">
-                      @error('location')
-                      <p class="text-danger mt-2 mb-0 text-sm">{{$message}}</p>
-                      @enderror
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
-                      <label for="">Employment Type <span style="color: red">*</span></label>
-                      <input type="text" class="form-control" name="employment_type"  value="{{old('employment_type') == NULL?$job->employment_type:old('employment_type') }}">
-                      @error('employment_type')
-                      <p class="text-danger mt-2 mb-0 text-sm">{{$message}}</p>
-                      @enderror
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label for="">Education Level <span style="color: red">*</span></label>
-                      <input type="text" class="form-control" name="education_level"  value="{{old('education_level') == NULL?$job->education_level:old('education_level') }}">
-                      @error('education_level')
-                      <p class="text-danger mt-2 mb-0 text-sm">{{$message}}</p>
-                      @enderror
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label for="">Experience Level <span style="color: red">*</span></label>
-                      <input type="text" class="form-control" name="experience_level"  value="{{old('experience_level') == NULL?$job->experience_level:old('experience_level') }}">
-                      @error('experience_level')
-                      <p class="text-danger mt-2 mb-0 text-sm">{{$message}}</p>
-                      @enderror
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label for="">Skills <span style="color: red">*</span></label>
-                      <input type="text" class="form-control" name="skills"  value="{{old('skills') == NULL?$job->skills:old('skills') }}">
-                      @error('skills')
-                      <p class="text-danger mt-2 mb-0 text-sm">{{$message}}</p>
-                      @enderror
+                        <label for="employment_type">Employement Type <span style="color: red">*</span></label>
+                        <select class="form-control" id="employment_type" name="employment_type">
+                            <option value="">Select Employement Type</option>
+                            <option value="Full Time" {{ (old('employment_type') ?? $job->employment_type) == 'Full Time' ? 'selected' : '' }}>Full Time</option>
+                            <option value="Part Time" {{ (old('employment_type') ?? $job->employment_type) == 'Part Time' ? 'selected' : '' }}>Part Time</option>
+                            <option value="Intern" {{ (old('employment_type') ?? $job->employment_type) == 'Intern' ? 'selected' : '' }}>Intern</option>
+                        </select>
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
                       <label for="">Salary Range <span style="color: red">*</span></label>
                       <input type="text" class="form-control" name="salary_range"  value="{{old('salary_range') == NULL?$job->salary_range:old('salary_range') }}">
-                      @error('salary_range')
-                      <p class="text-danger mt-2 mb-0 text-sm">{{$message}}</p>
-                      @enderror
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label for="">Application Deadline <span style="color: red">*</span></label>
-                      <input type="text" class="form-control" name="application_deadline"  value="{{old('application_deadline') == NULL?$job->application_deadline:old('application_deadline') }}">
-                      @error('application_deadline')
-                      <p class="text-danger mt-2 mb-0 text-sm">{{$message}}</p>
-                      @enderror
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label for="">Email <span style="color: red">*</span></label>
-                      <input type="text" class="form-control" name="email"  value="{{old('email') == NULL?$job->email:old('email') }}">
-                      @error('email')
-                      <p class="text-danger mt-2 mb-0 text-sm">{{$message}}</p>
-                      @enderror
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label for="">Phone <span style="color: red">*</span></label>
-                      <input type="text" class="form-control" name="phone"  value="{{old('phone') == NULL?$job->phone:old('phone') }}">
-                      @error('phone')
-                      <p class="text-danger mt-2 mb-0 text-sm">{{$message}}</p>
-                      @enderror
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label for="">Date Posted <span style="color: red">*</span></label>
-                      <input type="text" class="form-control" name="date_posted"  value="{{old('date_posted') == NULL?$job->date_posted:old('date_posted') }}">
-                      @error('date_posted')
-                      <p class="text-danger mt-2 mb-0 text-sm">{{$message}}</p>
-                      @enderror
                     </div>
                   </div>
                 <div class="col-md-6">

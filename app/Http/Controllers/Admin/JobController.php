@@ -128,7 +128,7 @@ class JobController extends Controller
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
 
         if ($crudAccess == false) {
-            return redirect()->back()->withInput()->with('error', 'No right to edit a service');
+            return redirect()->back()->withInput()->with('error', 'No right to edit a vacency');
         }
 
         $validatedData = [
@@ -136,13 +136,7 @@ class JobController extends Controller
             "job_description"=>"required",
             "location"=>"required",
             "employment_type"=>"required",
-            "education_level"=>"required",
-            "experience_level"=>"required",
-            "skills"=>"required",
             "salary_range"=>"required",
-            "application_deadline"=>"required",
-            "email"=>"required",
-            "phone"=>"required",
         ];
         $valdiate = Validator::make($request->all(), $validatedData);
 
@@ -151,20 +145,30 @@ class JobController extends Controller
             return redirect()->back()->withInput()->with('error', 'All Fields are required');
         }
 
+        if ($request->hasFile('logo')) {
+            if (!$request->file('logo')->isValid() || !in_array($request->file('logo')->extension(), ['jpeg', 'png', 'jpg'])) {
+                return redirect()->back()->withInput()->with('error', 'Please provide a valid background image file of type: jpeg, png, or jpg.');
+            }
+        }
+
         $job = Job::findOrFail($id);
+
+        if ($request->hasFile('image')) {
+            if ($job->logo && file_exists(public_path('frontend_assets/images/jobs/' . $job->image))) {
+                unlink(public_path('frontend_assets/images/jobs/' . $job->image));
+            }
+            $file = $request->file('image');
+            $extension = $file->getClientOriginalExtension();
+            $filename = Str::random(40) . '.' . $extension;
+            $file->move(public_path('frontend_assets/images/jobs'), $filename);
+            $job->image = $filename;
+        }
 
         $job->job_title = $request['job_title'];
         $job->job_description = $request['job_description'];
         $job->location = $request['location'];
         $job->employment_type = $request['employment_type'];
-        $job->education_level = $request['education_level'];
-        $job->experience_level = $request['experience_level'];
-        $job->skills = $request['skills'];
         $job->salary_range = $request['salary_range'];
-        $job->application_deadline = $request['application_deadline'];
-        $job->email = $request['email'];
-        $job->phone = $request['phone'];
-        $job->date_posted = $request['date_posted'];
         $job->is_active = $request->has('is_active') ? 1 : 0;
         $job->save();
 
