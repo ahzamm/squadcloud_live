@@ -7,12 +7,10 @@
 @foreach ($jobs as $job)
     <div class="single-post d-flex flex-row">
         <div class="thumb">
-            <img src="{{ asset('frontend_assets/images/jobs/' . $job->image) }}" width="120" height="60">
+            {{-- <img src="{{ asset('frontend_assets/images/jobs/' . $job->image) }}" width="120" height="60"> --}}
             <ul class="tags">
                 @foreach (explode(',', $job->tags) as $tag)
-                    <li>
-                        <a href="#">{{ $tag }}</a>
-                    </li>
+                    <li><a>{{ $tag }}</a></li>
                 @endforeach
             </ul>
         </div>

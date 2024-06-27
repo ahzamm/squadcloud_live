@@ -76,7 +76,7 @@
 <!-- End features Area -->
 
 <!-- Start popular-post Area -->
-<section class="popular-post-area pt-100">
+{{-- <section class="popular-post-area pt-100">
     <div class="container">
         <div class="row align-items-center">
             <div class="active-popular-post-carusel">
@@ -122,11 +122,11 @@
             </div>
         </div>
     </div>
-</section>
+</section> --}}
 <!-- End popular-post Area -->
 
 <!-- Start feature-cat Area -->
-<section class="feature-cat-area pt-100" id="category">
+{{-- <section class="feature-cat-area pt-100" id="category">
     <div class="container">
         <div class="row d-flex justify-content-center">
             <div class="menu-content pb-60 col-lg-10">
@@ -186,7 +186,7 @@
             </div>
         </div>
     </div>
-</section>
+</section> --}}
 <!-- End feature-cat Area -->
 
 <!-- Start post Area -->
