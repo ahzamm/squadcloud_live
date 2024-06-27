@@ -5,13 +5,11 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Service;
-use DB;
 use App\Models\SubMenu;
 use App\Models\UserMenuAccess;
 use App\Models\Job;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
-use App\Models\Team;
 use Auth;
 
 class JobController extends Controller
@@ -56,6 +54,7 @@ class JobController extends Controller
 
         $validatedData = [
             "title"=>"required",
+            "company"=>"required",
             "description"=>"required",
             "location"=>"required",
             "employment_type"=>"required",
@@ -88,6 +87,7 @@ class JobController extends Controller
 
         $job = new Job();
         $job->job_title = $request['title'];
+        $job->company = $request['company'];
         $job->image = $filename;
         $job->job_description = $request['description'];
         $job->location = $request['location'];
@@ -134,6 +134,7 @@ class JobController extends Controller
 
         $validatedData = [
             "job_title"=>"required",
+            "company"=>"required",
             "job_description"=>"required",
             "location"=>"required",
             "employment_type"=>"required",
@@ -166,6 +167,7 @@ class JobController extends Controller
         }
 
         $job->job_title = $request['job_title'];
+        $job->company = $request['company'];
         $job->job_description = $request['job_description'];
         $job->location = $request['location'];
         $job->employment_type = $request['employment_type'];

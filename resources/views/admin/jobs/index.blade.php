@@ -27,6 +27,7 @@
                                                 <th>Serial#</th>
                                                 <th>Title</th>
                                                 <th>Image</th>
+                                                <th>Company</th>
                                                 <th>Description</th>
                                                 <th>Location</th>
                                                 <th>Employment Type</th>
@@ -45,6 +46,7 @@
                                                     <td><img width="40px" height="40px"
                                                             src="{{ asset('frontend_assets/images/jobs/' . $item->image) }}" />
                                                     </td>
+                                                    <td>{{ $item->company }}</td>
                                                     <td>{!! $item->job_description !!}</td>
                                                     <td>{{ $item->location }}</td>
                                                     <td>{{ $item->employment_type }}</td>
@@ -258,6 +260,7 @@
                   <td>${index + 1 }<input type="hidden" class="order-id" value="${value.id}"></td>
                    <td>${value.job_title}</td>
                    <td> <img width="40px" height="40px" src="{{ asset('frontend_assets/images/jobs/') }}/${value.image}"/></td>
+                   <td>${value.company}</td>
                    <td>${value.job_description}</td>
                    <td>${value.location}</td>
                    <td>${value.employment_type}</td>

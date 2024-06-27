@@ -76,6 +76,12 @@
                       <input type="file" value="{{ $job->image }}" name="image">
                     </div>
                   </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="">Company<span style="color: red">*</span></label>
+                      <input type="text" class="form-control" name="company"  value="{{old('company') == NULL ? $job->company : old('company') }}">
+                    </div>
+                  </div>
                 <div class="col-md-12">
                     <div class="form-group">
                       <label for="">Description <span style="color: red">*</span></label>

@@ -216,7 +216,7 @@
                         <div class="title d-flex flex-row justify-content-between">
                             <div class="titles">
                                 <a href="#"><h4>{{$job->job_title}}</h4></a>
-                                <h6>Premium Labels Limited</h6>
+                                <h6>{{$job->company}}</h6>
                             </div>
                             <ul class="btns">
                                     <li><a href="#"><span class="lnr lnr-heart"></span></a></li>

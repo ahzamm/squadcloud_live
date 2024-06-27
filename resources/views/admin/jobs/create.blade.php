@@ -78,6 +78,12 @@
                       <input type="file" name="image">
                     </div>
                   </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="">Company <span style="color: red">*</span></label>
+                      <input type="text" class="form-control" name="company" placeholder="Example : 15 Mbps" required value="{{old('company')}}">
+                    </div>
+                  </div>
                 <div class="col-md-12">
                   <div class="form-group">
                     <label for="">Description <span style="color: red">*</span></label>
