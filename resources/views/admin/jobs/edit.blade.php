@@ -1,5 +1,45 @@
 @extends('admin.layouts.app')
 @section('content')
+<style>
+    .tag-container {
+        display: flex;
+        flex-wrap: wrap;
+        padding: 5px;
+        width: 300px;
+        border: 1px solid #ccc;
+        background-color: #fff;
+        border-radius: 5px;
+    }
+    .tag-container input {
+        flex-grow: 1;
+        border: none;
+        outline: none;
+        padding: 5px;
+        font-size: 16px;
+    }
+    .tag {
+        display: inline-flex;
+        align-items: center;
+        padding: 5px 10px;
+        margin: 2px;
+        background-color: #007bff;
+        color: #fff;
+        border-radius: 3px;
+        position: relative;
+    }
+    .tag:nth-child(odd) {
+        background-color: #28a745;
+    }
+    .tag .close {
+        display: none;
+        margin-left: 8px;
+        cursor: pointer;
+        font-weight: bold;
+    }
+    .tag:hover .close {
+        display: inline;
+    }
+</style>
 <div class="content-wrapper">
   <!-- Main content -->
   <section class="content">
@@ -14,7 +54,7 @@
               </a>
             </div>
           </div>
-          <form action="{{route('jobs.update',$job->id)}}" method="POST" enctype="multipart/form-data">
+          <form id="jobForm" action="{{route('jobs.update', $job->id)}}" method="POST" enctype="multipart/form-data">
             @method('PUT')
             <div class="card-body pad">
               @csrf
@@ -22,9 +62,8 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label for="">Job Title <span style="color: red">*</span></label>
-                    <input type="text" class="form-control" name="job_title"  value="{{old('job_title') == NULL?$job->job_title:old('job_title') }}">
+                    <input type="text" class="form-control" name="job_title"  value="{{old('job_title') == NULL ? $job->job_title : old('job_title') }}">
                   </div>
-                </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
@@ -40,13 +79,13 @@
                 <div class="col-md-12">
                     <div class="form-group">
                       <label for="">Description <span style="color: red">*</span></label>
-                      <textarea name="job_description" rows="4" placeholder="Example : How are you" required class="form-control summernote">{{$job->job_description}}</textarea>
+                      <textarea name="job_description" rows="4" placeholder="Example : How are you" required class="form-control summernote">{{ old('job_description') == NULL ? $job->job_description : old('job_description') }}</textarea>
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
                       <label for="">Location <span style="color: red">*</span></label>
-                      <input type="text" class="form-control" name="location"  value="{{old('location') == NULL?$job->location:old('location') }}">
+                      <input type="text" class="form-control" name="location"  value="{{old('location') == NULL ? $job->location : old('location') }}">
                     </div>
                   </div>
                   <div class="col-md-6">
@@ -63,13 +102,19 @@
                   <div class="col-md-6">
                     <div class="form-group">
                       <label for="">Salary Range <span style="color: red">*</span></label>
-                      <input type="text" class="form-control" name="salary_range"  value="{{old('salary_range') == NULL?$job->salary_range:old('salary_range') }}">
+                      <input type="text" class="form-control" name="salary_range"  value="{{old('salary_range') == NULL ? $job->salary_range : old('salary_range') }}">
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="tag-container">
+                        <input type="text" id="tag-input" placeholder="Add a tag and press Enter">
+                        <input type="hidden" name="tags" id="tags" value="{{ old('tags') == NULL ? $job->tags : old('tags') }}">
                     </div>
                   </div>
                 <div class="col-md-6">
                   <div class="form-group clearfix">
                     <div class="icheck-success d-inline">
-                      <input type="checkbox"  {{ $job->is_active == 1? 'checked' :'unchecked' }} name="is_active" id="checkboxSuccess1">
+                      <input type="checkbox"  {{ $job->is_active == 1 ? 'checked' :'unchecked' }} name="is_active" id="checkboxSuccess1">
                       <label for="checkboxSuccess1">
                         Status (On & Off)
                       </label>
@@ -95,5 +140,59 @@
       height:300
     });
   });
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const tagContainer = document.querySelector('.tag-container');
+        const input = document.getElementById('tag-input');
+        const tagsInput = document.getElementById('tags');
+        let tags = tagsInput.value.split(',').filter(tag => tag.trim() !== '');
+
+        function renderTags() {
+            tags.forEach(tag => addTag(tag));
+        }
+
+        function addTag(tag) {
+            const tagElement = document.createElement('span');
+            tagElement.classList.add('tag');
+            tagElement.textContent = tag;
+
+            const closeIcon = document.createElement('span');
+            closeIcon.classList.add('close');
+            closeIcon.textContent = '×';
+            closeIcon.addEventListener('click', () => {
+                removeTag(tag);
+                tagElement.remove();
+            });
+
+            tagElement.appendChild(closeIcon);
+            tagContainer.insertBefore(tagElement, input);
+        }
+
+        function removeTag(tag) {
+            tags = tags.filter(t => t !== tag);
+            updateTagsInput();
+        }
+
+        function updateTagsInput() {
+            tagsInput.value = tags.join(',');
+        }
+
+        input.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter' && input.value.trim() !== '') {
+                event.preventDefault();
+                addTag(input.value);
+                tags.push(input.value);
+                input.value = '';
+                updateTagsInput();
+            }
+        });
+
+        document.getElementById('jobForm').addEventListener('submit', () => {
+            updateTagsInput();
+        });
+
+        renderTags();
+    });
 </script>
 @endpush

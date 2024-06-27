@@ -62,7 +62,7 @@
               </a>
             </div>
           </div>
-          <form action="{{route('jobs.store')}}" method="POST" enctype="multipart/form-data">
+          <form id="jobForm" action="{{route('jobs.store')}}" method="POST" enctype="multipart/form-data">
             <div class="card-body pad">
               @csrf
               <div class="row">
@@ -110,6 +110,7 @@
                   <div class="col-md-6">
                     <div class="tag-container">
                         <input type="text" id="tag-input" placeholder="Add a tag and press Enter">
+                        <input type="hidden" name="tags" id="tags">
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -146,6 +147,8 @@
     document.addEventListener('DOMContentLoaded', () => {
         const tagContainer = document.querySelector('.tag-container');
         const input = document.getElementById('tag-input');
+        const tagsInput = document.getElementById('tags');
+        let tags = [];
 
         input.addEventListener('keydown', (event) => {
             if (event.key === 'Enter' && input.value.trim() !== '') {
@@ -164,12 +167,28 @@
             closeIcon.classList.add('close');
             closeIcon.textContent = '×';
             closeIcon.addEventListener('click', () => {
+                removeTag(tag);
                 tagElement.remove();
             });
 
             tagElement.appendChild(closeIcon);
             tagContainer.insertBefore(tagElement, input);
+            tags.push(tag);
+            updateTagsInput();
         }
+
+        function removeTag(tag) {
+            tags = tags.filter(t => t !== tag);
+            updateTagsInput();
+        }
+
+        function updateTagsInput() {
+            tagsInput.value = tags.join(',');
+        }
+
+        document.getElementById('jobForm').addEventListener('submit', () => {
+            updateTagsInput();
+        });
     });
 </script>
 @endpush

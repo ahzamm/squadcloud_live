@@ -60,11 +60,11 @@ class JobController extends Controller
             "location"=>"required",
             "employment_type"=>"required",
             "salary_range"=>"required",
+            "tags" => "required"
         ];
 
         $valdiate = Validator::make($request->all(), $validatedData);
         if ($valdiate->fails()) {
-            dd($valdiate->errors());
             return redirect()->back()->withInput()->with('error', 'All Fields are required');
         }
 
@@ -97,8 +97,9 @@ class JobController extends Controller
         $job->is_active = $request->has('is_active') ? 1 : 0;
         $job->save();
 
-        return redirect()->route('jobs.index')->with('success', 'Jop Added member added successfully!');
+        return redirect()->route('jobs.index')->with('success', 'Job added successfully!');
     }
+
 
     public function show($id)
     {
@@ -169,6 +170,7 @@ class JobController extends Controller
         $job->location = $request['location'];
         $job->employment_type = $request['employment_type'];
         $job->salary_range = $request['salary_range'];
+        $job->tags = $request->input('tags');
         $job->is_active = $request->has('is_active') ? 1 : 0;
         $job->save();
 
