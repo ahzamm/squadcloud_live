@@ -2,8 +2,6 @@
 @section('home_select', 'active')
 @section('content')
 
-
-
 <style>
    header#main-header {
       background: rgb(100 5 15) !important;
@@ -11,10 +9,7 @@
    /* Client Section */
    section#career {
       min-height: 100vh;
-      /* padding-bottom: 50px; */
    }
-
-
 </style>
 
 <section id="career" class="position-relative">
@@ -26,15 +21,6 @@
 				<div class="container">
 					<div class="row fullscreen d-flex align-items-center justify-content-center" style="height: calc(100vh - 100px)">
 						<div class="banner-content col-lg-12">
-							{{-- <h1 class="text-white">
-								<!-- <span>15</span>  -->
-								Take your
-								career to the
-								next level
-							</h1>
-
-							<p class="text-white"> <span>Jobs in:</span> Tecnology, Business, Consulting, IT Company, Design, Development</p> --}}
-
                             {!!$career->top_heading!!}
 						</div>
 					</div>
@@ -207,10 +193,10 @@
 					<div class="row justify-content-center d-flex">
 						<div class="col-lg-8 post-list">
 							<ul class="cat-list">
-								<li><a href="#">Recent</a></li>
-								<li><a href="#">Full Time</a></li>
-								<li><a href="#">Intern</a></li>
-								<li><a href="#" style="white-space:nowrap">part Time</a></li>
+								<li><a href="{{ route('site.career', ['employment_type' => 'recent']) }}">Recent</a></li>
+								<li><a href="{{ route('jobs.filter', ['employment_type' => 'Full Time']) }}">Full Time</a></li>
+								<li><a href="{{ route('jobs.filter', ['employment_type' => 'Intern']) }}">Intern</a></li>
+								<li><a href="{{ route('jobs.filter', ['employment_type' => 'Part Time']) }}">Part Time</a></li>
 							</ul>
                             @foreach ($jobs as $job)
 							<div class="single-post d-flex flex-row">
@@ -231,8 +217,8 @@
 											<h6>Premium Labels Limited</h6>
 										</div>
 										<ul class="btns">
-											<li><a href="#"><span class="lnr lnr-heart"></span></a></li>
-											<li><a href="#">Apply</a></li>
+												<li><a href="#"><span class="lnr lnr-heart"></span></a></li>
+												<li><a href="#">Apply</a></li>
 										</ul>
 									</div>
 									<p>
@@ -244,15 +230,12 @@
 								</div>
 							</div>
                             @endforeach
-							<!-- <a class="text-uppercase loadmore-btn mx-auto d-block" href="#">Load More job Posts</a> -->
-
 						</div>
 
 					</div>
 				</div>
 			</section>
 			<!-- End post Area -->
-
 
 			<!-- Start callto-action Area -->
 			<section class="callto-action-area section-gap" id="join">
@@ -267,10 +250,6 @@
 				</div>
 			</section>
 			<!-- End calto-action Area -->
-
-
-
-
 
    </div>
 </section>
@@ -300,5 +279,4 @@
             </div>
         </div>
     </div>
-@endsection()
-
+@endsection

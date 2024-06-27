@@ -13,4 +13,15 @@ class CareerController extends Controller
         $jobs = Job::where('is_active', 1)->orderby("sortIds" , "asc")->get();
         return view('frontend.career', compact('career', 'jobs'));
     }
+
+    public function filterJobs($employment_type)
+    {
+        $career = Career::first();
+        if ($employment_type == 'recent') {
+            $jobs = Job::where('is_active', 1)->orderby("sortIds" , "asc")->get();
+        } else {
+            $jobs = Job::where('employment_type', $employment_type)->where('is_active', 1)->orderby("sortIds" , "asc")->get();
+        }
+        return view('frontend.career', compact('career', 'jobs'));
+    }
 }

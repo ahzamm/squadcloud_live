@@ -92,6 +92,7 @@ use App\Http\Controllers\Site\CareerController;
          Route::post('/contact-request', [ContactController::class, 'store'])->name('site.contact.request');
          Route::post('/manage_contacts', [ContactController::class, 'index'])->name('contact.manage_contact_forms_process');
          Route::post('/subscribe', [SubscriberController::class, 'store'])->name('subscribers.store');
+         Route::get('/career/employement_type={employment_type}', [CareerController::class, 'filterJobs'])->name('jobs.filter');
 
         // End Of Contact Routes From Site section
         Route::prefix('admin')->group(function () {
