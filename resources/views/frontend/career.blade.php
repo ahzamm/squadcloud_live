@@ -291,7 +291,7 @@
             var employmentType = $(this).data('employment-type');
 
             $.ajax({
-                url: '{{ route('jobs.filter') }}',
+                url: '{{ route('site.career') }}',
                 type: 'GET',
                 data: {
                     employment_type: employmentType
@@ -307,7 +307,7 @@
 
         // Load all jobs when the page is first loaded
         $.ajax({
-            url: '{{ route('jobs.filter') }}',
+            url: '{{ route('site.career') }}',
             type: 'GET',
             data: {
                 employment_type: 'recent'

@@ -9,42 +9,23 @@ use Illuminate\Http\Request;
 
 class CareerController extends Controller
 {
-    // public function index(){
-    //     $career = Career::first();
-    //     $jobs = Job::where('is_active', 1)->orderby("sortIds" , "asc")->get();
-    //     return view('frontend.career', compact('career', 'jobs'));
-    // }
-
-    // public function filterJobs(Request $request)
-    // {
-    //     $career = Career::first();
-    //     $employment_type = $request->employment_type;
-    //     $jobs = Job::where('employment_type', $employment_type)->get();
-
-    //     if ($request->ajax()) {
-    //         return view('frontend.job_listings', compact('jobs'))->render();
-    //     }
-
-    //     return view('frontend.career', compact('career', 'jobs'));
-    // }
-
     public function index(Request $request)
-{
-    $career = Career::first();
-    $employment_type = $request->employment_type;
+    {
+        $career = Career::first();
+        $employment_type = $request->employment_type;
 
-    if ($employment_type == 'recent' || !$employment_type) {
-        $jobs = Job::where('is_active', 1)->orderby("sortIds" , "asc")->get();
-    } else {
-        $jobs = Job::where('employment_type', $employment_type)->get();
+        if ($employment_type == 'recent' || !$employment_type) {
+            $jobs = Job::where('is_active', 1)->orderby("sortIds", "asc")->get();
+        } else {
+            $jobs = Job::where('employment_type', $employment_type)->get();
+        }
+
+        if ($request->ajax()) {
+            return view('frontend.job_listings', compact('jobs'))->render();
+        }
+
+        return view('frontend.career', compact('career', 'jobs'));
     }
-
-    if ($request->ajax()) {
-        return view('frontend.job_listings', compact('jobs'))->render();
-    }
-
-    return view('frontend.career', compact('career', 'jobs'));
-}
 
 
 }

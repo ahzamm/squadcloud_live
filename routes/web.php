@@ -88,11 +88,10 @@ use App\Http\Controllers\Site\CareerController;
          Route::get('/client', [ClientController::class, 'index'])->name('site.client');
          Route::get('/about', [AboutController::class, 'index'])->name('site.about');
          Route::get('/contact', [ContactController::class, 'index'])->name('site.contact');
-        //  Route::get('/career', [CareerController::class, 'index'])->name('site.career');
          Route::post('/contact-request', [ContactController::class, 'store'])->name('site.contact.request');
          Route::post('/manage_contacts', [ContactController::class, 'index'])->name('contact.manage_contact_forms_process');
          Route::post('/subscribe', [SubscriberController::class, 'store'])->name('subscribers.store');
-         Route::get('/career', [CareerController::class, 'index'])->name('jobs.filter');
+         Route::get('/career', [CareerController::class, 'index'])->name('site.career');
 
         // End Of Contact Routes From Site section
         Route::prefix('admin')->group(function () {
