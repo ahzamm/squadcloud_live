@@ -1,5 +1,5 @@
 <ul class="cat-list">
-    <li><a href="#" class="filter-button" data-employment-type="recent">Recent</a></li>
+    <li><a href="#" class="filter-button" data-employment-type="View All">View All</a></li>
     <li><a href="#" class="filter-button" data-employment-type="Full Time">Full Time</a></li>
     <li><a href="#" class="filter-button" data-employment-type="Intern">Intern</a></li>
     <li><a href="#" class="filter-button" data-employment-type="Part Time">Part Time</a></li>

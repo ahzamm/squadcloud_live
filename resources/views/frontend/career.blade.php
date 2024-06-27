@@ -39,7 +39,7 @@
                     <h2>01</h2>
                     <h4>Apply</h4>
                     <p>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing.
+                        Submit your application and resume to start your journey with us.
                     </p>
                 </div>
             </div>
@@ -48,7 +48,7 @@
                     <h2>02</h2>
                     <h4>Review</h4>
                     <p>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing.
+                        Our team will carefully evaluate your qualifications and experience.
                     </p>
                 </div>
             </div>
@@ -57,7 +57,7 @@
                     <h2>03</h2>
                     <h4>Interview</h4>
                     <p>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing.
+                        Participate in interviews to discuss your skills and potential fit.
                     </p>
                 </div>
             </div>
@@ -66,7 +66,7 @@
                     <h2>04</h2>
                     <h4>On board</h4>
                     <p>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing.
+                        Join our team and begin your exciting new role with comprehensive onboarding.
                     </p>
                 </div>
             </div>
@@ -195,7 +195,7 @@
         <div class="row justify-content-center d-flex">
             <div class="col-lg-8 post-list" id="job-list">
                 <ul class="cat-list">
-                    <li><a href="#" class="filter-button" data-employment-type="recent">Recent</a></li>
+                    <li><a href="#" class="filter-button" data-employment-type="View All">View All</a></li>
                     <li><a href="#" class="filter-button" data-employment-type="Full Time">Full Time</a></li>
                     <li><a href="#" class="filter-button" data-employment-type="Intern">Intern</a></li>
                     <li><a href="#" class="filter-button" data-employment-type="Part Time">Part Time</a></li>
@@ -310,7 +310,7 @@
             url: '{{ route('site.career') }}',
             type: 'GET',
             data: {
-                employment_type: 'recent'
+                employment_type: 'View All'
             },
             success: function(response) {
                 $('#job-list').html(response);
