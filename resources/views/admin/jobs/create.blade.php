@@ -109,7 +109,7 @@
                   </div>
                   <div class="col-md-6">
                     <div class="tag-container">
-                        <input type="text" id="tag-input" placeholder="Add a tag and press Enter">
+                        <input type="text" id="tag-input" placeholder="Add a tag without spaces and press Enter">
                         <input type="hidden" name="tags" id="tags">
                     </div>
                 </div>

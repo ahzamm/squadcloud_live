@@ -212,31 +212,22 @@
 								<li><a href="#">Intern</a></li>
 								<li><a href="#" style="white-space:nowrap">part Time</a></li>
 							</ul>
+                            @foreach ($jobs as $job)
 							<div class="single-post d-flex flex-row">
 								<div class="thumb">
-									<img src="{{ asset('frontend_assets/images/post.png') }}" alt="">
+									<img src="{{ asset('frontend_assets/images/jobs/'. $job->image) }}" width="120" height="60">
 									<ul class="tags">
-										<li>
-											<a href="#">Art</a>
-										</li>
-										<li>
-											<a href="#">Media</a>
-										</li>
-										<li>
-											<a href="#">Design</a>
-										</li>
-										<li>
-											<a href="#">Design</a>
-										</li>
-										<li>
-											<a href="#">Design</a>
-										</li>
+                                        @foreach (explode(',', $job->tags) as $tag)
+                                            <li>
+                                                <a href="#">{{$tag}}</a>
+                                            </li>
+                                        @endforeach
 									</ul>
 								</div>
 								<div class="details">
 									<div class="title d-flex flex-row justify-content-between">
 										<div class="titles">
-											<a href="#"><h4>Creative Art Designer</h4></a>
+											<a href="#"><h4>{{$job->job_title}}</h4></a>
 											<h6>Premium Labels Limited</h6>
 										</div>
 										<ul class="btns">
@@ -245,218 +236,14 @@
 										</ul>
 									</div>
 									<p>
-										Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod temporinc ididunt ut dolore magna aliqua.
+										{!!$job->job_description!!}
 									</p>
-									<h5>Job Nature: Full time</h5>
-									<p class="address"><span class="lnr lnr-map"></span> E-19, Glass Tower, Clifton Karachi</p>
-									<p class="address"><span class="lnr lnr-database"></span> 15k - 25k</p>
+									<h5>Job Nature: {{$job->employment_type}}</h5>
+									<p class="address"><span class="lnr lnr-map"></span> {{$job->location}}</p>
+									<p class="address"><span class="lnr lnr-database"></span> {{$job->salary_range}}</p>
 								</div>
 							</div>
-							<div class="single-post d-flex flex-row">
-								<div class="thumb">
-									<img src="{{ asset('frontend_assets/images/post.png') }}" alt="">
-									<ul class="tags">
-										<li>
-											<a href="#">Art</a>
-										</li>
-										<li>
-											<a href="#">Media</a>
-										</li>
-										<li>
-											<a href="#">Design</a>
-										</li>
-									</ul>
-								</div>
-								<div class="details">
-									<div class="title d-flex flex-row justify-content-between">
-										<div class="titles">
-											<a href=""><h4>Creative Art Designer</h4></a>
-											<h6>Premium Labels Limited</h6>
-										</div>
-										<ul class="btns">
-											<li><a href="#"><span class="lnr lnr-heart"></span></a></li>
-											<li><a href="#">Apply</a></li>
-										</ul>
-									</div>
-									<p>
-										Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod temporinc ididunt ut dolore magna aliqua.
-									</p>
-									<h5>Job Nature: Full time</h5>
-									<p class="address"><span class="lnr lnr-map"></span> E-19, Glass Tower, Clifton Karachi</p>
-									<p class="address"><span class="lnr lnr-database"></span> 15k - 25k</p>
-								</div>
-							</div>
-							<div class="single-post d-flex flex-row">
-								<div class="thumb">
-									<img src="{{ asset('frontend_assets/images/post.png') }}" alt="">
-									<ul class="tags">
-										<li>
-											<a href="#">Art</a>
-										</li>
-										<li>
-											<a href="#">Media</a>
-										</li>
-										<li>
-											<a href="#">Design</a>
-										</li>
-									</ul>
-								</div>
-								<div class="details">
-									<div class="title d-flex flex-row justify-content-between">
-										<div class="titles">
-											<a href=""><h4>Creative Art Designer</h4></a>
-											<h6>Premium Labels Limited</h6>
-										</div>
-										<ul class="btns">
-											<li><a href="#"><span class="lnr lnr-heart"></span></a></li>
-											<li><a href="#">Apply</a></li>
-										</ul>
-									</div>
-									<p>
-										Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod temporinc ididunt ut dolore magna aliqua.
-									</p>
-									<h5>Job Nature: Full time</h5>
-									<p class="address"><span class="lnr lnr-map"></span> E-19, Glass Tower, Clifton Karachi</p>
-									<p class="address"><span class="lnr lnr-database"></span> 15k - 25k</p>
-								</div>
-							</div>
-							<div class="single-post d-flex flex-row">
-								<div class="thumb">
-									<img src="{{ asset('frontend_assets/images/post.png') }}" alt="">
-									<ul class="tags">
-										<li>
-											<a href="#">Art</a>
-										</li>
-										<li>
-											<a href="#">Media</a>
-										</li>
-										<li>
-											<a href="#">Design</a>
-										</li>
-									</ul>
-								</div>
-								<div class="details">
-									<div class="title d-flex flex-row justify-content-between">
-										<div class="titles">
-											<a href=""><h4>Creative Art Designer</h4></a>
-											<h6>Premium Labels Limited</h6>
-										</div>
-										<ul class="btns">
-											<li><a href="#"><span class="lnr lnr-heart"></span></a></li>
-											<li><a href="#">Apply</a></li>
-										</ul>
-									</div>
-									<p>
-										Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod temporinc ididunt ut dolore magna aliqua.
-									</p>
-									<h5>Job Nature: Full time</h5>
-									<p class="address"><span class="lnr lnr-map"></span> E-19, Glass Tower, Clifton Karachi</p>
-									<p class="address"><span class="lnr lnr-database"></span> 15k - 25k</p>
-								</div>
-							</div>
-							<div class="single-post d-flex flex-row">
-								<div class="thumb">
-									<img src="{{ asset('frontend_assets/images/post.png') }}" alt="">
-									<ul class="tags">
-										<li>
-											<a href="#">Art</a>
-										</li>
-										<li>
-											<a href="#">Media</a>
-										</li>
-										<li>
-											<a href="#">Design</a>
-										</li>
-									</ul>
-								</div>
-								<div class="details">
-									<div class="title d-flex flex-row justify-content-between">
-										<div class="titles">
-											<a href=""><h4>Creative Art Designer</h4></a>
-											<h6>Premium Labels Limited</h6>
-										</div>
-										<ul class="btns">
-											<li><a href="#"><span class="lnr lnr-heart"></span></a></li>
-											<li><a href="#">Apply</a></li>
-										</ul>
-									</div>
-									<p>
-										Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod temporinc ididunt ut dolore magna aliqua.
-									</p>
-									<h5>Job Nature: Full time</h5>
-									<p class="address"><span class="lnr lnr-map"></span> E-19, Glass Tower, Clifton Karachi</p>
-									<p class="address"><span class="lnr lnr-database"></span> 15k - 25k</p>
-								</div>
-							</div>
-							<div class="single-post d-flex flex-row">
-								<div class="thumb">
-									<img src="{{ asset('frontend_assets/images/post.png') }}" alt="">
-									<ul class="tags">
-										<li>
-											<a href="#">Art</a>
-										</li>
-										<li>
-											<a href="#">Media</a>
-										</li>
-										<li>
-											<a href="#">Design</a>
-										</li>
-									</ul>
-								</div>
-								<div class="details">
-									<div class="title d-flex flex-row justify-content-between">
-										<div class="titles">
-											<a href=""><h4>Creative Art Designer</h4></a>
-											<h6>Premium Labels Limited</h6>
-										</div>
-										<ul class="btns">
-											<li><a href="#"><span class="lnr lnr-heart"></span></a></li>
-											<li><a href="#">Apply</a></li>
-										</ul>
-									</div>
-									<p>
-										Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod temporinc ididunt ut dolore magna aliqua.
-									</p>
-									<h5>Job Nature: Full time</h5>
-									<p class="address"><span class="lnr lnr-map"></span> E-19, Glass Tower, Clifton Karachi</p>
-									<p class="address"><span class="lnr lnr-database"></span> 15k - 25k</p>
-								</div>
-							</div>
-							<div class="single-post d-flex flex-row">
-								<div class="thumb">
-									<img src="{{ asset('frontend_assets/images/post.png') }}" alt="">
-									<ul class="tags">
-										<li>
-											<a href="#">Art</a>
-										</li>
-										<li>
-											<a href="#">Media</a>
-										</li>
-										<li>
-											<a href="#">Design</a>
-										</li>
-									</ul>
-								</div>
-								<div class="details">
-									<div class="title d-flex flex-row justify-content-between">
-										<div class="titles">
-											<a href=""><h4>Creative Art Designer</h4></a>
-											<h6>Premium Labels Limited</h6>
-										</div>
-										<ul class="btns">
-											<li><a href="#"><span class="lnr lnr-heart"></span></a></li>
-											<li><a href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#uploadModal">Apply</a></li>
-										</ul>
-									</div>
-									<p>
-										Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod temporinc ididunt ut dolore magna aliqua.
-									</p>
-									<h5>Job Nature: Full time</h5>
-									<p class="address"><span class="lnr lnr-map"></span> E-19, Glass Tower, Clifton Karachi</p>
-									<p class="address"><span class="lnr lnr-database"></span> 15k - 25k</p>
-								</div>
-							</div>
-
+                            @endforeach
 							<!-- <a class="text-uppercase loadmore-btn mx-auto d-block" href="#">Load More job Posts</a> -->
 
 						</div>

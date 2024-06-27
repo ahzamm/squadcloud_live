@@ -216,14 +216,15 @@ class JobController extends Controller
     public function updateSorting(Request $request)
     {
         $sortIds = $request->sort_Ids;
+        // dd($sortIds);
         foreach ($sortIds as $key => $value) {
-            $menu = Team::find($value);
+            $menu = Job::find($value);
             if ($menu) {
                 $menu->sortIds = $key;
                 $menu->save();
             }
         }
-        $frontValue = Team::orderby("sortIds", 'asc')->get();
+        $frontValue = Job::orderby("sortIds", 'asc')->get();
         return response()->json($frontValue);
     }
 }

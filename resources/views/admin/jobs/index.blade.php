@@ -258,7 +258,7 @@
                   <td>${index + 1 }<input type="hidden" class="order-id" value="${value.id}"></td>
                    <td>${value.job_title}</td>
                    <td> <img width="40px" height="40px" src="{{ asset('frontend_assets/images/jobs/') }}/${value.image}"/></td>
-                   <td>${value.description}</td>
+                   <td>${value.job_description}</td>
                    <td>${value.location}</td>
                    <td>${value.employment_type}</td>
                    <td>${value.salary_range}</td>
