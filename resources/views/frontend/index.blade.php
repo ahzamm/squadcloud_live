@@ -75,7 +75,14 @@
     </div>
     @endif
 
-    <!-- End Social Links -->
+    {{-- HOME SLIDER --}}
+    @if(@isset($video->video))
+            <div class="video_wrapper">
+                  <video autoplay muted loop style="width:100%;height:100%">
+                    <source src="{{asset('frontend_assets/images/home_sliders/' . $video->video)}}" type="video/mp4">
+                  </video>
+            </div>
+    @else
     <section id="home" class="iq-main-slider p-0">
         <div id="home-slider" class="slider m-0 p-0">
             @foreach ($home_sliders as $home_slider)
@@ -93,7 +100,6 @@
                               </div>
                               <p data-animation-in="fadeInUp" data-delay-in="1.2">{{ $home_slider->description }}
                               </p>
-
                            </div>
                            <div class="col-lg-6 minusZindex">
                               <div class="position-relative">
@@ -116,7 +122,7 @@
                     </div>
                 </div>
             </div>
-            @endforeach
+        @endforeach
         </div>
         <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
             <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 44 44" width="44px" height="44px" id="circle"
@@ -126,6 +132,8 @@
         </svg>
         <a href="#service-section" class="moveDownBtn"><i class="fa fa-chevron-down chevron_animate"></i></a>
     </section>
+    @endif
+    {{-- HOME SLIDER --}}
 
 
 <!-- -------SERVICES------- -->

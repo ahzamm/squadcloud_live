@@ -27,11 +27,7 @@
                       <th>Heading</th>
                       <th>Subheading</th>
                       <th>Description</th>
-                      <th>Image</th>
-                      {{-- <th>Image 2</th>
-                      <th>Image 3</th>
-                      <th>Image 4</th> --}}
-                      <th>Video</th>
+                      <th>Image / Video</th>
                       <th>Status</th>
                       <th>Action</th>
                     </tr>
@@ -46,21 +42,26 @@
                       <td>{{ $item->subheading}}</td>
                       <td>{{ $item->description}}</td>
                       <td>
-                        @isset($item->image_1)
-                          <img width="40px" height="40px" src="{{ asset('frontend_assets/images/home_sliders/' . $item->image_1) }}"/>
-                          <img width="40px" height="40px" src="{{ asset('frontend_assets/images/home_sliders/' . $item->image_2) }}"/>
-                          <img width="40px" height="40px" src="{{ asset('frontend_assets/images/home_sliders/' . $item->image_3) }}"/>
-                          <img width="40px" height="40px" src="{{ asset('frontend_assets/images/home_sliders/' . $item->image_4) }}"/>
-                          @endisset
-                        </td>
-                        <td>
-                            @isset($item->video)
+                        @if(isset($item->image_1) || isset($item->image_2) || isset($item->image_3) || isset($item->image_4))
+                            @if(isset($item->image_1))
+                                <img width="40px" height="40px" src="{{ asset('frontend_assets/images/home_sliders/' . $item->image_1) }}"/>
+                            @endif
+                            @if(isset($item->image_2))
+                                <img width="40px" height="40px" src="{{ asset('frontend_assets/images/home_sliders/' . $item->image_2) }}"/>
+                            @endif
+                            @if(isset($item->image_3))
+                                <img width="40px" height="40px" src="{{ asset('frontend_assets/images/home_sliders/' . $item->image_3) }}"/>
+                            @endif
+                            @if(isset($item->image_4))
+                                <img width="40px" height="40px" src="{{ asset('frontend_assets/images/home_sliders/' . $item->image_4) }}"/>
+                            @endif
+                        @elseif(isset($item->video))
                             <video controls width="200" height="120">
-                              <source src="{{ asset('frontend_assets/images/home_sliders/' . $item->video) }}" type="video/mp4">
-                              Your browser does not support the video tag.
+                                <source src="{{ asset('frontend_assets/images/home_sliders/' . $item->video) }}" type="video/mp4">
+                                Your browser does not support the video tag.
                             </video>
-                            @endisset
-                        </td>
+                        @endif
+                      </td>
                       <td>{{$item->is_active == 1?'active':'deactive'}}</td>
                       <td class="d-flex justify-content-center" style="gap: 5px;">
                         <a class="btn btn-primary btn-sm" href="{{ route('homesliders.edit', $item->id) }}"><i class="fa fa-edit"></i></a>
@@ -248,58 +249,75 @@
     })
   })
 
-  // Sorting Data
-  let sortTable = $("#sortfrontMenu");
-    let sortingFrontUrl = "{{ route('sort.homeslider') }}";
-    let csrfToken = $(".csrf_token");
-    var editUrlFront = "{{ route('front.edit') }}";
-    $(sortTable).sortable({
-        update: function(event, ui) {
-            var SortIds = $(this).find('.order-id').map(function() {
-                return $(this).val().trim();
-            }).get();
-            // Getting The Order id of each sortIds
-            $(this).find('.order-id').each(function(index) {
-                $(this).text(SortIds[index]);
-            });
-            //Sending Ajax to update the sort ids and change the data sorting
-            $.ajax({
-                url: sortingFrontUrl,
-                type: "post",
-                data: {
-                    sort_Ids: SortIds
-                },
-                headers: {
-                    "X-CSRF-TOKEN": csrfToken.val()
-                },
-                success: function(response) {
-                    let table = "";
-                    $(response).each(function(index, value) {
-                        table += ` <tr>
+ // Sorting Data
+ let sortTable = $("#sortfrontMenu");
+  let sortingFrontUrl = "{{ route('sort.homeslider') }}";
+  let csrfToken = $(".csrf_token");
+  var editUrlFront = "{{ route('front.edit') }}";
+  $(sortTable).sortable({
+      update: function(event, ui) {
+          var SortIds = $(this).find('.order-id').map(function() {
+              return $(this).val().trim();
+          }).get();
+          // Getting The Order id of each sortIds
+          $(this).find('.order-id').each(function(index) {
+              $(this).text(SortIds[index]);
+          });
+          //Sending Ajax to update the sort ids and change the data sorting
+          $.ajax({
+              url: sortingFrontUrl,
+              type: "post",
+              data: {
+                  sort_Ids: SortIds
+              },
+              headers: {
+                  "X-CSRF-TOKEN": csrfToken.val()
+              },
+              success: function(response) {
+                  let table = "";
+                  $(response).each(function(index, value) {
+                      table += ` <tr class="table-row">
                   <td><i class="fas fa-sort" id="sort-serial"></i></td>
                   <td>${index + 1 }
                   <input type="hidden" class="order-id" value="${value.id}">
                   </td>
-                  <td >${value.heading}</td>
+                  <td>${value.heading}</td>
                   <td>${value.subheading}</td>
                   <td>${value.description}</td>
-                  <td> <img width="40px" height="40px" src="{{ asset('frontend_assets/images/home_sliders/') }}/${value.image_1}" alt="service logo" /></td>
-                  <td> <img width="40px" height="40px" src="{{ asset('frontend_assets/images/home_sliders/') }}/${value.image_2}" alt="service logo" /></td>
-                  <td> <img width="40px" height="40px" src="{{ asset('frontend_assets/images/home_sliders/') }}/${value.image_3}" alt="service logo" /></td>
-                  <td> <img width="40px" height="40px" src="{{ asset('frontend_assets/images/home_sliders/') }}/${value.image_4}" alt="service logo" /></td>
-                  <td>${value.is_active == 1?'active':'deactive'}</td>
-                  <td>
-                  <a href="` + editUrlFront + "/" + value.id + `" class="btn btn-sm btn-info"><i class="fa fa-edit"></i></a>
-                  <button class="btn btn-danger btn-sm deleteRecord" data-id="${value.id}">
-                  <i class="fa fa-trash"></i> </button>
+                  <td>`;
+                      if (value.image_1) {
+                          table += `<img width="40px" height="40px" src="{{ asset('frontend_assets/images/home_sliders/') }}/${value.image_1}" />`;
+                      }
+                      if (value.image_2) {
+                          table += `<img width="40px" height="40px" src="{{ asset('frontend_assets/images/home_sliders/') }}/${value.image_2}" />`;
+                      }
+                      if (value.image_3) {
+                          table += `<img width="40px" height="40px" src="{{ asset('frontend_assets/images/home_sliders/') }}/${value.image_3}" />`;
+                      }
+                      if (value.image_4) {
+                          table += `<img width="40px" height="40px" src="{{ asset('frontend_assets/images/home_sliders/') }}/${value.image_4}" />`;
+                      }
+                      if (value.video) {
+                          table += `<video controls width="200" height="120">
+                              <source src="{{ asset('frontend_assets/images/home_sliders/') }}/${value.video}" type="video/mp4">
+                              Your browser does not support the video tag.
+                          </video>`;
+                      }
+                      table += `</td>
+                  <td>${value.is_active == 1 ? 'active' : 'deactive'}</td>
+                  <td class="d-flex justify-content-center" style="gap: 5px;">
+                      <a href="` + editUrlFront + "/" + value.id + `" class="btn btn-sm btn-info"><i class="fa fa-edit"></i></a>
+                      <button class="btn btn-danger btn-sm deleteRecord" data-id="${value.id}">
+                          <i class="fa fa-trash"></i>
+                      </button>
                   </td>
                   </tr>`;
-                    });
-                    $(sortTable).html(table);
-                }
-            })
-        }
-    });
+                  });
+                  $(sortTable).html(table);
+              }
+          })
+      }
+  });
 
 </script>
 @endpush

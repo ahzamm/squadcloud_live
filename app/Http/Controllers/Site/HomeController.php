@@ -26,6 +26,7 @@ class HomeController extends Controller
         }
 
         $home_menu = FrontMenu::where('menu', 'Home')->first();
+        $video = HomeSlider::where('is_active', 1)->whereNotNull('video')->orderby("sortIds", "asc")->first();
         $home_sliders = HomeSlider::where('is_active', 1)->orderby("sortIds", "asc")->get();
         $service_menu = FrontMenu::where('menu', 'Services')->first();
         $services = Service::where('is_active', 1)->orderby("sortIds", "asc")->get();
@@ -46,6 +47,7 @@ class HomeController extends Controller
             compact(
                 'showAnimation',
                 'home_menu',
+                'video',
                 'home_sliders',
                 'service_menu',
                 'services',

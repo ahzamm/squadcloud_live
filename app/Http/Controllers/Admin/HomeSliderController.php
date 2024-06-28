@@ -137,8 +137,6 @@ class HomeSliderController extends Controller
         }
     }
 
-
-
     public function show($id)
     {
         $packageData = Homeslider::find($id);
@@ -158,7 +156,6 @@ class HomeSliderController extends Controller
         $homeslider = Homeslider::find($id);
         return view('admin.homesliders.edit', compact('homeslider'));
     }
-
 
     public function update(Request $request, $id)
     {
