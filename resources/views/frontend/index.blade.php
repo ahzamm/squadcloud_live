@@ -57,6 +57,12 @@
     .more_action:hover:before {
       width: 100%;
     }
+
+    .error-message {
+      display: none;
+      color: red;
+      font-size: 0.875rem;
+    }
   </style>
 
   @if ($showAnimation)
@@ -73,7 +79,7 @@
     </div>
   @endif
 
-  {{-- HOME SLIDER --}}
+  <!-- -------HOME SLIDER------- -->
   @if (@isset($video->video))
     <div class="video_wrapper">
       <video autoplay muted loop style="width:100%;height:100%">
@@ -91,7 +97,6 @@
                   <div class="col-lg-6 zIndex">
                     <h1 class="slider-text title" data-animation-in="fadeInLeft" data-delay-in="0.6">
                       {{ $home_slider->heading }}</h1>
-
                     <h4 class="text-white" data-animation-in="fadeInLeft" data-delay-in="0.6">
                       {{ $home_slider->subheading }}</h4>
                     <div class="d-flex align-items-center" data-animation-in="fadeInUp" data-delay-in="1">
@@ -111,7 +116,6 @@
                         data-delay-in="1.6">
                     </div>
                   </div>
-
                 </div>
               </div>
             </div>
@@ -126,8 +130,6 @@
       <a href="#service-section" class="moveDownBtn"><i class="fa fa-chevron-down chevron_animate"></i></a>
     </section>
   @endif
-  {{-- HOME SLIDER --}}
-
 
   <!-- -------SERVICES------- -->
   <section id="service-section" class="position-relative">
@@ -158,7 +160,6 @@
     </div>
   </section>
 
-
   <!-- -------PORTFOLIO------- -->
   <section id="portfolio-section" class="position-relative">
     <div class="portfolio-bg"></div>
@@ -174,7 +175,6 @@
               <div class="card" data-aos="flip-right" data-aos-duration="1000">
                 <div class="card-header">
                   <p class="p-3 d-inline-block mb-0 text-center w-100">{{ $list->title }}</p>
-
                 </div>
                 <div class="card-body">
                   <p class="text-center">{!! substr($list->description, 0, 100) !!}</p>
@@ -208,7 +208,6 @@
         <h2 class="section-heading text-uppercase">Clients</h2>
         <h3 class="section-subheading text-muted">{{ $client_menu->tagline }}</h3>
       </div>
-
       <div class="row">
         @forelse($Clients->take(6) as $list)
           <div class="col-lg-4 col-md-6" style="margin-top:-50px;">
@@ -224,7 +223,6 @@
                   </b></p>
               </div>
             </div>
-
           </div>
         @empty
           <div class="alert alert-danger">No Clients Found</div>
@@ -241,7 +239,6 @@
 
   <!-- -------SLIDER------- -->
   <section id="section-slider" class="slider m-0 p-0 position-relative">
-
     <div class="strategy-bg"></div>
     <div class="strategy-slider" data-aos="fade" data-aos-delay="300">
       @foreach ($bottom_sliders as $bottom_slider)
@@ -249,7 +246,6 @@
           <img src="frontend_assets/images/bottom_sliders/{{ $bottom_slider->image }}" style="width: 1200px;" class="w-50" alt="{{ $bottom_slider->title }}">
         </div>
       @endforeach
-
     </div>
   </section>
 
@@ -265,7 +261,6 @@
         @foreach ($socials as $index => $social)
           <a href="{{ $social->url }}" class="social-btn" data-aos="fade-{{ $index % 2 == 0 ? 'up' : 'down' }}" data-aos-duration="1000"><i class="{{ $social->icon }}"></i></a>
         @endforeach
-
       </div>
     </div>
   </div>
@@ -279,7 +274,6 @@
         <h3 class="section-subheading text-muted2">{!! $contact_menu->tagline !!}</h3>
       </div>
       <div class="main-form">
-
         <form class="contact-form" action="{{ route('site.contact.request') }}" method="post" id="contactForm">
           @csrf
           <div class="row mb-3">
@@ -321,13 +315,6 @@
     </div>
   </section>
 
-  <style>
-    .error-message {
-      display: none;
-      color: red;
-      font-size: 0.875rem;
-    }
-  </style>
   <script>
     document.getElementById('contactForm').addEventListener('submit', function(event) {
       let valid = true;
