@@ -108,9 +108,10 @@ class HomeSliderController extends Controller
             return redirect()->back()->with("error", 'No rights To create Home Sliders');
         }
 
-        $request->validate([
-            'video' => 'nullable|mimes:mp4', // Adjust the video
-        ]);
+        $valdiate = Validator::make($request->all(),  ['video' => 'nullable|mimes:mp4']);
+        if ($valdiate->fails()) {
+            return redirect()->back()->withInput()->with('error', 'Plz provide a mp4 file');
+        }
 
         try {
             DB::transaction(function () use ($request) {
