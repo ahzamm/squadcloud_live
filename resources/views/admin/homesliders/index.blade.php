@@ -6,6 +6,11 @@
   <link rel="stylesheet" href="{{ asset('site/sweet-alert/sweetalert2.css') }}">
 @endpush
 @section('content')
+  <style>
+    .move {
+      cursor: move;
+    }
+  </style>
   <div class="content-wrapper">
     <section class="content">
       <div class="container-fluid">
@@ -37,9 +42,21 @@
                         <tr class="table-row">
                           <td><i class="fas fa-sort" id="sort-serial"></i></td>
                           <td>{{ $key + 1 }}<input type="hidden" class="order-id"value="{{ $item->id }}"></td>
-                          <td>{{ $item->heading }}</td>
-                          <td>{{ $item->subheading }}</td>
-                          <td>{{ $item->description }}</td>
+                          <td>
+                            @if (isset($item->heading))
+                              {{ $item->heading }}
+                            @endif
+                          </td>
+                          <td>
+                            @if (isset($item->subheading))
+                              {{ $item->subheading }}
+                            @endif
+                          </td>
+                          <td>
+                            @if (isset($item->description))
+                              {{ $item->description }}
+                            @endif
+                          </td>
                           <td>
                             @if (isset($item->image_1) || isset($item->image_2) || isset($item->image_3) || isset($item->image_4))
                               @if (isset($item->image_1))

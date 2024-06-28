@@ -6,6 +6,11 @@
   <link rel="stylesheet" href="{{ asset('site/sweet-alert/sweetalert2.css') }}">
 @endpush
 @section('content')
+  <style>
+    .move {
+      cursor: move;
+    }
+  </style>
   <div class="content-wrapper">
     <section class="content">
       <div class="container-fluid">

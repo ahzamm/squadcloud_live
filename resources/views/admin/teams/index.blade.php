@@ -6,6 +6,11 @@
   <link rel="stylesheet" href="{{ asset('site/sweet-alert/sweetalert2.css') }}">
 @endpush
 @section('content')
+  <style>
+    .move {
+      cursor: move;
+    }
+  </style>
   <div class="content-wrapper">
     <section class="content">
       <div class="container-fluid">
@@ -251,6 +256,7 @@
                   <td >${value.name}</td>
                   <td> <img width="40px" height="40px" src="{{ asset('frontend_assets/images/teams/') }}/${value.image}" alt="team logo" /></td>
                   <td>${value.designation}</td>
+                  <td>${value.linkedin}</td>
                   <td>${value.is_active == 1?'active':'deactive'}</td>
                   <td>
                   <a href="` + editUrlFront + "/" + value.id + `" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></a>
