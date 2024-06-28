@@ -1,7 +1,6 @@
 @extends('admin.layouts.app')
 @section('content')
   <div class="content-wrapper">
-    <!-- Main content -->
     <section class="content">
       <div class="row">
         <div class="col-md-12">
@@ -109,7 +108,7 @@
               </div>
               <div class="tab-pane fade" id="nav-video" role="tabpanel" aria-labelledby="nav-video-tab">
                 <form action="{{ route('homesliders.storevideo') }}" method="POST" enctype="multipart/form-data">
-                  {{-- VIDEO FORM--}}
+                  {{-- VIDEO FORM --}}
                   <div class="card-body pad">
                     @csrf
                     <div class="row">
@@ -133,8 +132,6 @@
                           @endif
                         </div>
                       </div>
-
-
                       <div class="col-md-6">
                         <div class="form-group clearfix">
                           <label for="" style="visibility: hidden">A</label>
@@ -158,9 +155,7 @@
 
           </div>
         </div>
-        <!-- /.col-->
       </div>
-      <!-- ./row -->
     </section>
   </div>
 @endsection

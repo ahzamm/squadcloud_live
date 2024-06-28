@@ -7,16 +7,14 @@
   <title>Admin</title>
 </head>
 @php
-    $general_configuration = DB::table('general_configurations')->first();
+  $general_configuration = DB::table('general_configurations')->first();
 @endphp
+
 <body style="font-family: Arial, sans-serif;">
   <p>Dear <span style="font-weight: 900;">Admin</span>,</p>
   <p>A contact message was sent by <b>
       {{ $fullName }} </b> via {{ $general_configuration->brand_name }} website.</p>
   <table align="center" border="1" cellpadding="0" cellspacing="0" width="600" style="border-collapse: collapse;">
-
-
-
     <tr>
       <td style="padding: 20px;"> Full Name</td>
       <td style="padding: 20px;"> <b> {{ $fullName }}</b></td>
@@ -33,7 +31,6 @@
       <td style="padding: 20px;"> Message</td>
       <td style="padding: 20px;"> <b> {{ $message }}</b></td>
     </tr>
-
   </table>
 </body>
 

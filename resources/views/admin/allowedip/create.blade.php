@@ -19,6 +19,6 @@
   </form>
 </div>
 <div class="modal-footer">
-  <button type="button"  class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+  <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
   <button type="submit" form="ipAddForm" class="btn btn-outline-primary">Submit</button>
 </div>
