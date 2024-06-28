@@ -11,30 +11,26 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
 use Auth;
 
-
 class ContactController extends Controller
 {
-
     public function index()
     {
         $subMenuid = SubMenu::where('route_name', 'contacts.index')->first();
-        $userOperation = "view_status";
+        $userOperation = 'view_status';
         $userId = Auth::user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
         if (!$crudAccess) {
-            return redirect()->back()->withInput()->with("error", "No rights To View Contacts");
+            return redirect()->back()->withInput()->with('error', 'No rights To View Contacts');
         }
 
         $contact = Contact::first();
         return view('admin.contacts.index', compact('contact'));
     }
 
-
-
     public function update(Request $request)
     {
         $subMenuid = SubMenu::where('route_name', 'contacts.index')->first();
-        $userOperation = "update_status";
+        $userOperation = 'update_status';
         $userId = Auth::guard('admin', 'user')->user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
 
@@ -43,14 +39,14 @@ class ContactController extends Controller
         }
 
         $validatedData = [
-            "title" => "required",
-            "tagline" => "required",
-            "phone" => "required",
-            "email" => "required",
-            "address" => "required",
-            "office_hours_start" => "required",
-            "office_hours_end" => "required",
-            "location_url" => "required",
+            'title' => 'required',
+            'tagline' => 'required',
+            'phone' => 'required',
+            'email' => 'required',
+            'address' => 'required',
+            'office_hours_start' => 'required',
+            'office_hours_end' => 'required',
+            'location_url' => 'required',
         ];
         $validate = Validator::make($request->all(), $validatedData);
         if ($validate->fails()) {
@@ -75,20 +71,18 @@ class ContactController extends Controller
             $contact->background_image = $filename;
         }
 
-            $contact->title = $request['title'];
-            $contact->tagline = $request['tagline'];
-            $contact->phone = $request['phone'];
-            $contact->email = $request['email'];
-            $contact->address = $request['address'];
-            $contact->office_hours_start = $request['office_hours_start'];
-            $contact->office_hours_end = $request['office_hours_end'];
-            $contact->location_url = $request['location_url'];
-            $contact->save();
+        $contact->title = $request['title'];
+        $contact->tagline = $request['tagline'];
+        $contact->phone = $request['phone'];
+        $contact->email = $request['email'];
+        $contact->address = $request['address'];
+        $contact->office_hours_start = $request['office_hours_start'];
+        $contact->office_hours_end = $request['office_hours_end'];
+        $contact->location_url = $request['location_url'];
+        $contact->save();
 
-            return redirect()->route('contacts.index')->with('success', 'Contact updated successfully!');
+        return redirect()->route('contacts.index')->with('success', 'Contact updated successfully!');
     }
-
-
 
     public function show($id)
     {
@@ -99,7 +93,7 @@ class ContactController extends Controller
     public function crud_access($submenuId = null, $operation = null, $uId = null)
     {
         if (!$submenuId == null) {
-            $CheckData = UserMenuAccess::where(["user_id" => $uId, "sub_menu_Id" => $submenuId, $operation => 1, 'view_status' => 1])->count();
+            $CheckData = UserMenuAccess::where(['user_id' => $uId, 'sub_menu_Id' => $submenuId, $operation => 1, 'view_status' => 1])->count();
 
             if ($CheckData > 0) {
                 return true;

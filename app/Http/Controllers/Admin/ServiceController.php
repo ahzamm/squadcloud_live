@@ -13,39 +13,37 @@ use Auth;
 
 class ServiceController extends Controller
 {
-
     public function index()
     {
         $subMenuid = SubMenu::where('route_name', 'services.index')->first();
-        $userOperation = "view_status";
+        $userOperation = 'view_status';
         $userId = Auth::user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
         if (!$crudAccess) {
-            return redirect()->back()->withInput()->with("error", "No rights To View Services");
+            return redirect()->back()->withInput()->with('error', 'No rights To View Services');
         }
 
-        $services = Service::orderby("sortIds", "asc")->get();
+        $services = Service::orderby('sortIds', 'asc')->get();
         return view('admin.services.index', compact('services'));
     }
 
     public function create()
     {
         $subMenuid = SubMenu::where('route_name', 'services.index')->first();
-        $userOperation = "create_status";
+        $userOperation = 'create_status';
         $userId = Auth::user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
         if (!$crudAccess) {
-            return redirect()->back()->withInput()->with("error", "No rights To Create Services");
+            return redirect()->back()->withInput()->with('error', 'No rights To Create Services');
         }
 
         return view('admin.services.create');
     }
 
-
     public function store(Request $request)
     {
         $subMenuid = SubMenu::where('route_name', 'services.index')->first();
-        $userOperation = "create_status";
+        $userOperation = 'create_status';
         $userId = Auth::guard('admin', 'user')->user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
         if ($crudAccess == false) {
@@ -64,7 +62,7 @@ class ServiceController extends Controller
         }
 
         $validator = Validator::make($request->all(), [
-            'slug' => 'required|regex:/^[a-zA-Z0-9\-]+$/'
+            'slug' => 'required|regex:/^[a-zA-Z0-9\-]+$/',
         ]);
         if ($validator->fails()) {
             return redirect()->back()->withInput()->with('error', 'Please provide a valid slug');
@@ -72,12 +70,12 @@ class ServiceController extends Controller
 
         $isDuplicateSlugExists = Service::where('slug', $request->slug)->first();
         if ($isDuplicateSlugExists) {
-            return redirect()->back()->withInput()->with('error', "Provided slug is already used");
+            return redirect()->back()->withInput()->with('error', 'Provided slug is already used');
         }
 
         $isDuplicateNameExists = Service::where('service', $request->service)->first();
         if ($isDuplicateNameExists) {
-            return redirect()->back()->withInput()->with('error', "Provided service name is already in use");
+            return redirect()->back()->withInput()->with('error', 'Provided service name is already in use');
         }
 
         if (!$request->hasFile('logo')) {
@@ -94,14 +92,13 @@ class ServiceController extends Controller
             return redirect()->back()->withInput()->with('error', 'Please provide a valid background image file of type: jpeg, png, or jpg.');
         }
 
-
-        $filename = "";
+        $filename = '';
         $file = $request->file('logo');
         $extension = $file->getClientOriginalExtension();
         $filename = Str::random(40) . '.' . $extension;
         $file->move(public_path('frontend_assets/images/services'), $filename);
 
-        $backgroundImageFileName = "";
+        $backgroundImageFileName = '';
         $file = $request->file('background_image');
         $extension = $file->getClientOriginalExtension();
         $backgroundImageFileName = Str::random(40) . '.' . $extension;
@@ -120,23 +117,20 @@ class ServiceController extends Controller
         return redirect()->route('services.index')->with('success', 'Service created successfully!');
     }
 
-
-
     public function show($id)
     {
         $packageData = Service::find($id);
         return view('admin.services.show-modal', compact('packageData'));
     }
 
-
     public function edit($id)
     {
         $subMenuid = SubMenu::where('route_name', 'services.index')->first();
-        $userOperation = "update_status";
+        $userOperation = 'update_status';
         $userId = Auth::user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
         if (!$crudAccess) {
-            return redirect()->back()->withInput()->with("error", "No rights To Edit Services");
+            return redirect()->back()->withInput()->with('error', 'No rights To Edit Services');
         }
 
         $service = Service::find($id);
@@ -146,7 +140,7 @@ class ServiceController extends Controller
     public function update(Request $request, $id)
     {
         $subMenuid = SubMenu::where('route_name', 'services.index')->first();
-        $userOperation = "update_status";
+        $userOperation = 'update_status';
         $userId = Auth::guard('admin', 'user')->user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
 
@@ -178,20 +172,24 @@ class ServiceController extends Controller
         }
 
         $validator = Validator::make($request->all(), [
-            'slug' => 'required|regex:/^[a-zA-Z0-9\-]+$/'
+            'slug' => 'required|regex:/^[a-zA-Z0-9\-]+$/',
         ]);
         if ($validator->fails()) {
             return redirect()->back()->withInput()->with('error', 'Please provide a valid slug');
         }
 
-        $isDuplicateSlugExists = Service::where('slug', $request->slug)->where('id', '!=', $id)->first();
+        $isDuplicateSlugExists = Service::where('slug', $request->slug)
+            ->where('id', '!=', $id)
+            ->first();
         if ($isDuplicateSlugExists) {
-            return redirect()->back()->withInput()->with('error', "Provided slug is already used");
+            return redirect()->back()->withInput()->with('error', 'Provided slug is already used');
         }
 
-        $isDuplicateNameExists = Service::where('service', $request->service)->where('id', '!=', $id)->first();
+        $isDuplicateNameExists = Service::where('service', $request->service)
+            ->where('id', '!=', $id)
+            ->first();
         if ($isDuplicateNameExists) {
-            return redirect()->back()->withInput()->with('error', "Provided service name is already in use");
+            return redirect()->back()->withInput()->with('error', 'Provided service name is already in use');
         }
 
         $service = Service::findOrFail($id);
@@ -230,11 +228,10 @@ class ServiceController extends Controller
         return redirect()->route('services.index')->with('success', 'Service updated successfully!');
     }
 
-
     public function destroy($id = null)
     {
         $subMenuid = SubMenu::where('route_name', 'services.index')->first();
-        $userOperation = "delete_status";
+        $userOperation = 'delete_status';
         $userId = Auth::guard('admin', 'user')->user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
 
@@ -250,19 +247,19 @@ class ServiceController extends Controller
 
                 $service->delete();
 
-                return response()->json(["status" => true]);
+                return response()->json(['status' => true]);
             } else {
-                return response()->json(["status" => false, "message" => "Service not found."]);
+                return response()->json(['status' => false, 'message' => 'Service not found.']);
             }
         } else {
-            return response()->json(["unauthorized" => true]);
+            return response()->json(['unauthorized' => true]);
         }
     }
 
     public function crud_access($submenuId = null, $operation = null, $uId = null)
     {
         if (!$submenuId == null) {
-            $CheckData = UserMenuAccess::where(["user_id" => $uId, "sub_menu_Id" => $submenuId, $operation => 1, 'view_status' => 1])->count();
+            $CheckData = UserMenuAccess::where(['user_id' => $uId, 'sub_menu_Id' => $submenuId, $operation => 1, 'view_status' => 1])->count();
 
             if ($CheckData > 0) {
                 return true;
@@ -282,7 +279,7 @@ class ServiceController extends Controller
                 $menu->save();
             }
         }
-        $frontValue = Service::orderby("sortIds", 'asc')->get();
+        $frontValue = Service::orderby('sortIds', 'asc')->get();
         return response()->json($frontValue);
     }
 }

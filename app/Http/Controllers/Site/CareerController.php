@@ -15,7 +15,7 @@ class CareerController extends Controller
         $employment_type = $request->employment_type;
 
         if ($employment_type == 'View All' || $employment_type == null) {
-            $jobs = Job::where('is_active', 1)->orderby("sortIds", "asc")->get();
+            $jobs = Job::where('is_active', 1)->orderby('sortIds', 'asc')->get();
         } else {
             $jobs = Job::where('employment_type', $employment_type)->get();
         }
@@ -26,6 +26,4 @@ class CareerController extends Controller
 
         return view('frontend.career', compact('career', 'jobs'));
     }
-
-
 }

@@ -13,39 +13,37 @@ use Auth;
 
 class BottomSliderController extends Controller
 {
-
     public function index()
     {
         $subMenuid = SubMenu::where('route_name', 'bottom_sliders.index')->first();
-        $userOperation = "view_status";
+        $userOperation = 'view_status';
         $userId = Auth::user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
         if (!$crudAccess) {
-            return redirect()->back()->withInput()->with("error", "No rights To View Bottom Slider");
+            return redirect()->back()->withInput()->with('error', 'No rights To View Bottom Slider');
         }
 
-        $bottom_sliders = BottomSlider::orderby("sortIds", "asc")->get();
+        $bottom_sliders = BottomSlider::orderby('sortIds', 'asc')->get();
         return view('admin.bottom_sliders.index', compact('bottom_sliders'));
     }
 
     public function create()
     {
         $subMenuid = SubMenu::where('route_name', 'bottom_sliders.index')->first();
-        $userOperation = "create_status";
+        $userOperation = 'create_status';
         $userId = Auth::user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
         if (!$crudAccess) {
-            return redirect()->back()->withInput()->with("error", "No rights To Create Bottom Slider");
+            return redirect()->back()->withInput()->with('error', 'No rights To Create Bottom Slider');
         }
 
         return view('admin.bottom_sliders.create');
     }
 
-
     public function store(Request $request)
     {
         $subMenuid = SubMenu::where('route_name', 'bottom_sliders.index')->first();
-        $userOperation = "create_status";
+        $userOperation = 'create_status';
         $userId = Auth::guard('admin', 'user')->user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
         if (!$crudAccess) {
@@ -53,7 +51,7 @@ class BottomSliderController extends Controller
         }
 
         $validatedData = [
-            "title" => "required",
+            'title' => 'required',
         ];
         $valdiate = Validator::make($request->all(), $validatedData);
         if ($valdiate->fails()) {
@@ -70,7 +68,7 @@ class BottomSliderController extends Controller
             }
         }
 
-        $filename = "";
+        $filename = '';
         if ($request->hasFile('image')) {
             $file = $request->file('image');
             $extension = $file->getClientOriginalExtension();
@@ -85,9 +83,7 @@ class BottomSliderController extends Controller
         $bottom_slider->save();
 
         return redirect()->route('bottom_sliders.index')->with('success', 'Bottom Slider Added successfully');
-
     }
-
 
     public function show($id)
     {
@@ -98,11 +94,11 @@ class BottomSliderController extends Controller
     public function edit($id)
     {
         $subMenuid = SubMenu::where('route_name', 'bottom_sliders.index')->first();
-        $userOperation = "update_status";
+        $userOperation = 'update_status';
         $userId = Auth::user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
         if (!$crudAccess) {
-            return redirect()->back()->withInput()->with("error", "No rights To Edit Bottom Slider");
+            return redirect()->back()->withInput()->with('error', 'No rights To Edit Bottom Slider');
         }
 
         $bottom_slider = BottomSlider::find($id);
@@ -112,7 +108,7 @@ class BottomSliderController extends Controller
     public function update(Request $request, $id)
     {
         $subMenuid = SubMenu::where('route_name', 'bottom_sliders.index')->first();
-        $userOperation = "update_status";
+        $userOperation = 'update_status';
         $userId = Auth::guard('admin', 'user')->user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
         if (!$crudAccess) {
@@ -120,7 +116,7 @@ class BottomSliderController extends Controller
         }
 
         $validatedData = [
-            "title" => "required",
+            'title' => 'required',
         ];
         $valdiate = Validator::make($request->all(), $validatedData);
         if ($valdiate->fails()) {
@@ -151,15 +147,12 @@ class BottomSliderController extends Controller
         $bottom_slider->save();
 
         return redirect()->route('bottom_sliders.index')->with('success', 'BottomSlider updated successfully!');
-
-
     }
-
 
     public function destroy($id = null)
     {
         $subMenuid = SubMenu::where('route_name', 'bottom_sliders.index')->first();
-        $userOperation = "delete_status";
+        $userOperation = 'delete_status';
         $userId = Auth::guard('admin', 'user')->user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
         if ($crudAccess == true) {
@@ -172,18 +165,18 @@ class BottomSliderController extends Controller
 
                 $bottom_slider->delete();
 
-                return response()->json(["status" => true]);
+                return response()->json(['status' => true]);
             } else {
-                return response()->json(["status" => false, "message" => "BottomSlider not found."]);
+                return response()->json(['status' => false, 'message' => 'BottomSlider not found.']);
             }
         } else {
-            return response()->json(["unauthorized" => true]);
+            return response()->json(['unauthorized' => true]);
         }
     }
     public function crud_access($submenuId = null, $operation = null, $uId = null)
     {
         if (!$submenuId == null) {
-            $CheckData = UserMenuAccess::where(["user_id" => $uId, "sub_menu_Id" => $submenuId, $operation => 1, 'view_status' => 1])->count();
+            $CheckData = UserMenuAccess::where(['user_id' => $uId, 'sub_menu_Id' => $submenuId, $operation => 1, 'view_status' => 1])->count();
 
             if ($CheckData > 0) {
                 return true;
@@ -203,7 +196,7 @@ class BottomSliderController extends Controller
                 $menu->save();
             }
         }
-        $frontValue = BottomSlider::orderby("sortIds", 'asc')->get();
+        $frontValue = BottomSlider::orderby('sortIds', 'asc')->get();
         return response()->json($frontValue);
     }
 }

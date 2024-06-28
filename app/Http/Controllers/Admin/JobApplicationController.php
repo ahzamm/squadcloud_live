@@ -13,11 +13,11 @@ class JobApplicationController extends Controller
     public function index()
     {
         $subMenuid = SubMenu::where('route_name', 'job_applications.index')->first();
-        $userOperation = "view_status";
+        $userOperation = 'view_status';
         $userId = Auth::user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
         if (!$crudAccess) {
-            return redirect()->back()->withInput()->with("error", "No rights To View Job Applications");
+            return redirect()->back()->withInput()->with('error', 'No rights To View Job Applications');
         }
 
         $job_applications = JobApplication::get();
@@ -27,16 +27,16 @@ class JobApplicationController extends Controller
     public function destroy($id = null)
     {
         $subMenuid = SubMenu::where('route_name', 'job_applications.index')->first();
-        $userOperation = "delete_status";
+        $userOperation = 'delete_status';
         $userId = Auth::guard('admin', 'user')->user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
         if ($crudAccess == false) {
-            return response()->json(["unauthorized" => true]);
+            return response()->json(['unauthorized' => true]);
         }
 
         $jobApplication = JobApplication::find($id);
         if (is_null($jobApplication)) {
-            return response()->json(["status" => false, "message" => "Job application not found."]);
+            return response()->json(['status' => false, 'message' => 'Job application not found.']);
         }
 
         $resumePath = public_path('backend/resumes/' . $jobApplication->resume);
@@ -46,15 +46,14 @@ class JobApplicationController extends Controller
 
         $delete = $jobApplication->delete();
         if ($delete == true) {
-            return response()->json(["status" => true]);
+            return response()->json(['status' => true]);
         }
     }
-
 
     public function crud_access($submenuId = null, $operation = null, $uId = null)
     {
         if (!$submenuId == null) {
-            $CheckData = UserMenuAccess::where(["user_id" => $uId, "sub_menu_Id" => $submenuId, $operation => 1, 'view_status' => 1])->count();
+            $CheckData = UserMenuAccess::where(['user_id' => $uId, 'sub_menu_Id' => $submenuId, $operation => 1, 'view_status' => 1])->count();
 
             if ($CheckData > 0) {
                 return true;
@@ -63,5 +62,4 @@ class JobApplicationController extends Controller
             }
         }
     }
-
 }

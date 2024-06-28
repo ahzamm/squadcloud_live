@@ -15,9 +15,8 @@ class AboutController extends Controller
 {
     public function index()
     {
-
         $subMenuid = SubMenu::where('route_name', 'about.index')->first();
-        $userOperation = "view_status";
+        $userOperation = 'view_status';
         $userId = Auth::guard('admin', 'user')->user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
         if ($crudAccess == false) {
@@ -29,11 +28,10 @@ class AboutController extends Controller
         return view('admin.abouts.index', compact('about', 'gallary'));
     }
 
-
     public function update(Request $request)
     {
         $subMenuid = SubMenu::where('route_name', 'about.index')->first();
-        $userOperation = "update_status";
+        $userOperation = 'update_status';
         $userId = Auth::guard('admin', 'user')->user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
         if ($crudAccess == false) {
@@ -41,8 +39,8 @@ class AboutController extends Controller
         }
 
         $validatedData = [
-            "description" => "required",
-            "closing_remarks" => "required",
+            'description' => 'required',
+            'closing_remarks' => 'required',
             'images.*' => 'image',
         ];
         $validate = Validator::make($request->all(), $validatedData);
@@ -76,18 +74,16 @@ class AboutController extends Controller
                 $image = Gallary::where('id', $id)->first();
                 unlink(public_path('frontend_assets/images/gallary/' . $image->image));
                 $image->delete();
-
             }
         }
 
         return redirect()->route('about.index')->with('success', 'About updated successfully!');
     }
 
-
     public function crud_access($submenuId = null, $operation = null, $uId = null)
     {
         if (!$submenuId == null) {
-            $CheckData = UserMenuAccess::where(["user_id" => $uId, "sub_menu_Id" => $submenuId, $operation => 1, 'view_status' => 1])->count();
+            $CheckData = UserMenuAccess::where(['user_id' => $uId, 'sub_menu_Id' => $submenuId, $operation => 1, 'view_status' => 1])->count();
 
             if ($CheckData > 0) {
                 return true;

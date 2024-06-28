@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Site;
 
 use App\Models\Gallary;
-use Illuminate\Http\Request;
 use App\Models\About;
 use App\Models\FrontMenu;
 use App\Models\Team;

@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use App\Models\Subscriber;
 use App\Models\FrontEmail;
 use Illuminate\Support\Facades\Validator;
-use App\Models\Admin;
 use App\Services\EmailService;
 
 class SubscriberController extends Controller
@@ -37,13 +36,7 @@ class SubscriberController extends Controller
         }
 
         $email_settings = FrontEmail::where('status', 1)->First();
-        $this->emailService->sendEmail(
-            "Welcome to SquadCloud! Thank You for Subscribing!",
-            'EmailTemplates.subscriberEmailTemplate',
-            [],
-            $email_settings->emails,
-            $request->email
-        );
+        $this->emailService->sendEmail('Welcome to SquadCloud! Thank You for Subscribing!', 'EmailTemplates.subscriberEmailTemplate', [], $email_settings->emails, $request->email);
         return response()->json(['status' => 'success', 'message' => 'Thank you for subscribing to our newsletter.']);
     }
 }

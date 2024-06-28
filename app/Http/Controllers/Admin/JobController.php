@@ -17,35 +17,34 @@ class JobController extends Controller
     public function index()
     {
         $subMenuid = SubMenu::where('route_name', 'jobs.index')->first();
-        $userOperation = "view_status";
+        $userOperation = 'view_status';
         $userId = Auth::user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
         if (!$crudAccess) {
-            return redirect()->back()->withInput()->with("error", "No rights To View Vacency");
+            return redirect()->back()->withInput()->with('error', 'No rights To View Vacency');
         }
 
-        $jobs = Job::orderby("sortIds", "asc")->get();
+        $jobs = Job::orderby('sortIds', 'asc')->get();
         return view('admin.jobs.index', compact('jobs'));
     }
 
     public function create()
     {
         $subMenuid = SubMenu::where('route_name', 'jobs.index')->first();
-        $userOperation = "create_status";
+        $userOperation = 'create_status';
         $userId = Auth::user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
         if (!$crudAccess) {
-            return redirect()->back()->withInput()->with("error", "No rights To Create Vacency");
+            return redirect()->back()->withInput()->with('error', 'No rights To Create Vacency');
         }
 
         return view('admin.jobs.create');
     }
 
-
     public function store(Request $request)
     {
         $subMenuid = SubMenu::where('route_name', 'jobs.index')->first();
-        $userOperation = "create_status";
+        $userOperation = 'create_status';
         $userId = Auth::guard('admin', 'user')->user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
         if ($crudAccess == false) {
@@ -53,13 +52,13 @@ class JobController extends Controller
         }
 
         $validatedData = [
-            "title"=>"required",
-            "company"=>"required",
-            "description"=>"required",
-            "location"=>"required",
-            "employment_type"=>"required",
-            "salary_range"=>"required",
-            "tags" => "required"
+            'title' => 'required',
+            'company' => 'required',
+            'description' => 'required',
+            'location' => 'required',
+            'employment_type' => 'required',
+            'salary_range' => 'required',
+            'tags' => 'required',
         ];
 
         $valdiate = Validator::make($request->all(), $validatedData);
@@ -77,7 +76,7 @@ class JobController extends Controller
             }
         }
 
-        $filename = "";
+        $filename = '';
         if ($request->hasFile('image')) {
             $file = $request->file('image');
             $extension = $file->getClientOriginalExtension();
@@ -100,7 +99,6 @@ class JobController extends Controller
         return redirect()->route('jobs.index')->with('success', 'Job added successfully!');
     }
 
-
     public function show($id)
     {
         $packageData = Service::find($id);
@@ -110,11 +108,11 @@ class JobController extends Controller
     public function edit($id)
     {
         $subMenuid = SubMenu::where('route_name', 'jobs.index')->first();
-        $userOperation = "update_status";
+        $userOperation = 'update_status';
         $userId = Auth::user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
         if (!$crudAccess) {
-            return redirect()->back()->withInput()->with("error", "No rights To Edit Vacency");
+            return redirect()->back()->withInput()->with('error', 'No rights To Edit Vacency');
         }
 
         $job = Job::find($id);
@@ -124,7 +122,7 @@ class JobController extends Controller
     public function update(Request $request, $id)
     {
         $subMenuid = SubMenu::where('route_name', 'jobs.index')->first();
-        $userOperation = "update_status";
+        $userOperation = 'update_status';
         $userId = Auth::guard('admin', 'user')->user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
 
@@ -133,17 +131,17 @@ class JobController extends Controller
         }
 
         $validatedData = [
-            "job_title"=>"required",
-            "company"=>"required",
-            "job_description"=>"required",
-            "location"=>"required",
-            "employment_type"=>"required",
-            "salary_range"=>"required",
+            'job_title' => 'required',
+            'company' => 'required',
+            'job_description' => 'required',
+            'location' => 'required',
+            'employment_type' => 'required',
+            'salary_range' => 'required',
         ];
         $valdiate = Validator::make($request->all(), $validatedData);
 
         if ($valdiate->fails()) {
-             dd($valdiate->errors());
+            dd($valdiate->errors());
             return redirect()->back()->withInput()->with('error', 'All Fields are required');
         }
 
@@ -179,33 +177,31 @@ class JobController extends Controller
         return redirect()->route('jobs.index')->with('success', 'Job post updated successfully!');
     }
 
-
     public function destroy($id = null)
     {
         $subMenuid = SubMenu::where('route_name', 'jobs.index')->first();
-        $userOperation = "delete_status";
+        $userOperation = 'delete_status';
         $userId = Auth::guard('admin', 'user')->user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
 
         if ($crudAccess == true) {
             $job = Job::find($id);
             if ($job) {
-
                 $job->delete();
 
-                return response()->json(["status" => true]);
+                return response()->json(['status' => true]);
             } else {
-                return response()->json(["status" => false, "message" => "Team member not found not found."]);
+                return response()->json(['status' => false, 'message' => 'Team member not found not found.']);
             }
         } else {
-            return response()->json(["unauthorized" => true]);
+            return response()->json(['unauthorized' => true]);
         }
     }
 
     public function crud_access($submenuId = null, $operation = null, $uId = null)
     {
         if (!$submenuId == null) {
-            $CheckData = UserMenuAccess::where(["user_id" => $uId, "sub_menu_Id" => $submenuId, $operation => 1, 'view_status' => 1])->count();
+            $CheckData = UserMenuAccess::where(['user_id' => $uId, 'sub_menu_Id' => $submenuId, $operation => 1, 'view_status' => 1])->count();
 
             if ($CheckData > 0) {
                 return true;
@@ -226,7 +222,7 @@ class JobController extends Controller
                 $menu->save();
             }
         }
-        $frontValue = Job::orderby("sortIds", 'asc')->get();
+        $frontValue = Job::orderby('sortIds', 'asc')->get();
         return response()->json($frontValue);
     }
 }

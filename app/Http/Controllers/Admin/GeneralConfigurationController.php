@@ -11,14 +11,12 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
 use Auth;
 
-
 class GeneralConfigurationController extends Controller
 {
-
     public function index()
     {
         $subMenuid = SubMenu::where('route_name', 'general_configurations.index')->first();
-        $userOperation = "view_status";
+        $userOperation = 'view_status';
         $userId = Auth::guard('admin', 'user')->user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
 
@@ -30,12 +28,10 @@ class GeneralConfigurationController extends Controller
         return view('admin.general_configurations.index', compact('general_configuration'));
     }
 
-
-
     public function update(Request $request)
     {
         $subMenuid = SubMenu::where('route_name', 'general_configurations.index')->first();
-        $userOperation = "update_status";
+        $userOperation = 'update_status';
         $userId = Auth::guard('admin', 'user')->user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
 
@@ -44,9 +40,9 @@ class GeneralConfigurationController extends Controller
         }
 
         $validatedData = [
-            "brand_name" => "required",
-            "site_footer" => "required",
-            "description" => "required",
+            'brand_name' => 'required',
+            'site_footer' => 'required',
+            'description' => 'required',
         ];
         $validate = Validator::make($request->all(), $validatedData);
         if ($validate->fails()) {
@@ -77,13 +73,12 @@ class GeneralConfigurationController extends Controller
         $general_configuration->save();
 
         return redirect()->route('general_configurations.index')->with('success', 'Configurations updated successfully!');
-
     }
 
-    public function change_status (Request $request ){
-
+    public function change_status(Request $request)
+    {
         $subMenuid = SubMenu::where('route_name', 'general_configurations.index')->first();
-        $userOperation = "update_status";
+        $userOperation = 'update_status';
         $userId = Auth::guard('admin', 'user')->user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
 
@@ -93,24 +88,21 @@ class GeneralConfigurationController extends Controller
 
         $Otp = GeneralConfiguration::first();
 
-        $statusChange  = $Otp->update([
-            'otp_status' => $request->status
+        $statusChange = $Otp->update([
+            'otp_status' => $request->status,
         ]);
 
-        if($statusChange){
-            return response()->json("success");
-        }
-        else{
-            return response()->json("error");
-
+        if ($statusChange) {
+            return response()->json('success');
+        } else {
+            return response()->json('error');
         }
     }
-
 
     public function crud_access($submenuId = null, $operation = null, $uId = null)
     {
         if (!$submenuId == null) {
-            $CheckData = UserMenuAccess::where(["user_id" => $uId, "sub_menu_Id" => $submenuId, $operation => 1, 'view_status' => 1])->count();
+            $CheckData = UserMenuAccess::where(['user_id' => $uId, 'sub_menu_Id' => $submenuId, $operation => 1, 'view_status' => 1])->count();
 
             if ($CheckData > 0) {
                 return true;

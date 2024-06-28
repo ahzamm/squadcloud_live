@@ -16,36 +16,34 @@ class ClientController extends Controller
     public function index()
     {
         $subMenuid = SubMenu::where('route_name', 'clients.index')->first();
-        $userOperation = "view_status";
+        $userOperation = 'view_status';
         $userId = Auth::user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
         if (!$crudAccess) {
-            return redirect()->back()->withInput()->with("error", "No rights To View Clients");
+            return redirect()->back()->withInput()->with('error', 'No rights To View Clients');
         }
 
         $clients = Client::all();
         return view('admin.clients.index', compact('clients'));
     }
 
-
     public function create()
     {
         $subMenuid = SubMenu::where('route_name', 'clients.index')->first();
-        $userOperation = "create_status";
+        $userOperation = 'create_status';
         $userId = Auth::user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
         if (!$crudAccess) {
-            return redirect()->back()->withInput()->with("error", "No rights To Create Clients");
+            return redirect()->back()->withInput()->with('error', 'No rights To Create Clients');
         }
 
         return view('admin.clients.create');
     }
 
-
     public function store(Request $request)
     {
         $subMenuid = SubMenu::where('route_name', 'clients.index')->first();
-        $userOperation = "create_status";
+        $userOperation = 'create_status';
         $userId = Auth::guard('admin', 'user')->user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
         if (!$crudAccess) {
@@ -53,9 +51,9 @@ class ClientController extends Controller
         }
 
         $validatedData = [
-            "link" => "required",
-            "title" => "required",
-            "description" => "required",
+            'link' => 'required',
+            'title' => 'required',
+            'description' => 'required',
         ];
         $valdiate = Validator::make($request->all(), $validatedData);
         if ($valdiate->fails()) {
@@ -72,7 +70,7 @@ class ClientController extends Controller
             }
         }
 
-        $filename = "";
+        $filename = '';
         if ($request->hasFile('logo')) {
             $file = $request->file('logo');
             $extension = $file->getClientOriginalExtension();
@@ -89,9 +87,7 @@ class ClientController extends Controller
         $client->save();
 
         return redirect()->route('clients.index')->with('success', 'Client Added successfully');
-
     }
-
 
     public function show($id)
     {
@@ -102,22 +98,21 @@ class ClientController extends Controller
     public function edit($id)
     {
         $subMenuid = SubMenu::where('route_name', 'clients.index')->first();
-        $userOperation = "update_status";
+        $userOperation = 'update_status';
         $userId = Auth::user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
         if (!$crudAccess) {
-            return redirect()->back()->withInput()->with("error", "No rights To Edit Clients");
+            return redirect()->back()->withInput()->with('error', 'No rights To Edit Clients');
         }
 
         $client = Client::find($id);
         return view('admin.clients.edit', compact('client'));
     }
 
-
     public function update(Request $request, $id)
     {
         $subMenuid = SubMenu::where('route_name', 'clients.index')->first();
-        $userOperation = "update_status";
+        $userOperation = 'update_status';
         $userId = Auth::guard('admin', 'user')->user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
         if (!$crudAccess) {
@@ -125,9 +120,9 @@ class ClientController extends Controller
         }
 
         $validatedData = [
-            "link" => "required",
-            "title" => "required",
-            "description" => "required",
+            'link' => 'required',
+            'title' => 'required',
+            'description' => 'required',
         ];
         $valdiate = Validator::make($request->all(), $validatedData);
         if ($valdiate->fails()) {
@@ -160,15 +155,12 @@ class ClientController extends Controller
         $client->save();
 
         return redirect()->route('clients.index')->with('success', 'Client updated successfully!');
-
-
     }
-
 
     public function destroy($id = null)
     {
         $subMenuid = SubMenu::where('route_name', 'clients.index')->first();
-        $userOperation = "delete_status";
+        $userOperation = 'delete_status';
         $userId = Auth::guard('admin', 'user')->user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
         if ($crudAccess == true) {
@@ -181,18 +173,18 @@ class ClientController extends Controller
 
                 $client->delete();
 
-                return response()->json(["status" => true]);
+                return response()->json(['status' => true]);
             } else {
-                return response()->json(["status" => false, "message" => "Client not found."]);
+                return response()->json(['status' => false, 'message' => 'Client not found.']);
             }
         } else {
-            return response()->json(["unauthorized" => true]);
+            return response()->json(['unauthorized' => true]);
         }
     }
     public function crud_access($submenuId = null, $operation = null, $uId = null)
     {
         if (!$submenuId == null) {
-            $CheckData = UserMenuAccess::where(["user_id" => $uId, "sub_menu_Id" => $submenuId, $operation => 1, 'view_status' => 1])->count();
+            $CheckData = UserMenuAccess::where(['user_id' => $uId, 'sub_menu_Id' => $submenuId, $operation => 1, 'view_status' => 1])->count();
 
             if ($CheckData > 0) {
                 return true;
@@ -212,7 +204,7 @@ class ClientController extends Controller
                 $menu->save();
             }
         }
-        $frontValue = Client::orderby("sortIds", 'asc')->get();
+        $frontValue = Client::orderby('sortIds', 'asc')->get();
         return response()->json($frontValue);
     }
 }

@@ -26,43 +26,22 @@ class HomeController extends Controller
         }
 
         $home_menu = FrontMenu::where('menu', 'Home')->first();
-        $video = HomeSlider::where('is_active', 1)->whereNotNull('video')->orderby("sortIds", "asc")->first();
-        $home_sliders = HomeSlider::where('is_active', 1)->orderby("sortIds", "asc")->get();
+        $video = HomeSlider::where('is_active', 1)->whereNotNull('video')->orderby('sortIds', 'asc')->first();
+        $home_sliders = HomeSlider::where('is_active', 1)->orderby('sortIds', 'asc')->get();
         $service_menu = FrontMenu::where('menu', 'Services')->first();
-        $services = Service::where('is_active', 1)->orderby("sortIds", "asc")->get();
+        $services = Service::where('is_active', 1)->orderby('sortIds', 'asc')->get();
         $portfolio_menu = FrontMenu::where('menu', 'Portfolio')->first();
-        $portfolios = Portfolio::where('is_active', 1)->orderby("sortIds", "asc")->get();
+        $portfolios = Portfolio::where('is_active', 1)->orderby('sortIds', 'asc')->get();
         $product_menu = FrontMenu::where('menu', 'Product')->first();
         $products = Product::where('is_active', 1)->get();
         $client_menu = FrontMenu::where('menu', 'Client')->first();
-        $Clients = Client::where('is_active', 1)->orderby("sortIds", "asc")->get();
-        $bottom_sliders = BottomSlider::where('is_active', 1)->orderby("sortIds", "asc")->get();
+        $Clients = Client::where('is_active', 1)->orderby('sortIds', 'asc')->get();
+        $bottom_sliders = BottomSlider::where('is_active', 1)->orderby('sortIds', 'asc')->get();
         $general_configuration = GeneralConfiguration::first();
-        $socials = Social::where('status', 1)->orderby("sortIds", "asc")->get();
+        $socials = Social::where('status', 1)->orderby('sortIds', 'asc')->get();
         $contact_menu = FrontMenu::where('menu', 'Contact')->first();
         $Contact = Contact::first();
 
-        return view(
-            'frontend.index',
-            compact(
-                'showAnimation',
-                'home_menu',
-                'video',
-                'home_sliders',
-                'service_menu',
-                'services',
-                'portfolio_menu',
-                'portfolios',
-                'client_menu',
-                'socials',
-                'Clients',
-                'product_menu',
-                'products',
-                'contact_menu',
-                'Contact',
-                'bottom_sliders',
-                'general_configuration'
-            )
-        );
+        return view('frontend.index', compact('showAnimation', 'home_menu', 'video', 'home_sliders', 'service_menu', 'services', 'portfolio_menu', 'portfolios', 'client_menu', 'socials', 'Clients', 'product_menu', 'products', 'contact_menu', 'Contact', 'bottom_sliders', 'general_configuration'));
     }
 }

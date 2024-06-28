@@ -10,17 +10,16 @@ use App\Models\UserMenuAccess;
 use App\Models\email_contact;
 use Auth;
 
-
 class ContactRequestController extends Controller
 {
     public function index()
     {
         $subMenuid = SubMenu::where('route_name', 'contact_requests.index')->first();
-        $userOperation = "view_status";
+        $userOperation = 'view_status';
         $userId = Auth::user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
         if (!$crudAccess) {
-            return redirect()->back()->withInput()->with("error", "No rights To View Messages");
+            return redirect()->back()->withInput()->with('error', 'No rights To View Messages');
         }
 
         $contacts = ContactRequest::all();
@@ -31,28 +30,27 @@ class ContactRequestController extends Controller
     public function destroy($id = null)
     {
         $subMenuid = SubMenu::where('route_name', 'contacts.index')->first();
-        $userOperation = "delete_status";
+        $userOperation = 'delete_status';
         $userId = Auth::guard('admin', 'user')->user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
         if ($crudAccess == true) {
             $delete = ContactRequest::find($id)->delete();
             if ($delete == true) {
-                return response()->json(["status" => true]);
+                return response()->json(['status' => true]);
             }
         } else {
-            return response()->json(["unauthorized" => true]);
-
+            return response()->json(['unauthorized' => true]);
         }
     }
 
-    public function EmailFormSubmit(Request $request) {
-
+    public function EmailFormSubmit(Request $request)
+    {
         $subMenuid = SubMenu::where('route_name', 'contact_requests.index')->first();
-        $userOperation = "update_status";
+        $userOperation = 'update_status';
         $userId = Auth::user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
         if (!$crudAccess) {
-            return redirect()->back()->withInput()->with("error", "No rights To Add Recipent");
+            return redirect()->back()->withInput()->with('error', 'No rights To Add Recipent');
         }
 
         email_contact::truncate();
@@ -66,7 +64,7 @@ class ContactRequestController extends Controller
         }
 
         // Filter out empty emails
-        $adminEmails = array_filter($adminEmails, function($email) {
+        $adminEmails = array_filter($adminEmails, function ($email) {
             return !empty($email);
         });
 
@@ -91,20 +89,19 @@ class ContactRequestController extends Controller
         return redirect()->route('contact_requests.index')->with('success', 'Emails updated successfully');
     }
 
-
-    public function destroyEmail($id) {
+    public function destroyEmail($id)
+    {
         $email_contacts = email_contact::findorfail($id);
         if ($email_contacts) {
             $email_contacts->delete();
         }
-        return redirect()->route('contact_request.index')->with('success','Email has been deleted successfully');
-
+        return redirect()->route('contact_request.index')->with('success', 'Email has been deleted successfully');
     }
 
     public function crud_access($submenuId = null, $operation = null, $uId = null)
     {
         if (!$submenuId == null) {
-            $CheckData = UserMenuAccess::where(["user_id" => $uId, "sub_menu_Id" => $submenuId, $operation => 1, 'view_status' => 1])->count();
+            $CheckData = UserMenuAccess::where(['user_id' => $uId, 'sub_menu_Id' => $submenuId, $operation => 1, 'view_status' => 1])->count();
 
             if ($CheckData > 0) {
                 return true;

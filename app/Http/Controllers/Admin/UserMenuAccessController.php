@@ -30,11 +30,11 @@ class UserMenuAccessController extends Controller
     public function index()
     {
         $subMenuid = SubMenu::where('route_name', 'user.index')->first();
-        $userOperation = "view_status";
+        $userOperation = 'view_status';
         $userId = Auth::user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
         if (!$crudAccess) {
-            return redirect()->back()->withInput()->with("error", "No rights To View User Management");
+            return redirect()->back()->withInput()->with('error', 'No rights To View User Management');
         }
 
         $data['users'] = $this->parentModel::all();
@@ -43,52 +43,51 @@ class UserMenuAccessController extends Controller
     public function create()
     {
         $subMenuid = SubMenu::where('route_name', 'user.index')->first();
-        $userOperation = "create_status";
+        $userOperation = 'create_status';
         $userId = Auth::user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
         if (!$crudAccess) {
-            return redirect()->back()->withInput()->with("error", "No rights To Create User Management");
+            return redirect()->back()->withInput()->with('error', 'No rights To Create User Management');
         }
 
-        $data['action'] = "create";
-        return view("admin.users.create")->with("data", $data);
+        $data['action'] = 'create';
+        return view('admin.users.create')->with('data', $data);
     }
     public function edit($id = null)
     {
         $subMenuid = SubMenu::where('route_name', 'user.index')->first();
-        $userOperation = "update_status";
+        $userOperation = 'update_status';
         $userId = Auth::user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
         if (!$crudAccess) {
-            return redirect()->back()->withInput()->with("error", "No rights To Edit User Management");
+            return redirect()->back()->withInput()->with('error', 'No rights To Edit User Management');
         }
 
         $user = $this->parentModel::where('id', $id)->first();
-        return view("admin.users.edit", compact('user'));
+        return view('admin.users.edit', compact('user'));
     }
 
     public function store(Request $request)
     {
-
         $subMenuid = SubMenu::where('route_name', 'user.index')->first();
-        $userOperation = "create_status";
+        $userOperation = 'create_status';
         $userId = Auth::guard('admin', 'user')->user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
         if ($crudAccess == false) {
-            return redirect()->back()->withInput()->with('error', "No Rights To create Users");
+            return redirect()->back()->withInput()->with('error', 'No Rights To create Users');
         }
 
         $validator = Validator::make($request->all(), [
             'password' => 'required|string|min:6',
         ]);
         if ($validator->fails()) {
-            return redirect()->back()->withInput()->with("error", "Password must be atleast 6 character long");
+            return redirect()->back()->withInput()->with('error', 'Password must be atleast 6 character long');
         }
 
         $userName = $request->user_name;
         $last_name = $request->last_name;
         $first_name = $request->first_name;
-        $status = $request->status == "on" ? 1 : 0;
+        $status = $request->status == 'on' ? 1 : 0;
         $email = $request->email;
         $password = Hash::make($request->password);
         $cnic = $request->cnic;
@@ -96,9 +95,9 @@ class UserMenuAccessController extends Controller
         $phone = $request->phone;
         $department = $request->department;
 
-        $userEmailcheck = $this->parentModel::where("email", "=", $email)->count();
-        $userNamecheck = $this->parentModel::where("name", "=", $userName)->count();
-        $userCniccheck = $this->parentModel::where("cnic", "=", $cnic)->count();
+        $userEmailcheck = $this->parentModel::where('email', '=', $email)->count();
+        $userNamecheck = $this->parentModel::where('name', '=', $userName)->count();
+        $userCniccheck = $this->parentModel::where('cnic', '=', $cnic)->count();
         if ($userEmailcheck > 0) {
             return redirect()->back()->withInput()->with('error', 'User Email Already Used');
         }
@@ -120,7 +119,7 @@ class UserMenuAccessController extends Controller
             'phone' => $phone,
             'department' => $department, //It Department
             'active' => $status,
-            'role' => "user",
+            'role' => 'user',
         ]);
 
         if ($userCreate == false) {
@@ -133,29 +132,21 @@ class UserMenuAccessController extends Controller
                 'sub_menu_id' => $subMenu[$key]->id,
                 'user_id' => $userCreate->id,
                 'menu_id' => $subMenu[$key]->menu->id,
-
             ]);
         }
 
         $email_settings = FrontEmail::where('status', 1)->First();
 
         $full_name = $first_name . ' ' . $last_name;
-            $this->emailService->sendEmail(
-                'SquadCloud Admin Pannel Credentails',
-                'EmailTemplates.credentialsEmail',
-                ['fullName' => $full_name, 'email' => $email, 'password' => $request->password],
-                $email_settings->emails,
-                $email
-            );
+        $this->emailService->sendEmail('SquadCloud Admin Pannel Credentails', 'EmailTemplates.credentialsEmail', ['fullName' => $full_name, 'email' => $email, 'password' => $request->password], $email_settings->emails, $email);
 
         return redirect()->route('user.index')->with('success', 'User Has been Created');
     }
 
     public function update(Request $request, $id = null)
     {
-
         $subMenuid = SubMenu::where('route_name', 'user.index')->first();
-        $userOperation = "update_status";
+        $userOperation = 'update_status';
         $userId = Auth::guard('admin', 'user')->user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
         if ($crudAccess == false) {
@@ -182,14 +173,14 @@ class UserMenuAccessController extends Controller
         }
 
         $user = $this->parentModel::where('id', $id)->first();
-        if ($request->hasFile("profileImage")) {
+        if ($request->hasFile('profileImage')) {
             if (!$request->file('profileImage')->isValid() || !in_array($request->file('profileImage')->extension(), ['jpeg', 'png', 'jpg'])) {
                 return redirect()->back()->withInput()->with('error', 'Please provide a valid background image file of type: jpeg, png, or jpg.');
             }
             if ($user->image && file_exists(public_path('backend/dist/img/user_profiles/' . $user->image))) {
                 unlink(public_path('backend/dist/img/user_profiles/' . $user->image));
             }
-            $fileName = time() . "." . $request->file('profileImage')->getClientOriginalExtension();
+            $fileName = time() . '.' . $request->file('profileImage')->getClientOriginalExtension();
             $request->file('profileImage')->move('backend/dist/img/user_profiles/', $fileName);
             $user->image = $fileName;
             $user->save();
@@ -213,13 +204,7 @@ class UserMenuAccessController extends Controller
             $email_settings = FrontEmail::where('status', 1)->First();
 
             $full_name = $first_name . ' ' . $last_name;
-            $this->emailService->sendEmail(
-                'SquadCloud Admin Pannel Credentails',
-                'EmailTemplates.credentialsEmail',
-                ['fullName' => $full_name, 'email' => $email, 'password' => $request->password],
-                $email_settings->emails,
-                $email
-            );
+            $this->emailService->sendEmail('SquadCloud Admin Pannel Credentails', 'EmailTemplates.credentialsEmail', ['fullName' => $full_name, 'email' => $email, 'password' => $request->password], $email_settings->emails, $email);
         }
 
         $this->parentModel::where('id', $id)->update([
@@ -236,70 +221,66 @@ class UserMenuAccessController extends Controller
         return redirect()->route('user.index')->with('success', 'User Profile Has been Updated');
     }
 
-
     public function change_status(Request $request)
     {
         $subMenuid = SubMenu::where('route_name', 'user.index')->first();
-        $userOperation = "update_status";
+        $userOperation = 'update_status';
         $userId = Auth::guard('admin', 'user')->user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
         if ($crudAccess == true) {
             $user = $this->parentModel::where('id', $request->id)->update(['active' => $request->status]);
             if ($user == true) {
-                return response()->json("success");
+                return response()->json('success');
             } else {
-                return response()->json("error");
+                return response()->json('error');
             }
         } else {
-            return response()->json("unauthorized");
-
+            return response()->json('unauthorized');
         }
     }
     public function destroy($id = null)
     {
-
         $subMenuid = SubMenu::where('route_name', 'user.index')->first();
-        $userOperation = "delete_status";
+        $userOperation = 'delete_status';
         $userId = Auth::guard('admin', 'user')->user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
         if ($crudAccess == true) {
             $user = $this->parentModel::where('id', $id)->delete();
             if ($user == true) {
-                return response()->json(["status" => true]);
+                return response()->json(['status' => true]);
             } else {
-                return response()->json(["status" => false]);
-
+                return response()->json(['status' => false]);
             }
         } else {
-            return response()->json(["unauthorized" => true]);
-
+            return response()->json(['unauthorized' => true]);
         }
     }
 
     public function menuAccess($id)
     {
         $subMenuid = SubMenu::where('route_name', 'user.index')->first();
-        $userOperation = "update_status";
+        $userOperation = 'update_status';
         $userId = Auth::user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
         if (!$crudAccess) {
-            return redirect()->back()->withInput()->with("error", "No rights To Change User Menu Access");
+            return redirect()->back()->withInput()->with('error', 'No rights To Change User Menu Access');
         }
 
-        $data['submenus'] = $this->menuAccessModel::where('user_menu_accesses.user_id', $id)
-                                          ->where('user_menu_accesses.deleted', 0)
-                                          ->join('menus', 'user_menu_accesses.menu_id', '=', 'menus.id')
-                                          ->orderBy('menus.order_menu', 'asc')
-                                          ->with('submenu')
-                                          ->get(['user_menu_accesses.*']);
+        $data['submenus'] = $this->menuAccessModel
+            ::where('user_menu_accesses.user_id', $id)
+            ->where('user_menu_accesses.deleted', 0)
+            ->join('menus', 'user_menu_accesses.menu_id', '=', 'menus.id')
+            ->orderBy('menus.order_menu', 'asc')
+            ->with('submenu')
+            ->get(['user_menu_accesses.*']);
 
-        return view('admin.users.manuaccess')->with("data", $data);
+        return view('admin.users.manuaccess')->with('data', $data);
     }
 
     public function giveAccess(Request $request, $id = null)
     {
         $subMenuid = SubMenu::where('route_name', 'user.index')->first();
-        $userOperation = "update_status";
+        $userOperation = 'update_status';
         $userId = Auth::guard('admin', 'user')->user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
         if ($crudAccess == false) {
@@ -310,7 +291,7 @@ class UserMenuAccessController extends Controller
         $update_status = $request->update_id;
         $create_status = $request->create_id;
         $delete_status = $request->delete_id;
-        $changeStatus = $this->menuAccessModel::where("id", $id)->update([
+        $changeStatus = $this->menuAccessModel::where('id', $id)->update([
             'view_status' => $view_status,
             'create_status' => $create_status,
             'update_status' => $update_status,
@@ -321,12 +302,11 @@ class UserMenuAccessController extends Controller
         } else {
             return response()->json(['status' => false]);
         }
-
     }
     public function crud_access($submenuId = null, $operation = null, $uId = null)
     {
         if (!$submenuId == null) {
-            $CheckData = UserMenuAccess::where(["user_id" => $uId, "sub_menu_Id" => $submenuId, $operation => 1, 'view_status' => 1])->count();
+            $CheckData = UserMenuAccess::where(['user_id' => $uId, 'sub_menu_Id' => $submenuId, $operation => 1, 'view_status' => 1])->count();
 
             if ($CheckData > 0) {
                 return true;

@@ -17,45 +17,44 @@ class FrontMenuController extends Controller
     public function index()
     {
         $subMenuid = SubMenu::where('route_name', 'frontmenu.index')->first();
-        $userOperation = "view_status";
+        $userOperation = 'view_status';
         $userId = Auth::user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
         if (!$crudAccess) {
-            return redirect()->back()->withInput()->with("error", "No rights To View Front Menus");
+            return redirect()->back()->withInput()->with('error', 'No rights To View Front Menus');
         }
 
-        $collection = FrontMenu::orderby("sortIds", "asc")->get();
+        $collection = FrontMenu::orderby('sortIds', 'asc')->get();
         return view('admin.frontmenu.index', compact('collection'));
     }
 
     public function create()
     {
         $subMenuid = SubMenu::where('route_name', 'frontmenu.index')->first();
-        $userOperation = "create_status";
+        $userOperation = 'create_status';
         $userId = Auth::user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
         if (!$crudAccess) {
-            return redirect()->back()->withInput()->with("error", "No rights To Create Front Menus");
+            return redirect()->back()->withInput()->with('error', 'No rights To Create Front Menus');
         }
         return view('admin.frontmenu.create');
     }
 
-
     public function store(Request $request)
     {
         $subMenuid = SubMenu::where('route_name', 'frontmenu.index')->first();
-        $userOperation = "create_status";
+        $userOperation = 'create_status';
         $userId = Auth::user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
         if (!$crudAccess) {
-            return redirect()->back()->withInput()->with("error", "No rights To Create Front Menus");
+            return redirect()->back()->withInput()->with('error', 'No rights To Create Front Menus');
         }
 
         $validatedData = [
-            "menu" => "required",
-            "route" => "required",
-            "tagline" => "required",
-            "page_title" => "required",
+            'menu' => 'required',
+            'route' => 'required',
+            'tagline' => 'required',
+            'page_title' => 'required',
         ];
         $valdiate = Validator::make($request->all(), $validatedData);
         if ($valdiate->fails()) {
@@ -63,7 +62,7 @@ class FrontMenuController extends Controller
         }
 
         $validator = Validator::make($request->all(), [
-            'route' => 'required|regex:/^[a-zA-Z0-9\-]+$/'
+            'route' => 'required|regex:/^[a-zA-Z0-9\-]+$/',
         ]);
         if ($validator->fails()) {
             return redirect()->back()->withInput()->with('error', 'Please provide a valid rotue');
@@ -79,7 +78,7 @@ class FrontMenuController extends Controller
             }
         }
 
-        $filename = "";
+        $filename = '';
         if ($request->hasFile('title_image')) {
             $file = $request->file('title_image');
             $extension = $file->getClientOriginalExtension();
@@ -96,45 +95,42 @@ class FrontMenuController extends Controller
         $front_menu->is_active = $request->has('is_active') ? 1 : 0;
         $front_menu->save();
 
-        return redirect()->route("frontmenu.index")->with("success", "Menu Added successfulyl");
+        return redirect()->route('frontmenu.index')->with('success', 'Menu Added successfulyl');
     }
 
     public function show($id)
     {
-
     }
-
 
     public function edit($id = null)
     {
         $subMenuid = SubMenu::where('route_name', 'frontmenu.index')->first();
-        $userOperation = "update_status";
+        $userOperation = 'update_status';
         $userId = Auth::user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
         if (!$crudAccess) {
-            return redirect()->back()->withInput()->with("error", "No rights To Edit Site Menus");
+            return redirect()->back()->withInput()->with('error', 'No rights To Edit Site Menus');
         }
 
         $menus = FrontMenu::find($id);
-        return view("admin.frontmenu.edit", compact('menus'));
+        return view('admin.frontmenu.edit', compact('menus'));
     }
-
 
     public function update(Request $request, $id)
     {
         $subMenuid = SubMenu::where('route_name', 'frontmenu.index')->first();
-        $userOperation = "update_status";
+        $userOperation = 'update_status';
         $userId = Auth::user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
         if (!$crudAccess) {
-            return redirect()->back()->withInput()->with("error", "No rights To Update Front Menus");
+            return redirect()->back()->withInput()->with('error', 'No rights To Update Front Menus');
         }
 
         $validatedData = [
-            "menu" => "required",
-            "route" => "required",
-            "tagline" => "required",
-            "page_title" => "required",
+            'menu' => 'required',
+            'route' => 'required',
+            'tagline' => 'required',
+            'page_title' => 'required',
         ];
         $valdiate = Validator::make($request->all(), $validatedData);
         if ($valdiate->fails()) {
@@ -142,7 +138,7 @@ class FrontMenuController extends Controller
         }
 
         $validator = Validator::make($request->all(), [
-            'route' => 'required|regex:/^[a-zA-Z0-9\-]+$/'
+            'route' => 'required|regex:/^[a-zA-Z0-9\-]+$/',
         ]);
         if ($validator->fails()) {
             return redirect()->back()->withInput()->with('error', 'Please provide a valid slug');
@@ -177,15 +173,14 @@ class FrontMenuController extends Controller
         return redirect()->route('frontmenu.index')->with('success', 'Menu Updated successfully');
     }
 
-
     public function destroy(Request $request)
     {
         $subMenuid = SubMenu::where('route_name', 'frontmenu.index')->first();
-        $userOperation = "delete_status";
+        $userOperation = 'delete_status';
         $userId = Auth::user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
         if (!$crudAccess) {
-            return response()->json(["unauthorized" => true]);
+            return response()->json(['unauthorized' => true]);
         }
 
         $menu = FrontMenu::find($request->frontmenu);
@@ -198,9 +193,8 @@ class FrontMenuController extends Controller
             }
             $menu->delete();
         }
-        return response()->json(["status" => true]);
+        return response()->json(['status' => true]);
     }
-
 
     public function checkroute(Request $request)
     {
@@ -220,14 +214,14 @@ class FrontMenuController extends Controller
                 $menu->save();
             }
         }
-        $frontValue = FrontMenu::orderby("sortIds", 'asc')->get();
+        $frontValue = FrontMenu::orderby('sortIds', 'asc')->get();
         return response()->json($frontValue);
     }
 
     public function crud_access($submenuId = null, $operation = null, $uId = null)
     {
         if (!$submenuId == null) {
-            $CheckData = UserMenuAccess::where(["user_id" => $uId, "sub_menu_Id" => $submenuId, $operation => 1, 'view_status' => 1])->count();
+            $CheckData = UserMenuAccess::where(['user_id' => $uId, 'sub_menu_Id' => $submenuId, $operation => 1, 'view_status' => 1])->count();
 
             if ($CheckData > 0) {
                 return true;
@@ -236,5 +230,4 @@ class FrontMenuController extends Controller
             }
         }
     }
-
 }

@@ -15,22 +15,21 @@ class CareerController extends Controller
     public function index()
     {
         $subMenuid = SubMenu::where('route_name', 'careers.index')->first();
-        $userOperation = "view_status";
+        $userOperation = 'view_status';
         $userId = Auth::user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
         if (!$crudAccess) {
-            return redirect()->back()->withInput()->with("error", "No rights To View Vacency");
+            return redirect()->back()->withInput()->with('error', 'No rights To View Vacency');
         }
 
         $career = Career::first();
         return view('admin.careers.index', compact('career'));
     }
 
-
     public function update(Request $request)
     {
         $subMenuid = SubMenu::where('route_name', 'careers.index')->first();
-        $userOperation = "update_status";
+        $userOperation = 'update_status';
         $userId = Auth::guard('admin', 'user')->user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
 
@@ -39,14 +38,14 @@ class CareerController extends Controller
         }
 
         $validatedData = [
-            "top_heading"=>"required",
-            "middle_heading"=>"required",
-            "bottom_heading"=>"required",
+            'top_heading' => 'required',
+            'middle_heading' => 'required',
+            'bottom_heading' => 'required',
         ];
         $valdiate = Validator::make($request->all(), $validatedData);
 
         if ($valdiate->fails()) {
-             dd($valdiate->errors());
+            dd($valdiate->errors());
             return redirect()->back()->withInput()->with('error', 'All Fields are required');
         }
 
@@ -62,7 +61,7 @@ class CareerController extends Controller
     public function crud_access($submenuId = null, $operation = null, $uId = null)
     {
         if (!$submenuId == null) {
-            $CheckData = UserMenuAccess::where(["user_id" => $uId, "sub_menu_Id" => $submenuId, $operation => 1, 'view_status' => 1])->count();
+            $CheckData = UserMenuAccess::where(['user_id' => $uId, 'sub_menu_Id' => $submenuId, $operation => 1, 'view_status' => 1])->count();
 
             if ($CheckData > 0) {
                 return true;

@@ -16,40 +16,37 @@ use Illuminate\Support\Facades\File;
 
 class PortfolioController extends Controller
 {
-
     public function index()
     {
         $subMenuid = SubMenu::where('route_name', 'portfolios.index')->first();
-        $userOperation = "view_status";
+        $userOperation = 'view_status';
         $userId = Auth::user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
         if (!$crudAccess) {
-            return redirect()->back()->withInput()->with("error", "No rights To View Portfolios");
+            return redirect()->back()->withInput()->with('error', 'No rights To View Portfolios');
         }
 
-        $portfolios = Portfolio::orderby("sortIds", "asc")->get();
+        $portfolios = Portfolio::orderby('sortIds', 'asc')->get();
         return view('admin.portfolios.index', compact('portfolios'));
     }
-
 
     public function create()
     {
         $subMenuid = SubMenu::where('route_name', 'portfolios.index')->first();
-        $userOperation = "create_status";
+        $userOperation = 'create_status';
         $userId = Auth::user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
         if (!$crudAccess) {
-            return redirect()->back()->withInput()->with("error", "No rights To Create Portfolios");
+            return redirect()->back()->withInput()->with('error', 'No rights To Create Portfolios');
         }
 
         return view('admin.portfolios.create');
     }
 
-
     public function store(Request $request)
     {
         $subMenuid = SubMenu::where('route_name', 'portfolios.index')->first();
-        $userOperation = "create_status";
+        $userOperation = 'create_status';
         $userId = Auth::guard('admin', 'user')->user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
         if ($crudAccess == false) {
@@ -74,7 +71,7 @@ class PortfolioController extends Controller
         }
 
         $routeValidator = Validator::make($request->all(), [
-            'route' => 'required|regex:/^[a-zA-Z0-9\-]+$/'
+            'route' => 'required|regex:/^[a-zA-Z0-9\-]+$/',
         ]);
         if ($routeValidator->fails()) {
             return redirect()->back()->withInput()->with('error', 'Please provide a valid route');
@@ -82,7 +79,7 @@ class PortfolioController extends Controller
 
         $isDuplicateRouteExists = Portfolio::where('route', $request->route)->first();
         if ($isDuplicateRouteExists) {
-            return redirect()->back()->withInput()->with('error', "Provided route is already used");
+            return redirect()->back()->withInput()->with('error', 'Provided route is already used');
         }
 
         $imageFields = ['image', 'background_image'];
@@ -94,12 +91,18 @@ class PortfolioController extends Controller
         try {
             foreach ($imageFields as $field) {
                 if (!$request->hasFile($field)) {
-                    return redirect()->back()->withInput()->with('error', ucfirst(str_replace('_', ' ', $field)) . ' is required.');
+                    return redirect()
+                        ->back()
+                        ->withInput()
+                        ->with('error', ucfirst(str_replace('_', ' ', $field)) . ' is required.');
                 }
 
                 $file = $request->file($field);
                 if (!$file->isValid() || !in_array($file->extension(), ['jpeg', 'png', 'jpg'])) {
-                    return redirect()->back()->withInput()->with('error', 'Please provide a valid ' . ucfirst(str_replace('_', ' ', $field)) . ' file of type: jpeg, png, or jpg.');
+                    return redirect()
+                        ->back()
+                        ->withInput()
+                        ->with('error', 'Please provide a valid ' . ucfirst(str_replace('_', ' ', $field)) . ' file of type: jpeg, png, or jpg.');
                 }
 
                 $filename = Str::random(40) . '.' . $file->getClientOriginalExtension();
@@ -157,7 +160,6 @@ class PortfolioController extends Controller
         }
     }
 
-
     public function show($id)
     {
         $packageData = Portfolio::find($id);
@@ -167,11 +169,11 @@ class PortfolioController extends Controller
     public function edit($id)
     {
         $subMenuid = SubMenu::where('route_name', 'portfolios.index')->first();
-        $userOperation = "update_status";
+        $userOperation = 'update_status';
         $userId = Auth::user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
         if (!$crudAccess) {
-            return redirect()->back()->withInput()->with("error", "No rights To Edit Portfolios");
+            return redirect()->back()->withInput()->with('error', 'No rights To Edit Portfolios');
         }
 
         $portfolio = Portfolio::with('images')->findOrFail($id);
@@ -181,7 +183,7 @@ class PortfolioController extends Controller
     public function update(Request $request, $id)
     {
         $subMenuid = SubMenu::where('route_name', 'portfolios.index')->first();
-        $userOperation = "update_status";
+        $userOperation = 'update_status';
         $userId = Auth::guard('admin', 'user')->user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
         if ($crudAccess == false) {
@@ -204,15 +206,17 @@ class PortfolioController extends Controller
         }
 
         $validator = Validator::make($request->all(), [
-            'route' => 'required|regex:/^[a-zA-Z0-9\-]+$/'
+            'route' => 'required|regex:/^[a-zA-Z0-9\-]+$/',
         ]);
         if ($validator->fails()) {
             return redirect()->back()->withInput()->with('error', 'Please provide a valid route');
         }
 
-        $isDuplicateRouteExists = Portfolio::where('route', $request->route)->where('id', '!=', $id)->first();
+        $isDuplicateRouteExists = Portfolio::where('route', $request->route)
+            ->where('id', '!=', $id)
+            ->first();
         if ($isDuplicateRouteExists) {
-            return redirect()->back()->withInput()->with('error', "Provided route is already used");
+            return redirect()->back()->withInput()->with('error', 'Provided route is already used');
         }
 
         $portfolio = Portfolio::findOrFail($id);
@@ -232,7 +236,10 @@ class PortfolioController extends Controller
 
                     $file = $request->file($field);
                     if (!$file->isValid() || !in_array($file->extension(), ['jpeg', 'png', 'jpg'])) {
-                        return redirect()->back()->withInput()->with('error', 'Please provide a valid ' . ucfirst(str_replace('_', ' ', $field)) . ' file of type: jpeg, png, or jpg.');
+                        return redirect()
+                            ->back()
+                            ->withInput()
+                            ->with('error', 'Please provide a valid ' . ucfirst(str_replace('_', ' ', $field)) . ' file of type: jpeg, png, or jpg.');
                     }
 
                     $filename = Str::random(40) . '.' . $file->getClientOriginalExtension();
@@ -268,9 +275,8 @@ class PortfolioController extends Controller
                 @unlink($oldFile);
             }
 
-
             if ($request->imagesToDelete != null) {
-                $array = explode(",", $request->imagesToDelete);
+                $array = explode(',', $request->imagesToDelete);
                 foreach ($array as $imageId) {
                     $image = PortfolioImage::find($imageId);
                     if ($image) {
@@ -294,7 +300,7 @@ class PortfolioController extends Controller
 
             DB::commit();
 
-            return redirect()->route('portfolios.index')->with("success", "Portfolio Updated Successfully");
+            return redirect()->route('portfolios.index')->with('success', 'Portfolio Updated Successfully');
         } catch (\Exception $e) {
             DB::rollBack();
             dd($e->getMessage());
@@ -303,27 +309,25 @@ class PortfolioController extends Controller
         }
     }
 
-
     public function destroy($id = null)
     {
         $subMenuid = SubMenu::where('route_name', 'portfolios.index')->first();
-        $userOperation = "delete_status";
+        $userOperation = 'delete_status';
         $userId = Auth::guard('admin', 'user')->user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
         if ($crudAccess == true) {
             $delete = Portfolio::find($id)->delete();
             if ($delete == true) {
-                return response()->json(["status" => true]);
+                return response()->json(['status' => true]);
             }
         } else {
-            return response()->json(["unauthorized" => true]);
-
+            return response()->json(['unauthorized' => true]);
         }
     }
     public function crud_access($submenuId = null, $operation = null, $uId = null)
     {
         if (!$submenuId == null) {
-            $CheckData = UserMenuAccess::where(["user_id" => $uId, "sub_menu_Id" => $submenuId, $operation => 1, 'view_status' => 1])->count();
+            $CheckData = UserMenuAccess::where(['user_id' => $uId, 'sub_menu_Id' => $submenuId, $operation => 1, 'view_status' => 1])->count();
 
             if ($CheckData > 0) {
                 return true;
@@ -343,7 +347,7 @@ class PortfolioController extends Controller
                 $menu->save();
             }
         }
-        $frontValue = Portfolio::orderby("sortIds", 'asc')->get();
+        $frontValue = Portfolio::orderby('sortIds', 'asc')->get();
         return response()->json($frontValue);
     }
 }

@@ -17,25 +17,25 @@ class TeamController extends Controller
     public function index()
     {
         $subMenuid = SubMenu::where('route_name', 'teams.index')->first();
-        $userOperation = "view_status";
+        $userOperation = 'view_status';
         $userId = Auth::user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
         if (!$crudAccess) {
-            return redirect()->back()->withInput()->with("error", "No rights To View Team");
+            return redirect()->back()->withInput()->with('error', 'No rights To View Team');
         }
 
-        $teams = Team::orderby("sortIds", "asc")->get();
+        $teams = Team::orderby('sortIds', 'asc')->get();
         return view('admin.teams.index', compact('teams'));
     }
 
     public function create()
     {
         $subMenuid = SubMenu::where('route_name', 'teams.index')->first();
-        $userOperation = "create_status";
+        $userOperation = 'create_status';
         $userId = Auth::user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
         if (!$crudAccess) {
-            return redirect()->back()->withInput()->with("error", "No rights To Create Team");
+            return redirect()->back()->withInput()->with('error', 'No rights To Create Team');
         }
 
         return view('admin.teams.create');
@@ -44,7 +44,7 @@ class TeamController extends Controller
     public function store(Request $request)
     {
         $subMenuid = SubMenu::where('route_name', 'teams.index')->first();
-        $userOperation = "create_status";
+        $userOperation = 'create_status';
         $userId = Auth::guard('admin', 'user')->user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
         if ($crudAccess == false) {
@@ -68,7 +68,7 @@ class TeamController extends Controller
             return redirect()->back()->withInput()->with('error', 'Please provide a valid image file of type: jpeg, png, or jpg.');
         }
 
-        $filename = "";
+        $filename = '';
         $file = $request->file('image');
         $extension = $file->getClientOriginalExtension();
         $filename = Str::random(40) . '.' . $extension;
@@ -85,7 +85,6 @@ class TeamController extends Controller
         return redirect()->route('teams.index')->with('success', 'Team member added successfully!');
     }
 
-
     public function show($id)
     {
         $packageData = Service::find($id);
@@ -95,22 +94,21 @@ class TeamController extends Controller
     public function edit($id)
     {
         $subMenuid = SubMenu::where('route_name', 'teams.index')->first();
-        $userOperation = "update_status";
+        $userOperation = 'update_status';
         $userId = Auth::user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
         if (!$crudAccess) {
-            return redirect()->back()->withInput()->with("error", "No rights To Edit Team");
+            return redirect()->back()->withInput()->with('error', 'No rights To Edit Team');
         }
 
         $team = Team::find($id);
         return view('admin.teams.edit', compact('team'));
     }
 
-
     public function update(Request $request, $id)
     {
         $subMenuid = SubMenu::where('route_name', 'teams.index')->first();
-        $userOperation = "update_status";
+        $userOperation = 'update_status';
         $userId = Auth::guard('admin', 'user')->user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
 
@@ -160,7 +158,7 @@ class TeamController extends Controller
     public function destroy($id = null)
     {
         $subMenuid = SubMenu::where('route_name', 'teams.index')->first();
-        $userOperation = "delete_status";
+        $userOperation = 'delete_status';
         $userId = Auth::guard('admin', 'user')->user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
 
@@ -176,19 +174,19 @@ class TeamController extends Controller
 
                 $team->delete();
 
-                return response()->json(["status" => true]);
+                return response()->json(['status' => true]);
             } else {
-                return response()->json(["status" => false, "message" => "Team member not found not found."]);
+                return response()->json(['status' => false, 'message' => 'Team member not found not found.']);
             }
         } else {
-            return response()->json(["unauthorized" => true]);
+            return response()->json(['unauthorized' => true]);
         }
     }
 
     public function crud_access($submenuId = null, $operation = null, $uId = null)
     {
         if (!$submenuId == null) {
-            $CheckData = UserMenuAccess::where(["user_id" => $uId, "sub_menu_Id" => $submenuId, $operation => 1, 'view_status' => 1])->count();
+            $CheckData = UserMenuAccess::where(['user_id' => $uId, 'sub_menu_Id' => $submenuId, $operation => 1, 'view_status' => 1])->count();
 
             if ($CheckData > 0) {
                 return true;
@@ -208,7 +206,7 @@ class TeamController extends Controller
                 $menu->save();
             }
         }
-        $frontValue = Team::orderby("sortIds", 'asc')->get();
+        $frontValue = Team::orderby('sortIds', 'asc')->get();
         return response()->json($frontValue);
     }
 }
