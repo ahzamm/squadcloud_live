@@ -9,6 +9,7 @@ use App\Models\SubMenu;
 use App\Models\UserMenuAccess;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
+use DB;
 use Auth;
 
 class HomeSliderController extends Controller
@@ -41,7 +42,7 @@ class HomeSliderController extends Controller
         return view('admin.homesliders.create');
     }
 
-    public function store(Request $request)
+    public function storeImages(Request $request)
     {
         $subMenuid = SubMenu::where('route_name', 'homesliders.index')->first();
         $userOperation = "create_status";
@@ -95,6 +96,45 @@ class HomeSliderController extends Controller
         $homeslider->save();
 
         return redirect()->route('homesliders.index')->with('success', 'Homeslider created successfully!');
+    }
+
+    public function storeVideo(Request $request)
+    {
+        $subMenuid = SubMenu::where('route_name', 'homesliders.index')->first();
+        $userOperation = "create_status";
+        $userId = Auth::user()->id;
+        $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
+        if (!$crudAccess) {
+            return redirect()->back()->with("error", 'No rights To create Home Sliders');
+        }
+
+        $request->validate([
+            'video' => 'nullable|mimes:mp4', // Adjust the video
+        ]);
+
+        try {
+            DB::transaction(function () use ($request) {
+                $homeSlider = new HomeSlider();
+
+                $homeSlider->is_active = $request->status != null ? true : false;
+                $homeSlider->video = "";
+
+                if (!$request->hasFile('video')) {
+                    return redirect()->back()->withInput()->with('error', 'Video is required');
+                }
+
+                if ($request->hasFile('video') && $request->file('video')->isValid()) {
+                    $videoPath = $request->file('video');
+                    $videoPath->move("frontend_assets/images/home_sliders/", $videoPath->getClientOriginalName());
+                    $homeSlider->video = $videoPath->getClientOriginalName();
+                }
+
+                $homeSlider->save();
+            }, 2);
+            return redirect()->route('homesliders.index');
+        } catch (\Throwable $th) {
+            dd($th->getMessage());
+        }
     }
 
 
@@ -176,6 +216,40 @@ class HomeSliderController extends Controller
         $homeslider->save();
 
         return redirect()->route('homesliders.index')->with('success', 'Homeslider updated successfully!');
+    }
+    public function updateVideo(Request $request, $id)
+    {
+        $subMenuid = SubMenu::where('route_name', 'homesliders.index')->first();
+        $userOperation = "update_status";
+        $userId = Auth::user()->id;
+        $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
+        if (!$crudAccess) {
+            return redirect()->back()->with("error", 'No Rights to Update Home Slider');
+        }
+        $request->validate([
+            'video' => 'nullable|mimes:mp4',
+        ]);
+
+        DB::transaction(function () use ($request, $id) {
+
+            $homeSlider = HomeSlider::find($id);
+
+            if ($request->hasFile('video') && $request->file('video')->isValid()) {
+
+                if ($homeSlider->video && file_exists(public_path('/frontend_assets/images/home_sliders/' . $homeSlider->video))) {
+                    unlink(public_path('/frontend_assets/images/home_sliders/' . $homeSlider->video));
+                }
+
+                $videoPath = $request->file('video');
+                $videoPath->move("frontend_assets/images/home_sliders/", $videoPath->getClientOriginalName());
+                $homeSlider->video = $videoPath->getClientOriginalName();
+            }
+
+            $homeSlider->is_active = $request->has('is_active') ? 1 : 0;
+            $homeSlider->save();
+        }, 2);
+        return redirect()->route('homesliders.index')->with("success", "Video Updated Successfully");
+
     }
 
     public function destroy($id = null)

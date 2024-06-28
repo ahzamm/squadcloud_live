@@ -27,10 +27,11 @@
                       <th>Heading</th>
                       <th>Subheading</th>
                       <th>Description</th>
-                      <th>Image 1</th>
-                      <th>Image 2</th>
+                      <th>Image</th>
+                      {{-- <th>Image 2</th>
                       <th>Image 3</th>
-                      <th>Image 4</th>
+                      <th>Image 4</th> --}}
+                      <th>Video</th>
                       <th>Status</th>
                       <th>Action</th>
                     </tr>
@@ -45,17 +46,21 @@
                       <td>{{ $item->subheading}}</td>
                       <td>{{ $item->description}}</td>
                       <td>
-                          <img width="40px" height="40px" src="{{ asset('frontend_assets/images/home_sliders/' . $item->image_1) }}" alt="internet homeslider provider in karachi/Clifton/pakistan" />
-                      </td>
-                      <td>
-                          <img width="40px" height="40px" src="{{ asset('frontend_assets/images/home_sliders/' . $item->image_2) }}" alt="internet homeslider provider in karachi/Clifton/pakistan" />
-                      </td>
-                      <td>
-                          <img width="40px" height="40px" src="{{ asset('frontend_assets/images/home_sliders/' . $item->image_3) }}" alt="internet homeslider provider in karachi/Clifton/pakistan" />
-                      </td>
-                      <td>
-                          <img width="40px" height="40px" src="{{ asset('frontend_assets/images/home_sliders/' . $item->image_4) }}" alt="internet homeslider provider in karachi/Clifton/pakistan" />
-                      </td>
+                        @isset($item->image_1)
+                          <img width="40px" height="40px" src="{{ asset('frontend_assets/images/home_sliders/' . $item->image_1) }}"/>
+                          <img width="40px" height="40px" src="{{ asset('frontend_assets/images/home_sliders/' . $item->image_2) }}"/>
+                          <img width="40px" height="40px" src="{{ asset('frontend_assets/images/home_sliders/' . $item->image_3) }}"/>
+                          <img width="40px" height="40px" src="{{ asset('frontend_assets/images/home_sliders/' . $item->image_4) }}"/>
+                          @endisset
+                        </td>
+                        <td>
+                            @isset($item->video)
+                            <video controls width="200" height="120">
+                              <source src="{{ asset('frontend_assets/images/home_sliders/' . $item->video) }}" type="video/mp4">
+                              Your browser does not support the video tag.
+                            </video>
+                            @endisset
+                        </td>
                       <td>{{$item->is_active == 1?'active':'deactive'}}</td>
                       <td class="d-flex justify-content-center" style="gap: 5px;">
                         <a class="btn btn-primary btn-sm" href="{{ route('homesliders.edit', $item->id) }}"><i class="fa fa-edit"></i></a>

@@ -5,20 +5,18 @@
   <section class="content">
     <div class="row">
       <div class="col-md-12">
-        <div class="card card-outline card-info mt-3">
+        <div class="card card-outline card-info">
           <div class="card-header d-flex justify-content-between align-items-center">
-            <h3 class="card-title mb-0"><i class="fa-solid fa-images"></i></span> Update Home (Slider)</h3>
+            <h3 class="card-title mb-0"><span><i class="fa-solid fa-box-open"></i></span> Update Home Slider</h3>
             <div class="ml-auto">
-              <a class="btn btn-outline-secondary btn-sm" href="{{route('homeslider.index')}}">
+              <a class="btn btn-outline-secondary btn-sm" href="{{route('homesliders.index')}}">
                 <i class="fa fa-arrow-left"></i> Back
               </a>
             </div>
           </div>
-          @if($homeslider->image_1 || $homeslider->image_2 || $homeslider->image_3 || $homeslider->image_4)
-          <form action="{{route('homeslider.update',$homeslider->id)}}" method="POST" enctype="multipart/form-data">
-            <!-- /.card-header -->
+          <form action="{{route('homesliders.update',$homeslider->id)}}" method="POST" enctype="multipart/form-data">
+            @method('PUT')
             <div class="card-body pad">
-              @method('PUT')
               @csrf
               <div class="row">
                 <div class="col-md-6">
@@ -120,52 +118,18 @@
               <button type="submit" class="btn btn-outline-primary float-right">Update</button>
             </div>
           </form>
-          @else
-          <form action="{{route('homesliders.updatevideo',$homeslider->id)}}" method="POST" enctype="multipart/form-data">
-            <!-- /.card-header -->
-            <div class="card-body pad">
-              @method('PUT')
-              @csrf
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label for="">Upload Video <span style="color: red">*</span></label> <br>
-                    @if(isset($homeslider))
-                    <video controls width="200" class="mt-3 mb-3">
-                      <source src="{{ asset('VideoHeader/' . $homeslider->video ) }}" type="video/mp4">
-                      Your browser does not support the video tag.
-                    </video>
-                    <input type="file" class="form-control-file" name="video" id="video">
-                    @else
-                    <input type="file" class="form-control-file" name="video" id="video">
-                    @endif
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group clearfix">
-                    <label for="" style="visibility: hidden">A</label>
-                    <div class="icheck-success d-block">
-                        <input type="checkbox"  {{ $homeslider->is_active == 1? 'checked' :'unchecked' }} name="is_active" id="checkboxSuccess2">
-                      <label for="checkboxSuccess2">
-                        Status (On & Off)
-                      </label>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="card-footer">
-              <button type="submit" class="btn btn-outline-primary float-right">Update</button>
-            </div>
-          </form>
-          @endif
         </div>
       </div>
-      <!-- /.col-->
     </div>
-    <!-- ./row -->
   </section>
 </div>
 @endsection
 @push('scripts')
+<script>
+  $(document).ready(function(){
+    $('#pageContent').summernote({
+      height:300
+    });
+  });
+</script>
 @endpush

@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\GeneralConfiguration;
 use Illuminate\Http\Request;
 use Auth;
-use App\Models\Admin;
 use Illuminate\Support\Facades\Hash;
 use Validator;
 use App\Services\EmailService;
@@ -61,7 +60,6 @@ class AuthController extends Controller
             Auth::guard('admin')->logout();
             return redirect()->back()->withInput($request->only('email', 'remember'))->withMessage("User account is not active.");
         }
-
         return redirect()->back()->withInput($request->only('email', 'remember'))->withMessage("Invalid username or password.");
     }
 
@@ -77,7 +75,6 @@ class AuthController extends Controller
         if ($validate->fails()) {
             return redirect()->back()->with('error', 'Provide an OTP.');
         }
-
         if ($request->token == $request->session()->get('login_token')) {
             $credentials = $request->session()->get('login_credentials');
             if ($credentials) {
@@ -85,8 +82,7 @@ class AuthController extends Controller
                 return redirect()->intended(route('admin.dashboard'));
             }
         }
-
-        return redirect()->back()->withInput()->withMessage("Invalid token.");
+        return redirect()->back()->withInput()->withMessage("Invalid OTP.");
     }
 
 
@@ -99,39 +95,9 @@ class AuthController extends Controller
         return redirect()->route('admin.login');
 
     }
-    // public function verify()
-    // {
-    //     return view('admin.auth.verify');
-    // }
-    // public function verifyPost(Request $request)
-    // {
-    //     $code = session()->get('verification_code');
-    //     $data = session()->get('verification_data');
-    //     // Attempt to log the user in
-    //     if($code != null && $code == $request->code)
-    //     {
-    //         $request->session()->forget(['verification_code', 'verification_data']);
-    //         Auth::guard('admin')->attempt(['email' => $data['email'], 'password' => $data['password'],'active'=>1]);
-    //         return redirect()->intended(route('admin.dashboard'));
-    //     }
-    //     else
-    //     {
-    //         return redirect()->route('admin.verify')->withMessage("Verification code is invalid");
-    //     }
-    // }
-    // private function sendMail($to,$code)
-    // {
-    //     $subject = 'Logon Home Admin Panel Login Request | Date: '.date("F j, Y, g:i a");
-    //     // Always set content-type when sending HTML email
-    //     $headers = "MIME-Version: 1.0" . "\r\n";
-    //     $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
-    //     $headers .= "From: info@logon.com.pk";
-    //     $message = view('email.verify',['code'=>$code])->render();
-    //     mail($to,$subject,$message,$headers);
-    // }
+
     public function changePassword(Request $request)
     {
-
         $validator = Validator::make($request->all(), [
             'oldpassword' => 'required',
             'newpassword' => 'required|confirmed|min:6',

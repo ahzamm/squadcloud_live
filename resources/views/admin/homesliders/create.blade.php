@@ -5,20 +5,29 @@
   <section class="content">
     <div class="row">
       <div class="col-md-12">
-        <div class="card card-outline card-info mt-2">
+        <div class="card card-outline card-info mt-3">
           <div class="card-header d-flex justify-content-between align-items-center">
-            <h3 class="card-title mb-0"><span><i class="fa-solid fa-box-open"></i></span> Add Home Slider</h3>
+            <h3 class="card-title mb-0"><i class="fa-solid fa-images"></i></span> Add Home (Slider)</h3>
             <div class="ml-auto">
-              <a class="btn btn-outline-secondary btn-sm" href="{{route('homesliders.index')}}">
+              <a class="btn btn-outline-secondary btn-sm" href="{{route('homeslider.index')}}">
                 <i class="fa fa-arrow-left"></i> Back
               </a>
             </div>
           </div>
-          <form action="{{route('homesliders.store')}}" method="POST" enctype="multipart/form-data">
+          <nav>
+					<div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+						<a class="nav-item nav-link active" id="nav-slider-tab" data-toggle="tab" href="#nav-slider" role="tab" aria-controls="nav-home" aria-selected="true">Slider</a>
+						<a class="nav-item nav-link" id="nav-video-tab" data-toggle="tab" href="#nav-video" role="tab" aria-controls="nav-video" aria-selected="false">Video</a>
+					</div>
+				</nav>
+          <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
+					<div class="tab-pane fade show active" id="nav-slider" role="tabpanel" aria-labelledby="nav-slider-tab">
+          <form action="{{route('homesliders.storeimages')}}" method="POST" enctype="multipart/form-data">
+            <!-- /.card-header -->
+            {{-- IMAGES --}}
             <div class="card-body pad">
               @csrf
               <div class="row">
-
                 <div class="col-md-6">
                     <div class="form-group">
                       <label for="">Heading <span style="color: red">*</span></label>
@@ -98,18 +107,63 @@
               <button type="submit" class="btn btn-outline-primary float-right">Submit</button>
             </div>
           </form>
+					</div>
+					<div class="tab-pane fade" id="nav-video" role="tabpanel" aria-labelledby="nav-video-tab">
+          <form action="{{route('homesliders.storevideo')}}" method="POST" enctype="multipart/form-data">
+            <!-- /.card-header -->
+            {{-- VIDEO --}}
+            <div class="card-body pad">
+              @csrf
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="">Upload Video <span style="color: red">*</span></label> <br>
+                    @if(isset($data))
+                    <video controls width="200" class="mt-3 mb-3">
+                      <source src="{{ asset('HomeVideo/' . $data->video ) }}" type="video/mp4">
+                      Your browser does not support the video tag.
+                    </video>
+                    <input type="file" class="form-control-file" name="video" id="video">
+                    @error('video')
+                    <p class="text-danger mt-2 mb-0 text-sm">{{$message}}</p>
+                    @enderror
+                    @else
+                    <input type="file" class="form-control-file" name="video" id="video">
+                    @error('video')
+                    <p class="text-danger mt-2 mb-0 text-sm">{{$message}}</p>
+                    @enderror
+                    @endif
+                  </div>
+                </div>
+
+
+                <div class="col-md-6">
+                  <div class="form-group clearfix">
+                    <label for="" style="visibility: hidden">A</label>
+                    <div class="icheck-success d-block">
+                      <input type="checkbox"  {{old('status') != null? 'checked' :'unchecked' }} name="status" id="checkboxSuccess2">
+                      <label for="checkboxSuccess2">
+                        Status (On & Off)
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+            <div class="card-footer">
+              <button type="submit" class="btn btn-outline-primary float-right">Submit</button>
+            </div>
+          </form>					</div>
+				</div>
+
         </div>
       </div>
+      <!-- /.col-->
     </div>
+    <!-- ./row -->
   </section>
 </div>
 @endsection
-@push('scripts')
-<script>
-  $(document).ready(function() {
-    $('#pageContent').summernote({
-      height: 300
-    });
-  });
-</script>
+@push('scr  ipts')
 @endpush

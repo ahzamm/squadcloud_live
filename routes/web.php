@@ -280,6 +280,9 @@ use App\Http\Controllers\Site\CareerController;
 
         Route::resource('homesliders','App\Http\Controllers\Admin\HomeSliderController');
         Route::get("/homesliders/destroy/{id?}" , [AdminHomeSlideController::class ,"destroy"])->name("homeslider.destroy");
+        Route::post("/homesliders/store/image" , [AdminHomeSlideController::class ,"storeImages"])->name("homesliders.storeimages");
+        Route::post("/homesliders/store/video" , [AdminHomeSlideController::class ,"storeVideo"])->name("homesliders.storevideo");
+        Route::put("/homesliders/{id}/edit/" , [AdminHomeSlideController::class ,"updateVideo"])->name("homesliders.updatevideo");
 
         Route::get("/general_configurations" , [AdminGeneralConfigurationController::class ,"index"])->name("general_configurations.index");
         Route::put("/general_configuration-update" , [AdminGeneralConfigurationController::class ,"update"])->name("general-configurations.update");
