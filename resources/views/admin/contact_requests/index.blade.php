@@ -56,6 +56,40 @@
       </div>
     </section>
   </div>
+  <!-- Add Email Modal -->
+  <div class="modal fade" id="emailModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+      <div class="modal-content">
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4>Add Email</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <!-- Modal Body -->
+        <form action="{{ route('emailcontact.store') }}" method="POST" id="emailForm">
+          @csrf
+          <div class="modal-body" id="emailContainer">
+            @foreach ($data['email_contacts'] as $key => $contact)
+              <div class="d-flex gap-5 mb-2 email-row" id="row_{{ $key }}">
+                <input type="text" class="form-control" name="adminemail[]" value="{{ $contact->adminemail }}" placeholder="Enter Email">
+                <button class="btn btn-danger btn-sm deleteRow" type="button" onclick="removeRow(this)"><i class="fa fa-minus"></i></button>
+              </div>
+            @endforeach
+            <!-- Add Email Button Alone -->
+            <div class="d-flex gap-5 mb-2" id="addEmailButton">
+              <button type="button" class="btn btn-success" onclick="addRow()"><i class="fa fa-plus"></i></button>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-success">Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  @include('admin.front-faq._modal')
 @endsection
 @push('scripts')
   <script src="{{ asset('backend/plugins/toastr/toastr.min.js') }}"></script>
