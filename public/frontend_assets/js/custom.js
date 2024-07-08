@@ -126,12 +126,34 @@
 
 		});
 		
+		jQuery('.client-slider').slick({
+			dots: false,
+			infinite: true,
+			speed: 300,
+			autoplay: true,
+			slidesToShow: 3,
+			slidesToScroll: 1,
+			prevArrow: '<div class="slick-nav prev-arrow"><i></i><svg><use xlink:href="#circle"></svg></div>',
+			nextArrow: '<div class="slick-nav next-arrow"><i></i><svg><use xlink:href="#circle"></svg></div>',
+			
+		});
 		jQuery('.strategy-slider').slick({
 			dots: false,
 			infinite: true,
 			speed: 300,
 			autoplay: false,
 			slidesToShow: 1,
+			slidesToScroll: 1,
+			prevArrow: '<div class="slick-nav prev-arrow"><i></i><svg><use xlink:href="#circle"></svg></div>',
+			nextArrow: '<div class="slick-nav next-arrow"><i></i><svg><use xlink:href="#circle"></svg></div>',
+			
+		});
+		jQuery('.team-slider').slick({
+			dots: false,
+			infinite: true,
+			speed: 300,
+			autoplay: false,
+			slidesToShow: 3,
 			slidesToScroll: 1,
 			prevArrow: '<div class="slick-nav prev-arrow"><i></i><svg><use xlink:href="#circle"></svg></div>',
 			nextArrow: '<div class="slick-nav next-arrow"><i></i><svg><use xlink:href="#circle"></svg></div>',
