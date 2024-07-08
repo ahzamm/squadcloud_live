@@ -8,6 +8,24 @@
 .slick-nav.next-arrow { left: auto; right: 2%;-webkit-transform: translateY(-50%); transform: translateY(-50%);top:50%; }
 /* .top-ten-slider .slick-nav.prev-arrow { left: -3%; } */
 /* .top-ten-slider .slick-nav.next-arrow { right: -3%; } */
+.client-slider .slick-nav.prev-arrow {
+	left: 46%;
+	top: 113%;
+	transform: scaleX(-1);
+}
+.client-slider .slick-nav.next-arrow {
+	right: 46%;
+	top: 113%;
+	transform: none;
+}
+.client-slider .slick-nav:before, .slick-nav:after {
+	border: none;
+}
+.client-slider .slick-nav i:before, .client-slider .slick-nav i:after {
+	width: 17px;
+	background: #64050f;
+	transform-origin: 17px 50%;
+}
 #video-suggest-slider .slick-nav {top: 0 !important; --border: rgba(255, 255, 255, 0)}
 .top-ten-slider .slick-nav {top: calc(50% -  30px);}
 

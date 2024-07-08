@@ -7,56 +7,6 @@
       padding-top: 100px;
     }
 
-    .more_action {
-      display: inline-block;
-      padding: 0.75rem 1.25rem;
-      border-radius: 10rem;
-      color: #fff;
-      text-transform: uppercase;
-      font-size: 1rem;
-      letter-spacing: 0.15rem;
-      transition: all 0.3s;
-      position: relative;
-      bottom: 15px;
-      overflow: hidden;
-      z-index: 1;
-    }
-
-    .more_action:after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: #71030f;
-
-      border-radius: 10rem;
-      z-index: -2;
-    }
-
-    .more_action:before {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 0%;
-      height: 100%;
-      background-color: lightgrey;
-      opacity: 0.2;
-
-      transition: all 0.3s;
-      border-radius: 10rem;
-      z-index: -1;
-    }
-
-    .more_action:hover {
-      color: white;
-    }
-
-    .more_action:hover:before {
-      width: 100%;
-    }
 
     .error-message {
       display: none;
@@ -201,8 +151,29 @@
     </div>
   </section>
 
-  <!-- -------CLIENTS------- -->
-  <section id="service-section" class="clients position-relative">
+  <!-- -------CLIENTS Slider------- -->
+  <section id="service-section" class="clients position-relative" style="padding-bottom: 100px">
+    <div class="container">
+      <div class="text-center" data-aos="zoom-in-down" style="">
+        <h2 class="section-heading text-uppercase">Clients</h2>
+        <h3 class="section-subheading text-muted">{{ $client_menu->tagline }}</h3>
+      </div>
+      <div class="client-slider">
+        @foreach($Clients as $list)
+          <div class="slider-1 d-flex align-items-center justify-content-center py-3">
+            <div class="card" data-aos="flip-right" data-aos-duration="1000">
+              <a href="{{ $list->link }}" target="_blank" class="card-header d-flex justify-content-center align-items-center" >
+                <div class="clients-logo">
+                  <img src="{{ asset('frontend_assets/images/clients/' . $list->logo) }}" alt="{{ $list->title }}" class="p-2 d-inline-block">
+                </div>
+              </a>
+            </div>
+          </div>
+        @endforeach
+      </div>
+    </div>
+  </section>
+  <!-- <section id="service-section" class="clients position-relative">
     <div class="container">
       <div class="text-center" data-aos="zoom-in-down" style="">
         <h2 class="section-heading text-uppercase">Clients</h2>
@@ -235,7 +206,8 @@
         View All
       </a>
     </div>
-  </section>
+  </section> -->
+  <!-- -------CLIENTS Slider end ------- -->
 
   <!-- -------SLIDER------- -->
   <section id="section-slider" class="slider m-0 p-0 position-relative">
