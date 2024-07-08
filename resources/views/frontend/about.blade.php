@@ -53,19 +53,23 @@
       @endif
     </div>
   </section>
-  <section class="pb-5">
+  <section class="pb-5 gallery-section">
     <h2 class="text-center my-5">Gallery</h2>
     <div class="screenshot-wrapper">
       @foreach ($gallary as $image)
         <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#imageModal" data-aos="zoom-in" data-aos-delay="50" data-aos-duration="1000">
           <div class=" mt-3 screensht">
             <div class="screensht-bg">
-              <img src="{{ asset('frontend_assets/images/gallary/' . $image->image) }}" style="width: 200px; height: 200px;">
+              <img src="{{ asset('frontend_assets/images/gallary/' . $image->image) }}" style="height: 200px;">
             </div>
           </div>
-
         </a>
       @endforeach
+    </div>
+    <div style="display: flex; justify-content: center">
+      <a href="/gallery" class="more_action mt-5">
+        View All
+      </a>
     </div>
   </section>
   <section style="min-height: 430px; padding: 100px 0; background-image: url(frontend_assets/images/about-bg.jpg);" id="section-slider">
