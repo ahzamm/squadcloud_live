@@ -3,272 +3,120 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\DeleteServiceRequest;
 use Illuminate\Http\Request;
 use App\Models\Service;
 use App\Models\SubMenu;
 use App\Models\UserMenuAccess;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Validator;
+use App\Http\Requests\CreateServiceRequest;
+use App\Http\Requests\StoreServiceRequest;
+use App\Http\Requests\ViewServiceRequest;
+use App\Http\Requests\UpdateServiceRequest;
+use App\Http\Requests\EditServiceRequest;
 use Auth;
 
 class ServiceController extends Controller
 {
-    public function index()
+    public function index(ViewServiceRequest $request)
     {
-        $subMenuid = SubMenu::where('route_name', 'services.index')->first();
-        $userOperation = 'view_status';
-        $userId = Auth::user()->id;
-        $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
-        if (!$crudAccess) {
-            return redirect()->back()->withInput()->with('error', 'No rights To View Services');
-        }
-
+        $request->validated();
         $services = Service::orderby('sortIds', 'asc')->get();
         return view('admin.services.index', compact('services'));
     }
 
-    public function create()
+    public function create(CreateServiceRequest $request)
     {
-        $subMenuid = SubMenu::where('route_name', 'services.index')->first();
-        $userOperation = 'create_status';
-        $userId = Auth::user()->id;
-        $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
-        if (!$crudAccess) {
-            return redirect()->back()->withInput()->with('error', 'No rights To Create Services');
-        }
-
+        $request->validated();
         return view('admin.services.create');
     }
 
-    public function store(Request $request)
+    public function store(StoreServiceRequest $request)
     {
-        $subMenuid = SubMenu::where('route_name', 'services.index')->first();
-        $userOperation = 'create_status';
-        $userId = Auth::guard('admin', 'user')->user()->id;
-        $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
-        if ($crudAccess == false) {
-            return redirect()->back()->withInput()->with('error', 'No right to add a service');
-        }
+        $validatedData = $request->validated();
 
-        $validatedData = [
-            'service' => 'required',
-            'tagline' => 'required',
-            'description' => 'required',
-            'slug' => 'required',
-        ];
-        $valdiate = Validator::make($request->all(), $validatedData);
-        if ($valdiate->fails()) {
-            return redirect()->back()->withInput()->with('error', 'All Fields are required');
-        }
+        $images = ['logo', 'background_image'];
+        $image_filenames = [];
 
-        $validator = Validator::make($request->all(), [
-            'slug' => 'required|regex:/^[a-zA-Z0-9\-]+$/',
-        ]);
-        if ($validator->fails()) {
-            return redirect()->back()->withInput()->with('error', 'Please provide a valid slug');
+        foreach ($images as $imageField) {
+            $file = $request->file($imageField);
+            $extension = $file->getClientOriginalExtension();
+            $image_filename = Str::random(40) . '.' . $extension;
+            $file->move(public_path('frontend_assets/images/services'), $image_filename);
+            $image_filenames[$imageField] = $image_filename;
         }
-
-        $isDuplicateSlugExists = Service::where('slug', $request->slug)->first();
-        if ($isDuplicateSlugExists) {
-            return redirect()->back()->withInput()->with('error', 'Provided slug is already used');
-        }
-
-        $isDuplicateNameExists = Service::where('service', $request->service)->first();
-        if ($isDuplicateNameExists) {
-            return redirect()->back()->withInput()->with('error', 'Provided service name is already in use');
-        }
-
-        if (!$request->hasFile('logo')) {
-            return redirect()->back()->withInput()->with('error', 'Please provide an image.');
-        }
-        if (!$request->file('logo')->isValid() || !in_array($request->file('logo')->extension(), ['jpeg', 'png', 'jpg'])) {
-            return redirect()->back()->withInput()->with('error', 'Please provide a valid image file of type: jpeg, png, or jpg.');
-        }
-
-        if (!$request->hasFile('background_image')) {
-            return redirect()->back()->withInput()->with('error', 'Please provide a background image.');
-        }
-        if (!$request->file('background_image')->isValid() || !in_array($request->file('background_image')->extension(), ['jpeg', 'png', 'jpg'])) {
-            return redirect()->back()->withInput()->with('error', 'Please provide a valid background image file of type: jpeg, png, or jpg.');
-        }
-
-        $filename = '';
-        $file = $request->file('logo');
-        $extension = $file->getClientOriginalExtension();
-        $filename = Str::random(40) . '.' . $extension;
-        $file->move(public_path('frontend_assets/images/services'), $filename);
-
-        $backgroundImageFileName = '';
-        $file = $request->file('background_image');
-        $extension = $file->getClientOriginalExtension();
-        $backgroundImageFileName = Str::random(40) . '.' . $extension;
-        $file->move(public_path('frontend_assets/images/services'), $backgroundImageFileName);
 
         $service = new Service();
-        $service->service = $request['service'];
-        $service->tagline = $request['tagline'];
-        $service->description = $request['description'];
-        $service->slug = $request['slug'];
-        $service->logo = $filename;
-        $service->background_image = $backgroundImageFileName;
+        $service->fill($validatedData);
+        $service->logo = $image_filenames['logo'];
+        $service->background_image = $image_filenames['background_image'];
         $service->is_active = $request->has('is_active') ? 1 : 0;
         $service->save();
 
         return redirect()->route('services.index')->with('success', 'Service created successfully!');
     }
 
-    public function show($id)
+    public function edit(EditServiceRequest $request, $id)
     {
-        $packageData = Service::find($id);
-        return view('admin.services.show-modal', compact('packageData'));
-    }
-
-    public function edit($id)
-    {
-        $subMenuid = SubMenu::where('route_name', 'services.index')->first();
-        $userOperation = 'update_status';
-        $userId = Auth::user()->id;
-        $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
-        if (!$crudAccess) {
-            return redirect()->back()->withInput()->with('error', 'No rights To Edit Services');
-        }
-
+        $request->validated();
         $service = Service::find($id);
         return view('admin.services.edit', compact('service'));
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdateServiceRequest $request, $id)
     {
-        $subMenuid = SubMenu::where('route_name', 'services.index')->first();
-        $userOperation = 'update_status';
-        $userId = Auth::guard('admin', 'user')->user()->id;
-        $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
-
-        if ($crudAccess == false) {
-            return redirect()->back()->withInput()->with('error', 'No right to edit a service');
-        }
-
-        $validatedData = [
-            'service' => 'required',
-            'tagline' => 'required',
-            'description' => 'required',
-            'slug' => 'required',
-        ];
-        $valdiate = Validator::make($request->all(), $validatedData);
-        if ($valdiate->fails()) {
-            return redirect()->back()->withInput()->with('error', 'All Fields are required');
-        }
-
-        if ($request->hasFile('logo')) {
-            if (!$request->file('logo')->isValid() || !in_array($request->file('logo')->extension(), ['jpeg', 'png', 'jpg'])) {
-                return redirect()->back()->withInput()->with('error', 'Please provide a valid image file of type: jpeg, png, or jpg.');
-            }
-        }
-
-        if ($request->hasFile('background_image')) {
-            if (!$request->file('background_image')->isValid() || !in_array($request->file('background_image')->extension(), ['jpeg', 'png', 'jpg'])) {
-                return redirect()->back()->withInput()->with('error', 'Please provide a valid background image file of type: jpeg, png, or jpg.');
-            }
-        }
-
-        $validator = Validator::make($request->all(), [
-            'slug' => 'required|regex:/^[a-zA-Z0-9\-]+$/',
-        ]);
-        if ($validator->fails()) {
-            return redirect()->back()->withInput()->with('error', 'Please provide a valid slug');
-        }
-
-        $isDuplicateSlugExists = Service::where('slug', $request->slug)
-            ->where('id', '!=', $id)
-            ->first();
-        if ($isDuplicateSlugExists) {
-            return redirect()->back()->withInput()->with('error', 'Provided slug is already used');
-        }
-
-        $isDuplicateNameExists = Service::where('service', $request->service)
-            ->where('id', '!=', $id)
-            ->first();
-        if ($isDuplicateNameExists) {
-            return redirect()->back()->withInput()->with('error', 'Provided service name is already in use');
-        }
+        $validatedData = $request->validated();
 
         $service = Service::findOrFail($id);
+        $service->fill($validatedData);
 
-        if ($request->hasFile('logo')) {
-            if ($service->logo && file_exists(public_path('frontend_assets/images/services/' . $service->logo))) {
-                unlink(public_path('frontend_assets/images/services/' . $service->logo));
+        $images = ['logo', 'background_image'];
+
+        foreach ($images as $imageField) {
+            if ($request->hasFile($imageField)) {
+                // Delete the old image if it exists
+                if ($service->$imageField && file_exists(public_path('frontend_assets/images/services/' . $service->$imageField))) {
+                    unlink(public_path('frontend_assets/images/services/' . $service->$imageField));
+                }
+
+                // Upload new image
+                $file = $request->file($imageField);
+                $extension = $file->getClientOriginalExtension();
+                $image_filename = Str::random(40) . '.' . $extension;
+                $file->move(public_path('frontend_assets/images/services'), $image_filename);
+
+                $service->$imageField = $image_filename;
             }
-
-            $file = $request->file('logo');
-            $extension = $file->getClientOriginalExtension();
-            $filename = Str::random(40) . '.' . $extension;
-            $file->move(public_path('frontend_assets/images/services'), $filename);
-            $service->logo = $filename;
         }
 
-        if ($request->hasFile('background_image')) {
-            if ($service->background_image && file_exists(public_path('frontend_assets/images/services/' . $service->background_image))) {
-                unlink(public_path('frontend_assets/images/services/' . $service->background_image));
-            }
-
-            $file = $request->file('background_image');
-            $extension = $file->getClientOriginalExtension();
-            $filename = Str::random(40) . '.' . $extension;
-            $file->move(public_path('frontend_assets/images/services'), $filename);
-            $service->background_image = $filename;
-        }
-
-        $service->service = $request['service'];
-        $service->tagline = $request['tagline'];
-        $service->description = $request['description'];
-        $service->slug = $request['slug'];
         $service->is_active = $request->has('is_active') ? 1 : 0;
         $service->save();
 
         return redirect()->route('services.index')->with('success', 'Service updated successfully!');
     }
 
-    public function destroy($id = null)
+    public function destroy(DeleteServiceRequest $request, $id)
     {
-        $subMenuid = SubMenu::where('route_name', 'services.index')->first();
-        $userOperation = 'delete_status';
-        $userId = Auth::guard('admin', 'user')->user()->id;
-        $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
+        $request->validated();
+        $service = Service::find($id);
 
-        if ($crudAccess == true) {
-            $service = Service::find($id);
-            if ($service) {
-                if ($service->logo) {
-                    $imagePath = public_path('frontend_assets/images/services/' . $service->logo);
-                    if (file_exists($imagePath)) {
-                        unlink($imagePath);
-                    }
-                }
-
-                $service->delete();
-
-                return response()->json(['status' => true]);
-            } else {
-                return response()->json(['status' => false, 'message' => 'Service not found.']);
+        if ($service) {
+            // Delete the images associated with the service
+            if ($service->logo && file_exists(public_path('frontend_assets/images/services/' . $service->logo))) {
+                unlink(public_path('frontend_assets/images/services/' . $service->logo));
             }
+
+            if ($service->background_image && file_exists(public_path('frontend_assets/images/services/' . $service->background_image))) {
+                unlink(public_path('frontend_assets/images/services/' . $service->background_image));
+            }
+
+            $service->delete();
+
+            return redirect()->route('services.index')->with('success', 'Service deleted successfully!');
         } else {
-            return response()->json(['unauthorized' => true]);
+            return redirect()->back()->with('error', 'Service not found.');
         }
     }
-
-    public function crud_access($submenuId = null, $operation = null, $uId = null)
-    {
-        if (!$submenuId == null) {
-            $CheckData = UserMenuAccess::where(['user_id' => $uId, 'sub_menu_Id' => $submenuId, $operation => 1, 'view_status' => 1])->count();
-
-            if ($CheckData > 0) {
-                return true;
-            } else {
-                return false;
-            }
-        }
-    }
-
     public function updateSorting(Request $request)
     {
         $sortIds = $request->sort_Ids;
