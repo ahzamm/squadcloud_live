@@ -18,6 +18,29 @@
     <div class="">
       <!-- start banner Area -->
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+      @if (session('success'))
+        <script>
+          Swal.fire({
+            title: 'Success!',
+            text: "{{ session('success') }}",
+            icon: 'success',
+            confirmButtonText: 'OK'
+          });
+        </script>
+      @endif
+
+      @if (session('error'))
+        <script>
+          Swal.fire({
+            title: 'Error!',
+            text: "{{ session('error') }}",
+            icon: 'error',
+            confirmButtonText: 'OK'
+          });
+        </script>
+      @endif
 
       <section class="banner-area relative" id="jumbotron">
         <div class="overlay overlay-bg"></div>
@@ -31,6 +54,14 @@
       </section>
       <!-- End banner Area -->
 
+      @foreach ($errors as $error)
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+          <strong>Error!</strong> {{ $errors }}
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      @endforeach
       <!-- Start features Area -->
       <section class="features-area">
         <div class="container">
@@ -217,7 +248,7 @@
     </div>
   </section>
   <!-- Alert -->
-  <div id="uploadModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  {{-- <div id="uploadModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-sm modal-dialog-centered">
       <div class="modal-content" style="border: 2px solid #007d88">
         <div class="modal-header" style="background: #007d88;">
@@ -241,8 +272,13 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> --}}
 
+
+  {{-- <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script> --}}
 
   <script>
     $(document).ready(function() {

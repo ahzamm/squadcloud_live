@@ -40,9 +40,9 @@
                           <td>{{ $item->cover_letter }}</td>
                           <td>{{ substr($item->created_at, 0, 10) }}</td>
                           <td>
-                            <a href="{{ asset('backend/resumes/' . $item->resume) }}" class="btn btn-primary btn-sm" download>
+                            <button class="btn btn-primary btn-sm download-resume" data-url="{{ asset('backend/resumes/' . $item->resume) }}">
                               <i class="fa fa-download"></i> Download
-                            </a>
+                            </button>
                           </td>
                           <td class="d-flex justify-content-center" style="gap: 5px;">
                             <button class="btn btn-danger btn-sm btnDeleteMenu" data-value="{{ $item->id }}"><i class="fa fa-trash"></i></button>
@@ -70,6 +70,7 @@
   <script src="{{ asset('site/sweet-alert/sweetalert2.min.js') }}"></script>
   <script>
     let packageDeleteUrl = "{{ route('job_application.destroy') }}";
+
     $(document).on('click', '.btnDeleteMenu', function() {
       id = $(this).attr('data-value');
       swal({
@@ -108,6 +109,17 @@
           })
         }
       })
-    })
+    });
+
+    // Script to download resume with custom filename
+    $(document).on('click', '.download-resume', function() {
+      var url = $(this).data('url');
+      var a = document.createElement('a');
+      a.href = url;
+      a.download = 'Resume.pdf';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    });
   </script>
 @endpush

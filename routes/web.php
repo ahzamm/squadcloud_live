@@ -93,6 +93,7 @@ use App\Http\Controllers\Site\GalleryController;
          Route::post('/manage_contacts', [ContactController::class, 'index'])->name('contact.manage_contact_forms_process');
          Route::post('/subscribe', [SubscriberController::class, 'store'])->name('subscribers.store');
          Route::get('/career', [CareerController::class, 'index'])->name('site.career');
+         Route::post('/career', [CareerController::class, 'store'])->name('site.career.post');
          Route::get('/gallery', [GalleryController::class, 'index'])->name('site.gallery');
 
         // End Of Contact Routes From Site section
