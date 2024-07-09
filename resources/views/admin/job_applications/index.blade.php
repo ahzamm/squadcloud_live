@@ -27,6 +27,7 @@
                         <th>Cover Letter</th>
                         <th>Submission Date</th>
                         <th>Resume</th>
+                        <th>Job Title</th>
                         <th>Action</th>
                       </tr>
                     </thead>
@@ -44,6 +45,7 @@
                               <i class="fa fa-download"></i> Download
                             </button>
                           </td>
+                          <td>{{ $item->job->job_title }}</td>
                           <td class="d-flex justify-content-center" style="gap: 5px;">
                             <button class="btn btn-danger btn-sm btnDeleteMenu" data-value="{{ $item->id }}"><i class="fa fa-trash"></i></button>
                           </td>

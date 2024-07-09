@@ -8897,3 +8897,6 @@ animation-delay: 600ms;
     display:none;
     color: #fff;
   }
+  #responsive--menu2 ul {
+    padding-bottom: 40px;
+  }

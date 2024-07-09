@@ -101,10 +101,10 @@
             </a>
           </div>
           <div class="col-lg-3 col-6">
-            <a href="{{ route('subscribers.index') }}" class="small-box-footer">
+            <a href="{{ route('job_applications.index') }}" class="small-box-footer">
               <div class="small-box bg-blue">
                 <div class="inner">
-                  <h3>{{ $subscriberCount }}</h3>
+                  <h3>{{ $JobApplicationCount }}</h3>
                   <p>
                     Job Application
                   </p>
@@ -116,7 +116,7 @@
             </a>
           </div>
           <div class="col-lg-3 col-6">
-            <a href="{{ route('social.index') }}" class="small-box-footer">
+            <a href="{{ route('jobs.index') }}" class="small-box-footer">
               <div class="small-box bg-teal">
                 <div class="inner">
                   <h3>{{ $social }}</h3>
@@ -209,7 +209,7 @@
                               </tr>
                             </thead>
                             <tbody>
-                              @foreach ($job_applications as $key => $item)
+                              @foreach ($jobApplication as $key => $item)
                                 <tr onclick="openInNewTab('coveragerequest');">
                                   <td>{{ ++$key }}</td>
                                   <td>{{ $item->name }}</td>

@@ -15,7 +15,8 @@
   <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('frontend_assets/images/' . $general_configuration->brand_logo) }}">
   <link rel="shortcut icon" href="{{ asset('frontend_assets/images/' . $general_configuration->brand_logo) }}" />
   <!-- Fav end -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/css/lightbox.css" integrity="sha512-Woz+DqWYJ51bpVk5Fv0yES/edIMXjj3Ynda+KWTIkGoynAMHrqTcDUQltbipuiaD5ymEo9520lyoVOo9jCQOCA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/css/lightbox.css"
+    integrity="sha512-Woz+DqWYJ51bpVk5Fv0yES/edIMXjj3Ynda+KWTIkGoynAMHrqTcDUQltbipuiaD5ymEo9520lyoVOo9jCQOCA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="{{ asset('site/sweet-alert/sweetalert2.css') }}">
   <link rel="stylesheet" href="{{ asset('frontend_assets/css/all.min.css') }}" />
   <link rel="stylesheet" href="{{ asset('frontend_assets/css/bootstrap.min.css?v=3') }}" />
@@ -126,10 +127,13 @@
       <div class="container">
         <div class="d-flex align-items-start" style="padding: 30px 0 10px">
           <div style="flex: 1 1 30%">
-            <p class="text-left"><img src="{{ asset('frontend_assets/images/' . $general_configuration->brand_logo) }}" alt="" class="footer--logo mb-20" style="width: 250px"></p>
-            <p class="text-gray pe-5" style="text-align:justify">{!! $general_configuration->site_footer_description !!}</p>
+            <p class="text-left">
+              <span style="display: inline-block;margin-top: -30px;background: #cfcfcf;padding: 10px;border-bottom-right-radius: 40px;border-bottom-left-radius:40px">
+                <img src="{{ asset('frontend_assets/images/' . $general_configuration->brand_logo) }}" alt="" class="footer--logo mb-20" style="width: 250px"></span>
+            </p>
+            <p class="text-gray pe-5 brand-description" style="text-align:justify;padding-right: 50px;color:#d1d0d0">{!! $general_configuration->site_footer_description !!}</p>
           </div>
-          <div style="flex: 1 1 20%">
+          <div style="flex: 1 1 10%">
             <h6 class="text-white text-left p-3" style="font-size:1rem">Quick Links</h6>
             <ul class="list-style-none">
               @foreach ($menus as $item)
@@ -151,7 +155,7 @@
             <form id="subscribeForm" class="text-left" action="{{ route('subscribers.store') }}" method="POST">
               @csrf
               <div class="form-group">
-                <input type="text" name="email" class="form-control text-white" placeholder="Enter your email"
+                <input type="text" name="email" class="form-control subscribe-input text-white" placeholder="Enter your email"
                   style="background-color: transparent; border:1px solid #b9c9c8;box-shadow:none;margin:20px 0">
                 <button type="submit" class="btn btn-sm text-dark" style="background: #d6d2cb;float: right;border-radius: 10px !important;">Subscribe</button>
               </div>
@@ -168,7 +172,44 @@
       </div>
     </div>
   </footer>
-
+  <!-- Modal -->
+  <div class="modal" id="applyModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="applyModalLabel">Apply Now</h5>
+          <button type="button" class="close" aria-label="Close" data-bs-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <form id="applyForm" action="{{ route('site.career.post') }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            <div class="form-group">
+              <label for="applicant-name">Good Name</label>
+              <input type="text" id="applicant-name" name="name" required>
+            </div>
+            <div class="form-group">
+              <label for="applicant-email">Email Address</label>
+              <input type="email" id="applicant-email" name="email" required>
+            </div>
+            <div class="form-group">
+              <label for="applicant-phone">Contact Number</label>
+              <input type="tel" id="applicant-phone" name="phone" required>
+            </div>
+            <div class="form-group">
+              <label for="applicant-coverletter">Cover Letter</label>
+              <textarea id="applicant-coverletter" name="coverletter" rows="3" required></textarea>
+            </div>
+            <div class="form-group">
+              <label for="applicant-resume">Resume (PDF & Doc)</label>
+              <input type="file" id="applicant-resume" name="resume" accept=".pdf" required>
+            </div>
+            <input type="hidden" id="job-id" name="job_id" value="">
+            <button type="submit" class="btn-primary">Apply Now</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="{{ asset('frontend_assets/js/jquery-3.6.0.min.js') }}"></script>
   <script src="{{ asset('frontend_assets/js/popper.min.js') }}"></script>
@@ -178,7 +219,8 @@
   <script src="{{ asset('frontend_assets/js/slick-animation.min.js') }}"></script>
   <script src="{{ asset('frontend_assets/js/custom.js?v=2') }}"></script>
   <script src="{{ asset('frontend_assets/js/tiltfx.js') }}"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox.min.js" integrity="sha512-Ixzuzfxv1EqafeQlTCufWfaC6ful6WFqIz4G+dWvK0beHw0NVJwvCKSgafpy5gwNqKmgUfIBraVwkKI+Cz0SEQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox.min.js" integrity="sha512-Ixzuzfxv1EqafeQlTCufWfaC6ful6WFqIz4G+dWvK0beHw0NVJwvCKSgafpy5gwNqKmgUfIBraVwkKI+Cz0SEQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script>
     CKEDITOR.replace('editor1');
   </script>
@@ -189,7 +231,12 @@
     });
   </script>
   <script>
-    $(document).ready(function() {
+    function showModal(jobId) {
+      $('#job-id').val(jobId);
+      $('#applyModal').modal('show');
+    }
+    $(function() {
+
       $('#menucheckbox').click(function() {
         if ($('#menucheckbox').is(':checked')) {
           $('.nav-overlay').css('opacity', 1);

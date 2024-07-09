@@ -18,7 +18,7 @@
           <div class="col-12">
             <div class="card mt-3 card-outline card-info">
               <div class="card-header">
-                <h3 class="card-title"><span><i class="fa-solid fa-box-open"></i></span> Service</h3>
+                <h3 class="card-title"><span><i class="fa fa-gears"></i></span> Service</h3>
                 <a class="btn btn-success btn-sm float-right" href="{{ route('services.create') }}"><i class="fa fa-plus"></i> Add Service</a>
               </div>
               <div class="card-body">
@@ -26,7 +26,6 @@
                   <table class="table table-bordered table-striped" id="example">
                     <thead>
                       <tr>
-                        <th>Sort</th>
                         <th>Serial#</th>
                         <th>Service Name</th>
                         <th>Logo</th>
@@ -41,7 +40,6 @@
                     <tbody id="sortfrontMenu" class="move">
                       @foreach ($services as $key => $item)
                         <tr class="table-row">
-                          <td><i class="fas fa-sort" id="sort-serial"></i></td>
                           <td>{{ $key + 1 }}</i><input type="hidden" class="order-id"value="{{ $item->id }}"></td>
                           <td>{{ $item->service }}</td>
                           <td><img width="40px" height="40px" src="{{ asset('frontend_assets/images/services/' . $item->logo) }}" alt="internet service provider in karachi/Clifton/pakistan" /> </td>
@@ -256,14 +254,13 @@
             let table = "";
             $(response).each(function(index, value) {
               table += ` <tr>
-                            <td><i class="fas fa-sort" id="sort-serial"></i></td>
+
                   <td>${index + 1 }
                   <input type="hidden" class="order-id" value="${value.id}">
                   </td>
                   <td >${value.service}</td>
                   <td> <img width="40px" height="40px" src="{{ asset('frontend_assets/images/services/') }}/${value.logo}" alt="service logo" /></td>
                   <td>${value.tagline}</td>
-                  <td>${value.description.length > 100 ? value.description.substring(0, 100) : value.description}</td>
                   <td>${value.slug}</td>
                   <td> <img width="40px" height="40px" src="{{ asset('frontend_assets/images/services/') }}/${value.background_image}" alt="service logo" /></td>
                   <td>${value.is_active == 1?'active':'deactive'}</td>

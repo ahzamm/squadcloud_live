@@ -1,24 +1,6 @@
 <style>
-    /* Custom CSS for modal */
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 1000;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      overflow: auto;
-      background-color: rgba(0, 0, 0, 0.5);
-    }
-
     .modal-content {
       background-color: #fefefe;
-      margin: 10% auto;
-      padding: 20px;
-      border: 1px solid #888;
-      width: 80%;
-      max-width: 600px;
       border-radius: 8px;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     }
@@ -71,6 +53,7 @@
       border: none;
       border-radius: 4px;
       cursor: pointer;
+      float: right;
     }
 
     .btn-primary:hover {
@@ -102,68 +85,15 @@
             <h6>{{ $job->company }}</h6>
           </div>
           <ul class="btns">
-            <li><a href="#" class="apply-button" data-toggle="modal" data-target="#applyModal">Apply</a></li>
+            <li><a href="javascript:void(0);" class="apply-button" data-job-id="{{ $job->id }}" onclick="showModal({{ $job->id }})">Apply Now</a></li>
           </ul>
         </div>
         <p>
           {!! $job->job_description !!}
         </p>
-        <h5>Job Nature: {{ $job->employment_type }}</h5>
-        <p class="address"><span class="lnr lnr-map"></span> {{ $job->location }}</p>
-        <p class="address"><span class="lnr lnr-database"></span> {{ $job->salary_range }}</p>
+        <p><i class="fa fa-copy"></i> Job Nature: {{ $job->employment_type }}</p>
+        <p class="address"><i class="fa fa-map-marker-alt"></i> {{ $job->location }}</p>
+        <p class="address"><i class="fa fa-money-bill-alt"></i> {{ $job->salary_range }}</p>
       </div>
     </div>
   @endforeach
-
-  <!-- Modal -->
-  <div class="modal" id="applyModal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="applyModalLabel">Apply for Job</h5>
-        <button type="button" class="close" onclick="document.getElementById('applyModal').style.display='none'">&times;</button>
-      </div>
-      <div class="modal-body">
-        <form id="applyForm" action="{{ route('site.career.post') }}" method="POST" enctype="multipart/form-data">
-            @csrf
-          <div class="form-group">
-            <label for="applicant-name">Name</label>
-            <input type="text" id="applicant-name" name="name" required>
-          </div>
-          <div class="form-group">
-            <label for="applicant-email">Email</label>
-            <input type="email" id="applicant-email" name="email" required>
-          </div>
-          <div class="form-group">
-            <label for="applicant-phone">Phone</label>
-            <input type="tel" id="applicant-phone" name="phone" required>
-          </div>
-          <div class="form-group">
-            <label for="applicant-coverletter">Cover Letter</label>
-            <textarea id="applicant-coverletter" name="coverletter" rows="3" required></textarea>
-          </div>
-          <div class="form-group">
-            <label for="applicant-resume">Resume (PDF)</label>
-            <input type="file" id="applicant-resume" name="resume" accept=".pdf" required>
-          </div>
-          <button type="submit" class="btn-primary">Submit Application</button>
-        </form>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    // Show modal
-    document.querySelectorAll('.apply-button').forEach(button => {
-      button.addEventListener('click', () => {
-        document.getElementById('applyModal').style.display = 'block';
-      });
-    });
-
-    // Hide modal when clicking outside of it
-    window.addEventListener('click', event => {
-      const modal = document.getElementById('applyModal');
-      if (event.target === modal) {
-        modal.style.display = 'none';
-      }
-    });
-  </script>

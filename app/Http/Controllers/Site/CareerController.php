@@ -9,9 +9,17 @@ use App\Models\JobApplication;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use App\Models\FrontEmail;
+use App\Services\EmailService;
 
 class CareerController extends Controller
 {
+    protected $emailService;
+    public function __construct(EmailService $emailService)
+    {
+        $this->emailService = $emailService;
+    }
+
     public function index(Request $request)
     {
         $career = Career::first();
@@ -37,6 +45,7 @@ class CareerController extends Controller
             'email' => 'required',
             'phone' => 'required',
             'coverletter' => 'required',
+            'job_id' => 'required',
         ];
         $valdiate = Validator::make($request->all(), $validatedData);
         if ($valdiate->fails()) {
@@ -60,7 +69,13 @@ class CareerController extends Controller
         $job_application->phone = $request['phone'];
         $job_application->cover_letter = $request['coverletter'];
         $job_application->resume = $filename;
-        $job_application->save();
+        $job_application->job_id = $request['job_id'];
+
+        // Send Email To Applicant
+        $email_settings = FrontEmail::where('status', 1)->First();
+        if ($job_application->save()) {
+            $this->emailService->sendEmail("Thank You for Applying for {$job_application->job->job_title} at {$job_application->job->company}", 'EmailTemplates.jobApplication', ['name' => $request['name'], 'company' => $job_application->job->company, 'job_title' => $job_application->job->job_title], $email_settings->emails, $request['email']);
+        }
 
         return redirect()->route('site.career')->with('success', 'Application submitted successfully');
     }

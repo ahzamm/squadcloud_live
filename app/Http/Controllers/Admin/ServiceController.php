@@ -3,11 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\DeleteServiceRequest;
 use Illuminate\Http\Request;
 use App\Models\Service;
 use Illuminate\Support\Str;
-use App\Http\Requests\Admin\Services\{CreateServiceRequest, StoreServiceRequest, ViewServiceRequest, UpdateServiceRequest, EditServiceRequest};
+use App\Http\Requests\Admin\Services\{CreateServiceRequest, StoreServiceRequest, ViewServiceRequest, UpdateServiceRequest, EditServiceRequest, DeleteServiceRequest};
 
 class ServiceController extends Controller
 {
@@ -39,10 +38,12 @@ class ServiceController extends Controller
             $image_filenames[$imageField] = $image_filename;
         }
 
+        $maxSortId = Service::max('sortIds');
         $service = new Service();
         $service->fill($validatedData);
         $service->logo = $image_filenames['logo'];
         $service->background_image = $image_filenames['background_image'];
+        $service->sortIds = $maxSortId !== null ? $maxSortId + 1 : 0;
         $service->is_active = $request->has('is_active') ? 1 : 0;
         $service->save();
 
@@ -90,7 +91,6 @@ class ServiceController extends Controller
 
     public function destroy(DeleteServiceRequest $request, $id)
     {
-        $request->validated();
         $service = Service::find($id);
 
         if ($service) {
@@ -105,9 +105,11 @@ class ServiceController extends Controller
 
             $service->delete();
 
-            return redirect()->route('services.index')->with('success', 'Service deleted successfully!');
+            return response()->json(['status' => true]);
+            // return redirect()->route('services.index')->with('success', 'Service deleted successfully!');
         } else {
-            return redirect()->back()->with('error', 'Service not found.');
+            // return redirect()->back()->with('error', 'Service not found.');
+            return response()->json(['status' => false, 'message' => 'Service not found.']);
         }
     }
     public function updateSorting(Request $request)
