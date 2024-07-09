@@ -1,23 +1,23 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
 use App\Models\SubMenu;
-use Auth;
 use App\Models\UserMenuAccess;
+use Auth;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class CreateFrontMenuRequest extends FormRequest
+class ViewFrontMenuRequest extends FormRequest
 {
     public function authorize()
     {
         $subMenuid = SubMenu::where('route_name', 'frontmenu.index')->first();
-        $userOperation = 'create_status';
+        $userOperation = 'view_status';
         $userId = Auth::user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
         if (!$crudAccess) {
-            throw new HttpResponseException(redirect()->back()->withInput()->with('error', 'No right to Create Site Menu'));
+            throw new HttpResponseException(redirect()->back()->withInput()->with('error', 'No right to View Site Menu'));
         }
         return true;
     }

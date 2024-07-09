@@ -1,31 +1,36 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
 use App\Models\SubMenu;
 use App\Models\UserMenuAccess;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class ViewFrontMenuRequest extends FormRequest
+class EditFrontMenuRequest extends FormRequest
 {
     public function authorize()
     {
         $subMenuid = SubMenu::where('route_name', 'frontmenu.index')->first();
-        $userOperation = 'view_status';
-        $userId = Auth::user()->id;
+        $userOperation = 'update_status';
+        $userId = Auth::guard('admin', 'user')->user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
         if (!$crudAccess) {
-            throw new HttpResponseException(redirect()->back()->withInput()->with('error', 'No right to View Site Menu'));
+            throw new HttpResponseException(redirect()->back()->withInput()->with('error', 'No right to edit a Front Menu'));
         }
         return true;
     }
 
-    public function crud_access($submenuId = null, $operation = null, $uId = null)
+    private function crud_access($submenuId = null, $operation = null, $uId = null)
     {
         if (!$submenuId == null) {
-            $CheckData = UserMenuAccess::where(['user_id' => $uId, 'sub_menu_Id' => $submenuId, $operation => 1, 'view_status' => 1])->count();
+            $CheckData = UserMenuAccess::where([
+                'user_id' => $uId,
+                'sub_menu_Id' => $submenuId,
+                $operation => 1,
+                'view_status' => 1,
+            ])->count();
 
             if ($CheckData > 0) {
                 return true;

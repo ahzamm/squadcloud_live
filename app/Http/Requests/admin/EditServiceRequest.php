@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
 use App\Models\SubMenu;
@@ -8,16 +8,16 @@ use App\Models\UserMenuAccess;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class EditFrontMenuRequest extends FormRequest
+class EditServiceRequest extends FormRequest
 {
     public function authorize()
     {
-        $subMenuid = SubMenu::where('route_name', 'frontmenu.index')->first();
+        $subMenuid = SubMenu::where('route_name', 'services.index')->first();
         $userOperation = 'update_status';
         $userId = Auth::guard('admin', 'user')->user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
         if (!$crudAccess) {
-            throw new HttpResponseException(redirect()->back()->withInput()->with('error', 'No right to edit a Front Menu'));
+            throw new HttpResponseException(redirect()->back()->withInput()->with('error', 'No right to edit a service'));
         }
         return true;
     }

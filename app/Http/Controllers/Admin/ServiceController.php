@@ -6,15 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\DeleteServiceRequest;
 use Illuminate\Http\Request;
 use App\Models\Service;
-use App\Models\SubMenu;
-use App\Models\UserMenuAccess;
 use Illuminate\Support\Str;
-use App\Http\Requests\CreateServiceRequest;
-use App\Http\Requests\StoreServiceRequest;
-use App\Http\Requests\ViewServiceRequest;
-use App\Http\Requests\UpdateServiceRequest;
-use App\Http\Requests\EditServiceRequest;
-use Auth;
+use App\Http\Requests\Admin\{CreateServiceRequest, StoreServiceRequest, ViewServiceRequest, UpdateServiceRequest, EditServiceRequest};
 
 class ServiceController extends Controller
 {
