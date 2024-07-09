@@ -201,7 +201,7 @@
             </div>
             <div class="form-group">
               <label for="applicant-resume">Resume (PDF & Doc)</label>
-              <input type="file" id="applicant-resume" name="resume" accept=".pdf" required>
+              <input type="file" id="applicant-resume" name="resume" accept=".pdf,.doc,.docx" required>
             </div>
             <input type="hidden" id="job-id" name="job_id" value="">
             <button type="submit" class="btn-primary">Apply Now</button>

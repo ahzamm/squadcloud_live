@@ -113,12 +113,13 @@
       })
     });
 
-    // Script to download resume with custom filename
+
     $(document).on('click', '.download-resume', function() {
       var url = $(this).data('url');
+      var extension = url.split('.').pop();
       var a = document.createElement('a');
       a.href = url;
-      a.download = 'Resume.pdf';
+      a.download = 'Resume.' + extension;
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
