@@ -6,13 +6,14 @@
       height: 280px;
       overflow-y: auto;
     }
+
     .small-box .icon svg {
-    font-size: 70px;
-    top: 20px;
-    position: absolute;
-    right: 15px;
-    transition: all .3s linear;
-}
+      font-size: 70px;
+      top: 20px;
+      position: absolute;
+      right: 15px;
+      transition: all .3s linear;
+    }
   </style>
   <div class="content-wrapper">
     <div class="content-header">
@@ -168,7 +169,7 @@
                   </thead>
                   <tbody>
                     @foreach ($todaysContactRequests as $key => $item)
-                      <tr onclick="openInNewTab('contact');">
+                      <tr>
                         <td>{{ ++$key }}</td>
                         <td>{{ $item->full_name }}</td>
                         <td>{{ $item->email }}</td>
@@ -204,22 +205,20 @@
                                 <th>Name</th>
                                 <th>Email Address</th>
                                 <th>Contact Number</th>
-                                <th>Resume</th>
+                                <th>Job Title</th>
+                                <th>Cover Letter</th>
                                 <th>Date & time</th>
                               </tr>
                             </thead>
                             <tbody>
                               @foreach ($jobApplication as $key => $item)
-                                <tr onclick="openInNewTab('coveragerequest');">
+                                <tr>
                                   <td>{{ ++$key }}</td>
                                   <td>{{ $item->name }}</td>
                                   <td>{{ $item->email }}</td>
                                   <td>{{ $item->phone }}</td>
-                                  <td>
-                                    <a href="{{ asset('backend/resumes/' . $item->resume) }}" class="btn btn-primary btn-sm" download>
-                                      <i class="fa fa-download"></i> Download
-                                    </a>
-                                  </td>
+                                  <td>{{ $item->job->job_title }}</td>
+                                  <td>{{ $item->cover_letter }}</td>
                                   <td>{{ $item->created_at }}</td>
                                 </tr>
                               @endforeach
