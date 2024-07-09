@@ -40,7 +40,7 @@
                         <div class="col-lg-12 col-sm-12 col-xs-12">
                           <div class="form-group">
                             <label>Route<span style="color: red">*</span></label>
-                            <input name="route" type="text" class="form-control" placeholder="Example : Contact Us" value="{{ $menus->slug }}">
+                            <input name="slug" type="text" class="form-control" placeholder="Example : Contact Us" value="{{ $menus->slug }}">
                           </div>
                         </div>
 
@@ -54,7 +54,7 @@
                         <div class="col-md-6">
                           <div class="form-group">
                             <label for="">Title Image<span style="color: red">*</span></label>
-                            @if (isset($menu->title_image) && !empty($menu->title_image))
+                            @if (isset($menus->title_image) && !empty($menus->title_image))
                               <img src="{{ asset('frontend_assets/images/title/' . $menus->title_image) }}" height="60" width="120" alt="" srcset="">
                             @endisset
                             <br><br>

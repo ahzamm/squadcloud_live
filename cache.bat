@@ -20,6 +20,9 @@ php artisan clear-compiled
 REM Reoptimize the application
 php artisan optimize:clear
 
+REM Running Dump Autoload
+@REM composer dump-autoload
+
 echo All caches have been cleared...
 
 php artisan serve

@@ -15,6 +15,7 @@
   <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('frontend_assets/images/' . $general_configuration->brand_logo) }}">
   <link rel="shortcut icon" href="{{ asset('frontend_assets/images/' . $general_configuration->brand_logo) }}" />
   <!-- Fav end -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/css/lightbox.css" integrity="sha512-Woz+DqWYJ51bpVk5Fv0yES/edIMXjj3Ynda+KWTIkGoynAMHrqTcDUQltbipuiaD5ymEo9520lyoVOo9jCQOCA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="{{ asset('site/sweet-alert/sweetalert2.css') }}">
   <link rel="stylesheet" href="{{ asset('frontend_assets/css/all.min.css') }}" />
   <link rel="stylesheet" href="{{ asset('frontend_assets/css/bootstrap.min.css?v=3') }}" />
@@ -177,6 +178,7 @@
   <script src="{{ asset('frontend_assets/js/slick-animation.min.js') }}"></script>
   <script src="{{ asset('frontend_assets/js/custom.js?v=2') }}"></script>
   <script src="{{ asset('frontend_assets/js/tiltfx.js') }}"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox.min.js" integrity="sha512-Ixzuzfxv1EqafeQlTCufWfaC6ful6WFqIz4G+dWvK0beHw0NVJwvCKSgafpy5gwNqKmgUfIBraVwkKI+Cz0SEQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script>
     CKEDITOR.replace('editor1');
   </script>

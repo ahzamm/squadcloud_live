@@ -38,7 +38,7 @@
                         <div class="col-lg-12 col-sm-12 col-xs-12">
                           <div class="form-group">
                             <label>Route <span style="color: red">*</span></label>
-                            <input name="route" type="text" class="form-control" placeholder="Example : Contact Us" value="{{ old('route') }}">
+                            <input name="slug" type="text" class="form-control" placeholder="Example : Contact Us" value="{{ old('slug') }}">
                           </div>
                         </div>
 
