@@ -6,6 +6,13 @@
       height: 280px;
       overflow-y: auto;
     }
+    .small-box .icon svg {
+    font-size: 70px;
+    top: 20px;
+    position: absolute;
+    right: 15px;
+    transition: all .3s linear;
+}
   </style>
   <div class="content-wrapper">
     <div class="content-header">
@@ -34,7 +41,7 @@
                   <p>Services</p>
                 </div>
                 <div class="icon">
-                  <i class="ion ion-person-add"></i>
+                  <i class="fa fa-gears"></i>
                 </div>
               </div>
             </a>
@@ -47,7 +54,7 @@
                   <p>Portfolios</p>
                 </div>
                 <div class="icon">
-                  <i class="ion ion-location"></i>
+                  <i class="fa fa-podcast"></i>
                 </div>
               </div>
             </a>
@@ -60,7 +67,7 @@
                   <p>Clients</p>
                 </div>
                 <div class="icon">
-                  <i class="ion ion-help"></i>
+                  <i class="fa fa-users-viewfinder"></i>
                 </div>
               </div>
             </a>
@@ -99,11 +106,11 @@
                 <div class="inner">
                   <h3>{{ $subscriberCount }}</h3>
                   <p>
-                    Subscribers
+                    Job Application
                   </p>
                 </div>
                 <div class="icon">
-                  <i class="ion ion-wifi"></i>
+                  <i class="fa fa-paperclip"></i>
                 </div>
               </div>
             </a>
@@ -114,11 +121,11 @@
                 <div class="inner">
                   <h3>{{ $social }}</h3>
                   <p>
-                    Socials Midea
+                    Job Post
                   </p>
                 </div>
                 <div class="icon">
-                  <i class="ion ion-planet"></i>
+                  <i class="fa fa-graduation-cap"></i>
                 </div>
               </div>
             </a>
