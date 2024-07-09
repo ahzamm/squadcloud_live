@@ -72,9 +72,8 @@ class CareerController extends Controller
         $job_application->job_id = $request['job_id'];
 
         // Send Email To Applicant
-        $email_settings = FrontEmail::where('status', 1)->First();
         if ($job_application->save()) {
-            $this->emailService->sendEmail("Thank You for Applying for {$job_application->job->job_title} at {$job_application->job->company}", 'EmailTemplates.jobApplication', ['name' => $request['name'], 'company' => $job_application->job->company, 'job_title' => $job_application->job->job_title], $email_settings->emails, $request['email']);
+            $this->emailService->sendEmail("Thank You for Applying for {$job_application->job->job_title} at {$job_application->job->company}", 'EmailTemplates.jobApplication', ['name' => $request['name'], 'company' => $job_application->job->company, 'job_title' => $job_application->job->job_title], $request['email']);
         }
 
         return redirect()->route('site.career')->with('success', 'Application submitted successfully');

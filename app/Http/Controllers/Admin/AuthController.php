@@ -46,9 +46,8 @@ class AuthController extends Controller
                 $request->session()->put('login_token', $token);
                 $request->session()->put('otp_creation_time', $otpCreationTime);
                 $request->session()->put('login_credentials', ['email' => $request->email, 'password' => $request->password]);
-                $email_settings = FrontEmail::where('status', 1)->first();
 
-                $this->emailService->sendEmail('Squad Cloud OTP', 'EmailTemplates.otpEmailTemplate', ['otp' => $token], $email_settings->emails, $request->email);
+                $this->emailService->sendEmail('Squad Cloud OTP', 'EmailTemplates.otpEmailTemplate', ['otp' => $token], $request->email);
                 Auth::guard('admin')->logout();
 
                 return redirect()->route('admin.verifyOTP');

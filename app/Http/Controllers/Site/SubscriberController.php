@@ -35,8 +35,7 @@ class SubscriberController extends Controller
             return response()->json(['status' => 'error', 'message' => 'Something went wrong.']);
         }
 
-        $email_settings = FrontEmail::where('status', 1)->First();
-        $this->emailService->sendEmail('Welcome to SquadCloud! Thank You for Subscribing!', 'EmailTemplates.subscriberEmailTemplate', [], $email_settings->emails, $request->email);
+        $this->emailService->sendEmail('Welcome to SquadCloud! Thank You for Subscribing!', 'EmailTemplates.subscriberEmailTemplate', [], $request->email);
         return response()->json(['status' => 'success', 'message' => 'Thank you for subscribing to our newsletter.']);
     }
 }

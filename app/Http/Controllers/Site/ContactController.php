@@ -77,7 +77,6 @@ class ContactController extends Controller
                 'SquadCloud Contact Request',
                 'EmailTemplates.customerContact',
                 ['fullName' => $full_name, 'message' => $message],
-                $email_settings->emails,
                 $email
             );
 
@@ -92,7 +91,6 @@ class ContactController extends Controller
                         'phone' => $phone,
                         'message' => $message,
                     ],
-                    $email_settings->emails,
                     $adminEmail
                 );
             }

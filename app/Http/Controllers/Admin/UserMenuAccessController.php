@@ -135,10 +135,8 @@ class UserMenuAccessController extends Controller
             ]);
         }
 
-        $email_settings = FrontEmail::where('status', 1)->First();
-
         $full_name = $first_name . ' ' . $last_name;
-        $this->emailService->sendEmail('SquadCloud Admin Pannel Credentails', 'EmailTemplates.credentialsEmail', ['fullName' => $full_name, 'email' => $email, 'password' => $request->password], $email_settings->emails, $email);
+        $this->emailService->sendEmail('SquadCloud Admin Pannel Credentails', 'EmailTemplates.credentialsEmail', ['fullName' => $full_name, 'email' => $email, 'password' => $request->password], $email);
 
         return redirect()->route('user.index')->with('success', 'User Has been Created');
     }
@@ -201,10 +199,8 @@ class UserMenuAccessController extends Controller
             $hashedPassword = Hash::make($password);
             $this->parentModel::where('id', $id)->update(['password' => $hashedPassword]);
 
-            $email_settings = FrontEmail::where('status', 1)->First();
-
             $full_name = $first_name . ' ' . $last_name;
-            $this->emailService->sendEmail('SquadCloud Admin Pannel Credentails', 'EmailTemplates.credentialsEmail', ['fullName' => $full_name, 'email' => $email, 'password' => $request->password], $email_settings->emails, $email);
+            $this->emailService->sendEmail('SquadCloud Admin Pannel Credentails', 'EmailTemplates.credentialsEmail', ['fullName' => $full_name, 'email' => $email, 'password' => $request->password], $email);
         }
 
         $this->parentModel::where('id', $id)->update([

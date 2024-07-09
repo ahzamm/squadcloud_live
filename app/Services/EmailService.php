@@ -13,11 +13,10 @@ require_once base_path('vendor/phpmailer/phpmailer/src/SMTP.php');
 
 class EmailService
 {
-    public function sendEmail($subject, $view, $data, $sender, $recipient)
+    public function sendEmail($subject, $view, $data, $recipient)
     {
         try {
             $email_settings = FrontEmail::where('status', 1)->first();
-
             $body = View::make($view, $data)->render();
 
             $mail = new PHPMailer(true);
@@ -28,6 +27,7 @@ class EmailService
             $mail->Password = $email_settings->smtp_password;
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
             $mail->Port = $email_settings->port;
+            $sender = $email_settings->emails;
 
             $mail->setFrom($sender, 'SquadCloud');
             $mail->addAddress($recipient);
