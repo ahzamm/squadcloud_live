@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Admin;
+namespace App\Http\Requests\Admin\FrontMenu;
 
 use Illuminate\Foundation\Http\FormRequest;
 use App\Models\SubMenu;
@@ -8,11 +8,11 @@ use App\Models\UserMenuAccess;
 use Auth;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class DeleteServiceRequest extends FormRequest
+class DeleteFrontMenuRequest extends FormRequest
 {
     public function authorize()
     {
-        $subMenuid = SubMenu::where('route_name', 'services.index')->first();
+        $subMenuid = SubMenu::where('route_name', 'frontmenu.index')->first();
         $userOperation = 'delete_status';
         $userId = Auth::user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);

@@ -1,30 +1,25 @@
 <?php
 
-namespace App\Http\Requests\Admin;
+namespace App\Http\Requests\Admin\Services;
 
 use Illuminate\Foundation\Http\FormRequest;
 use App\Models\SubMenu;
-use App\Models\UserMenuAccess;
 use Auth;
+use App\Models\UserMenuAccess;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class DeleteFrontMenuRequest extends FormRequest
+class CreateServiceRequest extends FormRequest
 {
     public function authorize()
     {
-        $subMenuid = SubMenu::where('route_name', 'frontmenu.index')->first();
-        $userOperation = 'delete_status';
+        $subMenuid = SubMenu::where('route_name', 'services.index')->first();
+        $userOperation = 'create_status';
         $userId = Auth::user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
         if (!$crudAccess) {
-            throw new HttpResponseException(response()->json(['unauthorized' => true]));
+            throw new HttpResponseException(redirect()->back()->withInput()->with('error', 'No right to Create Service'));
         }
         return true;
-    }
-
-    public function rules()
-    {
-        return [];
     }
 
     public function crud_access($submenuId = null, $operation = null, $uId = null)
@@ -38,5 +33,10 @@ class DeleteFrontMenuRequest extends FormRequest
                 return false;
             }
         }
+    }
+
+    public function rules()
+    {
+        return [];
     }
 }

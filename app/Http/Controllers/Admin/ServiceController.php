@@ -7,7 +7,7 @@ use App\Http\Requests\DeleteServiceRequest;
 use Illuminate\Http\Request;
 use App\Models\Service;
 use Illuminate\Support\Str;
-use App\Http\Requests\Admin\{CreateServiceRequest, StoreServiceRequest, ViewServiceRequest, UpdateServiceRequest, EditServiceRequest};
+use App\Http\Requests\Admin\Services\{CreateServiceRequest, StoreServiceRequest, ViewServiceRequest, UpdateServiceRequest, EditServiceRequest};
 
 class ServiceController extends Controller
 {

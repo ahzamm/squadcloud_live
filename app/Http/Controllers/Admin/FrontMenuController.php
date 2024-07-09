@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\FrontMenu;
 use Route;
 use Illuminate\Support\Str;
-use App\Http\Requests\Admin\{ViewFrontMenuRequest, CreateFrontMenuRequest, StoreFrontMenuRequest, EditFrontMenuRequest, UpdateFrontMenuRequest};
+use App\Http\Requests\Admin\FrontMenu\{ViewFrontMenuRequest, CreateFrontMenuRequest, StoreFrontMenuRequest, EditFrontMenuRequest, UpdateFrontMenuRequest};
 
 class FrontMenuController extends Controller
 {

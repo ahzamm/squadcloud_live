@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Requests\Admin;
-use Illuminate\Contracts\Validation\Validator;
-use Illuminate\Http\Exceptions\HttpResponseException;
+namespace App\Http\Requests\Admin\Services;
 
-class StoreServiceRequest extends CreateServiceRequest
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Contracts\Validation\Validator;
+
+class UpdateServiceRequest extends EditServiceRequest
 {
     public function rules()
     {
@@ -12,9 +13,9 @@ class StoreServiceRequest extends CreateServiceRequest
             'service' => 'required|string',
             'tagline' => 'required|string',
             'description' => 'required|string',
-            'slug' => 'required|regex:/^[a-zA-Z0-9\-]+$/|unique:services,slug',
-            'logo' => 'required|file|mimes:jpeg,png,jpg|max:2048',
-            'background_image' => 'required|file|mimes:jpeg,png,jpg|max:2048',
+            'slug' => 'required|regex:/^[a-zA-Z0-9\-]+$/|unique:services,slug,' . $this->route('service'),
+            'logo' => 'nullable|file|mimes:jpeg,png,jpg|max:2048',
+            'background_image' => 'nullable|file|mimes:jpeg,png,jpg|max:2048',
         ];
     }
 
@@ -27,10 +28,8 @@ class StoreServiceRequest extends CreateServiceRequest
             'slug.required' => 'Slug is required',
             'slug.regex' => 'Slug can only contain letters, numbers, and hyphens',
             'slug.unique' => 'Slug has already been taken',
-            'logo.required' => 'Logo is required',
             'logo.mimes' => 'Logo must be a file of type: jpeg, png, jpg',
             'logo.max' => 'Logo must not be larger than 2MB',
-            'background_image.required' => 'Background image is required',
             'background_image.mimes' => 'Background image must be a file of type: jpeg, png, jpg',
             'background_image.max' => 'Background image must not be larger than 2MB',
         ];
