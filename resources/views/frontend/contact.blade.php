@@ -51,47 +51,7 @@
             <h1 class="text-white get-in-touch" data-aos="zoom-in-down">{{ $contact->title }}</h1>
           @endif
           <div class="contact-wrapper">
-            <form class="contact-form" action="{{ route('site.contact.request') }}" method="post" id="contactForm">
-                @csrf
-                <div class="row mb-3">
-                  <div class="col" data-aos="fade-right" data-aos-duration="1000">
-                    <span class="icon-box"><i class="fa fa-user"></i></span>
-                    <input type="text" id="full_name" class="form-control name" name="full_name" value="{{ old('full_name') }}" placeholder="Good Name *">
-                    <span class="error-message" id="name-error">This field is required</span>
-                  </div>
-                  <div class="col" data-aos="fade-left" data-aos-duration="1000">
-                  <span class="icon-box"><i class="fa fa-envelope"></i></span>
-                    <input type="text" id="email" class="form-control email" name="email" value="{{ old('email') }}" placeholder="Email Address *">
-                    <span class="error-message" id="email-error">This field is required</span>
-                  </div>
-                </div>
-                <div class="row mb-3">
-                  <div class="col" data-aos="fade-right" data-aos-duration="1000">
-                  <span class="icon-box"><i class="fa fa-phone"></i></span>
-                    <input type="text" id="phone_number" class="form-control phone" name="phone" value="{{ old('phone') }}" placeholder="Contact Number *">
-                    <span class="error-message" id="phone-error">This field is required</span>
-                  </div>
-                  <div class="col" data-aos="fade-left" data-aos-duration="1000">
-                  <span class="icon-box"><i class="fa fa-list"></i></span>
-                    <input type="text" id="service_required" class="form-control service" name="service_required" value="{{ old('service_required') }}" placeholder="Required Service *">
-                    <span class="error-message" id="service-error">This field is required</span>
-                  </div>
-                </div>
-                <div class="row" style="margin-top: 25px; z-index: 9;">
-                  <div class="col position-relative" data-aos="fade-up" data-aos-duration="1000">
-                    <div class="textarea-overlay"></div>
-
-                    <textarea class="form-control custom-textarea" name="message" id="message" cols="30" rows="5"
-                      style="">{{ old('message') }} </textarea>
-                    <span class="textarea-placeholder">Write Here</span>
-                    <span class="error-message" id="message-error">This field is required</span>
-                    <div class="d-flex align-items-center justify-content-center">
-                      <button type="submit" id="send" value="send me" class="contact-now-btn"
-                        style="">Contact Now</button>
-                    </div>
-                  </div>
-                </div>
-              </form>
+            @include('component.front.contact')
           </div>
         </div>
         @if (isset($contact))
@@ -136,53 +96,53 @@
   </section>
 
   <script>
-    document.getElementById('contactForm').addEventListener('submit', function(event) {
-      let valid = true;
-      document.querySelectorAll('.error').forEach(function(el) {
-        el.classList.remove('error');
-      });
-      document.querySelectorAll('.error-message').forEach(function(el) {
-        el.style.display = 'none';
-      });
-      const fields = [{
-          id: 'full_name',
-          errorId: 'name-error'
-        },
-        {
-          id: 'email',
-          errorId: 'email-error'
-        },
-        {
-          id: 'phone_number',
-          errorId: 'phone-error'
-        },
-        {
-          id: 'service_required',
-          errorId: 'service-error'
-        },
-        {
-          id: 'message',
-          errorId: 'message-error'
-        }
-      ];
+    // document.getElementById('contactForm').addEventListener('submit', function(event) {
+    //   let valid = true;
+    //   document.querySelectorAll('.error').forEach(function(el) {
+    //     el.classList.remove('error');
+    //   });
+    //   document.querySelectorAll('.error-message').forEach(function(el) {
+    //     el.style.display = 'none';
+    //   });
+    //   const fields = [{
+    //       id: 'full_name',
+    //       errorId: 'name-error'
+    //     },
+    //     {
+    //       id: 'email',
+    //       errorId: 'email-error'
+    //     },
+    //     {
+    //       id: 'phone_number',
+    //       errorId: 'phone-error'
+    //     },
+    //     {
+    //       id: 'service_required',
+    //       errorId: 'service-error'
+    //     },
+    //     {
+    //       id: 'message',
+    //       errorId: 'message-error'
+    //     }
+    //   ];
 
-      fields.forEach(function(field) {
-        const input = document.getElementById(field.id);
-        if (!input.value.trim()) {
-          valid = false;
-          input.classList.add('error');
-          document.getElementById(field.errorId).style.display = 'block';
-        }
-      });
+    //   fields.forEach(function(field) {
+    //     const input = document.getElementById(field.id);
+    //     if (!input.value.trim()) {
+    //       valid = false;
+    //       input.classList.add('error');
+    //       document.getElementById(field.errorId).style.display = 'block';
+    //     }
+    //   });
 
-      if (!valid) {
-        event.preventDefault();
-      }
-    });
+    //   if (!valid) {
+    //     event.preventDefault();
+    //   }
+    // });
   </script>
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <script>
+  {{-- <script>
     $(document).ready(function() {
       $('#contactForm').on('submit', function(e) {
         e.preventDefault();
@@ -231,6 +191,6 @@
         });
       });
     });
-  </script>
+  </script> --}}
 
 @endsection

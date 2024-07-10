@@ -55,7 +55,6 @@ class ContactController extends Controller
         }
 
         $adminEmails = email_contact::get()->pluck('adminemail')->toArray();
-        $email_settings = FrontEmail::where('status', 1)->First();
 
         $full_name = $request->full_name;
         $email = $request->email;

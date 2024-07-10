@@ -131,6 +131,7 @@
     document.querySelector('.overlay').style.display = 'none';
     $("#resultAnswer").val("");
   }
+
   // Function to refresh the CAPTCHA numbers
   function refreshCaptcha() {
     const num1 = Math.floor(Math.random() * 10);
@@ -138,12 +139,10 @@
     document.getElementById('captchaAnswer').textContent = num1;
     document.getElementById('captchaAnswer2').textContent = num2;
   }
+
   let contactFormLink = "{{ route('user.contact') }}";
+
   $("#contactForm").submit(function(e) {
-    const num1 = Math.floor(Math.random() * 10);
-    const num2 = Math.floor(Math.random() * 10);
-    document.getElementById('captchaAnswer').textContent = num1;
-    document.getElementById('captchaAnswer2').textContent = num2;
     let isValid = true;
     if ($('#full_name').val() == "") {
       e.preventDefault();
@@ -171,7 +170,7 @@
       e.preventDefault();
       Swal.fire({
         title: 'You Are missing Something!',
-        text: "Message is Required!",
+        text: "Phone Number is Required!",
         animation: false,
         type: 'error',
       });
@@ -207,13 +206,12 @@
       $("#captchaPopup").fadeIn();
     }
   });
+
   $("#captchaForm").submit(function(e) {
-    isVarified = true;
+    e.preventDefault(); // Always prevent the default form submission
     let answerInput = $("#resultAnswer");
     if ($(answerInput).val() == "") {
-      e.preventDefault();
-      isVarified = false;
-      swal({
+      Swal.fire({
         title: 'You Are missing Something!',
         text: "Captcha Verification is Required!",
         animation: false,
@@ -225,53 +223,67 @@
     let number2 = parseInt($("#captchaAnswer2").text());
     let answer = number1 + number2;
     if (answer != parseInt(answerInput.val())) {
-      e.preventDefault();
-      swal({
+      Swal.fire({
         title: 'Incorrect Captcha!',
         text: "Captcha Verification Failed Try Again!",
         animation: false,
         type: 'error',
       });
-      const num1 = Math.floor(Math.random() * 10);
-      const num2 = Math.floor(Math.random() * 10);
-      document.getElementById('captchaAnswer').textContent = num1;
-      document.getElementById('captchaAnswer2').textContent = num2;
+      refreshCaptcha();
+      return false;
     }
     if (answer == parseInt(answerInput.val())) {
-      e.preventDefault();
-      swal({
+      Swal.fire({
         title: 'Captcha Verified!',
-        text: "Captcha Verification SuccessFull!",
+        text: "Captcha Verification Successful!",
         animation: false,
         type: 'success',
       });
       $("#captchaPopup").fadeOut();
       $("#sendFormButton").text("Sending Request....");
+
+      // AJAX call to submit the form data
       $.ajax({
         url: contactFormLink,
-        type: 'Post',
+        type: 'POST',
         data: $("#contactForm").serialize(),
         success: function(res) {
           console.log(res);
-          if (res.status == true) {
-            swal({
+          if (res.status == 'success') {
+            Swal.fire({
               title: 'Contact Message Sent!',
               text: "Message For Contact Request has been Sent!",
               type: 'success',
-            }, );
+            });
             $('#contactForm')[0].reset();
             $("#resultAnswer").val("");
             $("#sendFormButton").text("Send");
           } else {
-            swal({
+            Swal.fire({
               title: 'Error!',
               text: "Failed to send Contact request!",
               animation: false,
               type: 'error',
             });
           }
+        },
+        error: function(xhr) {
+          if (xhr.status === 422) {
+            var errors = xhr.responseJSON.errors;
+            $.each(errors, function(key, error) {
+              $('#' + key).addClass('error');
+              $('#' + key + '-error').text(error[0]).show();
+            });
+          } else {
+            Swal.fire({
+              title: 'Error!',
+              text: 'An unexpected error occurred. Please try again later.',
+              icon: 'error',
+              confirmButtonText: 'OK'
+            });
+          }
         }
-      })
+      });
     }
   });
 </script>
