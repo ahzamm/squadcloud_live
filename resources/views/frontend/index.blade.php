@@ -246,47 +246,7 @@
         <h3 class="section-subheading text-muted2">{!! $contact_menu->tagline !!}</h3>
       </div>
       <div class="main-form">
-        <form class="contact-form" action="{{ route('site.contact.request') }}" method="post" id="contactForm">
-          @csrf
-          <div class="row mb-3">
-            <div class="col" data-aos="fade-right" data-aos-duration="1000">
-              <span class="icon-box"><i class="fa fa-user"></i></span>
-              <input type="text" id="full_name" class="form-control name" name="full_name" value="{{ old('full_name') }}" placeholder="Good Name *">
-              <span class="error-message" id="name-error">This field is required</span>
-            </div>
-            <div class="col" data-aos="fade-left" data-aos-duration="1000">
-            <span class="icon-box"><i class="fa fa-envelope"></i></span>
-              <input type="text" id="email" class="form-control email" name="email" value="{{ old('email') }}" placeholder="Email Address *">
-              <span class="error-message" id="email-error">This field is required</span>
-            </div>
-          </div>
-          <div class="row mb-3">
-            <div class="col" data-aos="fade-right" data-aos-duration="1000">
-            <span class="icon-box"><i class="fa fa-phone"></i></span>
-              <input type="text" id="phone_number" class="form-control phone" name="phone" value="{{ old('phone') }}" placeholder="Contact Number *">
-              <span class="error-message" id="phone-error">This field is required</span>
-            </div>
-            <div class="col" data-aos="fade-left" data-aos-duration="1000">
-            <span class="icon-box"><i class="fa fa-list"></i></span>
-              <input type="text" id="service_required" class="form-control service" name="service_required" value="{{ old('service_required') }}" placeholder="Required Service *">
-              <span class="error-message" id="service-error">This field is required</span>
-            </div>
-          </div>
-          <div class="row" style="margin-top: 25px; z-index: 9;">
-            <div class="col position-relative" data-aos="fade-up" data-aos-duration="1000">
-              <div class="textarea-overlay"></div>
-              
-              <textarea class="form-control custom-textarea" name="message" id="message" cols="30" rows="5"
-                style="">{{ old('message') }} </textarea>
-              <span class="textarea-placeholder">Write Here</span>
-              <span class="error-message" id="message-error">This field is required</span>
-              <div class="d-flex align-items-center justify-content-center">
-                <button type="submit" id="send" value="send me" class="contact-now-btn"
-                  style="">Contact Now</button>
-              </div>
-            </div>
-          </div>
-        </form>
+        @include('component.front.contact')
       </div>
     </div>
   </section>
@@ -362,7 +322,7 @@
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script>
     $(document).ready(function() {
-      // hide placeholder 
+      // hide placeholder
       $('.custom-textarea').on('keyup', function() {
         let textVal = $(this).val();
         console.log(textVal);
