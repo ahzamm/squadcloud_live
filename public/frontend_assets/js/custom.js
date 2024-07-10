@@ -128,13 +128,19 @@
 		
 		jQuery('.client-slider').slick({
 			dots: false,
+			arrows: false,
 			infinite: true,
-			speed: 300,
+			speed: 5000,
+			cssEase: 'linear',
 			autoplay: true,
-			slidesToShow: 3,
+			slidesToShow: 4,
 			slidesToScroll: 1,
-			prevArrow: '<div class="slick-nav prev-arrow"><i></i><svg><use xlink:href="#circle"></svg></div>',
-			nextArrow: '<div class="slick-nav next-arrow"><i></i><svg><use xlink:href="#circle"></svg></div>',
+			buttons: false,
+			pauseOnHover: false,
+			pauseOnFocus: false,
+			swipe: false
+			// prevArrow: '<div class="slick-nav prev-arrow"><i></i><svg><use xlink:href="#circle"></svg></div>',
+			// nextArrow: '<div class="slick-nav next-arrow"><i></i><svg><use xlink:href="#circle"></svg></div>',
 			
 		});
 		jQuery('.strategy-slider').slick({

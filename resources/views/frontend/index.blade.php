@@ -152,7 +152,7 @@
   </section>
 
   <!-- -------CLIENTS Slider------- -->
-  <section id="service-section" class="clients position-relative" style="padding-bottom: 100px">
+  {{-- <section id="service-section" class="clients position-relative" style="padding-bottom: 100px">
     <div class="container">
       <div class="text-center" data-aos="zoom-in-down" style="">
         <h2 class="section-heading text-uppercase">Clients</h2>
@@ -172,7 +172,7 @@
         @endforeach
       </div>
     </div>
-  </section>
+  </section> --}}
   <!-- <section id="service-section" class="clients position-relative">
     <div class="container">
       <div class="text-center" data-aos="zoom-in-down" style="">
@@ -250,35 +250,39 @@
           @csrf
           <div class="row mb-3">
             <div class="col" data-aos="fade-right" data-aos-duration="1000">
-              <input type="text" id="full_name" class="form-control name" name="full_name" value="{{ old('full_name') }}" placeholder="Full Name*">
+              <span class="icon-box"><i class="fa fa-user"></i></span>
+              <input type="text" id="full_name" class="form-control name" name="full_name" value="{{ old('full_name') }}" placeholder="Good Name *">
               <span class="error-message" id="name-error">This field is required</span>
             </div>
             <div class="col" data-aos="fade-left" data-aos-duration="1000">
-              <input type="text" id="email" class="form-control email" name="email" value="{{ old('email') }}" placeholder="Email*">
+            <span class="icon-box"><i class="fa fa-envelope"></i></span>
+              <input type="text" id="email" class="form-control email" name="email" value="{{ old('email') }}" placeholder="Email Address *">
               <span class="error-message" id="email-error">This field is required</span>
             </div>
           </div>
           <div class="row mb-3">
             <div class="col" data-aos="fade-right" data-aos-duration="1000">
-              <input type="text" id="phone_number" class="form-control phone" name="phone" value="{{ old('phone') }}" placeholder="Phone Number*">
+            <span class="icon-box"><i class="fa fa-phone"></i></span>
+              <input type="text" id="phone_number" class="form-control phone" name="phone" value="{{ old('phone') }}" placeholder="Contact Number *">
               <span class="error-message" id="phone-error">This field is required</span>
             </div>
             <div class="col" data-aos="fade-left" data-aos-duration="1000">
-              <input type="text" id="service_required" class="form-control service" name="service_required" value="{{ old('service_required') }}" placeholder="Service Required*">
+            <span class="icon-box"><i class="fa fa-list"></i></span>
+              <input type="text" id="service_required" class="form-control service" name="service_required" value="{{ old('service_required') }}" placeholder="Required Service *">
               <span class="error-message" id="service-error">This field is required</span>
             </div>
           </div>
           <div class="row" style="margin-top: 25px; z-index: 9;">
             <div class="col position-relative" data-aos="fade-up" data-aos-duration="1000">
-              <div class="overlay"></div>
-              <textarea class="form-control custom-textarea" name="message" id="message" placeholder="Message*" cols="30" rows="5"
-                style="height: 350px; background-color: #71030f;color: #fff; z-index: 9;border-bottom-left-radius: 20px;
-                  border-bottom-right-radius: 20px;">{{ old('message') }}</textarea>
+              <div class="textarea-overlay"></div>
+              
+              <textarea class="form-control custom-textarea" name="message" id="message" cols="30" rows="5"
+                style="">{{ old('message') }} </textarea>
+              <span class="textarea-placeholder">Write Here</span>
               <span class="error-message" id="message-error">This field is required</span>
               <div class="d-flex align-items-center justify-content-center">
-                <button type="submit" id="send" value="send me" class=""
-                  style="background: #fff; margin: auto; width: 250px; margin-top: -60px; height: 60px; color: #71030f; border-top-left-radius: 20px; border-top-right-radius: 20px; border:none; z-index: 9;">Send
-                  Message</button>
+                <button type="submit" id="send" value="send me" class="contact-now-btn"
+                  style="">Contact Now</button>
               </div>
             </div>
           </div>
@@ -286,7 +290,30 @@
       </div>
     </div>
   </section>
+<!-- clients -->
 
+<section id="client-section" class="clients position-relative" style="padding-top: 0px;background-color: #cfcfcf00">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" style="position:initial; transform:none"><path fill="#cfcfcf70" fill-opacity="1" d="M0,0L48,21.3C96,43,192,85,288,117.3C384,149,480,171,576,154.7C672,139,768,85,864,85.3C960,85,1056,139,1152,154.7C1248,171,1344,149,1392,138.7L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>
+    <div class="container client-container">
+     {{-- <div class="text-center" data-aos="zoom-in-down" style="">
+        <h2 class="section-heading text-uppercase">Clients</h2>
+        <h3 class="section-subheading text-muted">{{ $client_menu->tagline }}</h3>
+      </div>--}}
+      <div class="client-slider">
+        @foreach($Clients as $list)
+          <div class="slider-1 d-flex align-items-center justify-content-center py-3">
+            <div class="card" data-aos="flip-right" data-aos-duration="1000">
+              <a href="{{ $list->link }}" target="_blank" class="card-header d-flex justify-content-center align-items-center" >
+                <div class="clients-logo">
+                  <img src="{{ asset('frontend_assets/images/clients/' . $list->logo) }}" alt="{{ $list->title }}" class="p-2 d-inline-block">
+                </div>
+              </a>
+            </div>
+          </div>
+        @endforeach
+      </div>
+    </div>
+  </section>
   <script>
     document.getElementById('contactForm').addEventListener('submit', function(event) {
       let valid = true;
@@ -335,6 +362,17 @@
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script>
     $(document).ready(function() {
+      // hide placeholder 
+      $('.custom-textarea').on('keyup', function() {
+        let textVal = $(this).val();
+        console.log(textVal);
+        if(!textVal) {
+          console.log('no text');
+          $('.textarea-placeholder').css('display', 'inline-block');
+        } else {
+          $('.textarea-placeholder').css('display', 'none');
+        }
+      })
       $('#contactForm').on('submit', function(e) {
         e.preventDefault();
 
