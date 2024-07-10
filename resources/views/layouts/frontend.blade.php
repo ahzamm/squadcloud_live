@@ -172,44 +172,33 @@
       </div>
     </div>
   </footer>
-  <!-- Modal -->
-  <div class="modal" id="applyModal">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="applyModalLabel">Apply Now</h5>
-          <button type="button" class="close" aria-label="Close" data-bs-dismiss="modal">&times;</button>
+    <!-- Captcha Popup HTML -->
+    <div class="modal" id="captchaModal">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-body">
+                <div class="" id="">
+                    <button class="mb-3" style="color: black!important; background:transparent!important;float:right;" onclick="closecaptcha()">X</button>
+                    <div class="captcha-box">
+                    <div class="captcha">
+                        <p>Please solve the addition:</p>
+                        <div class="numbers">
+                        <span id="captchaAnswer">0</span>
+                        <span>+</span>
+                        <span id="captchaAnswer2">5</span>
+                        <span><i class="fa fa-refresh" aria-hidden="true" onclick="refreshCaptcha()"></i></span>
+                        </div>
+                        <form id="captchaForm">
+                        <input type="text" id="resultAnswer" placeholder="Your answer">
+                        <button type="submit" id="captchaSubmit">Submit</button>
+                        <p id="result"></p>
+                        </form>
+                    </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="modal-body">
-          <form id="applyForm" action="{{ route('site.career.post') }}" method="POST" enctype="multipart/form-data">
-            @csrf
-            <div class="form-group">
-              <label for="applicant-name">Good Name</label>
-              <input type="text" id="applicant-name" name="name" required>
-            </div>
-            <div class="form-group">
-              <label for="applicant-email">Email Address</label>
-              <input type="email" id="applicant-email" name="email" required>
-            </div>
-            <div class="form-group">
-              <label for="applicant-phone">Contact Number</label>
-              <input type="tel" id="applicant-phone" name="phone" required>
-            </div>
-            <div class="form-group">
-              <label for="applicant-coverletter">Cover Letter</label>
-              <textarea id="applicant-coverletter" name="coverletter" rows="3" required></textarea>
-            </div>
-            <div class="form-group">
-              <label for="applicant-resume">Resume (PDF & Doc)</label>
-              <input type="file" id="applicant-resume" name="resume" accept=".pdf,.doc,.docx" required>
-            </div>
-            <input type="hidden" id="job-id" name="job_id" value="">
-            <button type="submit" class="btn-primary">Apply Now</button>
-          </form>
-        </div>
-      </div>
     </div>
-  </div>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="{{ asset('frontend_assets/js/jquery-3.6.0.min.js') }}"></script>
   <script src="{{ asset('frontend_assets/js/popper.min.js') }}"></script>
@@ -231,12 +220,7 @@
     });
   </script>
   <script>
-    function showModal(jobId) {
-      $('#job-id').val(jobId);
-      $('#applyModal').modal('show');
-    }
     $(function() {
-
       $('#menucheckbox').click(function() {
         if ($('#menucheckbox').is(':checked')) {
           $('.nav-overlay').css('opacity', 1);
