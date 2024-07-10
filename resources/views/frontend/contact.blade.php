@@ -52,41 +52,46 @@
           @endif
           <div class="contact-wrapper">
             <form class="contact-form" action="{{ route('site.contact.request') }}" method="post" id="contactForm">
-              @csrf
-              <div class="row mb-3">
-                <div class="col" data-aos="fade-right" data-aos-duration="1000">
-                  <input type="text" id="full_name" class="form-control name" name="full_name" value="{{ old('full_name') }}" placeholder="Full Name*">
-                  <span class="error-message" id="name-error">This field is required</span>
-                </div>
-                <div class="col" data-aos="fade-left" data-aos-duration="1000">
-                  <input type="text" id="email" class="form-control email" name="email" value="{{ old('email') }}" placeholder="Email*">
-                  <span class="error-message" id="email-error">This field is required</span>
-                </div>
-              </div>
-              <div class="row mb-3">
-                <div class="col" data-aos="fade-right" data-aos-duration="1000">
-                  <input type="text" id="phone_number" class="form-control phone" name="phone" value="{{ old('phone') }}" placeholder="Phone Number*">
-                  <span class="error-message" id="phone-error">This field is required</span>
-                </div>
-                <div class="col" data-aos="fade-left" data-aos-duration="1000">
-                  <input type="text" id="service_required" class="form-control service" name="service_required" value="{{ old('service_required') }}" placeholder="Service Required*">
-                  <span class="error-message" id="service-error">This field is required</span>
-                </div>
-              </div>
-              <div class="row" style="margin-top: 25px; z-index: 9;">
-                <div class="col position-relative" data-aos="fade-up" data-aos-duration="1000">
-                  <div class="overlay"></div>
-                  <textarea class="form-control custom-textarea" name="message" id="message" placeholder="Message*" cols="30" rows="5"
-                    style="background-size: cover; background-image: url('{{ asset('frontend_assets/images/contacts/' . $contact->background_image) }}');">{{ old('message') }}</textarea>
-                  <span class="error-message" id="message-error">This field is required</span>
-                  <div class="d-flex align-items-center justify-content-center">
-                    <button type="submit" id="send" value="send me" class=""
-                      style="background: #fff; margin: auto; width: 250px; margin-top: -60px; height: 60px; color: #71030f; border-top-left-radius: 20px; border-top-right-radius: 20px; border:none; z-index: 9;">Send
-                      Message</button>
+                @csrf
+                <div class="row mb-3">
+                  <div class="col" data-aos="fade-right" data-aos-duration="1000">
+                    <span class="icon-box"><i class="fa fa-user"></i></span>
+                    <input type="text" id="full_name" class="form-control name" name="full_name" value="{{ old('full_name') }}" placeholder="Good Name *">
+                    <span class="error-message" id="name-error">This field is required</span>
+                  </div>
+                  <div class="col" data-aos="fade-left" data-aos-duration="1000">
+                  <span class="icon-box"><i class="fa fa-envelope"></i></span>
+                    <input type="text" id="email" class="form-control email" name="email" value="{{ old('email') }}" placeholder="Email Address *">
+                    <span class="error-message" id="email-error">This field is required</span>
                   </div>
                 </div>
-              </div>
-            </form>
+                <div class="row mb-3">
+                  <div class="col" data-aos="fade-right" data-aos-duration="1000">
+                  <span class="icon-box"><i class="fa fa-phone"></i></span>
+                    <input type="text" id="phone_number" class="form-control phone" name="phone" value="{{ old('phone') }}" placeholder="Contact Number *">
+                    <span class="error-message" id="phone-error">This field is required</span>
+                  </div>
+                  <div class="col" data-aos="fade-left" data-aos-duration="1000">
+                  <span class="icon-box"><i class="fa fa-list"></i></span>
+                    <input type="text" id="service_required" class="form-control service" name="service_required" value="{{ old('service_required') }}" placeholder="Required Service *">
+                    <span class="error-message" id="service-error">This field is required</span>
+                  </div>
+                </div>
+                <div class="row" style="margin-top: 25px; z-index: 9;">
+                  <div class="col position-relative" data-aos="fade-up" data-aos-duration="1000">
+                    <div class="textarea-overlay"></div>
+
+                    <textarea class="form-control custom-textarea" name="message" id="message" cols="30" rows="5"
+                      style="">{{ old('message') }} </textarea>
+                    <span class="textarea-placeholder">Write Here</span>
+                    <span class="error-message" id="message-error">This field is required</span>
+                    <div class="d-flex align-items-center justify-content-center">
+                      <button type="submit" id="send" value="send me" class="contact-now-btn"
+                        style="">Contact Now</button>
+                    </div>
+                  </div>
+                </div>
+              </form>
           </div>
         </div>
         @if (isset($contact))
