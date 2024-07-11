@@ -42,7 +42,8 @@
     background-color: #fff;
     padding: 20px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-    z-index: 9999;
+    z-index: 9998;
+    /* Lower z-index for CAPTCHA */
   }
 
   .overlay {
@@ -53,15 +54,15 @@
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.1);
-    /* Adjust the alpha value here */
-    z-index: 9998;
+    z-index: 9997;
+    /* Lower z-index for overlay */
   }
 </style>
+
 <div role="form" class="wpcf7" id="wpcf7-f2869-p19-o1" lang="en-US" dir="ltr">
   @if (session()->has('message'))
     <div class="screen-reader-response">{{ session()->get('message') }}</div>
   @endif
-  {{-- <form  wire:submit.prevent="submit"> --}}
   <form class="contact-form" action="{{ route('site.contact.request') }}" method="post" id="contactForm">
     @csrf
     <div class="row mb-3">
@@ -132,7 +133,6 @@
     $("#resultAnswer").val("");
   }
 
-  // Function to refresh the CAPTCHA numbers
   function refreshCaptcha() {
     const num1 = Math.floor(Math.random() * 10);
     const num2 = Math.floor(Math.random() * 10);
@@ -148,9 +148,11 @@
       e.preventDefault();
       Swal.fire({
         title: 'You Are missing Something!',
-        text: "First and Last Name is Required!",
+        text: "Name is Required!",
         animation: false,
         type: 'error',
+        toast: true,
+        position: 'top-right'
       });
       isValid = false;
       return false;
@@ -162,6 +164,8 @@
         text: "Email Address is Required!",
         animation: false,
         type: 'error',
+        toast: true,
+        position: 'top-right'
       });
       isValid = false;
       return false;
@@ -173,6 +177,8 @@
         text: "Phone Number is Required!",
         animation: false,
         type: 'error',
+        toast: true,
+        position: 'top-right'
       });
       isValid = false;
     }
@@ -183,6 +189,8 @@
         text: "Service is Required!",
         animation: false,
         icon: 'error',
+        toast: true,
+        position: 'top-right'
       });
       isValid = false;
     }
@@ -193,6 +201,8 @@
         text: "Message is Required!",
         animation: false,
         icon: 'error',
+        toast: true,
+        position: 'top-right'
       });
       isValid = false;
     }
@@ -216,6 +226,10 @@
         text: "Captcha Verification is Required!",
         animation: false,
         type: 'error',
+        toast: true,
+        position: 'top-right'
+      }).then(() => {
+        $("#captchaPopup").fadeIn(); // Show the CAPTCHA popup again after SweetAlert closes
       });
       return false;
     }
@@ -228,6 +242,10 @@
         text: "Captcha Verification Failed Try Again!",
         animation: false,
         type: 'error',
+        toast: true,
+        position: 'top-right'
+      }).then(() => {
+        $("#captchaPopup").fadeIn(); // Show the CAPTCHA popup again after SweetAlert closes
       });
       refreshCaptcha();
       return false;
@@ -238,51 +256,56 @@
         text: "Captcha Verification Successful!",
         animation: false,
         type: 'success',
-      });
-      $("#captchaPopup").fadeOut();
-      $("#sendFormButton").text("Sending Request....");
+        toast: true,
+        position: 'top-right'
+      }).then(() => {
+        $("#captchaPopup").fadeOut();
+        $("#sendFormButton").text("Sending Request....");
 
-      // AJAX call to submit the form data
-      $.ajax({
-        url: contactFormLink,
-        type: 'POST',
-        data: $("#contactForm").serialize(),
-        success: function(res) {
-          console.log(res);
-          if (res.status == 'success') {
-            Swal.fire({
-              title: 'Contact Message Sent!',
-              text: "Message For Contact Request has been Sent!",
-              type: 'success',
-            });
-            $('#contactForm')[0].reset();
-            $("#resultAnswer").val("");
-            $("#sendFormButton").text("Send");
-          } else {
-            Swal.fire({
-              title: 'Error!',
-              text: "Failed to send Contact request!",
-              animation: false,
-              type: 'error',
-            });
+        // AJAX call to submit the form data
+        $.ajax({
+          url: contactFormLink,
+          type: 'POST',
+          data: $("#contactForm").serialize(),
+          success: function(res) {
+            console.log(res);
+            if (res.status == 'success') {
+              Swal.fire({
+                title: 'Contact Message Sent!',
+                text: "Message For Contact Request has been Sent!",
+                type: 'success',
+                toast: true,
+                position: 'top-right'
+              });
+              $('#contactForm')[0].reset();
+              $("#resultAnswer").val("");
+              $("#sendFormButton").text("Send");
+            } else {
+              Swal.fire({
+                title: 'Error!',
+                text: "Failed to send Contact request!",
+                animation: false,
+                type: 'error',
+              });
+            }
+          },
+          error: function(xhr) {
+            if (xhr.status === 422) {
+              var errors = xhr.responseJSON.errors;
+              $.each(errors, function(key, error) {
+                $('#' + key).addClass('error');
+                $('#' + key + '-error').text(error[0]).show();
+              });
+            } else {
+              Swal.fire({
+                title: 'Error!',
+                text: 'An unexpected error occurred. Please try again later.',
+                icon: 'error',
+                confirmButtonText: 'OK'
+              });
+            }
           }
-        },
-        error: function(xhr) {
-          if (xhr.status === 422) {
-            var errors = xhr.responseJSON.errors;
-            $.each(errors, function(key, error) {
-              $('#' + key).addClass('error');
-              $('#' + key + '-error').text(error[0]).show();
-            });
-          } else {
-            Swal.fire({
-              title: 'Error!',
-              text: 'An unexpected error occurred. Please try again later.',
-              icon: 'error',
-              confirmButtonText: 'OK'
-            });
-          }
-        }
+        });
       });
     }
   });
