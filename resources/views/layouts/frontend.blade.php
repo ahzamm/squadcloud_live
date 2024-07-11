@@ -173,7 +173,7 @@
     </div>
   </footer>
     <!-- Captcha Popup HTML -->
-    <div class="modal" id="captchaModal">
+    {{-- <div class="modal" id="captchaModal">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-body">
@@ -198,7 +198,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="{{ asset('frontend_assets/js/jquery-3.6.0.min.js') }}"></script>
   <script src="{{ asset('frontend_assets/js/popper.min.js') }}"></script>
