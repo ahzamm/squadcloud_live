@@ -232,6 +232,8 @@
         title: 'You Are missing Something!',
         text: "Name is Required!",
         icon: 'error',
+        toast: true,
+        position: 'top-right'
       });
       isValid = false;
       return false;
@@ -242,6 +244,8 @@
         title: 'You Are missing Something!',
         text: "Email is Required!",
         icon: 'error',
+        toast: true,
+        position: 'top-right'
       });
       isValid = false;
       return false;
@@ -252,6 +256,8 @@
         title: 'You Are missing Something!',
         text: "Phone is Required!",
         icon: 'error',
+        toast: true,
+        position: 'top-right'
       });
       isValid = false;
       return false;
@@ -262,6 +268,8 @@
         title: 'You Are Missing Something!',
         text: "Cover Letter is Required!",
         icon: 'error',
+        toast: true,
+        position: 'top-right'
       });
       isValid = false;
       return false;
@@ -273,6 +281,8 @@
         title: 'You Are missing Something!',
         text: "Resume is Required!",
         icon: 'error',
+        toast: true,
+        position: 'top-right'
       });
       isValid = false;
       return false;
@@ -293,6 +303,8 @@
         title: 'You Are missing Something!',
         text: "Captcha Verification is Required!",
         icon: 'error',
+        toast: true,
+        position: 'top-right'
       });
       return false;
     }
@@ -305,6 +317,8 @@
         title: 'Incorrect Captcha!',
         text: "Captcha Verification Failed Try Again!",
         icon: 'error',
+        toast: true,
+        position: 'top-right'
       });
       refreshCaptcha();
     } else {
