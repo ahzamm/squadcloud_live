@@ -188,7 +188,7 @@
             <label for="applicant-resume">Resume (PDF & Doc)</label>
             <input type="file" id="applicant-resume" name="resume" accept=".pdf,.doc,.docx">
           </div>
-          <div class="captcha-box">
+          <div class="captcha-box" id="captcha-box" style="display: none;">
             <div class="captcha">
               <p>Please solve the addition:</p>
               <div class="numbers">
@@ -202,13 +202,13 @@
             </div>
           </div>
           <input type="hidden" id="job-id" name="job_id" value="">
-          <button type="submit" class="btn-primary" id="applyNowButton">Apply Now</button>
+          <button type="button" class="btn-primary" id="applyNowButton">Apply Now</button>
+          <button type="submit" class="btn-primary" id="submitButton" style="display: none;">Submit</button>
         </form>
       </div>
     </div>
   </div>
 </div>
-
 
 <script src="{{ asset('sweet-alert/sweetalert2.min.js') }}"></script>
 <script>
@@ -263,6 +263,8 @@
         text: "Cover Letter is Required!",
         icon: 'error',
       });
+      isValid = false;
+      return false;
     }
     var fileInput = $('#applicant-resume')[0];
     if (fileInput.files.length === 0) {
@@ -277,32 +279,36 @@
     }
     if (isValid == true) {
       e.preventDefault();
-      let answerInput = $("#resultAnswer");
-      if ($(answerInput).val() == "") {
-        Swal.fire({
-          title: 'You Are missing Something!',
-          text: "Captcha Verification is Required!",
-          animation: false,
-          type: 'error',
-        });
-        return false;
-      }
-      let number1 = parseInt($("#captchaAnswer").text());
-      let number2 = parseInt($("#captchaAnswer2").text());
-      let answer = number1 + number2;
-      if (answer != parseInt(answerInput.val())) {
-        Swal.fire({
-          title: 'Incorrect Captcha!',
-          text: "Captcha Verification Failed Try Again!",
-          animation: false,
-          type: 'error',
-        });
-        refreshCaptcha();
-      } else {
-        $("#captchaPopup").fadeOut();
-        $(".overlay_popup").fadeOut();
-        $("#applyForm").unbind('submit').submit();
-      }
+      $('#applyNowButton').hide();
+      $('#captcha-box').show();
+      $('#submitButton').show();
+    }
+  });
+
+  $("#submitButton").click(function(e) {
+    let answerInput = $("#resultAnswer");
+    if ($(answerInput).val() == "") {
+      e.preventDefault();
+      Swal.fire({
+        title: 'You Are missing Something!',
+        text: "Captcha Verification is Required!",
+        icon: 'error',
+      });
+      return false;
+    }
+    let number1 = parseInt($("#captchaAnswer").text());
+    let number2 = parseInt($("#captchaAnswer2").text());
+    let answer = number1 + number2;
+    if (answer != parseInt(answerInput.val())) {
+      e.preventDefault();
+      Swal.fire({
+        title: 'Incorrect Captcha!',
+        text: "Captcha Verification Failed Try Again!",
+        icon: 'error',
+      });
+      refreshCaptcha();
+    } else {
+      $("#applyForm").unbind('submit').submit();
     }
   });
 </script>
