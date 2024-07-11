@@ -144,7 +144,7 @@
           <h6>{{ $job->company }}</h6>
         </div>
         <ul class="btns">
-          <li><a href="javascript:void(0);" class="apply-button" data-job-id="{{ $job->id }}" onclick="showModal({{ $job->id }})">Apply Now</a></li>
+          <li><a href="javascript:void(0);" class="apply-button" data-job-id="{{ $job->id }}" onclick="showModal({{ $job->id }})"><i class="fa fa-paper-plane"></i> Apply Now</a></li>
         </ul>
       </div>
       <p>
