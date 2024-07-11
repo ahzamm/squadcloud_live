@@ -17,26 +17,25 @@ class HomeSliderController extends Controller
     public function index()
     {
         $subMenuid = SubMenu::where('route_name', 'homesliders.index')->first();
-        $userOperation = "view_status";
+        $userOperation = 'view_status';
         $userId = Auth::user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
         if (!$crudAccess) {
-            return redirect()->back()->withInput()->with("error", "No rights To View Home Slider");
+            return redirect()->back()->withInput()->with('error', 'No rights To View Home Slider');
         }
 
-        $homesliders = HomeSlider::orderby("sortIds", "asc")->get();
+        $homesliders = HomeSlider::orderby('sortIds', 'asc')->get();
         return view('admin.homesliders.index', compact('homesliders'));
     }
-
 
     public function create()
     {
         $subMenuid = SubMenu::where('route_name', 'homesliders.index')->first();
-        $userOperation = "create_status";
+        $userOperation = 'create_status';
         $userId = Auth::user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
         if (!$crudAccess) {
-            return redirect()->back()->withInput()->with("error", "No rights To Create Home Slider");
+            return redirect()->back()->withInput()->with('error', 'No rights To Create Home Slider');
         }
 
         return view('admin.homesliders.create');
@@ -45,7 +44,7 @@ class HomeSliderController extends Controller
     public function storeImages(Request $request)
     {
         $subMenuid = SubMenu::where('route_name', 'homesliders.index')->first();
-        $userOperation = "create_status";
+        $userOperation = 'create_status';
         $userId = Auth::guard('admin', 'user')->user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
         if ($crudAccess == false) {
@@ -66,11 +65,17 @@ class HomeSliderController extends Controller
 
         foreach ($images as $imageField) {
             if (!$request->hasFile($imageField)) {
-                return redirect()->back()->withInput()->with('error', 'Please provide an image for ' . str_replace('_', ' ', $imageField) . '.');
+                return redirect()
+                    ->back()
+                    ->withInput()
+                    ->with('error', 'Please provide an image for ' . str_replace('_', ' ', $imageField) . '.');
             }
             $file = $request->file($imageField);
             if (!$file->isValid() || !in_array($file->extension(), ['jpeg', 'png', 'jpg'])) {
-                return redirect()->back()->withInput()->with('error', 'Please provide a valid image file for ' . str_replace('_', ' ', $imageField) . ' of type: jpeg, png, or jpg.');
+                return redirect()
+                    ->back()
+                    ->withInput()
+                    ->with('error', 'Please provide a valid image file for ' . str_replace('_', ' ', $imageField) . ' of type: jpeg, png, or jpg.');
             }
         }
 
@@ -84,6 +89,7 @@ class HomeSliderController extends Controller
             $image_filenames[$imageField] = $image_filename;
         }
 
+        $maxSortId = Homeslider::max('sortIds');
         $homeslider = new Homeslider();
         $homeslider->heading = $request['heading'];
         $homeslider->subheading = $request['subheading'];
@@ -93,6 +99,7 @@ class HomeSliderController extends Controller
         $homeslider->image_3 = $image_filenames['image_3'];
         $homeslider->image_4 = $image_filenames['image_4'];
         $homeslider->is_active = $request->has('is_active') ? 1 : 0;
+        $homeslider->sortIds = $maxSortId !== null ? $maxSortId + 1 : 0;
         $homeslider->save();
 
         return redirect()->route('homesliders.index')->with('success', 'Homeslider created successfully!');
@@ -101,24 +108,25 @@ class HomeSliderController extends Controller
     public function storeVideo(Request $request)
     {
         $subMenuid = SubMenu::where('route_name', 'homesliders.index')->first();
-        $userOperation = "create_status";
+        $userOperation = 'create_status';
         $userId = Auth::user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
         if (!$crudAccess) {
-            return redirect()->back()->with("error", 'No rights To create Home Sliders');
+            return redirect()->back()->with('error', 'No rights To create Home Sliders');
         }
 
-        $valdiate = Validator::make($request->all(),  ['video' => 'nullable|mimes:mp4']);
+        $valdiate = Validator::make($request->all(), ['video' => 'nullable|mimes:mp4']);
         if ($valdiate->fails()) {
             return redirect()->back()->withInput()->with('error', 'Plz provide a mp4 file');
         }
 
         try {
             DB::transaction(function () use ($request) {
+                $maxSortId = HomeSlider::max('sortIds');
                 $homeSlider = new HomeSlider();
 
                 $homeSlider->is_active = $request->status != null ? true : false;
-                $homeSlider->video = "";
+                $homeSlider->video = '';
 
                 if (!$request->hasFile('video')) {
                     return redirect()->back()->withInput()->with('error', 'Video is required');
@@ -126,10 +134,11 @@ class HomeSliderController extends Controller
 
                 if ($request->hasFile('video') && $request->file('video')->isValid()) {
                     $videoPath = $request->file('video');
-                    $videoPath->move("frontend_assets/images/home_sliders/", $videoPath->getClientOriginalName());
+                    $videoPath->move('frontend_assets/images/home_sliders/', $videoPath->getClientOriginalName());
                     $homeSlider->video = $videoPath->getClientOriginalName();
                 }
 
+                $homeSlider->sortIds = $maxSortId !== null ? $maxSortId + 1 : 0;
                 $homeSlider->save();
             }, 2);
             return redirect()->route('homesliders.index');
@@ -147,11 +156,11 @@ class HomeSliderController extends Controller
     public function edit($id)
     {
         $subMenuid = SubMenu::where('route_name', 'homesliders.index')->first();
-        $userOperation = "update_status";
+        $userOperation = 'update_status';
         $userId = Auth::user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
         if (!$crudAccess) {
-            return redirect()->back()->withInput()->with("error", "No rights To Update Home Slider");
+            return redirect()->back()->withInput()->with('error', 'No rights To Update Home Slider');
         }
 
         $homeslider = Homeslider::find($id);
@@ -161,7 +170,7 @@ class HomeSliderController extends Controller
     public function update(Request $request, $id)
     {
         $subMenuid = SubMenu::where('route_name', 'homesliders.index')->first();
-        $userOperation = "update_status";
+        $userOperation = 'update_status';
         $userId = Auth::guard('admin', 'user')->user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
 
@@ -187,7 +196,10 @@ class HomeSliderController extends Controller
             if ($request->hasFile($imageField)) {
                 $file = $request->file($imageField);
                 if (!$file->isValid() || !in_array($file->extension(), ['jpeg', 'png', 'jpg'])) {
-                    return redirect()->back()->withInput()->with('error', 'Please provide a valid image file for ' . str_replace('_', ' ', $imageField) . ' of type: jpeg, png, or jpg.');
+                    return redirect()
+                        ->back()
+                        ->withInput()
+                        ->with('error', 'Please provide a valid image file for ' . str_replace('_', ' ', $imageField) . ' of type: jpeg, png, or jpg.');
                 }
 
                 // Delete existing image file
@@ -218,52 +230,49 @@ class HomeSliderController extends Controller
     public function updateVideo(Request $request, $id)
     {
         $subMenuid = SubMenu::where('route_name', 'homesliders.index')->first();
-        $userOperation = "update_status";
+        $userOperation = 'update_status';
         $userId = Auth::user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
         if (!$crudAccess) {
-            return redirect()->back()->with("error", 'No Rights to Update Home Slider');
+            return redirect()->back()->with('error', 'No Rights to Update Home Slider');
         }
         $request->validate([
             'video' => 'nullable|mimes:mp4',
         ]);
 
         DB::transaction(function () use ($request, $id) {
-
             $homeSlider = HomeSlider::find($id);
 
             if ($request->hasFile('video') && $request->file('video')->isValid()) {
-
                 if ($homeSlider->video && file_exists(public_path('/frontend_assets/images/home_sliders/' . $homeSlider->video))) {
                     unlink(public_path('/frontend_assets/images/home_sliders/' . $homeSlider->video));
                 }
 
                 $videoPath = $request->file('video');
-                $videoPath->move("frontend_assets/images/home_sliders/", $videoPath->getClientOriginalName());
+                $videoPath->move('frontend_assets/images/home_sliders/', $videoPath->getClientOriginalName());
                 $homeSlider->video = $videoPath->getClientOriginalName();
             }
 
             $homeSlider->is_active = $request->has('is_active') ? 1 : 0;
             $homeSlider->save();
         }, 2);
-        return redirect()->route('homesliders.index')->with("success", "Video Updated Successfully");
-
+        return redirect()->route('homesliders.index')->with('success', 'Video Updated Successfully');
     }
 
     public function destroy($id = null)
     {
         $subMenuid = SubMenu::where('route_name', 'homesliders.index')->first();
-        $userOperation = "delete_status";
+        $userOperation = 'delete_status';
         $userId = Auth::guard('admin', 'user')->user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
 
         if ($crudAccess == false) {
-            return response()->json(["unauthorized" => true]);
+            return response()->json(['unauthorized' => true]);
         }
 
         $homeslider = Homeslider::find($id);
         if (!$homeslider) {
-            return response()->json(["status" => false, "message" => "Homeslider not found."]);
+            return response()->json(['status' => false, 'message' => 'Homeslider not found.']);
         }
 
         $imageFields = ['image_1', 'image_2', 'image_3', 'image_4'];
@@ -277,14 +286,13 @@ class HomeSliderController extends Controller
         }
 
         $homeslider->delete();
-        return response()->json(["status" => true]);
+        return response()->json(['status' => true]);
     }
-
 
     public function crud_access($submenuId = null, $operation = null, $uId = null)
     {
         if (!$submenuId == null) {
-            $CheckData = UserMenuAccess::where(["user_id" => $uId, "sub_menu_Id" => $submenuId, $operation => 1, 'view_status' => 1])->count();
+            $CheckData = UserMenuAccess::where(['user_id' => $uId, 'sub_menu_Id' => $submenuId, $operation => 1, 'view_status' => 1])->count();
 
             if ($CheckData > 0) {
                 return true;
@@ -304,7 +312,7 @@ class HomeSliderController extends Controller
                 $menu->save();
             }
         }
-        $frontValue = HomeSlider::orderby("sortIds", 'asc')->get();
+        $frontValue = HomeSlider::orderby('sortIds', 'asc')->get();
         return response()->json($frontValue);
     }
 }

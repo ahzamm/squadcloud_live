@@ -76,10 +76,12 @@ class BottomSliderController extends Controller
             $file->move(public_path('frontend_assets/images/bottom_sliders'), $filename);
         }
 
+        $maxSortId = BottomSlider::max('sortIds');
         $bottom_slider = new BottomSlider();
         $bottom_slider->image = $filename;
         $bottom_slider->title = $request['title'];
         $bottom_slider->is_active = $request->has('is_active') ? 1 : 0;
+        $bottom_slider->sortIds = $maxSortId !== null ? $maxSortId + 1 : 0;
         $bottom_slider->save();
 
         return redirect()->route('bottom_sliders.index')->with('success', 'Bottom Slider Added successfully');

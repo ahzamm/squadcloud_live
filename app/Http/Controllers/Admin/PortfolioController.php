@@ -111,6 +111,7 @@ class PortfolioController extends Controller
                 $savedFiles[$field] = $filename;
             }
 
+            $maxSortId = Portfolio::max('sortIds');
             $portfolio = new Portfolio();
             $portfolio->title = $request['title'];
             $portfolio->description = $request['description'];
@@ -123,6 +124,7 @@ class PortfolioController extends Controller
             $portfolio->image = $savedFiles['image'] ?? null;
             $portfolio->background_image = $savedFiles['background_image'] ?? null;
             $portfolio->is_active = $request->has('status') ? 1 : 0;
+            $portfolio->sortIds = $maxSortId !== null ? $maxSortId + 1 : 0;
 
             if ($portfolio->save()) {
                 if ($request->hasFile('images')) {

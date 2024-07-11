@@ -1043,12 +1043,14 @@ class SocialController extends Controller
         $userId = Auth::user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
         if ($crudAccess == true) {
+            $maxSortId = Social::max('sortIds');
             $storeData = $this->parentModel::create([
                 'name' => $name,
                 'icon' => $icon,
                 'url' => $url,
                 'status' => $status,
                 'color' => $color,
+                'sortIds' => $maxSortId !== null ? $maxSortId + 1 : 0,
             ]);
             if ($storeData) {
                 return redirect(route('social.index'))->with('success', 'Social Link Added Successfully');

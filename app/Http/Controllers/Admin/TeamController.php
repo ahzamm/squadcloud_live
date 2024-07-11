@@ -74,12 +74,14 @@ class TeamController extends Controller
         $filename = Str::random(40) . '.' . $extension;
         $file->move(public_path('frontend_assets/images/teams'), $filename);
 
+        $maxSortId = Team::max('sortIds');
         $team = new Team();
         $team->name = $request['name'];
         $team->designation = $request['designation'];
         $team->linkedin = $request['linkedin'];
         $team->image = $filename;
         $team->is_active = $request->has('is_active') ? 1 : 0;
+        $team->sortIds = $maxSortId !== null ? $maxSortId + 1 : 0;
         $team->save();
 
         return redirect()->route('teams.index')->with('success', 'Team member added successfully!');

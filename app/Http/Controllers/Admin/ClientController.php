@@ -78,12 +78,14 @@ class ClientController extends Controller
             $file->move(public_path('frontend_assets/images/clients'), $filename);
         }
 
+        $maxSortId = Client::max('sortIds');
         $client = new Client();
         $client->logo = $filename;
         $client->link = $request['link'];
         $client->title = $request['title'];
         $client->description = $request['description'];
         $client->is_active = $request->has('is_active') ? 1 : 0;
+        $client->sortIds = $maxSortId !== null ? $maxSortId + 1 : 0;
         $client->save();
 
         return redirect()->route('clients.index')->with('success', 'Client Added successfully');

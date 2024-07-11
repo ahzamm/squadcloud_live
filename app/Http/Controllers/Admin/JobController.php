@@ -84,6 +84,7 @@ class JobController extends Controller
             $file->move(public_path('frontend_assets/images/jobs/'), $filename);
         }
 
+        $maxSortId = Job::max('sortIds');
         $job = new Job();
         $job->job_title = $request['title'];
         $job->company = $request['company'];
@@ -94,6 +95,7 @@ class JobController extends Controller
         $job->salary_range = $request['salary_range'];
         $job->tags = $request->input('tags');
         $job->is_active = $request->has('is_active') ? 1 : 0;
+        $job->sortIds = $maxSortId !== null ? $maxSortId + 1 : 0;
         $job->save();
 
         return redirect()->route('jobs.index')->with('success', 'Job added successfully!');

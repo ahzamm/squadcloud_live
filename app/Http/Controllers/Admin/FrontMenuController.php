@@ -34,11 +34,12 @@ class FrontMenuController extends Controller
             $filename = Str::random(40) . '.' . $extension;
             $file->move(public_path('frontend_assets/images/title'), $filename);
         }
-
+        $maxSortId = FrontMenu::max('sortIds');
         $front_menu = new FrontMenu();
         $front_menu->fill($validatedData);
         $front_menu->title_image = $filename;
         $front_menu->is_active = $request->has('is_active') ? 1 : 0;
+        $front_menu->sortIds = $maxSortId !== null ? $maxSortId + 1 : 0;
         $front_menu->save();
 
         return redirect()->route('frontmenu.index')->with('success', 'Menu Added successfulyl');
