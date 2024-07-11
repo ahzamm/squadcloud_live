@@ -37,8 +37,11 @@
     <div class="our-portfolio-bg"></div>
     <div class="container">
       <div class="title-img d-flex align-items-center justify-content-center flex-column mb-5" data-aos="zoom-in-down">
-          <img src="frontend_assets/images/title/" alt="" style="width: 50%;">
-          <h2 class="text-center mb-5">Gallery</h2>
+          {{-- <img src="frontend_assets/images/title/" alt="" style="width: 50%;">
+          <h2 class="text-center mb-5">Gallery</h2> --}}
+          <div class="title-img d-flex align-items-center justify-content-center flex-column mb-5" data-aos="zoom-in-down">
+            <img src="frontend_assets/images/title/{{ $gallery_menu->title_image }}" alt="" style="width: 50%;">
+          </div>
           <div class="gallery">
             @foreach ($gallery as $image)
             <a href="{{ asset('frontend_assets/images/gallary/' . $image->image) }}" data-lightbox="example-set">
