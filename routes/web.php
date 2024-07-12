@@ -47,6 +47,7 @@ use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Site\SubscriberController;
 use App\Http\Controllers\Site\CareerController;
 use App\Http\Controllers\Site\GalleryController;
+use App\Http\Controllers\Site\TermsController;
 
         // dd('Boot Not Found! Please Insert Media & Try Again Lator');
         Cache::forget('key');
@@ -97,6 +98,7 @@ use App\Http\Controllers\Site\GalleryController;
          Route::get('/career', [CareerController::class, 'index'])->name('site.career');
          Route::post('/career', [CareerController::class, 'store'])->name('site.career.post');
          Route::get('/gallery', [GalleryController::class, 'index'])->name('site.gallery');
+         Route::get('/terms-and-conditions', [TermsController::class, 'index'])->name('site.terms');
 
         // End Of Contact Routes From Site section
         Route::prefix('admin')->group(function () {
