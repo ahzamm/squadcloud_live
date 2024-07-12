@@ -16,7 +16,7 @@
                   <div class="col-md-12">
                     <div class="form-group">
                       <label for="">Terms & Conditions <span style="color: red">*</span></label>
-                      <textarea class="form-control summernote" name="term" rows="4">{{ $term->terms }}</textarea>
+                      <textarea class="form-control summernote" name="terms" rows="4">{{ $term->terms }}</textarea>
                     </div>
                   </div>
                 </div>
