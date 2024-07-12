@@ -41,7 +41,6 @@ class AboutController extends Controller
         $validatedData = [
             'description' => 'required',
             'closing_remarks' => 'required',
-            'images.*' => 'image',
         ];
         $validate = Validator::make($request->all(), $validatedData);
         if ($validate->fails()) {
@@ -53,29 +52,6 @@ class AboutController extends Controller
         $about->description = $request['description'];
         $about->closing_remarks = $request['closing_remarks'];
         $about->save();
-
-        // Upload new images
-        if ($request->hasFile('images')) {
-            foreach ($request->file('images') as $file) {
-                if (in_array($file->extension(), ['jpeg', 'png', 'jpg', 'gif', 'svg'])) {
-                    $name = time() . rand(1, 100) . '.' . $file->extension();
-                    $file->move(public_path('frontend_assets/images/gallary/'), $name);
-                    $gallary = new Gallary();
-                    $gallary->image = $name;
-                    $gallary->save();
-                }
-            }
-        }
-
-        // Handle image deletion
-        if ($request->filled('imagesToDelete')) {
-            $imagesToDelete = explode(',', $request->input('imagesToDelete'));
-            foreach ($imagesToDelete as $id) {
-                $image = Gallary::where('id', $id)->first();
-                unlink(public_path('frontend_assets/images/gallary/' . $image->image));
-                $image->delete();
-            }
-        }
 
         return redirect()->route('about.index')->with('success', 'About updated successfully!');
     }

@@ -37,37 +37,6 @@
                       @enderror
                     </div>
                   </div>
-                  <div class="col-md-4">
-                    <div class="form-group">
-                      @php
-                        $image = explode('","', $about->images);
-                        $image = str_ireplace(['\'', '"', ',', ';', '<', '>', '[', ']'], ' ', $image);
-                        for ($i = 0; $i < Count($image); $i++) {
-                            $ages = $image[$i];
-                        }
-                      @endphp
-                      <label for="">Upload Images <span style="color: red">*</span></label>
-                      <table class="table table-bordered" id="dynamicTable">
-                        <tr>
-                          <td colspan="7">
-                            <input type="hidden" name="imagesToDelete" id="imagesToDelete">
-                            @foreach ($gallary as $image)
-                              <div class="image-container" data-image-key="{{ $image->id }}">
-                                <img src="{{ asset('frontend_assets/images/gallary/' . $image->image) }}" height="60" width="120" alt="" class="mb-3">
-                                <button type="button" class="btn btn-danger delete-image-btn">Delete</button>
-                              </div>
-                            @endforeach
-                          <td colspan="3">
-                            <button type="button" name="addmore[0][add]" id="add" class="btn btn-success"><i class="fa fa-plus"></i></button>
-                          </td>
-                        </tr>
-                      </table>
-                      <p id="image-error" class="text-danger mt-2 mb-0 text-sm" style="display:none;"></p>
-                      @error('image')
-                        <p class="text-danger mt-2 mb-0 text-sm">{{ $message }}</p>
-                      @enderror
-                    </div>
-                  </div>
                 </div>
               </div>
               <div class="card-footer">
@@ -85,58 +54,6 @@
     $(document).ready(function() {
       $('#pageContent').summernote({
         height: 300
-      });
-    });
-  </script>
-  <script type="text/javascript">
-    var i = 0;
-    $("#add").click(function() {
-      ++i;
-      $html = '<tr><td colspan="7"><input type="file" name="images[]" class="image-input" /></td><td colspan="3"><button type="button" class="btn btn-danger remove-tr">X</button></td></tr>';
-      $("#dynamicTable").append($html);
-    });
-    $(document).on('click', '.remove-tr', function() {
-      $(this).parents('tr').remove();
-    });
-
-    $(document).ready(function() {
-      var imagesToDelete = [];
-
-      $('.delete-image-btn').click(function() {
-        var container = $(this).closest('.image-container');
-        var imageKey = container.data('image-key');
-        imagesToDelete.push(imageKey);
-        $('#imagesToDelete').val(imagesToDelete.join(','));
-        container.remove();
-      });
-
-      $('#updateAboutUsForm').submit(function(e) {
-        var valid = true;
-        var imageInputs = $(this).find('input[type="file"]:visible');
-        var imageError = $('#image-error');
-        imageError.hide();
-
-        imageInputs.each(function() {
-          if ($(this).val()) {
-            var file = $(this).prop('files')[0];
-            var fileType = file.type;
-            var validExtensions = ['image/jpeg', 'image/png', 'image/jpg'];
-            var validFile = validExtensions.includes(fileType.toLowerCase());
-            if (!validFile) {
-              valid = false;
-              imageError.text('Please select only image files (JPEG/JPG/PNG).').show();
-              return false;
-            }
-          } else {
-            valid = false;
-            imageError.text('All image fields must have a selected file.').show();
-            return false;
-          }
-        });
-
-        if (!valid) {
-          e.preventDefault();
-        }
       });
     });
   </script>
