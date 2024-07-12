@@ -21,6 +21,7 @@ use App\Http\Controllers\Admin\JobApplicationController as AdminJobApplicationCo
 use App\Http\Controllers\Admin\SubscriberController as AdminSubscriberController;
 use App\Http\Controllers\Admin\GalleryController as AdminGalleryController;
 use App\Http\Controllers\Admin\TermController as AdminTermController;
+use App\Http\Controllers\Admin\PrivacyController as AdminPrivacyController;
 use App\Http\Controllers\Admin\ContactRequestController;
 use App\Http\Controllers\Admin\AllowedIpController;
 use App\Http\Controllers\Admin\SocialController;
@@ -48,6 +49,7 @@ use App\Http\Controllers\Site\SubscriberController;
 use App\Http\Controllers\Site\CareerController;
 use App\Http\Controllers\Site\GalleryController;
 use App\Http\Controllers\Site\TermsController;
+use App\Http\Controllers\Site\PrivacyController;
 
         // dd('Boot Not Found! Please Insert Media & Try Again Lator');
         Cache::forget('key');
@@ -99,6 +101,7 @@ use App\Http\Controllers\Site\TermsController;
          Route::post('/career', [CareerController::class, 'store'])->name('site.career.post');
          Route::get('/gallery', [GalleryController::class, 'index'])->name('site.gallery');
          Route::get('/terms-and-conditions', [TermsController::class, 'index'])->name('site.terms');
+         Route::get('/privacy-policy', [PrivacyController::class, 'index'])->name('site.privacy');
 
         // End Of Contact Routes From Site section
         Route::prefix('admin')->group(function () {
@@ -318,6 +321,9 @@ use App\Http\Controllers\Site\TermsController;
 
         Route::get("/terms-and-conditions" , [AdminTermController::class ,"index"])->name("terms.index");
         Route::put("/terms-and-conditions" , [AdminTermController::class ,"update"])->name("terms.update");
+
+        Route::get("/privacy-policy" , [AdminPrivacyController::class ,"index"])->name("privacy.index");
+        Route::put("/privacy-policy" , [AdminPrivacyController::class ,"update"])->name("privacy.update");
 
     });
 });

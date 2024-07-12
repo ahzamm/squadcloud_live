@@ -145,7 +145,7 @@
             <h6 class="text-white text-left p-3" style="font-size:1rem">Helpful Links</h6>
             <ul>
               <li><a href="{{route('site.terms')}}" class="nav nav-link text-left text-gray">Terms &amp; Conditions</a></li>
-              <li><a href="" class="nav nav-link text-left text-gray">Privacy Policy</a></li>
+              <li><a href="{{route('site.privacy')}}" class="nav nav-link text-left text-gray">Privacy Policy</a></li>
               {{-- <li><a href="" class="nav nav-link text-left text-gray">Promotions</a></li> --}}
               <li><a href="" class="nav nav-link text-left text-gray">FAQs</a></li>
             </ul>
