@@ -22,11 +22,11 @@
                 <a class="btn btn-success btn-sm float-right" href="{{ route('homesliders.create') }}"><i class="fa fa-plus"></i> Add Home Slider</a>
               </div>
               <div class="card-body">
-                <div class="table-responsive">
-                  <table class="table table-bordered table-striped" id="example1">
+                <div class="">
+                  <table class="table table-bordered table-striped dt-responsive" id="example1">
                     <thead>
                       <tr>
-                        <th>Sort</th>
+                        <!-- <th>Sort</th> -->
                         <th>Serial#</th>
                         <th>Heading</th>
                         <th>Subheading</th>
@@ -40,7 +40,7 @@
                     <tbody id="sortfrontMenu" class="move">
                       @foreach ($homesliders as $key => $item)
                         <tr class="table-row">
-                          <td><i class="fas fa-sort" id="sort-serial"></i></td>
+                          <!-- <td><i class="fas fa-sort" id="sort-serial"></i></td> -->
                           <td>{{ $key + 1 }}<input type="hidden" class="order-id"value="{{ $item->id }}"></td>
                           <td>
                             @if (isset($item->heading))
@@ -284,7 +284,6 @@
             let table = "";
             $(response).each(function(index, value) {
               table += ` <tr class="table-row">
-                  <td><i class="fas fa-sort" id="sort-serial"></i></td>
                   <td>${index + 1 }
                   <input type="hidden" class="order-id" value="${value.id}">
                   </td>

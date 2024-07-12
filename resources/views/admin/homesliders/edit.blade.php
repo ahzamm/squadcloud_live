@@ -122,6 +122,33 @@
                   @method('PUT')
                   @csrf
                   <div class="row">
+                  <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="">Heading <span style="color: red">*</span></label>
+                        <input type="text" class="form-control" name="heading" value="{{ old('heading') == null ? $homeslider->heading : old('heading') }}">
+                        @error('heading')
+                          <p class="text-danger mt-2 mb-0 text-sm">{{ $message }}</p>
+                        @enderror
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="">Subheading <span style="color: red">*</span></label>
+                        <input type="text" class="form-control" name="subheading" value="{{ old('subheading') == null ? $homeslider->subheading : old('subheading') }}">
+                        @error('subheading')
+                          <p class="text-danger mt-2 mb-0 text-sm">{{ $message }}</p>
+                        @enderror
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="">Description <span style="color: red">*</span></label>
+                        <input type="text" class="form-control" name="description" value="{{ old('description') == null ? $homeslider->description : old('description') }}">
+                        @error('description')
+                          <p class="text-danger mt-2 mb-0 text-sm">{{ $message }}</p>
+                        @enderror
+                      </div>
+                    </div>
                     <div class="col-md-6">
                       <div class="form-group">
                         <label for="">Upload Video <span style="color: red">*</span></label> <br>
