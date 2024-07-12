@@ -10,7 +10,7 @@ use App\Models\UserMenuAccess;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
 use DB;
-use App\Http\Requests\HomeSliders\ViewHomeSliderRequest;
+use App\Http\Requests\HomeSliders\{ViewHomeSliderRequest, CreateHomeSliderRequest};
 
 use Auth;
 
@@ -22,16 +22,8 @@ class HomeSliderController extends Controller
         return view('admin.homesliders.index', compact('homesliders'));
     }
 
-    public function create()
+    public function create(CreateHomeSliderRequest $request)
     {
-        $subMenuid = SubMenu::where('route_name', 'homesliders.index')->first();
-        $userOperation = 'create_status';
-        $userId = Auth::user()->id;
-        $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
-        if (!$crudAccess) {
-            return redirect()->back()->withInput()->with('error', 'No rights To Create Home Slider');
-        }
-
         return view('admin.homesliders.create');
     }
 
