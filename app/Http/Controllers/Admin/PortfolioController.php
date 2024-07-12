@@ -13,7 +13,7 @@ use Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
-use App\Http\Requests\Portfolio\ViewPortfolioRequest;
+use App\Http\Requests\Portfolio\{ViewPortfolioRequest, CreatePortfolioRequest};
 
 class PortfolioController extends Controller
 {
@@ -23,16 +23,8 @@ class PortfolioController extends Controller
         return view('admin.portfolios.index', compact('portfolios'));
     }
 
-    public function create()
+    public function create(CreatePortfolioRequest $request)
     {
-        $subMenuid = SubMenu::where('route_name', 'portfolios.index')->first();
-        $userOperation = 'create_status';
-        $userId = Auth::user()->id;
-        $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
-        if (!$crudAccess) {
-            return redirect()->back()->withInput()->with('error', 'No rights To Create Portfolios');
-        }
-
         return view('admin.portfolios.create');
     }
 
