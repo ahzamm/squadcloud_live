@@ -10,7 +10,7 @@ use App\Models\UserMenuAccess;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
 use Auth;
-use App\Http\Requests\BottomSlider\{ViewBottomSliderRequest, CreateBottomSliderRequest, StoreBottomSliderRequest};
+use App\Http\Requests\BottomSlider\{ViewBottomSliderRequest, CreateBottomSliderRequest, StoreBottomSliderRequest, EditBottomSliderRequest};
 
 class BottomSliderController extends Controller
 {
@@ -50,16 +50,8 @@ class BottomSliderController extends Controller
         return view('admin.bottom_sliders.show-modal', compact('packageData'));
     }
 
-    public function edit($id)
+    public function edit(EditBottomSliderRequest $request, $id)
     {
-        $subMenuid = SubMenu::where('route_name', 'bottom_sliders.index')->first();
-        $userOperation = 'update_status';
-        $userId = Auth::user()->id;
-        $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
-        if (!$crudAccess) {
-            return redirect()->back()->withInput()->with('error', 'No rights To Edit Bottom Slider');
-        }
-
         $bottom_slider = BottomSlider::find($id);
         return view('admin.bottom_sliders.edit', compact('bottom_slider'));
     }
