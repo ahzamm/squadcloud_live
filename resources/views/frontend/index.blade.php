@@ -13,6 +13,45 @@
       color: red;
       font-size: 0.875rem;
     }
+    #contact-section .section-heading {
+      font-size: 4rem;
+    font-weight: 900;
+    margin-top: 0;
+    letter-spacing: 3px;
+    color: #000 !important;
+    }
+    hr {
+  border: 0;
+  margin: 1.35em auto;
+  max-width: 60%;
+  background-position: 50%;
+  box-sizing: border-box;
+}
+hr.accessory {
+  height: 6px;
+  background-image: radial-gradient(
+    closest-side,
+    hsla(0, 0%, 50%, 1.0),
+    hsla(0, 0%, 50%, 0) 100%);
+  position: relative;
+}
+hr.accessory::before {
+  position: absolute;
+  top:  50%;
+  left: 50%;
+  display:block;
+  background-color: red;
+  height: 12px;
+  width:  12px;
+  transform: rotate(45deg);
+  margin-top:  -10px;
+  margin-left: -10px;
+  border-radius: 4px 0;
+  border: 4px solid hsla(0, 0%, 100%, 0.35);
+  background-clip: padding-box;
+  box-shadow: -10px 10px 0 hsla(0, 0%, 100%, 0.15), 10px -10px 0 hsla(0, 0%, 100%, 0.15);
+}
+
   </style>
 
   @if ($showAnimation)
@@ -221,13 +260,29 @@
     </div>
   </section>
 
-  <!-- -------New projects------- -->
-  <div id="portfolio-section" class="project position-relative py-5">
+
+
+  <!-- -------Contact Us------- -->
+  <section id="portfolio-section" class="contact position-relative pb-5" style="padding-top:40px">
+    <div class="contact-bg"></div>
+    <div class="container pb-1">
+      <div class="text-center" data-aos="zoom-in-down">
+        <h2 class="section-heading text-uppercase">Got New Project</h2>
+        <h3 class="section-subheading text-muted">{!! $contact_menu->tagline !!}</h3>
+      </div>
+      <div class="main-form">
+        @include('component.front.contact')
+      </div>
+    </div>
+  </section>
+  <hr class="accessory">
+    <!-- -------New projects------- -->
+  <div id="contact-section" class="project position-relative py-5">
     <div class="project-bg"></div>
     <div class="container">
       <div class="text-center" data-aos="zoom-in-down">
-        <h2 class="section-heading">Got New Project?</h2>
-        <h5 class="text-white">Contact us using the following links.</h3>
+        <h2 class="section-heading text-uppercase text-white">CONTACT US</h2>
+        <h5 class="section-subheading text-muted">Contact us using the following links.</h3>
       </div>
       <div class="d-flex align-items-center justify-content-center mt-4" style="column-gap: 12px">
         @foreach ($socials as $index => $social)
@@ -236,20 +291,6 @@
       </div>
     </div>
   </div>
-
-  <!-- -------Contact Us------- -->
-  <section id="portfolio-section" class="contact position-relative pb-5">
-    <div class="contact-bg"></div>
-    <div class="container pb-1">
-      <div class="text-center" data-aos="zoom-in-down">
-        <h2 class="section-heading text-uppercase">CONTACT US</h2>
-        <h3 class="section-subheading text-muted2">{!! $contact_menu->tagline !!}</h3>
-      </div>
-      <div class="main-form">
-        @include('component.front.contact')
-      </div>
-    </div>
-  </section>
 <!-- clients -->
 
 <section id="client-section" class="clients position-relative" style="padding-top: 0px;background-color: #cfcfcf00">
