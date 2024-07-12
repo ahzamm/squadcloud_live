@@ -10,20 +10,14 @@ use App\Models\UserMenuAccess;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
 use DB;
+use App\Http\Requests\HomeSliders\ViewHomeSliderRequest;
+
 use Auth;
 
 class HomeSliderController extends Controller
 {
-    public function index()
+    public function index(ViewHomeSliderRequest $request)
     {
-        $subMenuid = SubMenu::where('route_name', 'homesliders.index')->first();
-        $userOperation = 'view_status';
-        $userId = Auth::user()->id;
-        $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
-        if (!$crudAccess) {
-            return redirect()->back()->withInput()->with('error', 'No rights To View Home Slider');
-        }
-
         $homesliders = HomeSlider::orderby('sortIds', 'asc')->get();
         return view('admin.homesliders.index', compact('homesliders'));
     }
