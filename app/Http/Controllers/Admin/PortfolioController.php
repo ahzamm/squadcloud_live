@@ -13,7 +13,7 @@ use Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
-use App\Http\Requests\Portfolio\{ViewPortfolioRequest, CreatePortfolioRequest, StorePortfolioRequest};
+use App\Http\Requests\Portfolio\{ViewPortfolioRequest, CreatePortfolioRequest, StorePortfolioRequest, EditPortfolioRequest};
 
 class PortfolioController extends Controller
 {
@@ -101,16 +101,8 @@ class PortfolioController extends Controller
         return view('admin.portfolios.show-modal', compact('packageData'));
     }
 
-    public function edit($id)
+    public function edit(EditPortfolioRequest $request, $id)
     {
-        $subMenuid = SubMenu::where('route_name', 'portfolios.index')->first();
-        $userOperation = 'update_status';
-        $userId = Auth::user()->id;
-        $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
-        if (!$crudAccess) {
-            return redirect()->back()->withInput()->with('error', 'No rights To Edit Portfolios');
-        }
-
         $portfolio = Portfolio::with('images')->findOrFail($id);
         return view('admin.portfolios.edit', compact('portfolio'));
     }
