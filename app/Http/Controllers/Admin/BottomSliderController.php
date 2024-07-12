@@ -10,7 +10,7 @@ use App\Models\UserMenuAccess;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
 use Auth;
-use App\Http\Requests\BottomSlider\{ViewBottomSliderRequest, CreateBottomSliderRequest, StoreBottomSliderRequest, EditBottomSliderRequest};
+use App\Http\Requests\BottomSlider\{ViewBottomSliderRequest, CreateBottomSliderRequest, StoreBottomSliderRequest, EditBottomSliderRequest, UpdateBottomSliderRequest};
 
 class BottomSliderController extends Controller
 {
@@ -56,30 +56,8 @@ class BottomSliderController extends Controller
         return view('admin.bottom_sliders.edit', compact('bottom_slider'));
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdateBottomSliderRequest $request, $id)
     {
-        $subMenuid = SubMenu::where('route_name', 'bottom_sliders.index')->first();
-        $userOperation = 'update_status';
-        $userId = Auth::guard('admin', 'user')->user()->id;
-        $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
-        if (!$crudAccess) {
-            return redirect()->back()->withInput()->with('error', 'No Access To Update Bottom Sliders');
-        }
-
-        $validatedData = [
-            'title' => 'required',
-        ];
-        $valdiate = Validator::make($request->all(), $validatedData);
-        if ($valdiate->fails()) {
-            return redirect()->back()->withInput()->with('error', 'All Fields are required');
-        }
-
-        if ($request->hasFile('image')) {
-            if (!$request->file('image')->isValid() || !in_array($request->file('image')->extension(), ['jpeg', 'png', 'jpg'])) {
-                return redirect()->back()->withInput()->with('error', 'Please provide a valid background image file of type: jpeg, png, or jpg.');
-            }
-        }
-
         $bottom_slider = BottomSlider::findOrFail($id);
 
         if ($request->hasFile('image')) {
