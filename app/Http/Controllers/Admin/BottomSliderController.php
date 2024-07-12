@@ -10,19 +10,12 @@ use App\Models\UserMenuAccess;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
 use Auth;
+use App\Http\Requests\BottomSlider\ViewBottomSliderRequest;
 
 class BottomSliderController extends Controller
 {
-    public function index()
+    public function index(ViewBottomSliderRequest $request)
     {
-        $subMenuid = SubMenu::where('route_name', 'bottom_sliders.index')->first();
-        $userOperation = 'view_status';
-        $userId = Auth::user()->id;
-        $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
-        if (!$crudAccess) {
-            return redirect()->back()->withInput()->with('error', 'No rights To View Bottom Slider');
-        }
-
         $bottom_sliders = BottomSlider::orderby('sortIds', 'asc')->get();
         return view('admin.bottom_sliders.index', compact('bottom_sliders'));
     }
