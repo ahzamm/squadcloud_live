@@ -43,17 +43,16 @@
           <p>No about menu data found.</p>
         @endif
       </div>
-      @if (isset($about))
+      @if (isset($about->video_url))
         <div class="video-container" data-aos="zoom-in" data-aos-duration="1000">
           <iframe width="100%" height="100%" src="{{ $about->video_url }}" title="YouTube video player" frameborder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
         </div>
-      @else
-        <p>No about data found.</p>
+     
       @endif
     </div>
   </section>
-  <section class="pb-5 gallery-section">
+  {{--<section class="pb-5 gallery-section">
     <h2 class="text-center my-5">Gallery</h2>
     <div class="screenshot-wrapper">
       @foreach ($gallary as $image)
@@ -71,7 +70,7 @@
         View All
       </a>
     </div>
-  </section>
+  </section>--}}
   <section style="min-height: 430px; padding: 100px 0; background-image: url(frontend_assets/images/about-bg.jpg);" id="section-slider">
     <div class="container">
       <h2 class="text-white text-center mb-5">Meet Our Team</h2>
@@ -81,12 +80,13 @@
         @foreach ($team as $member)
           <div class="position-relative hex-container" style="height:320px;">
             <img src="frontend_assets/images/teams/{{ $member->image }}" alt="App" class=""
-              style="width: 120px;
+              style="width: 120px;height:120px;
                border: 4px solid #64050f;border-radius: 50%;left: 50%;position: absolute;transform: translateX(-50%);z-index: 9;top:-3px;box-shadow:0 10px 30px rgb(100 5 15)">
             <div class="hex">
-              <div style="position:absolute; transform:translate(-50%, -50%) rotate(270deg) ;z-index:9;white-space: nowrap;left:70%;top:50%;text-align:center;">
+              <div style="position:absolute; transform:translate(-50%, -50%) rotate(270deg) ;z-index:9;white-space: nowrap;left:80%;top:50%;text-align:center;">
                 <h3 style="color: #64050f;">{{ $member->name }}</h3>
                 <p>{{ $member->designation }}</p>
+                <p><a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin" style="font-size:26px"></i></a></p>
               </div>
             </div>
           </div>
