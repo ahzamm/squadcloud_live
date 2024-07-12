@@ -5,12 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\BottomSlider;
-use App\Models\SubMenu;
-use App\Models\UserMenuAccess;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Validator;
-use Auth;
-use App\Http\Requests\BottomSlider\{ViewBottomSliderRequest, CreateBottomSliderRequest, StoreBottomSliderRequest, EditBottomSliderRequest, UpdateBottomSliderRequest};
+use App\Http\Requests\BottomSlider\{ViewBottomSliderRequest, CreateBottomSliderRequest, StoreBottomSliderRequest, EditBottomSliderRequest, UpdateBottomSliderRequest, DeleteBottomSliderRequest};
 
 class BottomSliderController extends Controller
 {
@@ -78,40 +74,18 @@ class BottomSliderController extends Controller
         return redirect()->route('bottom_sliders.index')->with('success', 'BottomSlider updated successfully!');
     }
 
-    public function destroy($id = null)
+    public function destroy(DeleteBottomSliderRequest $request, $id = null)
     {
-        $subMenuid = SubMenu::where('route_name', 'bottom_sliders.index')->first();
-        $userOperation = 'delete_status';
-        $userId = Auth::guard('admin', 'user')->user()->id;
-        $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
-        if ($crudAccess == true) {
-            $bottom_slider = BottomSlider::find($id);
-            if ($bottom_slider) {
-                $imagePath = public_path('frontend_assets/images/bottom_sliders/' . $bottom_slider->image);
-                if (file_exists($imagePath)) {
-                    unlink($imagePath);
-                }
-
-                $bottom_slider->delete();
-
-                return response()->json(['status' => true]);
-            } else {
-                return response()->json(['status' => false, 'message' => 'BottomSlider not found.']);
+        $bottom_slider = BottomSlider::find($id);
+        if ($bottom_slider) {
+            $imagePath = public_path('frontend_assets/images/bottom_sliders/' . $bottom_slider->image);
+            if (file_exists($imagePath)) {
+                unlink($imagePath);
             }
+            $bottom_slider->delete();
+            return response()->json(['status' => true]);
         } else {
-            return response()->json(['unauthorized' => true]);
-        }
-    }
-    public function crud_access($submenuId = null, $operation = null, $uId = null)
-    {
-        if (!$submenuId == null) {
-            $CheckData = UserMenuAccess::where(['user_id' => $uId, 'sub_menu_Id' => $submenuId, $operation => 1, 'view_status' => 1])->count();
-
-            if ($CheckData > 0) {
-                return true;
-            } else {
-                return false;
-            }
+            return response()->json(['status' => false, 'message' => 'BottomSlider not found.']);
         }
     }
 
