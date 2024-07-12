@@ -10,7 +10,7 @@ use App\Models\UserMenuAccess;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
 use Auth;
-use App\Http\Requests\BottomSlider\ViewBottomSliderRequest;
+use App\Http\Requests\BottomSlider\{ViewBottomSliderRequest, CreateBottomSliderRequest};
 
 class BottomSliderController extends Controller
 {
@@ -20,16 +20,8 @@ class BottomSliderController extends Controller
         return view('admin.bottom_sliders.index', compact('bottom_sliders'));
     }
 
-    public function create()
+    public function create(CreateBottomSliderRequest $request)
     {
-        $subMenuid = SubMenu::where('route_name', 'bottom_sliders.index')->first();
-        $userOperation = 'create_status';
-        $userId = Auth::user()->id;
-        $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
-        if (!$crudAccess) {
-            return redirect()->back()->withInput()->with('error', 'No rights To Create Bottom Slider');
-        }
-
         return view('admin.bottom_sliders.create');
     }
 
