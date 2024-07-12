@@ -20,6 +20,7 @@ use App\Http\Controllers\Admin\JobController as AdminJobController;
 use App\Http\Controllers\Admin\JobApplicationController as AdminJobApplicationController;
 use App\Http\Controllers\Admin\SubscriberController as AdminSubscriberController;
 use App\Http\Controllers\Admin\GalleryController as AdminGalleryController;
+use App\Http\Controllers\Admin\TermController as AdminTermController;
 use App\Http\Controllers\Admin\ContactRequestController;
 use App\Http\Controllers\Admin\AllowedIpController;
 use App\Http\Controllers\Admin\SocialController;
@@ -312,6 +313,9 @@ use App\Http\Controllers\Site\GalleryController;
 
         Route::get("/gallery" , [AdminGalleryController::class ,"index"])->name("gallery.index");
         Route::put("/gallery" , [AdminGalleryController::class ,"update"])->name("gallery.update");
+
+        Route::get("/terms-and-conditions" , [AdminTermController::class ,"index"])->name("terms.index");
+        Route::put("/terms-and-conditions" , [AdminTermController::class ,"update"])->name("terms.update");
 
     });
 });
