@@ -13,7 +13,7 @@ use Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
-use App\Http\Requests\Portfolio\{ViewPortfolioRequest, CreatePortfolioRequest};
+use App\Http\Requests\Portfolio\{ViewPortfolioRequest, CreatePortfolioRequest, StorePortfolioRequest};
 
 class PortfolioController extends Controller
 {
@@ -28,45 +28,8 @@ class PortfolioController extends Controller
         return view('admin.portfolios.create');
     }
 
-    public function store(Request $request)
+    public function store(StorePortfolioRequest $request)
     {
-        $subMenuid = SubMenu::where('route_name', 'portfolios.index')->first();
-        $userOperation = 'create_status';
-        $userId = Auth::guard('admin', 'user')->user()->id;
-        $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
-        if ($crudAccess == false) {
-            return redirect()->back()->withInput()->with('error', 'No right to add a portfolio');
-        }
-
-        $validatedData = [
-            'title' => 'required',
-            'link' => 'required',
-            'route' => 'required',
-            'rating' => 'required',
-            'rating_number' => 'required',
-            'price' => 'required',
-            'price_description' => 'required',
-            'description' => 'required',
-            'images.*' => 'image',
-        ];
-        $valdiate = Validator::make($request->all(), $validatedData);
-
-        if ($valdiate->fails()) {
-            return redirect()->back()->withInput()->with('error', 'All Fields are required');
-        }
-
-        $routeValidator = Validator::make($request->all(), [
-            'route' => 'required|regex:/^[a-zA-Z0-9\-]+$/',
-        ]);
-        if ($routeValidator->fails()) {
-            return redirect()->back()->withInput()->with('error', 'Please provide a valid route');
-        }
-
-        $isDuplicateRouteExists = Portfolio::where('route', $request->route)->first();
-        if ($isDuplicateRouteExists) {
-            return redirect()->back()->withInput()->with('error', 'Provided route is already used');
-        }
-
         $imageFields = ['image', 'background_image'];
         $savedFiles = [];
         $screenshots = [];
@@ -75,24 +38,9 @@ class PortfolioController extends Controller
 
         try {
             foreach ($imageFields as $field) {
-                if (!$request->hasFile($field)) {
-                    return redirect()
-                        ->back()
-                        ->withInput()
-                        ->with('error', ucfirst(str_replace('_', ' ', $field)) . ' is required.');
-                }
-
                 $file = $request->file($field);
-                if (!$file->isValid() || !in_array($file->extension(), ['jpeg', 'png', 'jpg'])) {
-                    return redirect()
-                        ->back()
-                        ->withInput()
-                        ->with('error', 'Please provide a valid ' . ucfirst(str_replace('_', ' ', $field)) . ' file of type: jpeg, png, or jpg.');
-                }
-
                 $filename = Str::random(40) . '.' . $file->getClientOriginalExtension();
                 $file->move(public_path('frontend_assets/images/portfolio'), $filename);
-
                 $savedFiles[$field] = $filename;
             }
 

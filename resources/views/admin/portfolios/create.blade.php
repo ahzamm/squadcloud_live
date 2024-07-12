@@ -184,7 +184,7 @@
 
       $('#createPortfolioForm').submit(function(e) {
         var valid = true;
-        var imageInputs = $(this).find('input[type="file"]:visible');
+        var imageInputs = $(this).find('input[name="images[]"]:visible');
         var imageError = $('#image-error');
         imageError.hide();
 
