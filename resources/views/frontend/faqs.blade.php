@@ -29,7 +29,12 @@
     <div class="container">
       <div class="title-img d-flex align-items-center justify-content-center flex-column mb-5 aos-init aos-animate" data-aos="zoom-in-down">
           <div class="title-img d-flex align-items-center justify-content-center flex-column mb-5 aos-init aos-animate" data-aos="zoom-in-down">
-            <h1>Terms & Conditions</h1>
+            <h1>FAQs</h1>
+            @foreach ($faqs as $faq)
+            <h4>Question:</h4> <br> {!! $faq->question !!} <br>
+            <h4>Answer:</h4> <br> {!! $faq->answer !!} <br>
+
+            @endforeach
             <!-- <img src="frontend_assets/images/title/ySH3hslrZoU9IBgjkHxyeuSvlwP6NSTnGvHWSNTK.png" alt="" style="width: 50%;"> -->
           </div>
       </div>

@@ -147,7 +147,7 @@
               <li><a href="{{route('site.terms')}}" class="nav nav-link text-left text-gray">Terms &amp; Conditions</a></li>
               <li><a href="{{route('site.privacy')}}" class="nav nav-link text-left text-gray">Privacy Policy</a></li>
               {{-- <li><a href="" class="nav nav-link text-left text-gray">Promotions</a></li> --}}
-              <li><a href="" class="nav nav-link text-left text-gray">FAQs</a></li>
+              <li><a href="{{route('site.faq')}}" class="nav nav-link text-left text-gray">FAQs</a></li>
             </ul>
           </div>
           <div style="flex: 1 1 auto">

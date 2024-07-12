@@ -22,6 +22,7 @@ use App\Http\Controllers\Admin\SubscriberController as AdminSubscriberController
 use App\Http\Controllers\Admin\GalleryController as AdminGalleryController;
 use App\Http\Controllers\Admin\TermController as AdminTermController;
 use App\Http\Controllers\Admin\PrivacyController as AdminPrivacyController;
+use App\Http\Controllers\Admin\FaqController as AdminFaqController;
 use App\Http\Controllers\Admin\ContactRequestController;
 use App\Http\Controllers\Admin\AllowedIpController;
 use App\Http\Controllers\Admin\SocialController;
@@ -50,6 +51,7 @@ use App\Http\Controllers\Site\CareerController;
 use App\Http\Controllers\Site\GalleryController;
 use App\Http\Controllers\Site\TermsController;
 use App\Http\Controllers\Site\PrivacyController;
+use App\Http\Controllers\Site\FaqController;
 
         // dd('Boot Not Found! Please Insert Media & Try Again Lator');
         Cache::forget('key');
@@ -102,6 +104,7 @@ use App\Http\Controllers\Site\PrivacyController;
          Route::get('/gallery', [GalleryController::class, 'index'])->name('site.gallery');
          Route::get('/terms-and-conditions', [TermsController::class, 'index'])->name('site.terms');
          Route::get('/privacy-policy', [PrivacyController::class, 'index'])->name('site.privacy');
+         Route::get('/faqs', [FaqController::class, 'index'])->name('site.faq');
 
         // End Of Contact Routes From Site section
         Route::prefix('admin')->group(function () {
@@ -148,6 +151,7 @@ use App\Http\Controllers\Site\PrivacyController;
         Route::get('homeslider/edit/{id?}', [HomeSliderController::class , 'edit'])->name('homeslider.edit');
         Route::get('team/edit/{id?}', [AdminTeamController::class , 'edit'])->name('team.edit');
         Route::get('job/edit/{id?}', [AdminJobController::class , 'edit'])->name('job.edit');
+        Route::get('faq/edit/{id?}', [AdminFaqController::class , 'edit'])->name('faq.edit');
 
 
         Route::resource('cities','App\Http\Controllers\Admin\CitiesController');
@@ -196,6 +200,7 @@ use App\Http\Controllers\Site\PrivacyController;
         Route::post("sortHomeSlider" , [HomeSliderController::class , 'updateSorting'])->name("sort.homeslider");
         Route::post("sortTeam" , [AdminTeamController::class , 'updateSorting'])->name("sort.team");
         Route::post("sortJob" , [AdminJobController::class , 'updateSorting'])->name("sort.job");
+        Route::post("sortFaq" , [AdminFaqController::class , 'updateSorting'])->name("sort.faq");
 
 
 
@@ -324,6 +329,9 @@ use App\Http\Controllers\Site\PrivacyController;
 
         Route::get("/privacy-policy" , [AdminPrivacyController::class ,"index"])->name("privacy.index");
         Route::put("/privacy-policy" , [AdminPrivacyController::class ,"update"])->name("privacy.update");
+
+        Route::resource('faqs','App\Http\Controllers\Admin\FaqController');
+        Route::get("/faqs/destroy/{id?}" , [AdminFaqController::class ,"destroy"])->name("faq.destroy");
 
     });
 });
