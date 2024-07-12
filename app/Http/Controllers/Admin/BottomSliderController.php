@@ -10,7 +10,7 @@ use App\Models\UserMenuAccess;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
 use Auth;
-use App\Http\Requests\BottomSlider\{ViewBottomSliderRequest, CreateBottomSliderRequest};
+use App\Http\Requests\BottomSlider\{ViewBottomSliderRequest, CreateBottomSliderRequest, StoreBottomSliderRequest};
 
 class BottomSliderController extends Controller
 {
@@ -25,41 +25,13 @@ class BottomSliderController extends Controller
         return view('admin.bottom_sliders.create');
     }
 
-    public function store(Request $request)
+    public function store(StoreBottomSliderRequest $request)
     {
-        $subMenuid = SubMenu::where('route_name', 'bottom_sliders.index')->first();
-        $userOperation = 'create_status';
-        $userId = Auth::guard('admin', 'user')->user()->id;
-        $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
-        if (!$crudAccess) {
-            return redirect()->route('bottom_sliders.index')->with('error', 'No right to add BottomSlider');
-        }
-
-        $validatedData = [
-            'title' => 'required',
-        ];
-        $valdiate = Validator::make($request->all(), $validatedData);
-        if ($valdiate->fails()) {
-            return redirect()->back()->withInput()->with('error', 'All Fields are required');
-        }
-
-        if (!$request->hasFile('image')) {
-            return redirect()->back()->withInput()->with('error', 'Image is required');
-        }
-
-        if ($request->hasFile('image')) {
-            if (!$request->file('image')->isValid() || !in_array($request->file('image')->extension(), ['jpeg', 'png', 'jpg'])) {
-                return redirect()->back()->withInput()->with('error', 'Please provide a valid image file of type: jpeg, png, or jpg.');
-            }
-        }
-
         $filename = '';
-        if ($request->hasFile('image')) {
-            $file = $request->file('image');
-            $extension = $file->getClientOriginalExtension();
-            $filename = Str::random(40) . '.' . $extension;
-            $file->move(public_path('frontend_assets/images/bottom_sliders'), $filename);
-        }
+        $file = $request->file('image');
+        $extension = $file->getClientOriginalExtension();
+        $filename = Str::random(40) . '.' . $extension;
+        $file->move(public_path('frontend_assets/images/bottom_sliders'), $filename);
 
         $maxSortId = BottomSlider::max('sortIds');
         $bottom_slider = new BottomSlider();
