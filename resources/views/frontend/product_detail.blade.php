@@ -105,7 +105,7 @@
 
         <div class="bg-image">
           <div class="ms-5 py-3 text-white prgtxt">
-            <p class="fnt-size" data-aos="fade-up"> {{ $portfolio->price }} </p>
+            <p class="fnt-size" data-aos="fade-up"> ${{ $portfolio->price }} </p>
             {{-- <small class="pe-0 fnt-cloud" data-aos="fade-up" data-aos-delay="100">Cloud</small> --}}
             <p class="mb-2 fnt-cloud" data-aos="fade-up" data-aos-delay="200">{!! $portfolio->price_description !!}</p>
           </div>
