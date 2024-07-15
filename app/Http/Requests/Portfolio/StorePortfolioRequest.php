@@ -18,6 +18,7 @@ class StorePortfolioRequest extends CreatePortfolioRequest
             'price' => 'required|string',
             'price_description' => 'required|string',
             'description' => 'required|string',
+            'features' => 'required|string',
             'image' => 'required|file|mimes:jpeg,png,jpg|max:2048',
             'background_image' => 'required|file|mimes:jpeg,png,jpg|max:2048',
         ];
@@ -40,6 +41,7 @@ class StorePortfolioRequest extends CreatePortfolioRequest
             'route.regex' => 'Route can only contain letters, numbers, and hyphens',
             'route.unique' => 'Route has already been taken',
             'description.required' => 'Description is required',
+            'features.required' => 'Features is required',
             'rating.required' => 'Rating is required',
             'rating_number.required' => 'Rating Number is required',
             'price.required' => 'Price is required',

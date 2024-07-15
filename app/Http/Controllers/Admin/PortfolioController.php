@@ -48,6 +48,7 @@ class PortfolioController extends Controller
             $portfolio = new Portfolio();
             $portfolio->title = $request['title'];
             $portfolio->description = $request['description'];
+            $portfolio->features = $request['features'];
             $portfolio->link = $request['link'];
             $portfolio->route = $request['route'];
             $portfolio->rating = $request['rating'];
@@ -55,7 +56,6 @@ class PortfolioController extends Controller
             $portfolio->price = $request['price'];
             $portfolio->price_description = $request['price_description'];
             $portfolio->image = $savedFiles['image'] ?? null;
-            $portfolio->background_image = $savedFiles['background_image'] ?? null;
             $portfolio->is_active = $request->has('status') ? 1 : 0;
             $portfolio->sortIds = $maxSortId !== null ? $maxSortId + 1 : 0;
 
@@ -126,6 +126,7 @@ class PortfolioController extends Controller
             'price' => 'required',
             'price_description' => 'required',
             'description' => 'required',
+            'features' => 'required',
         ];
         $valdiate = Validator::make($request->all(), $validatedData);
         if ($valdiate->fails()) {
@@ -177,6 +178,7 @@ class PortfolioController extends Controller
             // Update portfolio details
             $portfolio->title = $request['title'];
             $portfolio->description = $request['description'];
+            $portfolio->features = $request['features'];
             $portfolio->link = $request['link'];
             $portfolio->route = $request['route'];
             $portfolio->rating = $request['rating'];

@@ -6,8 +6,8 @@
 
   <style>
     html {
-            scroll-behavior: smooth;
-        }
+      scroll-behavior: smooth;
+    }
 
     body {
       background-image: linear-gradient(#fff, #cfcfcf);
@@ -59,23 +59,24 @@
           <a href="#productSS"><img class=" me-2 icons1" src="/frontend_assets/images/screenshots-Icon.png" alt=""><span class="fixed w-75 tabs"> Screenshots</span> </a>
         </div>
         <div class="mt-1" data-aos="fade-up" data-aos-delay="300" data-aos-duration="500">
-          <a href=""><img class=" me-2 icons1" src="/frontend_assets/images/pricing-Icon.png" alt=""><span class="fixed w-75 tabs">
+          <a href="#productPrice"><img class=" me-2 icons1" src="/frontend_assets/images/pricing-Icon.png" alt=""><span class="fixed w-75 tabs">
               Pricing</span> </a>
         </div>
         <div class="text-center mt-4">
-          <a href="#productPrice"><p class="d-inline" data-aos="fade-up" data-aos-delay="400" data-aos-duration="500"> Starting at <strong>{{ $portfolio->price }} {!! $portfolio->price_description !!}</strong></p></a>
+          <p class="d-inline" data-aos="fade-up" data-aos-delay="400" data-aos-duration="500"> Starting at <strong> {{ $portfolio->price }} {!! $portfolio->price_description !!}</strong></p>
           <div data-aos="fade-up" data-aos-delay="500">
             <a href="{{ $portfolio->link }}" type="button" class="btn btn-dark mt-4 weblink-button">See {{ $portfolio->product_name }}<img class="weblink"
                 src="/frontend_assets/images/web-link-Icon.png"></a>
           </div>
         </div>
       </div>
-      <div id="productDetail"  class="second px-4" data-aos="fade-up" data-aos-duration="1000">
-        <h3 class="fw-bold">Product Details</h4>
-          <p>{!! $portfolio->description !!}</p>
-
-          </p>
+      <div id="productDetail" class="second px-4" data-aos="fade-up" data-aos-duration="1000">
+        <h3 class="fw-bold">Product Details</h3>
+        <p>{!! $portfolio->description !!}</p>
+        <h3 class="fw-bold">Product Features</h3>
+        <p>{!! $portfolio->features !!}</p>
       </div>
+    </div>
     </div>
   </section>
 
@@ -105,9 +106,8 @@
         <div class="bg-image">
           <div class="ms-5 py-3 text-white prgtxt">
             <p class="fnt-size" data-aos="fade-up"> {{ $portfolio->price }} </p>
-            <small class="pe-0 fnt-cloud" data-aos="fade-up" data-aos-delay="100">Cloud</small>
+            {{-- <small class="pe-0 fnt-cloud" data-aos="fade-up" data-aos-delay="100">Cloud</small> --}}
             <p class="mb-2 fnt-cloud" data-aos="fade-up" data-aos-delay="200">{!! $portfolio->price_description !!}</p>
-            {{-- <p class="fnt-recomend" data-aos="fade-up" data-aos-delay="300">{{$portfolio->linkProductClass->title}}</p> --}}
           </div>
         </div>
     </div>

@@ -3,12 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\DeleteFrontMenuRequest;
 use Illuminate\Http\Request;
 use App\Models\FrontMenu;
 use Route;
 use Illuminate\Support\Str;
-use App\Http\Requests\Admin\FrontMenu\{ViewFrontMenuRequest, CreateFrontMenuRequest, StoreFrontMenuRequest, EditFrontMenuRequest, UpdateFrontMenuRequest};
+use App\Http\Requests\Admin\FrontMenu\{ViewFrontMenuRequest, CreateFrontMenuRequest, StoreFrontMenuRequest, EditFrontMenuRequest, UpdateFrontMenuRequest, DeleteFrontMenuRequest};
 
 class FrontMenuController extends Controller
 {

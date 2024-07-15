@@ -27,7 +27,7 @@
                       @enderror
                     </div>
                   </div>
-                  
+
                   <div class="col-md-6">
                     <div class="form-group">
                       <label for="">Link <span style="color: red">*</span></label>
@@ -37,7 +37,7 @@
                       @enderror
                     </div>
                   </div>
-                  
+
 
                   <div class="col-md-6">
                     <div class="form-group">
@@ -145,6 +145,15 @@
                       <label for="">Description <span style="color: red">*</span></label>
                       <textarea name="description" rows="4" class="form-control summernote">{{ $portfolio->description }}</textarea>
                       @error('description')
+                        <p class="text-danger mt-2 mb-0 text-sm">{{ $message }}</p>
+                      @enderror
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="">Features <span style="color: red">*</span></label>
+                      <textarea name="features" rows="4" class="form-control summernote">{{ $portfolio->features }}</textarea>
+                      @error('features')
                         <p class="text-danger mt-2 mb-0 text-sm">{{ $message }}</p>
                       @enderror
                     </div>

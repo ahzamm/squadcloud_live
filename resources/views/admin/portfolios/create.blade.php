@@ -44,6 +44,15 @@
                       @enderror
                     </div>
                   </div>
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="">Features <span style="color: red">*</span></label>
+                      <textarea name="features" rows="4" placeholder="Example : How are you" class="form-control summernote">{{ old('features') }}</textarea>
+                      @error('mbps')
+                        <p class="text-danger mt-2 mb-0 text-sm">{{ $message }}</p>
+                      @enderror
+                    </div>
+                  </div>
                   <div class="col-md-6">
                     <div class="form-group">
                       <label for="">Link <span style="color: red">*</span></label>
@@ -119,15 +128,6 @@
                         <p class="text-danger mt-2 mb-0 text-sm">{{ $message }}</p>
                       @enderror
                     </div>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label for=""> Background Image <span style="color: red">*</span></label> <br>
-                    <input type="file" name="background_image">
-                    @error('background_image')
-                      <p class="text-danger mt-2 mb-0 text-sm">{{ $message }}</p>
-                    @enderror
                   </div>
                 </div>
                 <div class="col-md-6">
