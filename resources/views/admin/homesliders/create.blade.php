@@ -1,13 +1,13 @@
 @extends('admin.layouts.app')
 @section('content')
-<style>
-
-.homeslider-tab .nav-tabs .nav-item.show .nav-link, .homeslider-tab .nav-tabs .nav-link.active {
-  color: #fff;
-  border-color: #dee2e6 #dee2e6 #fff;
-  background-color: #b21828;
-}
-</style>
+  <style>
+    .homeslider-tab .nav-tabs .nav-item.show .nav-link,
+    .homeslider-tab .nav-tabs .nav-link.active {
+      color: #fff;
+      border-color: #dee2e6 #dee2e6 #fff;
+      background-color: #b21828;
+    }
+  </style>
   <div class="content-wrapper">
     <section class="content">
       <div class="row">
@@ -23,7 +23,8 @@
             </div>
             <nav class="homeslider-tab">
               <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
-                <a class="nav-item nav-link active" id="nav-slider-tab" data-toggle="tab" href="#nav-slider" role="tab" aria-controls="nav-home" aria-selected="true"><i class="fa fa-image"></i> Slider</a>
+                <a class="nav-item nav-link active" id="nav-slider-tab" data-toggle="tab" href="#nav-slider" role="tab" aria-controls="nav-home" aria-selected="true"><i class="fa fa-image"></i>
+                  Slider</a>
                 <a class="nav-item nav-link" id="nav-video-tab" data-toggle="tab" href="#nav-video" role="tab" aria-controls="nav-video" aria-selected="false"><i class="fa fa-video"></i> Video</a>
               </div>
             </nav>
@@ -71,33 +72,6 @@
                           @enderror
                         </div>
                       </div>
-                      {{-- <div class="col-md-6">
-                        <div class="form-group">
-                          <label for="">Image 2 <span style="color: red">*</span></label>
-                          <input type="file" name="image_2">
-                          @error('image_2')
-                            <p class="text-danger mt-2 mb-0 text-sm">{{ $message }}</p>
-                          @enderror
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label for="">Image 3 <span style="color: red">*</span></label>
-                          <input type="file" name="image_3">
-                          @error('image_3')
-                            <p class="text-danger mt-2 mb-0 text-sm">{{ $message }}</p>
-                          @enderror
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label for="">Image 4 <span style="color: red">*</span></label>
-                          <input type="file" name="image_4">
-                          @error('image_4')
-                            <p class="text-danger mt-2 mb-0 text-sm">{{ $message }}</p>
-                          @enderror
-                        </div>
-                      </div> --}}
                       <div class="col-md-6">
                         <div class="form-group clearfix">
                           <div class="icheck-success d-inline">
@@ -121,35 +95,7 @@
                   <div class="card-body pad">
                     @csrf
                     <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                          <label for="">Heading <span style="color: red">*</span></label>
-                          <input type="text" class="form-control" name="heading" placeholder="Example : Bitcoin" value="{{ old('heading') }}">
-                          @error('heading')
-                            <p class="text-danger mt-2 mb-0 text-sm">{{ $message }}</p>
-                          @enderror
-                        </div>
-                      </div>
                       <div class="col-md-6">
-                        <div class="form-group">
-                          <label for="">Subheading <span style="color: red">*</span></label>
-                          <input type="text" class="form-control" name="subheading" placeholder="Example : Bitcoin" value="{{ old('subheading') }}">
-                          @error('subheading')
-                            <p class="text-danger mt-2 mb-0 text-sm">{{ $message }}</p>
-                          @enderror
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label for="">Description <span style="color: red">*</span></label>
-                          <input type="text" class="form-control" name="description" placeholder="Example : Bitcoin" value="{{ old('description') }}">
-                          @error('description')
-                            <p class="text-danger mt-2 mb-0 text-sm">{{ $message }}</p>
-                          @enderror
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-
                         <div class="form-group">
                           <label for="">Upload Video <span style="color: red">*</span></label> <br>
                           @if (isset($data))
@@ -197,9 +143,9 @@
   </div>
 @endsection
 @push('scripts')
-<script>
-  function addRow() {
-    let html = `<div class="form-group">
+  <script>
+    function addRow() {
+      let html = `<div class="form-group">
       <label for="">Select Image<span style="color: red">*</span></label>
       <input type="file" name="image_1">
       <button class="btn btn-danger btn-sm deleteRow" type="button"><i class="fa fa-minus"></i></button>
@@ -207,10 +153,10 @@
         <p class="text-danger mt-2 mb-0 text-sm">{{ $message }}</p>
       @enderror
     </div>`;
-    $('#image_wrapper').append(html);
-  }
-  $(document).on('click', '.deleteRow', function() {
-    $(this).parent().closest('div').remove();
-  })
-</script>
+      $('#image_wrapper').append(html);
+    }
+    $(document).on('click', '.deleteRow', function() {
+      $(this).parent().closest('div').remove();
+    })
+  </script>
 @endpush
