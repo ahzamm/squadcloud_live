@@ -302,6 +302,7 @@
     function showModal(jobId, title) {
       $('#job-id').val(jobId);
       $('#portfolio-title').text(title);
+      refreshCaptcha();
       $('#applyModal').modal('show');
     }
 
