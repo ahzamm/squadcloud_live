@@ -35,7 +35,7 @@
   <section id="about" class="position-relative pb-5">
     <div class="our-portfolio-bg"></div>
     <div class="container">
-      <div class="title-img d-flex align-items-center justify-content-center flex-column mb-5" data-aos="zoom-in-down">
+      <div class="title-img d-flex align-items-center justify-content-center flex-column mb-3" data-aos="zoom-in-down">
         @if (isset($about_menu))
           <img src="frontend_assets/images/title/{{ $about_menu->title_image }}" alt="{{ $about_menu->menu }}" style="width: 50%;">
           <p class="text-center">{!! $about->description !!}</p>
@@ -48,7 +48,7 @@
           <iframe width="100%" height="100%" src="{{ $about->video_url }}" title="YouTube video player" frameborder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
         </div>
-     
+
       @endif
     </div>
   </section>
@@ -86,7 +86,7 @@
               <div style="position:absolute; transform:translate(-50%, -50%) rotate(270deg) ;z-index:9;white-space: nowrap;left:80%;top:50%;text-align:center;">
                 <h3 style="color: #64050f;">{{ $member->name }}</h3>
                 <p>{{ $member->designation }}</p>
-                <p><a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin" style="font-size:26px"></i></a></p>
+                <p><a href="https://{{ $member->linkedin }}" aria-label="LinkedIn"><i class="fab fa-linkedin" style="font-size:26px"></i></a></p>
               </div>
             </div>
           </div>

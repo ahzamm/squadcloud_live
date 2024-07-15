@@ -96,19 +96,19 @@
             </div>
           </a>
           <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#imageModal" data-aos="zoom-in" data-aos-delay="150" data-aos-duration="1000">
-          <div class=" mt-3 screensht">
-            <div class="screensht-bg">
-               <img src="{{ asset('frontend_assets/images/portfolio/' . $portfolio->screenshot_2) }}" alt="" class="w-100 h-100">
+            <div class=" mt-3 screensht">
+              <div class="screensht-bg">
+                <img src="{{ asset('frontend_assets/images/portfolio/' . $portfolio->screenshot_2) }}" alt="" class="w-100 h-100">
+              </div>
             </div>
-         </div>
          </a>
-         <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#imageModal" data-aos="zoom-in" data-aos-delay="250" data-aos-duration="1000">
-          <div class=" mt-3 screensht">
-            <div class="screensht-bg">
-               <img src="{{ asset('frontend_assets/images/portfolio/' . $portfolio->screenshot_3) }}" alt="" class="w-100 h-100">
+          <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#imageModal" data-aos="zoom-in" data-aos-delay="250" data-aos-duration="1000">
+            <div class=" mt-3 screensht">
+              <div class="screensht-bg">
+                <img src="{{ asset('frontend_assets/images/portfolio/' . $portfolio->screenshot_3) }}" alt="" class="w-100 h-100">
+              </div>
             </div>
-         </div>
-         </a>
+          </a>
         </div>
       </div>
     </section>

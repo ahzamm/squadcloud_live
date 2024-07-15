@@ -119,7 +119,7 @@
                         <label class="formlabel"></label>
                         <select name="company" class="formselect-3">
                            <option value="" selected>--Select Company--</option>
-                           <option value="1">Squad Cloud</option>
+                           <option value="1">SquadCloud</option>
                            <option value="2">Logon</option>
                            <option value="3">Folio</option>
                         </select>
@@ -179,8 +179,7 @@
                         <img src="frontend_assets/images/checkout/Maestro_logo.png" alt="">
                         <img src="frontend_assets/images/checkout/196578.png" alt="">
                         <img src="frontend_assets/images/checkout/paypal-784403__340.webp" alt="">
-                        <img
-                           src="frontend_assets/images/checkout/hd-payoneer-payment-official-logo-png-21635324705hhosuwxwnz.png"
+                        <img src="frontend_assets/images/checkout/hd-payoneer-payment-official-logo-png-21635324705hhosuwxwnz.png"
                            alt="">
                      </div>
                   </div>

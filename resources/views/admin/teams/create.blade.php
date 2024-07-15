@@ -49,8 +49,13 @@
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
-                      <label for="">Linkedin <span style="color: red">*</span></label>
-                      <input type="text" class="form-control" name="linkedin" placeholder="Transforming Ideas into Innovative Mobile Experiences" value="{{ old('linkedin') }}">
+                      <label for="">LinkedIn <span style="color: red">*</span></label>
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text" id="linkedinPrefix">https://</span>
+                        </div>
+                        <input type="text" class="form-control" id="linkedinInput" name="linkedin" placeholder="Enter your LinkedIn URL" value="{{ old('linkedin') }}">
+                      </div>
                       @error('linkedin')
                         <p class="text-danger mt-2 mb-0 text-sm">{{ $message }}</p>
                       @enderror
@@ -78,12 +83,3 @@
     </section>
   </div>
 @endsection
-@push('scripts')
-  <script>
-    $(document).ready(function() {
-      $('#pageContent').summernote({
-        height: 300
-      });
-    });
-  </script>
-@endpush

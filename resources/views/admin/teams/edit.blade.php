@@ -52,7 +52,12 @@
                   <div class="col-md-6">
                     <div class="form-group">
                       <label for="">Linkedin <span style="color: red">*</span></label>
-                      <input type="text" class="form-control" name="linkedin" value="{{ old('linkedin') == null ? $team->linkedin : old('linkedin') }}">
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text" id="linkedinPrefix">https://</span>
+                        </div>
+                        <input type="text" class="form-control" name="linkedin" value="{{ old('linkedin') == null ? $team->linkedin : old('linkedin') }}">
+                      </div>
                       @error('linkedin')
                         <p class="text-danger mt-2 mb-0 text-sm">{{ $message }}</p>
                       @enderror

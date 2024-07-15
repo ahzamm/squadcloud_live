@@ -6,50 +6,63 @@
     section {
       padding-top: 100px;
     }
+
+    .more_action {
+      display: inline-block;
+      padding: 0.75rem 1.25rem;
+      border-radius: 10rem;
+      color: #fff;
+      text-transform: uppercase;
+      font-size: 1rem;
+      letter-spacing: 0.15rem;
+      transition: all 0.3s;
+      position: relative;
+      bottom: 15px;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .more_action:after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #71030f;
+
+      border-radius: 10rem;
+      z-index: -2;
+    }
+
+    .more_action:before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0%;
+      height: 100%;
+      background-color: lightgrey;
+      opacity: 0.2;
+
+      transition: all 0.3s;
+      border-radius: 10rem;
+      z-index: -1;
+    }
+
+    .more_action:hover {
+      color: white;
+    }
+
+    .more_action:hover:before {
+      width: 100%;
+    }
+
     .error-message {
       display: none;
       color: red;
       font-size: 0.875rem;
     }
-    #contact-section .section-heading {
-      font-size: 4rem;
-    font-weight: 900;
-    margin-top: 0;
-    letter-spacing: 3px;
-    color: #000 !important;
-    }
-    hr {
-  border: 0;
-  margin: 1.35em auto;
-  max-width: 60%;
-  background-position: 50%;
-  box-sizing: border-box;
-}
-hr.accessory {
-  height: 6px;
-  background-image: radial-gradient(
-    closest-side,
-    hsla(0, 0%, 50%, 1.0),
-    hsla(0, 0%, 50%, 0) 100%);
-  position: relative;
-}
-hr.accessory::before {
-  position: absolute;
-  top:  50%;
-  left: 50%;
-  display:block;
-  background-color: red;
-  height: 12px;
-  width:  12px;
-  transform: rotate(45deg);
-  margin-top:  -10px;
-  margin-left: -10px;
-  border-radius: 4px 0;
-  border: 4px solid hsla(0, 0%, 100%, 0.35);
-  background-clip: padding-box;
-  box-shadow: -10px 10px 0 hsla(0, 0%, 100%, 0.15), 10px -10px 0 hsla(0, 0%, 100%, 0.15);
-}
-
   </style>
 
   @if ($showAnimation)
@@ -188,29 +201,8 @@ hr.accessory::before {
     </div>
   </section>
 
-  <!-- -------CLIENTS Slider------- -->
-  {{-- <section id="service-section" class="clients position-relative" style="padding-bottom: 100px">
-    <div class="container">
-      <div class="text-center" data-aos="zoom-in-down" style="">
-        <h2 class="section-heading text-uppercase">Clients</h2>
-        <h3 class="section-subheading text-muted">{{ $client_menu->tagline }}</h3>
-      </div>
-      <div class="client-slider">
-        @foreach($Clients as $list)
-          <div class="slider-1 d-flex align-items-center justify-content-center py-3">
-            <div class="card" data-aos="flip-right" data-aos-duration="1000">
-              <a href="{{ $list->link }}" target="_blank" class="card-header d-flex justify-content-center align-items-center" >
-                <div class="clients-logo">
-                  <img src="{{ asset('frontend_assets/images/clients/' . $list->logo) }}" alt="{{ $list->title }}" class="p-2 d-inline-block">
-                </div>
-              </a>
-            </div>
-          </div>
-        @endforeach
-      </div>
-    </div>
-  </section> --}}
-  <!-- <section id="service-section" class="clients position-relative">
+  <!-- -------CLIENTS------- -->
+  <section id="service-section" class="clients position-relative">
     <div class="container">
       <div class="text-center" data-aos="zoom-in-down" style="">
         <h2 class="section-heading text-uppercase">Clients</h2>
@@ -243,8 +235,7 @@ hr.accessory::before {
         View All
       </a>
     </div>
-  </section> -->
-  <!-- -------CLIENTS Slider end ------- -->
+  </section>
 
   <!-- -------SLIDER------- -->
   <section id="section-slider" class="slider m-0 p-0 position-relative">
@@ -258,29 +249,13 @@ hr.accessory::before {
     </div>
   </section>
 
-
-
-  <!-- -------Contact Us------- -->
-  <section id="project-section" class="contact position-relative pb-5" style="padding-top:40px">
-    <div class="contact-bg"></div>
-    <div class="container pb-1">
-      <div class="text-center" data-aos="zoom-in-down">
-        <h2 class="section-heading text-uppercase">Got New Project</h2>
-        <h3 class="section-subheading text-muted">{!! $contact_menu->tagline !!}</h3>
-      </div>
-      <div class="main-form">
-        @include('component.front.contact')
-      </div>
-    </div>
-  </section>
-  <hr class="accessory">
-    <!-- -------New projects------- -->
-  <div id="contact-section" class="project position-relative py-5">
+  <!-- -------New projects------- -->
+  <div id="portfolio-section" class="project position-relative py-5">
     <div class="project-bg"></div>
     <div class="container">
       <div class="text-center" data-aos="zoom-in-down">
-        <h2 class="section-heading text-uppercase text-white">CONTACT US</h2>
-        <h3 class="section-subheading text-muted">Contact us using the following links.</h3>
+        <h2 class="section-heading">Got New Project?</h2>
+        <h5 class="text-white">Contact us using the following links.</h3>
       </div>
       <div class="d-flex align-items-center justify-content-center mt-4" style="column-gap: 12px">
         @foreach ($socials as $index => $social)
@@ -289,30 +264,57 @@ hr.accessory::before {
       </div>
     </div>
   </div>
-<!-- clients -->
 
-<section id="client-section" class="clients position-relative" style="padding-top: 0px;background-color: #cfcfcf00">
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" style="position:initial; transform:none"><path fill="#cfcfcf70" fill-opacity="1" d="M0,0L48,21.3C96,43,192,85,288,117.3C384,149,480,171,576,154.7C672,139,768,85,864,85.3C960,85,1056,139,1152,154.7C1248,171,1344,149,1392,138.7L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>
-    <div class="container client-container">
-     {{-- <div class="text-center" data-aos="zoom-in-down" style="">
-        <h2 class="section-heading text-uppercase">Clients</h2>
-        <h3 class="section-subheading text-muted">{{ $client_menu->tagline }}</h3>
-      </div>--}}
-      <div class="client-slider">
-        @foreach($Clients as $list)
-          <div class="slider-1 d-flex align-items-center justify-content-center py-3">
-            <div class="card" data-aos="flip-right" data-aos-duration="1000">
-              <a href="{{ $list->link }}" target="_blank" class="card-header d-flex justify-content-center align-items-center" >
-                <div class="clients-logo">
-                  <img src="{{ asset('frontend_assets/images/clients/' . $list->logo) }}" alt="{{ $list->title }}" class="p-2 d-inline-block">
-                </div>
-              </a>
+  <!-- -------Contact Us------- -->
+  <section id="portfolio-section" class="contact position-relative pb-5">
+    <div class="contact-bg"></div>
+    <div class="container pb-1">
+      <div class="text-center" data-aos="zoom-in-down">
+        <h2 class="section-heading text-uppercase">CONTACT US</h2>
+        <h3 class="section-subheading text-muted2">{!! $contact_menu->tagline !!}</h3>
+      </div>
+      <div class="main-form">
+        <form class="contact-form" action="{{ route('site.contact.request') }}" method="post" id="contactForm">
+          @csrf
+          <div class="row mb-3">
+            <div class="col" data-aos="fade-right" data-aos-duration="1000">
+              <input type="text" id="full_name" class="form-control name" name="full_name" value="{{ old('full_name') }}" placeholder="Full Name*">
+              <span class="error-message" id="name-error">This field is required</span>
+            </div>
+            <div class="col" data-aos="fade-left" data-aos-duration="1000">
+              <input type="text" id="email" class="form-control email" name="email" value="{{ old('email') }}" placeholder="Email*">
+              <span class="error-message" id="email-error">This field is required</span>
             </div>
           </div>
-        @endforeach
+          <div class="row mb-3">
+            <div class="col" data-aos="fade-right" data-aos-duration="1000">
+              <input type="text" id="phone_number" class="form-control phone" name="phone" value="{{ old('phone') }}" placeholder="Phone Number*">
+              <span class="error-message" id="phone-error">This field is required</span>
+            </div>
+            <div class="col" data-aos="fade-left" data-aos-duration="1000">
+              <input type="text" id="service_required" class="form-control service" name="service_required" value="{{ old('service_required') }}" placeholder="Service Required*">
+              <span class="error-message" id="service-error">This field is required</span>
+            </div>
+          </div>
+          <div class="row" style="margin-top: 25px; z-index: 9;">
+            <div class="col position-relative" data-aos="fade-up" data-aos-duration="1000">
+              <div class="overlay"></div>
+              <textarea class="form-control custom-textarea" name="message" id="message" placeholder="Message*" cols="30" rows="5"
+                style="height: 350px; background-color: #71030f;color: #fff; z-index: 9;border-bottom-left-radius: 20px;
+                  border-bottom-right-radius: 20px;">{{ old('message') }}</textarea>
+              <span class="error-message" id="message-error">This field is required</span>
+              <div class="d-flex align-items-center justify-content-center">
+                <button type="submit" id="send" value="send me" class=""
+                  style="background: #fff; margin: auto; width: 250px; margin-top: -60px; height: 60px; color: #71030f; border-top-left-radius: 20px; border-top-right-radius: 20px; border:none; z-index: 9;">Send
+                  Message</button>
+              </div>
+            </div>
+          </div>
+        </form>
       </div>
     </div>
   </section>
+
   <script>
     document.getElementById('contactForm').addEventListener('submit', function(event) {
       let valid = true;
@@ -361,17 +363,6 @@ hr.accessory::before {
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script>
     $(document).ready(function() {
-      // hide placeholder
-      $('.custom-textarea').on('keyup', function() {
-        let textVal = $(this).val();
-        console.log(textVal);
-        if(!textVal) {
-          console.log('no text');
-          $('.textarea-placeholder').css('display', 'inline-block');
-        } else {
-          $('.textarea-placeholder').css('display', 'none');
-        }
-      })
       $('#contactForm').on('submit', function(e) {
         e.preventDefault();
 
@@ -379,46 +370,46 @@ hr.accessory::before {
         $('.error').removeClass('error');
         $('.error-message').hide();
 
-        // $.ajax({
-        //   url: $(this).attr('action'),
-        //   method: $(this).attr('method'),
-        //   data: $(this).serialize(),
-        //   success: function(response) {
-        //     if (response.status === 'success') {
-        //       Swal.fire({
-        //         title: 'Success!',
-        //         text: response.message,
-        //         icon: 'success',
-        //         confirmButtonText: 'OK'
-        //       }).then(() => {
-        //         $('#contactForm')[0].reset();
-        //       });
-        //     } else if (response.status === 'error') {
-        //       Swal.fire({
-        //         title: 'Error!',
-        //         text: response.message,
-        //         icon: 'error',
-        //         confirmButtonText: 'OK'
-        //       });
-        //     }
-        //   },
-        //   error: function(xhr) {
-        //     if (xhr.status === 422) {
-        //       var errors = xhr.responseJSON.errors;
-        //       $.each(errors, function(key, error) {
-        //         $('#' + key).addClass('error');
-        //         $('#' + key + '-error').text(error[0]).show();
-        //       });
-        //     } else {
-        //       Swal.fire({
-        //         title: 'Error!',
-        //         text: 'An unexpected error occurred. Please try again later.',
-        //         icon: 'error',
-        //         confirmButtonText: 'OK'
-        //       });
-        //     }
-        //   }
-        // });
+        $.ajax({
+          url: $(this).attr('action'),
+          method: $(this).attr('method'),
+          data: $(this).serialize(),
+          success: function(response) {
+            if (response.status === 'success') {
+              Swal.fire({
+                title: 'Success!',
+                text: response.message,
+                icon: 'success',
+                confirmButtonText: 'OK'
+              }).then(() => {
+                $('#contactForm')[0].reset();
+              });
+            } else if (response.status === 'error') {
+              Swal.fire({
+                title: 'Error!',
+                text: response.message,
+                icon: 'error',
+                confirmButtonText: 'OK'
+              });
+            }
+          },
+          error: function(xhr) {
+            if (xhr.status === 422) {
+              var errors = xhr.responseJSON.errors;
+              $.each(errors, function(key, error) {
+                $('#' + key).addClass('error');
+                $('#' + key + '-error').text(error[0]).show();
+              });
+            } else {
+              Swal.fire({
+                title: 'Error!',
+                text: 'An unexpected error occurred. Please try again later.',
+                icon: 'error',
+                confirmButtonText: 'OK'
+              });
+            }
+          }
+        });
       });
     });
   </script>
