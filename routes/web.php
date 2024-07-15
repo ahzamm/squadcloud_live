@@ -92,6 +92,7 @@ use App\Http\Controllers\Site\FaqController;
          Route::get('/services', [ServiceController::class, 'index'])->name('site.services');
          Route::get('/services/{slug}', [ServiceController::class, 'serviceDetail'])->where('id', '[0-9]+')->name('site.service.detail');
          Route::get('/portfolio', [PortfolioController::class, 'index'])->name('site.portfolio');
+         Route::post('/portfolio', [PortfolioController::class, 'request_demo'])->name('site.portfolio.post');
          Route::get('/portfolio/{route}', [PortfolioController::class, 'detail'])->name('site.portfolio.detail');
          Route::get('/client', [ClientController::class, 'index'])->name('site.client');
          Route::get('/about', [AboutController::class, 'index'])->name('site.about');
