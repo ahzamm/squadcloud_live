@@ -6,7 +6,7 @@
         <div class="col-md-12">
           <div class="card card-outline card-info">
             <div class="card-header d-flex justify-content-between align-items-center">
-              <h3 class="card-title mb-0"><span><i class="fa-solid fa-box-open"></i></span> Update Service</h3>
+              <h3 class="card-title mb-0"><span><i class="fa fa-gears"></i></span> Update Service</h3>
               <div class="ml-auto">
                 <a class="btn btn-outline-secondary btn-sm" href="{{ route('services.index') }}">
                   <i class="fa fa-arrow-left"></i> Back
@@ -29,31 +29,9 @@
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
-                      <label for="">Service Logo <span style="color: red">*</span></label>
-                      @isset($service->logo)
-                        <img src="{{ asset('frontend_assets/images/services/' . $service->logo) }}" height="60" width="120" alt="" srcset="">
-                      @endisset
-                      <br><br>
-                      <input type="file" value="{{ $service->logo }}" name="logo">
-                      @error('logo')
-                        <p class="text-danger mt-2 mb-0 text-sm">{{ $message }}</p>
-                      @enderror
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
                       <label for="">Tagline <span style="color: red">*</span></label>
                       <input type="text" class="form-control" name="tagline" value="{{ old('tagline') == null ? $service->tagline : old('tagline') }}">
                       @error('tagline')
-                        <p class="text-danger mt-2 mb-0 text-sm">{{ $message }}</p>
-                      @enderror
-                    </div>
-                  </div>
-                  <div class="col-md-12">
-                    <div class="form-group">
-                      <label for="">Description <span style="color: red">*</span></label>
-                      <textarea name="description" rows="4" placeholder="Example : How are you" required class="form-control summernote">{{ $service->description }}</textarea>
-                      @error('description')
                         <p class="text-danger mt-2 mb-0 text-sm">{{ $message }}</p>
                       @enderror
                     </div>
@@ -67,7 +45,20 @@
                       @enderror
                     </div>
                   </div>
-                  <div class="col-md-6">
+                  <div class="col-md-3">
+                    <div class="form-group">
+                      <label for="">Service Logo <span style="color: red">*</span></label>
+                      @isset($service->logo)
+                        <img src="{{ asset('frontend_assets/images/services/' . $service->logo) }}" height="60" width="120" alt="" srcset="">
+                      @endisset
+                      <br><br>
+                      <input type="file" value="{{ $service->logo }}" name="logo">
+                      @error('logo')
+                        <p class="text-danger mt-2 mb-0 text-sm">{{ $message }}</p>
+                      @enderror
+                    </div>
+                  </div>
+                  <div class="col-md-3">
                     <div class="form-group">
                       <label for="">Background Image <span style="color: red">*</span></label>
                       @isset($service->background_image)
@@ -80,6 +71,17 @@
                       @enderror
                     </div>
                   </div>
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="">Description <span style="color: red">*</span></label>
+                      <textarea name="description" rows="4" placeholder="Example : How are you" required class="form-control summernote">{{ $service->description }}</textarea>
+                      @error('description')
+                        <p class="text-danger mt-2 mb-0 text-sm">{{ $message }}</p>
+                      @enderror
+                    </div>
+                  </div>
+                  
+                  
                   <div class="col-md-6">
                     <div class="form-group clearfix">
                       <div class="icheck-success d-inline">

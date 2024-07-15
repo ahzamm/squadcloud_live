@@ -29,7 +29,6 @@
                   <table class="table table-bordered table-striped" id="">
                     <thead>
                       <tr>
-                        <th>Sort</th>
                         <th>Serial#</th>
                         <th>Social Media Names</th>
                         <th>Social Media Icons</th>
@@ -42,7 +41,6 @@
                     <tbody id="sortfrontMenu" class="move">
                       @foreach ($socials as $key => $item)
                         <tr>
-                          <td><i class="fas fa-sort" id="sort-serial"></i></td>
                           <td>{{ $key + 1 }}<input type="hidden" class="order-id"value="{{ $item->id }}"></td>
                           <input type="hidden" class="order-id" value="{{ $item->id }}">
                           </td>
@@ -151,7 +149,6 @@
             let table = "";
             $(response).each(function(index, value) {
               table += ` <tr>
-                    <td><i class="fas fa-sort" id="sort-serial"></i></td>
                   <td>${index + 1 }<input type="hidden" class="order-id" value="${value.id}"></td>
                   <td >${value.name}</td>
                   <td><i class="${value.icon}"></i></td>

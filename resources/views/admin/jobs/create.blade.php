@@ -11,12 +11,12 @@
     }
 
     .tag-container {
-      display: flex;
-      flex-wrap: wrap;
-      padding: 5px;
-      width: 300px;
+      /* display: flex;
+      flex-wrap: wrap; */
+      /* padding: 5px;
+      width: 300px; */
       border: 1px solid #ccc;
-      background-color: #fff;
+      /* background-color: #fff; */
       border-radius: 5px;
     }
 
@@ -60,7 +60,7 @@
         <div class="col-md-12">
           <div class="card card-outline card-info mt-2">
             <div class="card-header d-flex justify-content-between align-items-center">
-              <h3 class="card-title mb-0"><span><i class="fa-solid fa-box-open"></i></span> Add Vacancy</h3>
+              <h3 class="card-title mb-0"><span><i class="fa fa-bullhorn"></i></span> Add Vacancy</h3>
               <div class="ml-auto">
                 <a class="btn btn-outline-secondary btn-sm" href="{{ route('jobs.index') }}">
                   <i class="fa fa-arrow-left"></i> Back
@@ -77,22 +77,11 @@
                       <input type="text" class="form-control" name="title" placeholder="Example : 15 Mbps" required value="{{ old('title') }}">
                     </div>
                   </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label for="">Image <span style="color: red">*</span></label>
-                      <input type="file" name="image">
-                    </div>
-                  </div>
+                  
                   <div class="col-md-6">
                     <div class="form-group">
                       <label for="">Company <span style="color: red">*</span></label>
                       <input type="text" class="form-control" name="company" placeholder="Example : 15 Mbps" required value="{{ old('company') }}">
-                    </div>
-                  </div>
-                  <div class="col-md-12">
-                    <div class="form-group">
-                      <label for="">Description <span style="color: red">*</span></label>
-                      <textarea name="description" rows="4" placeholder="" class="form-control summernote">{{ old('description') }}</textarea>
                     </div>
                   </div>
                   <div class="col-md-6">
@@ -119,11 +108,27 @@
                     </div>
                   </div>
                   <div class="col-md-6">
+                    <div class="form-group">
+                    <label for="">Tag </label>
                     <div class="tag-container">
-                      <input type="text" id="tag-input" placeholder="Add a tag without spaces and press Enter">
+                      <input type="text" id="tag-input" placeholder="Add a tag without spaces and press Enter" >
                       <input type="hidden" name="tags" id="tags">
                     </div>
+                    </div>
                   </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="">Image <span style="color: red">*</span></label>
+                      <input type="file" name="image">
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="">Description <span style="color: red">*</span></label>
+                      <textarea name="description" rows="4" placeholder="" class="form-control summernote">{{ old('description') }}</textarea>
+                    </div>
+                  </div>
+                  
                   <div class="col-md-6">
                     <div class="form-group clearfix">
                       <div class="icheck-success d-inline">

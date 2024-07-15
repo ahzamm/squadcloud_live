@@ -6,7 +6,7 @@
         <div class="col-md-12">
           <div class="card card-outline card-info">
             <div class="card-header d-flex justify-content-between align-items-center">
-              <h3 class="card-title mb-0"><span><i class="fa-solid fa-box-open"></i></span> Update Client</h3>
+              <h3 class="card-title mb-0"><span><i class="fa fa-users-viewfinder"></i></span> Update Client</h3>
               <div class="ml-auto">
                 <a class="btn btn-outline-secondary btn-sm" href="{{ route('clients.index') }}">
                   <i class="fa fa-arrow-left"></i> Back
@@ -18,19 +18,16 @@
               <div class="card-body pad">
                 @csrf
                 <div class="row">
-                  <div class="col-md-6">
+                <div class="col-md-6">
                     <div class="form-group">
-                      <label for="">Client Logo <span style="color: red">*</span></label>
-                      @isset($client->logo)
-                        <img src="{{ asset('frontend_assets/images/clients/' . $client->logo) }}" height="60" width="120" alt="" srcset="">
-                      @endisset
-                      <br><br>
-                      <input type="file" value="{{ $client->logo }}" name="logo">
-                      @error('image')
+                      <label for="">Title <span style="color: red">*</span></label>
+                      <input type="text" class="form-control" name="title" value="{{ old('title') == null ? $client->title : old('title') }}">
+                      @error('title')
                         <p class="text-danger mt-2 mb-0 text-sm">{{ $message }}</p>
                       @enderror
                     </div>
                   </div>
+                  
                   <div class="col-md-6">
                     <div class="form-group">
                       <label for="">Link <span style="color: red">*</span></label>
@@ -42,9 +39,13 @@
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
-                      <label for="">Title <span style="color: red">*</span></label>
-                      <input type="text" class="form-control" name="title" value="{{ old('title') == null ? $client->title : old('title') }}">
-                      @error('title')
+                      <label for="">Client Logo <span style="color: red">*</span></label>
+                      @isset($client->logo)
+                        <img src="{{ asset('frontend_assets/images/clients/' . $client->logo) }}" height="60" width="120" alt="" srcset="">
+                      @endisset
+                      <br><br>
+                      <input type="file" value="{{ $client->logo }}" name="logo">
+                      @error('image')
                         <p class="text-danger mt-2 mb-0 text-sm">{{ $message }}</p>
                       @enderror
                     </div>

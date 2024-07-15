@@ -36,13 +36,13 @@
                     <table id="example" class="table table-bordered table-striped">
                       <thead>
                         <tr>
-                          <th>Sort</th>
+                          <!-- <th>Sort</th> -->
                           <th>Serial#</th>
                           <th>Main Menus</th>
                           <th>Route</th>
+                          <th>Page Title</th>
                           <th>Tagline</th>
                           <th>Title Image</th>
-                          <th>Page Title</th>
                           <th>Status</th>
                           <th>Action</th>
                         </tr>
@@ -51,20 +51,21 @@
                       <tbody id="sortfrontMenu" class="move">
                         @foreach ($collection as $key => $menu)
                           <tr>
-                            <td><i class="fas fa-sort" id="sort-serial"></i></td>
+                            <!-- <td><i class="fas fa-sort" id="sort-serial"></i></td> -->
                             <td>
                               {{ $key + 1 }}
                               <input type="hidden" class="order-id" value="{{ $menu->id }}">
                             </td>
                             <td>{{ $menu->menu }}</td>
                             <td>{{ $menu->slug }}</td>
+                            <td>{{ $menu->page_title }}</td>
                             <td>{{ $menu->tagline }}</td>
                             <td>
                               @if (isset($menu->title_image) && !empty($menu->title_image))
                                 <img width="100px" height="40px" src="{{ asset('frontend_assets/images/title/' . $menu->title_image) }}" alt="Title Image">
                               @endif
                             </td>
-                            <td>{{ $menu->page_title }}</td>
+                            
                             <td>{{ $menu->is_active == 1 ? 'active' : 'deactive' }}</td>
                             <td>
                               <a href="{{ route('front.edit', $menu->id) }}" class="btn btn-sm btn-info"><i class="fa fa-edit"></i></a>
@@ -173,7 +174,7 @@
           let table = "";
           $(response).each(function(index, value) {
             table += ` <tr>
-                  <td><i class="fas fa-sort" id="sort-serial"></i></td>
+                  
                   <td>${index + 1 }
                   <input type="hidden" class="order-id" value="${value.id}">
                   </td>

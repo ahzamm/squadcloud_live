@@ -13,7 +13,7 @@
           <div class="col-12">
             <div class="card mt-3 card-outline card-info">
               <div class="card-header">
-                <h3 class="card-title"><span><i class="fa-solid fa-box-open"></i></span> Newsletter Subscribers</h3>
+                <h3 class="card-title"><span><i class="fa fa-arrows-down-to-people"></i></span> Newsletter Subscribers</h3>
               </div>
               <div class="card-body">
                 <div class="table-responsive">

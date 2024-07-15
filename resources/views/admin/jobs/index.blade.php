@@ -18,7 +18,7 @@
           <div class="col-12">
             <div class="card mt-3 card-outline card-info">
               <div class="card-header">
-                <h3 class="card-title"><span><i class="fa-solid fa-box-open"></i></span> Vacancies</h3>
+                <h3 class="card-title"><span><i class="fa fa-bullhorn"></i></span> Vacancies</h3>
                 <a class="btn btn-success btn-sm float-right" href="{{ route('jobs.create') }}"><i class="fa fa-plus"></i> Add Vacancy</a>
               </div>
               <div class="card-body">
@@ -26,7 +26,6 @@
                   <table class="table table-bordered table-striped" id="example1">
                     <thead>
                       <tr>
-                        <th>Sort</th>
                         <th>Serial#</th>
                         <th>Title</th>
                         <th>Image</th>
@@ -41,7 +40,6 @@
                     <tbody id="sortfrontMenu" class="move">
                       @foreach ($jobs as $key => $item)
                         <tr class="table-row">
-                          <td><i class="fas fa-sort" id="sort-serial"></i></td>
                           <td>{{ $key + 1 }}<input type="hidden" class="order-id"value="{{ $item->id }}"></td>
                           <td>{{ $item->job_title }}</td>
                           <td><img width="40px" height="40px" src="{{ asset('frontend_assets/images/jobs/' . $item->image) }}" />
@@ -251,7 +249,6 @@
             let table = "";
             $(response).each(function(index, value) {
               table += ` <tr>
-                            <td><i class="fas fa-sort" id="sort-serial"></i></td>
                   <td>${index + 1 }<input type="hidden" class="order-id" value="${value.id}"></td>
                    <td>${value.job_title}</td>
                    <td> <img width="40px" height="40px" src="{{ asset('frontend_assets/images/jobs/') }}/${value.image}"/></td>

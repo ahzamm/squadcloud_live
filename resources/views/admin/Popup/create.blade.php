@@ -1,15 +1,34 @@
-@extends('admin.layouts.app')
-@push('style')
-<link rel="stylesheet" href="{{asset('backend/plugins/select2/css/select2.min.css')}}">
-<link rel="stylesheet" href="{{asset('backend/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css')}}">
-<link rel="stylesheet" href="{{asset('site/sweet-alert/sweetalert2.css')}}">
-@endpush
-@section('content')
-@php
-$action = $data['action'];
-if($action == "create"){
-$parentRoute = Route("popup.store");
-$parentTitle = "Create";
+<!--
+ * This file is part of the SQUADCLOUD project.
+ *
+ * (c) SQUADCLOUD TEAM
+ *
+ * This file contains the configuration settings for the application.
+ * It includes database connection details, API keys, and other sensitive information.
+ *
+ * IMPORTANT: DO NOT MODIFY THIS FILE UNLESS YOU ARE AN AUTHORIZED DEVELOPER.
+ * Changes made to this file may cause unexpected behavior in the application.
+ *
+ * WARNING: DO NOT SHARE THIS FILE WITH ANYONE OR UPLOAD IT TO A PUBLIC REPOSITORY.
+ *
+ * Website: https://squadcloud.co
+ * Created: January, 2024
+ * Last Updated: 15th May, 2024
+ * Author: Talha Fahim <info@squadcloud.co>
+ *-->
+ <!-- Code Onset -->
+ @extends('admin.layouts.app')
+ @push('style')
+ <link rel="stylesheet" href="{{asset('backend/plugins/select2/css/select2.min.css')}}">
+ <link rel="stylesheet" href="{{asset('backend/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css')}}">
+ <link rel="stylesheet" href="{{asset('site/sweet-alert/sweetalert2.css')}}">
+ @endpush
+ @section('content')
+ @php
+ $action = $data['action'];
+ if($action == "create"){
+ $parentRoute = Route("popup.store");
+ $parentTitle = "Create";
 }
 if($action == "edit"){
 $id = $data['popup']->id ;
@@ -209,22 +228,23 @@ $parentTitle = "Edit";
 <script>
   function validateImageSize(input) {
     if (input.files && input.files[0]) {
-        var img = new Image();
-        img.src = window.URL.createObjectURL(input.files[0]);
-        img.onload = function () {
-            if (this.width != 500 || this.height != 500) {
-              swal({
-                  title: 'Image Size Issue',
-                  text: "Please upload an image with dimensions 500px x 500px.",
-                  animation: false,
-                  customClass: 'animated pulse',
-                  type: 'error',
-                })
+      var img = new Image();
+      img.src = window.URL.createObjectURL(input.files[0]);
+      img.onload = function () {
+        if (this.width != 500 || this.height != 500) {
+          swal({
+            title: 'Image Size Issue',
+            text: "Please upload an image with dimensions 500px x 500px.",
+            animation: false,
+            customClass: 'animated pulse',
+            type: 'error',
+          })
                 // alert("Please upload an image with dimensions 500px x 500px.");
                 input.value = ''; // Clear input field
-            }
-        };
-    }
-}
-</script>
-@endpush
+              }
+            };
+          }
+        }
+      </script>
+      @endpush
+<!-- Code Finalize -->

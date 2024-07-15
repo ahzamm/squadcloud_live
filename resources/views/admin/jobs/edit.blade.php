@@ -2,10 +2,10 @@
 @section('content')
   <style>
     .tag-container {
-      display: flex;
-      flex-wrap: wrap;
-      padding: 5px;
-      width: 300px;
+      /* display: flex;
+      flex-wrap: wrap; */
+      /* padding: 5px;
+      width: 300px; */
       border: 1px solid #ccc;
       background-color: #fff;
       border-radius: 5px;
@@ -51,7 +51,7 @@
         <div class="col-md-12">
           <div class="card card-outline card-info">
             <div class="card-header d-flex justify-content-between align-items-center">
-              <h3 class="card-title mb-0"><span><i class="fa-solid fa-box-open"></i></span> Update Vacancy</h3>
+              <h3 class="card-title mb-0"><span><i class="fa fa-bullhorn"></i></span> Update Vacancy</h3>
               <div class="ml-auto">
                 <a class="btn btn-outline-secondary btn-sm" href="{{ route('jobs.index') }}">
                   <i class="fa fa-arrow-left"></i> Back
@@ -71,26 +71,11 @@
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
-                      <label for="">Image <span style="color: red">*</span></label>
-                      @isset($job->image)
-                        <img src="{{ asset('frontend_assets/images/jobs/' . $job->image) }}" height="60" width="120" alt="" srcset="">
-                      @endisset
-                      <br><br>
-                      <input type="file" value="{{ $job->image }}" name="image">
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
                       <label for="">Company<span style="color: red">*</span></label>
                       <input type="text" class="form-control" name="company" value="{{ old('company') == null ? $job->company : old('company') }}">
                     </div>
                   </div>
-                  <div class="col-md-12">
-                    <div class="form-group">
-                      <label for="">Description <span style="color: red">*</span></label>
-                      <textarea name="job_description" rows="4" placeholder="Example : How are you" required class="form-control summernote">{{ old('job_description') == null ? $job->job_description : old('job_description') }}</textarea>
-                    </div>
-                  </div>
+                  
                   <div class="col-md-6">
                     <div class="form-group">
                       <label for="">Location <span style="color: red">*</span></label>
@@ -115,9 +100,29 @@
                     </div>
                   </div>
                   <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="">Tag </label>
                     <div class="tag-container">
                       <input type="text" id="tag-input" placeholder="Add a tag without spaces and press Enter">
                       <input type="hidden" name="tags" id="tags" value="{{ old('tags') == null ? $job->tags : old('tags') }}">
+                    </div>
+                  </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="">Image <span style="color: red">*</span></label>
+                      @isset($job->image)
+                        <img src="{{ asset('frontend_assets/images/jobs/' . $job->image) }}" height="60" width="120" alt="" srcset="">
+                      @endisset
+                      <br><br>
+                      <input type="file" value="{{ $job->image }}" name="image">
+                    </div>
+                  </div>
+                  
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="">Description <span style="color: red">*</span></label>
+                      <textarea name="job_description" rows="4" placeholder="Example : How are you" required class="form-control summernote">{{ old('job_description') == null ? $job->job_description : old('job_description') }}</textarea>
                     </div>
                   </div>
                   <div class="col-md-6">

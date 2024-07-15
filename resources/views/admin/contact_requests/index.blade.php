@@ -13,7 +13,7 @@
           <div class="col-12">
             <div class="card mt-3 card-outline card-info">
               <div class="card-header">
-                <h3 class="card-title"><span><i class="fa-solid fa-box-open"></i></span> Contacts</h3>
+                <h3 class="card-title"><span><i class="fa fa-bell"></i></span> Contacts</h3>
                 <div class="float-right">
                   <a href="#" class="btn btn-info btn-sm" data-toggle="modal" data-target="#emailModal">Add Email</a>
                 </div>

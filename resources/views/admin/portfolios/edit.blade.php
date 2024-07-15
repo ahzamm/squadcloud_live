@@ -6,7 +6,7 @@
         <div class="col-md-12">
           <div class="card card-outline card-info">
             <div class="card-header d-flex justify-content-between align-items-center">
-              <h3 class="card-title mb-0"><span><i class="fa-solid fa-box-open"></i></span> Update Portfolio</h3>
+              <h3 class="card-title mb-0"><span><i class="fa fa-podcast"></i></span> Update Portfolio</h3>
               <div class="ml-auto">
                 <a class="btn btn-outline-secondary btn-sm" href="{{ route('portfolios.index') }}">
                   <i class="fa fa-arrow-left"></i> Back
@@ -27,15 +27,7 @@
                       @enderror
                     </div>
                   </div>
-                  <div class="col-md-12">
-                    <div class="form-group">
-                      <label for="">Description <span style="color: red">*</span></label>
-                      <textarea name="description" rows="4" class="form-control summernote">{{ $portfolio->description }}</textarea>
-                      @error('description')
-                        <p class="text-danger mt-2 mb-0 text-sm">{{ $message }}</p>
-                      @enderror
-                    </div>
-                  </div>
+                  
                   <div class="col-md-6">
                     <div class="form-group">
                       <label for="">Link <span style="color: red">*</span></label>
@@ -45,19 +37,7 @@
                       @enderror
                     </div>
                   </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label for="">Image <span style="color: red">*</span></label> <br>
-                      @isset($portfolio->image)
-                        <img src="{{ asset('frontend_assets/images/portfolio/' . $portfolio->image) }}" height="60" width="120" alt="" srcset="">
-                      @endisset
-                      <br><br>
-                      <input type="file" name="image">
-                      @error('image')
-                        <p class="text-danger mt-2 mb-0 text-sm">{{ $message }}</p>
-                      @enderror
-                    </div>
-                  </div>
+                  
 
                   <div class="col-md-6">
                     <div class="form-group">
@@ -134,7 +114,19 @@
                       @enderror
                     </div>
                   </div>
-
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="">Image <span style="color: red">*</span></label> <br>
+                      @isset($portfolio->image)
+                        <img src="{{ asset('frontend_assets/images/portfolio/' . $portfolio->image) }}" height="60" width="120" alt="" srcset="">
+                      @endisset
+                      <br><br>
+                      <input type="file" name="image">
+                      @error('image')
+                        <p class="text-danger mt-2 mb-0 text-sm">{{ $message }}</p>
+                      @enderror
+                    </div>
+                  </div>
                   <div class="col-md-6">
                     <div class="form-group">
                       <label for="">Background Image <span style="color: red">*</span></label> <br>
@@ -144,6 +136,15 @@
                       <br><br>
                       <input type="file" name="background_image">
                       @error('background_image')
+                        <p class="text-danger mt-2 mb-0 text-sm">{{ $message }}</p>
+                      @enderror
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="">Description <span style="color: red">*</span></label>
+                      <textarea name="description" rows="4" class="form-control summernote">{{ $portfolio->description }}</textarea>
+                      @error('description')
                         <p class="text-danger mt-2 mb-0 text-sm">{{ $message }}</p>
                       @enderror
                     </div>

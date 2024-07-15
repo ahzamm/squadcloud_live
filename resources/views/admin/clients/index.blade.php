@@ -18,7 +18,7 @@
           <div class="col-12">
             <div class="card mt-3 card-outline card-info">
               <div class="card-header">
-                <h3 class="card-title"><span><i class="fa-solid fa-box-open"></i></span> Clients</h3>
+                <h3 class="card-title"><span><i class="fa fa-users-viewfinder"></i></span> Clients</h3>
                 <a class="btn btn-success btn-sm float-right" href="{{ route('clients.create') }}"><i class="fa fa-plus"></i> Add Clients</a>
               </div>
               <div class="card-body">
@@ -26,7 +26,6 @@
                   <table class="table table-bordered table-striped" id="example1">
                     <thead>
                       <tr>
-                        <th>Sort</th>
                         <th>Serial#</th>
                         <th>Client Logo</th>
                         <th>Link</th>
@@ -39,7 +38,6 @@
                     <tbody id="sortfrontMenu" class="move">
                       @foreach ($clients as $key => $item)
                         <tr class="table-row">
-                          <td><i class="fas fa-sort" id="sort-serial"></i></td>
                           <td>{{ $key + 1 }}<input type="hidden" class="order-id"value="{{ $item->id }}"></td>
                           <td>
                             <img width="40px" height="40px" src="{{ asset('frontend_assets/images/clients/' . $item->logo) }}" alt="internet product provider in karachi/Clifton/pakistan" />
@@ -248,7 +246,6 @@
             let table = "";
             $(response).each(function(index, value) {
               table += ` <tr>
-                            <td><i class="fas fa-sort" id="sort-serial"></i></td>
                   <td>${index + 1 }<input type="hidden" class="order-id" value="${value.id}"></td>
                   <td> <img width="40px" height="40px" src="{{ asset('frontend_assets/images/clients/') }}/${value.logo}" alt="service logo" /></td>
                    <td>${value.link}</td>

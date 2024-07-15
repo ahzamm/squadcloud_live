@@ -18,15 +18,14 @@
           <div class="col-12">
             <div class="card mt-3 card-outline card-info">
               <div class="card-header">
-                <h3 class="card-title"><span><i class="fa-solid fa-box-open"></i></span> Portfolios</h3>
-                <a class="btn btn-success btn-sm float-right" href="{{ route('portfolios.create') }}"><i class="fa fa-plus"></i> Add Portfolios</a>
+                <h3 class="card-title"><span><i class="fa fa-podcast"></i></span> Portfolio</h3>
+                <a class="btn btn-success btn-sm float-right" href="{{ route('portfolios.create') }}"><i class="fa fa-plus"></i> Add Portfolio</a>
               </div>
               <div class="card-body">
                 <div class="table-responsive">
                   <table class="table table-bordered table-striped" id="example1">
                     <thead>
                       <tr>
-                        <th>Sort</th>
                         <th>Serial#</th>
                         <th>Title</th>
                         <th>Description</th>
@@ -45,7 +44,6 @@
                     <tbody id="sortfrontMenu" class="move">
                       @foreach ($portfolios as $key => $item)
                         <tr class="table-row">
-                          <td><i class="fas fa-sort" id="sort-serial"></i></td>
                           <td>{{ $key + 1 }}<input type="hidden" class="order-id"value="{{ $item->id }}"></td>
                           <td>{{ $item->title }}</td>
                           <td>{{ $item->description }}</td>
@@ -259,7 +257,6 @@
             let table = "";
             $(response).each(function(index, value) {
               table += ` <tr>
-                <td><i class="fas fa-sort" id="sort-serial"></i></td>
                   <td>${index + 1 }<input type="hidden" class="order-id" value="${value.id}"></td>
                   <td >${value.title}</td>
                   <td>${value.description}</td>

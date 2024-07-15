@@ -251,62 +251,52 @@
       return false;
     }
     if (answer == parseInt(answerInput.val())) {
-      Swal.fire({
-        title: 'Captcha Verified!',
-        text: "Captcha Verification Successful!",
-        animation: false,
-        type: 'success',
-        toast: true,
-        position: 'top-right'
-      }).then(() => {
-        $("#captchaPopup").fadeOut();
-        $("#sendFormButton").text("Sending Request....");
-
-        // AJAX call to submit the form data
-        $.ajax({
-          url: contactFormLink,
-          type: 'POST',
-          data: $("#contactForm").serialize(),
-          success: function(res) {
-            console.log(res);
-            if (res.status == 'success') {
-              Swal.fire({
-                title: 'Contact Message Sent!',
-                text: "Message For Contact Request has been Sent!",
-                type: 'success',
-                toast: true,
-                position: 'top-right'
-              });
-              $('#contactForm')[0].reset();
-              $("#resultAnswer").val("");
-              $("#sendFormButton").text("Send");
-            } else {
-              Swal.fire({
-                title: 'Error!',
-                text: "Failed to send Contact request!",
-                animation: false,
-                type: 'error',
-              });
-            }
-          },
-          error: function(xhr) {
-            if (xhr.status === 422) {
-              var errors = xhr.responseJSON.errors;
-              $.each(errors, function(key, error) {
-                $('#' + key).addClass('error');
-                $('#' + key + '-error').text(error[0]).show();
-              });
-            } else {
-              Swal.fire({
-                title: 'Error!',
-                text: 'An unexpected error occurred. Please try again later.',
-                icon: 'error',
-                confirmButtonText: 'OK'
-              });
-            }
+      $("#captchaPopup").fadeOut();
+      // AJAX call to submit the form data
+      $.ajax({
+        url: contactFormLink,
+        type: 'POST',
+        data: $("#contactForm").serialize(),
+        success: function(res) {
+          console.log(res);
+          if (res.status == 'success') {
+            Swal.fire({
+              title: 'Contact Message Sent!',
+              text: "Message For Contact Request has been Sent!",
+              type: 'success',
+              toast: true,
+              position: 'top-right'
+            });
+            $('#contactForm')[0].reset();
+            $("#resultAnswer").val("");
+            $("#sendFormButton").text("Send");
+          } else {
+            Swal.fire({
+              title: 'Error!',
+              text: "Failed to send Contact request!",
+              animation: false,
+              type: 'error',
+            });
           }
-        });
+        },
+        error: function(xhr) {
+          if (xhr.status === 422) {
+            var errors = xhr.responseJSON.errors;
+            $.each(errors, function(key, error) {
+              $('#' + key).addClass('error');
+              $('#' + key + '-error').text(error[0]).show();
+            });
+          } else {
+            Swal.fire({
+              title: 'Error!',
+              text: 'An unexpected error occurred. Please try again later.',
+              icon: 'error',
+              confirmButtonText: 'OK'
+            });
+          }
+        }
       });
+      //   });
     }
   });
 </script>

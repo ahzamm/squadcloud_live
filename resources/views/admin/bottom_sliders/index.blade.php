@@ -18,7 +18,7 @@
           <div class="col-12">
             <div class="card mt-3 card-outline card-info">
               <div class="card-header">
-                <h3 class="card-title"><span><i class="fa-solid fa-box-open"></i></span> Bottom Sliders</h3>
+                <h3 class="card-title"><span><i class="fa fa-photo-film"></i></span> Bottom Sliders</h3>
                 <a class="btn btn-success btn-sm float-right" href="{{ route('bottom_sliders.create') }}"><i class="fa fa-plus"></i> Add Bottom Sliders</a>
               </div>
               <div class="card-body">
@@ -26,7 +26,6 @@
                   <table class="table table-bordered table-striped" id="example1">
                     <thead>
                       <tr>
-                        <th>Sort</th>
                         <th>Serial#</th>
                         <th>Slider Image</th>
                         <th>Title</th>
@@ -37,7 +36,7 @@
                     <tbody id="sortfrontMenu" class="move">
                       @foreach ($bottom_sliders as $key => $item)
                         <tr class="table-row">
-                          <td><i class="fas fa-sort" id="sort-serial"></i></td>
+                          <!-- <td><i class="fas fa-sort" id="sort-serial"></i></td> -->
                           <td>{{ $key + 1 }}<input type="hidden" class="order-id"value="{{ $item->id }}"></td>
                           <td>
                             <img width="100px" height="40px" src="{{ asset('frontend_assets/images/bottom_sliders/' . $item->image) }}" alt="internet product provider in karachi/Clifton/pakistan" />
@@ -244,7 +243,6 @@
             let table = "";
             $(response).each(function(index, value) {
               table += ` <tr>
-                            <td><i class="fas fa-sort" id="sort-serial"></i></td>
                   <td>${index + 1 }<input type="hidden" class="order-id" value="${value.id}"></td>
                   <td> <img width="100px" height="40px" src="{{ asset('frontend_assets/images/bottom_sliders/') }}/${value.image}" alt="service logo" /></td>
                    <td>${value.title}</td>

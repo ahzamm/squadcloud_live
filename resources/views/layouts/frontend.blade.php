@@ -91,7 +91,7 @@
             </div>
             <div class="navbar-right menu-right">
               <div class="d-flex align-items-center justify-content-center">
-                <a href="#" class="btn btn-project">Get A Project</a>
+                <a href="https://squadcloud.co/#project-section" class="btn btn-project">Get A Project</a>
               </div>
             </div>
             <div class="navigation" role="navigation">

@@ -1,11 +1,30 @@
-@extends('admin.layouts.app')
-@push('style')
-<link rel="stylesheet" href="{{asset('backend/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
-<link rel="stylesheet" href="{{asset('backend/plugins/datatables-responsive/css/responsive.bootstrap4.min.css')}}">
-<link rel="stylesheet" href="{{asset('site/sweet-alert/sweetalert2.css')}}">
-@endpush
-@section('content')
-<style>
+<!--
+ * This file is part of the SQUADCLOUD project.
+ *
+ * (c) SQUADCLOUD TEAM
+ *
+ * This file contains the configuration settings for the application.
+ * It includes database connection details, API keys, and other sensitive information.
+ *
+ * IMPORTANT: DO NOT MODIFY THIS FILE UNLESS YOU ARE AN AUTHORIZED DEVELOPER.
+ * Changes made to this file may cause unexpected behavior in the application.
+ *
+ * WARNING: DO NOT SHARE THIS FILE WITH ANYONE OR UPLOAD IT TO A PUBLIC REPOSITORY.
+ *
+ * Website: https://squadcloud.co
+ * Created: January, 2024
+ * Last Updated: 15th May, 2024
+ * Author: Talha Fahim <info@squadcloud.co>
+ *-->
+ <!-- Code Onset -->
+ @extends('admin.layouts.app')
+ @push('style')
+ <link rel="stylesheet" href="{{asset('backend/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
+ <link rel="stylesheet" href="{{asset('backend/plugins/datatables-responsive/css/responsive.bootstrap4.min.css')}}">
+ <link rel="stylesheet" href="{{asset('site/sweet-alert/sweetalert2.css')}}">
+ @endpush
+ @section('content')
+ <style>
   /* The switch - the box around the slider */
   .switch {
     position: relative;
@@ -251,3 +270,4 @@
       });
     </script>
     @endpush
+    <!-- Code Finalize -->

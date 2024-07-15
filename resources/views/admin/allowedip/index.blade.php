@@ -1,10 +1,29 @@
-@extends('admin.layouts.app')
-@push('style')
-<link rel="stylesheet" href="{{asset('backend/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
-<link rel="stylesheet" href="{{asset('backend/plugins/datatables-responsive/css/responsive.bootstrap4.min.css')}}">
-@endpush
-@section('content')
-<div class="content-wrapper">
+<!--
+ * This file is part of the SQUADCLOUD project.
+ *
+ * (c) SQUADCLOUD TEAM
+ *
+ * This file contains the configuration settings for the application.
+ * It includes database connection details, API keys, and other sensitive information.
+ *
+ * IMPORTANT: DO NOT MODIFY THIS FILE UNLESS YOU ARE AN AUTHORIZED DEVELOPER.
+ * Changes made to this file may cause unexpected behavior in the application.
+ *
+ * WARNING: DO NOT SHARE THIS FILE WITH ANYONE OR UPLOAD IT TO A PUBLIC REPOSITORY.
+ *
+ * Website: https://squadcloud.co
+ * Created: June, 2024
+ * Last Updated: 08th June, 2024
+ * Author: Talha Fahim & Hasnain Raza <info@squadcloud.co>
+ *-->
+ <!-- Code Onset -->
+ @extends('admin.layouts.app')
+ @push('style')
+ <link rel="stylesheet" href="{{asset('backend/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
+ <link rel="stylesheet" href="{{asset('backend/plugins/datatables-responsive/css/responsive.bootstrap4.min.css')}}">
+ @endpush
+ @section('content')
+ <div class="content-wrapper">
   <!-- Main content -->
   <section class="content">
     <div class="container-fluid">
@@ -12,8 +31,8 @@
         <div class="col-12">
           <div class="card mt-3">
             <div class="card-header">
-              <h3 class="card-title"><span><i class="fa-solid fa-network-wired"></i></span> Allowed IP Addresses</h3>
-              <button class="btn btn-success btn-sm float-right" id="addIp"><i class="fa fa-plus"></i> Add IP Address</button>
+              <h3 class="card-title"><span><i class="fa-solid fa-network-wired"></i></span> Whitelisted <small style="color: #b91b2b;">(IP Addresses)</small></h3>
+              <button class="btn btn-success btn-sm float-right" id="addIp"><i class="fa fa-plus"></i> Permitted  Whitelisted (IP Address)</button>
             </div>
             <div class="card-body">
               <table class="table table-bordered table-striped" id="example1">
@@ -57,7 +76,7 @@
   $(function () {
     $("#example1").DataTable({
       "responsive": true
-  });
+    });
   });
   $(document).on('click','#addIp',function(){
     $('#AllowedIpModel').modal('show').find('.modal-content').html(`<div class="modal-body">
@@ -174,3 +193,4 @@
   })
 </script>
 @endpush
+<!-- Code Finalize -->
