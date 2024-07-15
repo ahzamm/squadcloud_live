@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\SubMenu;
 use App\Models\UserMenuAccess;
 use App\Models\Term;
+use Illuminate\Support\Str;
 use Auth;
 
 class TermController extends Controller
@@ -34,8 +35,25 @@ class TermController extends Controller
         if ($crudAccess == false) {
             return redirect()->back()->with('error', 'No Access To Update Abouts');
         }
-
         $term = Term::first();
+
+        if ($request->hasFile('title_image')) {
+            if (!$request->file('title_image')->isValid() || !in_array($request->file('title_image')->extension(), ['jpeg', 'png', 'jpg'])) {
+                return redirect()->back()->withInput()->with('error', 'Please provide a valid Title image file of type: jpeg, png, or jpg.');
+            }
+        }
+
+        if ($request->hasFile('title_image')) {
+            if ($term->title_image && file_exists(public_path('frontend_assets/images/title/' . $term->title_image))) {
+                unlink(public_path('frontend_assets/images/title/' . $term->title_image));
+            }
+            $file = $request->file('title_image');
+            $extension = $file->getClientOriginalExtension();
+            $filename = Str::random(40) . '.' . $extension;
+            $file->move(public_path('frontend_assets/images/title'), $filename);
+            $term->title_image = $filename;
+        }
+
         $term->terms = $request['terms'];
         $term->save();
 
