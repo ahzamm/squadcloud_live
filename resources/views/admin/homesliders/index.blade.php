@@ -40,7 +40,6 @@
                     <tbody id="sortfrontMenu" class="move">
                       @foreach ($homesliders as $key => $item)
                         <tr class="table-row">
-                          <!-- <td><i class="fas fa-sort" id="sort-serial"></i></td> -->
                           <td>{{ $key + 1 }}<input type="hidden" class="order-id"value="{{ $item->id }}"></td>
                           <td>
                             @if (isset($item->heading))
@@ -58,19 +57,16 @@
                             @endif
                           </td>
                           <td>
-                            @if (isset($item->image_1) || isset($item->image_2) || isset($item->image_3) || isset($item->image_4))
-                              @if (isset($item->image_1))
-                                <img width="40px" height="40px" src="{{ asset('frontend_assets/images/home_sliders/' . $item->image_1) }}" />
-                              @endif
-                              @if (isset($item->image_2))
-                                <img width="40px" height="40px" src="{{ asset('frontend_assets/images/home_sliders/' . $item->image_2) }}" />
-                              @endif
-                              @if (isset($item->image_3))
-                                <img width="40px" height="40px" src="{{ asset('frontend_assets/images/home_sliders/' . $item->image_3) }}" />
-                              @endif
-                              @if (isset($item->image_4))
-                                <img width="40px" height="40px" src="{{ asset('frontend_assets/images/home_sliders/' . $item->image_4) }}" />
-                              @endif
+                            @if (isset($item->images) && !empty($item->images))
+                              @php
+                                $images = json_decode($item->images, true);
+                              @endphp
+                              @foreach ($images as $index => $image)
+                                <img width="60px" height="40px" src="{{ asset('frontend_assets/images/home_sliders/' . $image) }}" />
+                                @if ($index < count($images) - 1)
+                                  <span style="font-size: 24px; font-weight: bold; margin: 0 10px;">|</span>
+                                @endif
+                              @endforeach
                             @elseif(isset($item->video))
                               <video controls width="200" height="120">
                                 <source src="{{ asset('frontend_assets/images/home_sliders/' . $item->video) }}" type="video/mp4">
@@ -243,8 +239,8 @@
   <script>
     $(document).on('click', '.viewFrontPages', function() {
       $('#frontPagesModal').modal('show').find('.modal-content').html(`<div class="modal-body">
-      <div class="overlay text-center"><i class="fas fa-2x fa-sync-alt fa-spin text-light"></i></div>
-      </div>`);
+    <div class="overlay text-center"><i class="fas fa-2x fa-sync-alt fa-spin text-light"></i></div>
+    </div>`);
       id = $(this).attr('data-value');
       $.ajax({
         method: 'get',
@@ -253,8 +249,8 @@
         success: function(res) {
           $('#frontPagesModal').find('.modal-content').html(res);
         }
-      })
-    })
+      });
+    });
 
     // Sorting Data
     let sortTable = $("#sortfrontMenu");
@@ -270,7 +266,7 @@
         $(this).find('.order-id').each(function(index) {
           $(this).text(SortIds[index]);
         });
-        //Sending Ajax to update the sort ids and change the data sorting
+        // Sending Ajax to update the sort ids and change the data sorting
         $.ajax({
           url: sortingFrontUrl,
           type: "post",
@@ -283,45 +279,41 @@
           success: function(response) {
             let table = "";
             $(response).each(function(index, value) {
-              table += ` <tr class="table-row">
-                  <td>${index + 1 }
-                  <input type="hidden" class="order-id" value="${value.id}">
-                  </td>
-                  <td>${value.heading}</td>
-                  <td>${value.subheading}</td>
-                  <td>${value.description}</td>
-                  <td>`;
-              if (value.image_1) {
-                table += `<img width="40px" height="40px" src="{{ asset('frontend_assets/images/home_sliders/') }}/${value.image_1}" />`;
-              }
-              if (value.image_2) {
-                table += `<img width="40px" height="40px" src="{{ asset('frontend_assets/images/home_sliders/') }}/${value.image_2}" />`;
-              }
-              if (value.image_3) {
-                table += `<img width="40px" height="40px" src="{{ asset('frontend_assets/images/home_sliders/') }}/${value.image_3}" />`;
-              }
-              if (value.image_4) {
-                table += `<img width="40px" height="40px" src="{{ asset('frontend_assets/images/home_sliders/') }}/${value.image_4}" />`;
-              }
-              if (value.video) {
+              table += `<tr class="table-row">
+                        <td>${index + 1 }
+                        <input type="hidden" class="order-id" value="${value.id}">
+                        </td>
+                        <td>${value.heading ? value.heading : ''}</td>
+                        <td>${value.subheading ? value.subheading : ''}</td>
+                        <td>${value.description ? value.description : ''}</td>
+                        <td>`;
+              if (value.images) {
+                let images = JSON.parse(value.images);
+                images.forEach((image, idx) => {
+                  table += `<img width="60px" height="40px" src="{{ asset('frontend_assets/images/home_sliders/') }}/${image}" />`;
+                  if (idx < images.length - 1) {
+                    table += `<span style="font-size: 24px; font-weight: bold; margin: 0 10px;">|</span>`;
+                  }
+                });
+              } else if (value.video) {
                 table += `<video controls width="200" height="120">
-                              <source src="{{ asset('frontend_assets/images/home_sliders/') }}/${value.video}" type="video/mp4">
-                              Your browser does not support the video tag.
-                          </video>`;
+                                  <source src="{{ asset('frontend_assets/images/home_sliders/') }}/${value.video}" type="video/mp4">
+                                  Your browser does not support the video tag.
+                              </video>`;
               }
               table += `</td>
-                  <td>${value.is_active == 1 ? 'active' : 'deactive'}</td>
-                  <td class="d-flex justify-content-center" style="gap: 5px;">
-                      <a href="` + editUrlFront + "/" + value.id + `" class="btn btn-sm btn-info"><i class="fa fa-edit"></i></a>
-                      <button class="btn btn-danger btn-sm deleteRecord" data-id="${value.id}">
-                          <i class="fa fa-trash"></i>
-                      </button>
-                  </td>
-                  </tr>`;
+                        <td>${value.is_active == 1 ? 'active' : 'deactive'}</td>
+                        <td class="d-flex justify-content-center" style="gap: 5px;">
+                            <a href="${editUrlFront}/${value.id}" class="btn btn-sm btn-info"><i class="fa fa-edit"></i></a>
+                            <button class="btn btn-danger btn-sm deleteRecord" data-id="${value.id}">
+                                <i class="fa fa-trash"></i>
+                            </button>
+                        </td>
+                        </tr>`;
             });
             $(sortTable).html(table);
           }
-        })
+        });
       }
     });
   </script>

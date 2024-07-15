@@ -93,16 +93,17 @@ hr.accessory::before {
                   </div>
                   <div class="col-lg-6 minusZindex">
                     <div class="position-relative">
-                      <img src="{{ asset('frontend_assets/images/home_sliders/' . $home_slider->image_1) }}" class="position-absolute sub-img-1" alt="" data-animation-in="fadeInDown"
-                        data-delay-in="0.6">
-                      <img src="{{ asset('frontend_assets/images/home_sliders/' . $home_slider->image_2) }}" class="position-absolute sub-img-2" alt="" data-animation-in="fadeInDown"
-                        data-delay-in="1">
-                      <img src="{{ asset('frontend_assets/images/home_sliders/' . $home_slider->image_3) }}" class="position-absolute sub-img-3" alt="" data-animation-in="fadeInDown"
-                        data-delay-in="1.4">
-                      <img src="{{ asset('frontend_assets/images/home_sliders/' . $home_slider->image_4) }}" class="position-absolute sub-img-4" alt="" data-animation-in="fadeInDown"
-                        data-delay-in="1.6">
+                        @if (isset($home_slider->images) && !empty($home_slider->images))
+                            @php
+                                $images = json_decode($home_slider->images, true);
+                            @endphp
+                            @foreach ($images as $index => $image)
+                                <img src="{{ asset('frontend_assets/images/home_sliders/' . $image) }}" class="position-absolute sub-img-{{ $index + 1 }}" alt="" data-animation-in="fadeInDown" data-delay-in="{{ 0.6 + ($index * 0.4) }}">
+                            @endforeach
+                        @endif
                     </div>
-                  </div>
+                </div>
+
                 </div>
               </div>
             </div>

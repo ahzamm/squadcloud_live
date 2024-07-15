@@ -62,12 +62,20 @@
                           @enderror
                         </div>
                       </div>
-                      <div class="col-md-12" id='image_wrapper'>
+                      <div class="col-md-4">
                         <div class="form-group">
-                          <label for="">Select Image<span style="color: red">*</span></label>
-                          <input type="file" name="image_1">
-                          <button class="btn btn-primary btn-sm" onclick="addRow()" type="button"><i class="fa fa-plus"></i></button>
-                          @error('image_1')
+                          <label for="">Upload Image <span style="color: red">*</span></label>
+                          <table class="table table-bordered" id="dynamicTable">
+                            <tr>
+                              <td colspan="2">
+                                <input type="file" class="form-control-file" name="images[]" id="image-about">
+                              </td>
+                              <td colspan="3">
+                                <button type="button" name="addmore[0][add]" id="add" class="btn btn-success"><i class="fa fa-plus"></i></button>
+                              </td>
+                            </tr>
+                          </table>
+                          @error('images')
                             <p class="text-danger mt-2 mb-0 text-sm">{{ $message }}</p>
                           @enderror
                         </div>
@@ -143,20 +151,37 @@
   </div>
 @endsection
 @push('scripts')
-  <script>
-    function addRow() {
-      let html = `<div class="form-group">
-      <label for="">Select Image<span style="color: red">*</span></label>
-      <input type="file" name="image_1">
-      <button class="btn btn-danger btn-sm deleteRow" type="button"><i class="fa fa-minus"></i></button>
-      @error('image_1')
-        <p class="text-danger mt-2 mb-0 text-sm">{{ $message }}</p>
-      @enderror
-    </div>`;
-      $('#image_wrapper').append(html);
-    }
-    $(document).on('click', '.deleteRow', function() {
-      $(this).parent().closest('div').remove();
-    })
+  <script type="text/javascript">
+    var i = 0;
+    $("#add").click(function() {
+      ++i;
+      $html = '<tr><td colspan="3"><input type="file" name="images[]" class="" /></td><td colspan="2"><button type="button" class="btn btn-danger remove-tr ml-1">X</button></td></tr>';
+      $("#dynamicTable").append($html);
+    });
+    $(document).on('click', '.remove-tr', function() {
+      $(this).parents('tr').remove();
+    });
   </script>
+  @if (Session::has('success'))
+    <script>
+      swal({
+        title: 'Success!',
+        text: "{{ Session::get('success') }}",
+        animation: false,
+        customClass: 'animated pulse',
+        type: 'success',
+      });
+    </script>
+  @endif
+  @if (Session::has('error'))
+    <script>
+      swal({
+        title: 'Error!',
+        text: '{{ Session::get('error') }}',
+        animation: false,
+        customClass: 'animated pulse',
+        type: 'error',
+      });
+    </script>
+  @endif
 @endpush
