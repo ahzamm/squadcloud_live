@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use App\Models\FrontMenu;
 use App\Models\Contact;
 use App\Models\ContactRequest;
-use App\Models\FrontEmail;
 use App\Models\email_contact;
 use Illuminate\Support\Facades\Validator;
 use App\Services\EmailService;
