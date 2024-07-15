@@ -19,7 +19,7 @@
       <div class="title-img d-flex align-items-center justify-content-center flex-column mb-5 aos-init aos-animate" data-aos="zoom-in-down">
 
         <div class="title-img d-flex align-items-center justify-content-center flex-column mb-5 aos-init aos-animate" data-aos="zoom-in-down">
-          <h1>Privacy Policy</h1>
+            <img src="frontend_assets/images/title/{{ $privacy->title_image }}" alt="" style="width: 50%;">
         </div>
 
       </div>

@@ -13,6 +13,16 @@
               <div class="card-body pad">
                 @csrf
                 <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                          <label for="">Title Image <span style="color: red">*</span></label>
+                          @isset($privacy->title_image)
+                            <img src="{{ asset('frontend_assets/images/title/' . $privacy->title_image) }}" height="60" width="120" alt="" srcset="">
+                          @endisset
+                          <br><br>
+                          <input type="file" value="{{ $privacy->title_image }}" name="title_image">
+                        </div>
+                      </div>
                   <div class="col-md-12">
                     <div class="form-group">
                       <label for="">Privacy Policy <span style="color: red">*</span></label>

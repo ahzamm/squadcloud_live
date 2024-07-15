@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\SubMenu;
 use App\Models\UserMenuAccess;
+use Illuminate\Support\Str;
 use App\Models\Privacy;
 use Auth;
 
@@ -36,6 +37,25 @@ class PrivacyController extends Controller
         }
 
         $privacy = Privacy::first();
+
+        if ($request->hasFile('title_image')) {
+            if (!$request->file('title_image')->isValid() || !in_array($request->file('title_image')->extension(), ['jpeg', 'png', 'jpg'])) {
+                return redirect()->back()->withInput()->with('error', 'Please provide a valid Title image file of type: jpeg, png, or jpg.');
+            }
+        }
+
+        if ($request->hasFile('title_image')) {
+            if ($privacy->title_image && file_exists(public_path('frontend_assets/images/title/' . $privacy->title_image))) {
+                unlink(public_path('frontend_assets/images/title/' . $privacy->title_image));
+            }
+            $file = $request->file('title_image');
+            $extension = $file->getClientOriginalExtension();
+            $filename = Str::random(40) . '.' . $extension;
+            $file->move(public_path('frontend_assets/images/title'), $filename);
+            $privacy->title_image = $filename;
+        }
+
+
         $privacy->privacy = $request['privacy'];
         $privacy->save();
 
