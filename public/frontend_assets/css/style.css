@@ -421,6 +421,7 @@ footer{
 	background: linear-gradient(0deg, rgba(204,204,204,1) 0%, rgba(221,221,221,1) 50%, rgba(239,239,239,1) 100%);
 
  }
+ #project-section .section-heading,
  #portfolio-section .section-heading,
  #product-section .section-heading,
  #service-section .section-heading {
@@ -453,6 +454,7 @@ footer{
 	z-index: -1;
 	background-color: #69030e;
  }
+ #project-section.contact::before,
  #portfolio-section.contact::before{
 	content: '';
 	position: absolute;
@@ -463,10 +465,13 @@ footer{
 	z-index: -1;
 	background-color: #69030e;
  }
+ #project-section .section-heading,
  #portfolio-section .section-heading {
 	color: #fff;
  }
 
+ #contact-section .section-subheading,
+ #project-section .section-subheading,
  #product-section .section-subheading,
  #portfolio-section .section-subheading,
  #service-section .section-subheading {
@@ -1782,6 +1787,7 @@ transform: translateY(-50%);
     background-color: #f9f9ff;
     margin-bottom: 30px;
 	gap: 10px;
+	border: 1px solid #64050f;
 }
 .post-list .single-post .thumb .tags {
     /* margin-top: 30px; */
@@ -1791,7 +1797,7 @@ transform: translateY(-50%);
     margin-bottom: 5px;
     display: inline-block;
     background: #fff;
-    border: 1px solid #eee;
+    border: 1px solid #64050f69;
     padding: 3px 6px;
     -webkit-transition: all 0.3s ease 0s;
     -moz-transition: all 0.3s ease 0s;
@@ -1825,6 +1831,9 @@ transform: translateY(-50%);
     color: #222;
     margin-bottom: 15px;
 }
+.post-list .fa, .post-list .fa-brands, .post-list .fa-classic, .post-list .fa-regular, .post-list .fa-sharp, .post-list .fa-solid, .post-list .fab, .post-list .far, .post-list .fas {
+	color: #64050f;
+}
 .lnr {
     font-family: 'Linearicons-Free';
     speak: none;
@@ -1840,7 +1849,7 @@ transform: translateY(-50%);
 .post-list .single-post .btns li {
     display: inline-block;
     background-color: #fff;
-    border: 1px solid #eee;
+    border: 1px solid #64050f69;
     padding: 10px 15px;
     -webkit-transition: all 0.3s ease 0s;
     -moz-transition: all 0.3s ease 0s;
@@ -2003,4 +2012,10 @@ transform: translateY(-50%);
 }
 .client-container {
 	margin-top: -220px;
+}
+.team-slider .slick-nav.prev-arrow {
+	left: -5%;
+}
+.team-slider .slick-nav.next-arrow {
+	right: -5%;
 }

@@ -8,7 +8,7 @@
   <title>@yield('page_title')</title>
 
   <link rel="stylesheet" href="{{ asset('admin_assets/css/style.min.css') }}">
-  <link rel="stylesheet" href="{{ asset('admin_assets/css/style.css?v=150') }}">
+  <link rel="stylesheet" href="{{ asset('admin_assets/css/style.css?v=151') }}">
   <link rel="stylesheet" href="{{ asset('admin_assets/css/fontawesome-free-6.2.1-web/css/all.min.css') }}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>

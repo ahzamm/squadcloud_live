@@ -6,65 +6,68 @@
     section {
       padding-top: 100px;
     }
+
     .error-message {
       display: none;
       color: red;
       font-size: 0.875rem;
     }
+
     #contact-section .section-heading {
       font-size: 4rem;
-    font-weight: 900;
-    margin-top: 0;
-    letter-spacing: 3px;
-    color: #000 !important;
+      font-weight: 900;
+      margin-top: 0;
+      letter-spacing: 3px;
+      color: #000 !important;
     }
-    hr {
-  border: 0;
-  margin: 1.35em auto;
-  max-width: 60%;
-  background-position: 50%;
-  box-sizing: border-box;
-}
-hr.accessory {
-  height: 6px;
-  background-image: radial-gradient(
-    closest-side,
-    hsla(0, 0%, 50%, 1.0),
-    hsla(0, 0%, 50%, 0) 100%);
-  position: relative;
-}
-hr.accessory::before {
-  position: absolute;
-  top:  50%;
-  left: 50%;
-  display:block;
-  background-color: red;
-  height: 12px;
-  width:  12px;
-  transform: rotate(45deg);
-  margin-top:  -10px;
-  margin-left: -10px;
-  border-radius: 4px 0;
-  border: 4px solid hsla(0, 0%, 100%, 0.35);
-  background-clip: padding-box;
-  box-shadow: -10px 10px 0 hsla(0, 0%, 100%, 0.15), 10px -10px 0 hsla(0, 0%, 100%, 0.15);
-}
 
+    hr {
+      border: 0;
+      margin: 1.35em auto;
+      max-width: 60%;
+      background-position: 50%;
+      box-sizing: border-box;
+    }
+
+    hr.accessory {
+      height: 6px;
+      background-image: radial-gradient(closest-side,
+          hsla(0, 0%, 50%, 1.0),
+          hsla(0, 0%, 50%, 0) 100%);
+      position: relative;
+    }
+
+    hr.accessory::before {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      display: block;
+      background-color: red;
+      height: 12px;
+      width: 12px;
+      transform: rotate(45deg);
+      margin-top: -10px;
+      margin-left: -10px;
+      border-radius: 4px 0;
+      border: 4px solid hsla(0, 0%, 100%, 0.35);
+      background-clip: padding-box;
+      box-shadow: -10px 10px 0 hsla(0, 0%, 100%, 0.15), 10px -10px 0 hsla(0, 0%, 100%, 0.15);
+    }
   </style>
 
-  @if ($showAnimation)
+  {{--@if ($showAnimation)--}}
     <div id="loading">
       <div class="position-relative loading-inner">
         <div class="svg_path">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="-8.1 -0.1 50.31 18.34">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="-8.1 -1.1 50.31 19.34">
             <path
-              d="M 9 3 L 7 1 L 5 3 L 2 0 C 2 0 6 0 24.319 0.04 Z L 9 3 M 7 1.5 C 1 7 3 13 9.796 17.968 L 9.782 14.991 C 6.9 11.4 4.3 8 8.7 3.1 L 7 1.5 Z M 4.2 4.3 C 3.4 5.4 3 6.7 3 8 L -8 8 L 4.2 4.3 Z M 12 13 C 14 12 14.95 10.769 15 9 C 14.962 6.306 13.94 5.141 11 5 Q 7 5 7 9 C 7 10 8 12 10 13 V 11 C 9.328 10.665 9.022 9.962 9 9 C 8.998 8.24 9.226 7.502 10 7 C 10.362 6.718 11.698 6.71 12 7 C 12.72 7.535 12.972 7.977 13 9 C 13.021 9.968 12.64 10.676 12 11 L 12 13 Z M 16 5 H 18 V 10 A 1 1 0 0 0 22 10 V 5 H 24 V 10 C 23.977 15.287 15.976 15.287 16 10 V 5 Z M 25 14 L 28 5 H 30 L 33 14 H 31 L 29 7 L 27 14 H 25 Z M 28.152 9.996 H 29.866 L 30.326 11.634 H 27.678 L 28.151 9.988 Z M 34.043 13.934 V 5.058 H 37.995 C 43.405 5.423 43.557 13.387 38.025 13.903 H 34.043 Z m 1.976 -6.869 V 11.958 H 37.934 C 41.125 11.685 40.791 7.247 37.995 7.065 H 36.019 Z M 11 15 V 18 H 13 V 17.059 H 12 V 15 H 11 Z M 15 15 C 13 15 13 18 15 18 L 15 17 C 14.34 16.995 14.369 16.011 15 16 C 15.671 16.015 15.692 17.003 15 17 V 17.994 C 17 18 17 15 15 15 Z M 17 15 V 17 C 16.976 18.543 19.999 18.489 19.979 17.037 V 15 H 19.004 V 16.704 C 18.991 17.402 17.991 17.423 17.987 16.699 V 15.015 H 16.999 Z M 20.556 15.005 V 18.005 H 21.708 C 24.051 17.999 24.085 15.028 21.72 15.006 H 20.556 Z M 21.471 15.987 L 21.897 15.987 C 22.658 16.02 22.625 17.029 21.864 17.021 H 21.468 V 15.995 Z M 10.415 10.048 H 11.58 V 13.958 H 10.426 V 10.048 Z"
+              d="M 9.973 3.419 L 7.011 0.41 C 5.978 1.074 5.262 1.827 4.509 2.724 L 2.094 -0.825 L 20.994 -0.798 L 9.973 3.419 Z Z M 7 1.5 C 0.058 6.632 2.184 15.463 9.796 17.968 L 9.765 14.29 C 6.49 12.848 3.4 7.387 9.167 3.816 L 7 1.5 Z M 3.838 3.501 C 2.392 5.27 2.052 6.427 1.899 8.315 L -8 8 L 3.821 3.501 Z M 12.621 12.905 C 14 12 14.95 10.769 15.26 9.04 C 14.962 6.306 13.94 5.141 11 5 Q 7.552 5.472 7.569 8.993 C 7.535 10.133 8 12 10 13 V 11 C 8.977 9.835 8.894 8.358 9.535 7.351 C 10.567 6.282 12.292 6.313 13.16 7.398 C 13.737 8.465 13.512 10.308 12.587 10.983 L 12.604 12.259 Z M 16 5 H 18 V 10 A 1 1 0 0 0 22 10 V 5 H 24 V 10 C 23.977 15.287 15.976 15.287 16 10 V 5 Z M 25 14 L 28 5 H 30 L 33 14 H 31 L 29 7 L 27 14 H 25 Z M 28.152 9.996 H 29.866 L 30.326 11.634 H 27.678 L 28.151 9.988 Z M 34.043 13.934 V 5.058 H 37.995 C 43.405 5.423 43.557 13.387 38.025 13.903 H 34.043 Z m 1.976 -6.869 V 11.958 H 37.934 C 41.125 11.685 40.791 7.247 37.995 7.065 H 36.019 Z M 11 15 V 18 H 13 V 17.059 H 12 V 15 H 11 Z M 15 15 C 13 15 13 18 15 18 L 15 17 C 14.34 16.995 14.369 16.011 15 16 C 15.671 16.015 15.692 17.003 15 17 V 17.994 C 17 18 17 15 15 15 Z M 17 15 V 17 C 16.976 18.543 19.999 18.489 19.979 17.037 V 15 H 19.004 V 16.704 C 18.991 17.402 17.991 17.423 17.987 16.699 V 15.015 H 16.999 Z M 20.556 15.005 V 18.005 H 21.708 C 24.051 17.999 24.085 15.028 21.72 15.006 H 20.556 Z M 21.471 15.987 L 21.897 15.987 C 22.658 16.02 22.625 17.029 21.864 17.021 H 21.468 V 15.995 Z M 10.415 10.048 H 12.044 V 13.958 H 10.751 V 10.048 Z"
               stroke="#f00" stroke-width="0.2" fill="none" class="path" />
           </svg>
         </div>
       </div>
     </div>
-  @endif
+{{--  @endif --}}
 
   <!-- -------HOME SLIDER------- -->
   @if (@isset($video->video))
@@ -91,19 +94,31 @@ hr.accessory::before {
                     <p data-animation-in="fadeInUp" data-delay-in="1.2">{{ $home_slider->description }}
                     </p>
                   </div>
+                  {{-- <div class="col-lg-6 minusZindex">
+                    <div class="position-relative">
+                      <img src="{{ asset('frontend_assets/images/home_sliders/' . $home_slider->image_1) }}" class="position-absolute sub-img-1" alt="" data-animation-in="fadeInDown"
+                        data-delay-in="0.6">
+                      <img src="{{ asset('frontend_assets/images/home_sliders/' . $home_slider->image_2) }}" class="position-absolute sub-img-2" alt="" data-animation-in="fadeInDown"
+                        data-delay-in="1">
+                      <img src="{{ asset('frontend_assets/images/home_sliders/' . $home_slider->image_3) }}" class="position-absolute sub-img-3" alt="" data-animation-in="fadeInDown"
+                        data-delay-in="1.4">
+                      <img src="{{ asset('frontend_assets/images/home_sliders/' . $home_slider->image_4) }}" class="position-absolute sub-img-4" alt="" data-animation-in="fadeInDown"
+                        data-delay-in="1.6">
+                    </div>
+                  </div> --}}
                   <div class="col-lg-6 minusZindex">
                     <div class="position-relative">
-                        @if (isset($home_slider->images) && !empty($home_slider->images))
-                            @php
-                                $images = json_decode($home_slider->images, true);
-                            @endphp
-                            @foreach ($images as $index => $image)
-                                <img src="{{ asset('frontend_assets/images/home_sliders/' . $image) }}" class="position-absolute sub-img-{{ $index + 1 }}" alt="" data-animation-in="fadeInDown" data-delay-in="{{ 0.6 + ($index * 0.4) }}">
-                            @endforeach
-                        @endif
+                      @if (isset($home_slider->images) && !empty($home_slider->images))
+                        @php
+                          $images = json_decode($home_slider->images, true);
+                        @endphp
+                        @foreach ($images as $index => $image)
+                          <img src="{{ asset('frontend_assets/images/home_sliders/' . $image) }}" class="position-absolute sub-img-{{ $index + 1 }}" alt="" data-animation-in="fadeInDown"
+                            data-delay-in="{{ 0.6 + $index * 0.4 }}">
+                        @endforeach
+                      @endif
                     </div>
-                </div>
-
+                  </div>
                 </div>
               </div>
             </div>
@@ -197,7 +212,7 @@ hr.accessory::before {
         <h3 class="section-subheading text-muted">{{ $client_menu->tagline }}</h3>
       </div>
       <div class="client-slider">
-        @foreach($Clients as $list)
+        @foreach ($Clients as $list)
           <div class="slider-1 d-flex align-items-center justify-content-center py-3">
             <div class="card" data-aos="flip-right" data-aos-duration="1000">
               <a href="{{ $list->link }}" target="_blank" class="card-header d-flex justify-content-center align-items-center" >
@@ -212,39 +227,39 @@ hr.accessory::before {
     </div>
   </section> --}}
   <!-- <section id="service-section" class="clients position-relative">
-    <div class="container">
-      <div class="text-center" data-aos="zoom-in-down" style="">
-        <h2 class="section-heading text-uppercase">Clients</h2>
-        <h3 class="section-subheading text-muted">{{ $client_menu->tagline }}</h3>
-      </div>
-      <div class="row">
-        @forelse($Clients->take(6) as $list)
-          <div class="col-lg-4 col-md-6" style="margin-top:-50px;">
-            <div class="card" data-aos="flip-right" data-aos-duration="1000">
-              <a href="{{ $list->link }}" target="_blank" class="card-header d-flex justify-content-center align-items-center" style="height: 100px">
-                <div class="clients-logo">
-                  <img src="{{ asset('frontend_assets/images/clients/' . $list->logo) }}" alt="{{ $list->title }}" class="p-2 d-inline-block">
+      <div class="container">
+        <div class="text-center" data-aos="zoom-in-down" style="">
+          <h2 class="section-heading text-uppercase">Clients</h2>
+          <h3 class="section-subheading text-muted"></h3>
+        </div>
+        <div class="row">
+          @forelse($Clients->take(6) as $list)
+  <div class="col-lg-4 col-md-6" style="margin-top:-50px;">
+              <div class="card" data-aos="flip-right" data-aos-duration="1000">
+                <a href="{{ $list->link }}" target="_blank" class="card-header d-flex justify-content-center align-items-center" style="height: 100px">
+                  <div class="clients-logo">
+                    <img src="{{ asset('frontend_assets/images/clients/' . $list->logo) }}" alt="{{ $list->title }}" class="p-2 d-inline-block">
+                  </div>
+                </a>
+                <div style="height:auto;" class="card-body">
+                  <p><b>
+                      <h5 class="text-center">{!! substr($list->title, 0, 20) !!}</h5>
+                    </b></p>
                 </div>
-              </a>
-              <div style="height:auto;" class="card-body">
-                <p><b>
-                    <h5 class="text-center">{!! substr($list->title, 0, 20) !!}</h5>
-                  </b></p>
               </div>
             </div>
-          </div>
         @empty
-          <div class="alert alert-danger">No Clients Found</div>
-        @endforelse
+            <div class="alert alert-danger">No Clients Found</div>
+  @endforelse
+        </div>
       </div>
-    </div>
-    <br><br>
-    <div style="display: flex; justify-content: center">
-      <a href="client" class="more_action">
-        View All
-      </a>
-    </div>
-  </section> -->
+      <br><br>
+      <div style="display: flex; justify-content: center">
+        <a href="client" class="more_action">
+          View All
+        </a>
+      </div>
+    </section> -->
   <!-- -------CLIENTS Slider end ------- -->
 
   <!-- -------SLIDER------- -->
@@ -275,7 +290,7 @@ hr.accessory::before {
     </div>
   </section>
   <hr class="accessory">
-    <!-- -------New projects------- -->
+  <!-- -------New projects------- -->
   <div id="contact-section" class="project position-relative py-5">
     <div class="project-bg"></div>
     <div class="container">
@@ -290,20 +305,24 @@ hr.accessory::before {
       </div>
     </div>
   </div>
-<!-- clients -->
+  <!-- clients -->
 
-<section id="client-section" class="clients position-relative" style="padding-top: 0px;background-color: #cfcfcf00">
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" style="position:initial; transform:none"><path fill="#cfcfcf70" fill-opacity="1" d="M0,0L48,21.3C96,43,192,85,288,117.3C384,149,480,171,576,154.7C672,139,768,85,864,85.3C960,85,1056,139,1152,154.7C1248,171,1344,149,1392,138.7L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>
+  <section id="client-section" class="clients position-relative" style="padding-top: 0px;background-color: #cfcfcf00">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" style="position:initial; transform:none">
+      <path fill="#cfcfcf70" fill-opacity="1"
+        d="M0,0L48,21.3C96,43,192,85,288,117.3C384,149,480,171,576,154.7C672,139,768,85,864,85.3C960,85,1056,139,1152,154.7C1248,171,1344,149,1392,138.7L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z">
+      </path>
+    </svg>
     <div class="container client-container">
-     {{-- <div class="text-center" data-aos="zoom-in-down" style="">
+      {{-- <div class="text-center" data-aos="zoom-in-down" style="">
         <h2 class="section-heading text-uppercase">Clients</h2>
         <h3 class="section-subheading text-muted">{{ $client_menu->tagline }}</h3>
-      </div>--}}
+      </div> --}}
       <div class="client-slider">
-        @foreach($Clients as $list)
+        @foreach ($Clients as $list)
           <div class="slider-1 d-flex align-items-center justify-content-center py-3">
             <div class="card" data-aos="flip-right" data-aos-duration="1000">
-              <a href="{{ $list->link }}" target="_blank" class="card-header d-flex justify-content-center align-items-center" >
+              <a href="{{ $list->link }}" target="_blank" class="card-header d-flex justify-content-center align-items-center">
                 <div class="clients-logo">
                   <img src="{{ asset('frontend_assets/images/clients/' . $list->logo) }}" alt="{{ $list->title }}" class="p-2 d-inline-block">
                 </div>
@@ -366,7 +385,7 @@ hr.accessory::before {
       $('.custom-textarea').on('keyup', function() {
         let textVal = $(this).val();
         console.log(textVal);
-        if(!textVal) {
+        if (!textVal) {
           console.log('no text');
           $('.textarea-placeholder').css('display', 'inline-block');
         } else {

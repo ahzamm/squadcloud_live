@@ -397,14 +397,29 @@
   </script>
 
   <script>
-    @if (session('success'))
-      Swal.fire({
-        title: 'Success!',
-        text: "{{ session('success') }}",
-        icon: 'success',
-        toast: true,
-        position: 'top-right'
-      });
-    @endif
+    document.addEventListener("DOMContentLoaded", function() {
+      @if (session('success'))
+        Swal.fire({
+          title: 'Success!',
+          text: "{{ session('success') }}",
+          icon: 'success',
+          toast: true,
+          position: 'top-right'
+        });
+        <?php session()->forget('success'); ?>
+      @endif
+
+      @if (session('error'))
+        Swal.fire({
+          title: 'Error!',
+          text: "{{ session('error') }}",
+          icon: 'error',
+          toast: true,
+          position: 'top-right'
+        });
+        <?php session()->forget('error'); ?>
+      @endif
+    });
   </script>
+
 @endsection

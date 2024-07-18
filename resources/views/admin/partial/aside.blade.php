@@ -62,8 +62,8 @@
         </li>
         <li class="nav-item">
           <a href="{{route('admin.dashboard')}}" class="nav-link">
-            <i @if(Request::route()->getName() == 'admin.dashboard') class="nav-icon text-success fas fa-chart-pie" @else class="nav-icon fas fa-chart-pie" @endif></i>
-            <p @if(Request::route()->getName() == 'admin.dashboard') class="text-success" @endif>
+            <i @if(Request::route()->getName() == 'admin.dashboard') class="nav-icon text-primary fas fa-chart-pie" @else class="nav-icon fas fa-chart-pie" @endif></i>
+            <p @if(Request::route()->getName() == 'admin.dashboard') class="text-primary" @endif>
               Dashboard
             </p>
           </a>
@@ -76,8 +76,8 @@
         @if($values->has_submenu == 0)
         <li class="nav-item">
           <a href="{{route($Submenus->first()->route_name)}}" class="nav-link">
-            <i @if(Request::route()->getName() == $Submenus->first()->route_name) class="nav-icon text-success {{$values->icon == ''?'fa fa-bars':$values->icon}}" @else class="nav-icon {{$values->icon == ''?'fa fa-bars':$values->icon}}" @endif></i>
-            <p @if(Request::route()->getName() == $Submenus->first()->route_name) class="text-success" @endif>
+            <i @if(Request::route()->getName() == $Submenus->first()->route_name) class="nav-icon text-primary {{$values->icon == ''?'fa fa-bars':$values->icon}}" @else class="nav-icon {{$values->icon == ''?'fa fa-bars':$values->icon}}" @endif></i>
+            <p @if(Request::route()->getName() == $Submenus->first()->route_name) class="text-primary" @endif>
               {{$Submenus->first()->submenu}}
             </p>
           </a>
@@ -128,8 +128,8 @@
           @if (Auth::user()->role == "admin")
           <li class="nav-item">
             <a href="{{ route('menus.index') }}" class="nav-link @if(Request::route()->getName() == "menus.create") active @endif">
-              <i class="nav-icon fas fa-user-shield @if(Request::route()->getName() == "menus.create") text-success @endif"></i>
-              <p class="@if(Request::route()->getName() == "menus.index") text-success @endif">Admin Menus</p>
+              <i class="nav-icon fas fa-user-shield @if(Request::route()->getName() == "menus.create") text-primary @endif"></i>
+              <p class="@if(Request::route()->getName() == "menus.index") text-primary @endif">Admin Menus</p>
             </a>
           </li>
           @endif
