@@ -13,7 +13,7 @@ use Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
-use App\Http\Requests\Portfolio\{ViewPortfolioRequest, CreatePortfolioRequest, StorePortfolioRequest, EditPortfolioRequest};
+use App\Http\Requests\Portfolio\{ViewPortfolioRequest, CreatePortfolioRequest, StorePortfolioRequest, EditPortfolioRequest, DeletePortfolioRequest};
 
 class PortfolioController extends Controller
 {
@@ -238,19 +238,11 @@ class PortfolioController extends Controller
         }
     }
 
-    public function destroy($id = null)
+    public function destroy(DeletePortfolioRequest $request, $id = null)
     {
-        $subMenuid = SubMenu::where('route_name', 'portfolios.index')->first();
-        $userOperation = 'delete_status';
-        $userId = Auth::guard('admin', 'user')->user()->id;
-        $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
-        if ($crudAccess == true) {
-            $delete = Portfolio::find($id)->delete();
-            if ($delete == true) {
-                return response()->json(['status' => true]);
-            }
-        } else {
-            return response()->json(['unauthorized' => true]);
+        $delete = Portfolio::find($id)->delete();
+        if ($delete == true) {
+            return response()->json(['status' => true]);
         }
     }
     public function crud_access($submenuId = null, $operation = null, $uId = null)
