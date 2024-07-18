@@ -2,42 +2,18 @@
 
 namespace App\Http\Requests\Admin\Portfolio;
 
-use Illuminate\Foundation\Http\FormRequest;
-use App\Models\SubMenu;
-use App\Models\UserMenuAccess;
-use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\BaseFormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class EditPortfolioRequest extends FormRequest
+class EditPortfolioRequest extends BaseFormRequest
 {
     public function authorize()
     {
-        $subMenuid = SubMenu::where('route_name', 'portfolios.index')->first();
-        $userOperation = 'update_status';
-        $userId = Auth::guard('admin', 'user')->user()->id;
-        $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
+        $crudAccess = $this->checkCrudAccess('portfolios.index', 'update_status');
         if (!$crudAccess) {
             throw new HttpResponseException(redirect()->back()->withInput()->with('error', 'No right to edit a Portfolio'));
         }
         return true;
-    }
-
-    private function crud_access($submenuId = null, $operation = null, $uId = null)
-    {
-        if (!$submenuId == null) {
-            $CheckData = UserMenuAccess::where([
-                'user_id' => $uId,
-                'sub_menu_Id' => $submenuId,
-                $operation => 1,
-                'view_status' => 1,
-            ])->count();
-
-            if ($CheckData > 0) {
-                return true;
-            } else {
-                return false;
-            }
-        }
     }
 
     public function rules()
