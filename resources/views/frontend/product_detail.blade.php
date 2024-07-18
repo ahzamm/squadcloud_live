@@ -53,7 +53,7 @@
           <a href="#productDetail"><img class="me-2 icons1" src="/frontend_assets/images/product-detail-icon.png" alt=""><span class="fixed w-75 tabs"> Product Details</span> </a>
         </div>
         <div class="mt-1" data-aos="fade-up" data-aos-delay="100" data-aos-duration="500">
-          <a href=""><img class=" me-2 icons1" src="/frontend_assets/images/features-Icon.png" alt=""><span class="fixed w-75 tabs"> Features</span> </a>
+          <a href="#productFeatures"><img class=" me-2 icons1" src="/frontend_assets/images/features-Icon.png" alt=""><span class="fixed w-75 tabs"> Features</span> </a>
         </div>
         <div class="mt-1" data-aos="fade-up" data-aos-delay="200" data-aos-duration="500">
           <a href="#productSS"><img class=" me-2 icons1" src="/frontend_assets/images/screenshots-Icon.png" alt=""><span class="fixed w-75 tabs"> Screenshots</span> </a>
@@ -74,7 +74,7 @@
         <h3 class="fw-bold">Product Details</h3>
         <p>{!! $portfolio->description !!}</p>
         <h3 class="fw-bold">Product Features</h3>
-        <p>{!! $portfolio->features !!}</p>
+        <p id="productFeatures">{!! $portfolio->features !!}</p>
       </div>
     </div>
     </div>
