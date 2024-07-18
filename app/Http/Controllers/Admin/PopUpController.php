@@ -84,7 +84,11 @@ class PopUpController extends Controller
                 'end_time' => $endTime,
             ];
 
+            $popup = $this->parentModel::where('id', $id)->first();
             if ($request->hasFile('image')) {
+                if ($popup->image && file_exists(public_path('frontend_assets/images/popups/' . $popup->image))) {
+                    unlink(public_path('frontend_assets/images/popups/' . $popup->image));
+                }
                 $fileName = time() . '.' . $request->file('image')->getClientOriginalExtension();
                 $request->file('image')->move('frontend_assets/images/popups/', $fileName);
                 $UpdateData['image'] = $fileName;
