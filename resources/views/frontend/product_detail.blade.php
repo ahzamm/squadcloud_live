@@ -10,6 +10,8 @@
     }
 
     body {
+      min-height: 100vh;
+      height: auto;
       background-image: linear-gradient(#fff, #cfcfcf);
     }
 
@@ -24,9 +26,9 @@
     <div class="container product-wrapper d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
       <div class="top-content" data-aos="fade-right" data-aos-duration="1000">
         <div class="product--title">
-          <p>{{ $portfolio->name }} <span></span></p>
+          <p class="mb-0">{{ $portfolio->title }} <span></span></p>
         </div>
-        <div class="product--rating">
+        {{-- <div class="product--rating">
           <div class="number-part d-inline-block">{{ $portfolio->rating }}</div>
           <div class="star-part d-inline-block">
             <i class="fa fa-star"></i>
@@ -36,7 +38,7 @@
             <i class="fa fa-star star"></i>
           </div>
         </div>
-        <div class="rating-review-text">{{ $portfolio->rating_number }} Reviews and Ratings</div>
+        <div class="rating-review-text">{{ $portfolio->rating_number }} Reviews and Ratings</div> --}}
       </div>
       <div class="product-buttons" data-aos="fade-left" data-aos-duration="1000">
         <a href="{{ $portfolio->link }}" class="btn btn-demo" style="padding: 8px 30px;">View Demo</a>
@@ -87,7 +89,7 @@
       </div>
       <div class="screenshot-wrapper">
         @foreach ($portfolio->images as $image)
-          <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#imageModal" data-aos="zoom-in" data-aos-delay="50" data-aos-duration="1000">
+          <a href="{{ asset('frontend_assets/images/portfolio/' . $image->images) }}" data-lightbox="example-set" data-aos="zoom-in" data-aos-delay="50" data-aos-duration="1000">
             <div class=" mt-3 screensht">
               <div class="screensht-bg">
                 <img src="{{ asset('frontend_assets/images/portfolio/' . $image->images) }}" alt="" class="w-100 h-100">

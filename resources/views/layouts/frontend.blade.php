@@ -24,7 +24,7 @@
   <link rel="stylesheet" href="{{ asset('frontend_assets/css/style.css?v=119') }}" />
   <link rel="stylesheet" href="{{ asset('frontend_assets/css/tilteffect.css') }}" />
   <link rel="stylesheet" href="{{ asset('frontend_assets/vendor/aos/aos.css') }}">
-  <link rel="stylesheet" href="{{ asset('frontend_assets/css/responsive.css') }}" />
+  <link rel="stylesheet" href="{{ asset('frontend_assets/css/responsive.css?v=1') }}" />
   <link rel="stylesheet" type="text/css" href="{{ asset('frontend_assets/css/form.css') }}">
   <style>
     svg {
@@ -125,15 +125,15 @@
   <footer class="footer custom-svg">
     <div class="footer__bottom">
       <div class="container">
-        <div class="d-flex align-items-start" style="padding: 30px 0 10px">
-          <div style="flex: 1 1 30%">
+        <div class="d-flex align-items-start flex-wrap" style="padding: 30px 0 10px">
+          <div class="fc-1">
             <p class="text-left">
               <span style="display: inline-block;margin-top: -30px;background: #cfcfcf;padding: 10px;border-bottom-right-radius: 40px;border-bottom-left-radius:40px">
                 <img src="{{ asset('frontend_assets/images/' . $general_configuration->brand_logo) }}" alt="" class="footer--logo mb-20" style="width: 250px"></span>
             </p>
             <p class="text-gray pe-5 brand-description" style="text-align:justify;padding-right: 50px;color:#d1d0d0">{!! $general_configuration->site_footer_description !!}</p>
           </div>
-          <div style="flex: 1 1 10%">
+          <div class="fc-2">
             <h6 class="text-white text-left p-3" style="font-size:1rem">Quick Links</h6>
             <ul class="list-style-none">
               @foreach ($menus as $item)
@@ -141,7 +141,7 @@
               @endforeach
             </ul>
           </div>
-          <div style="flex: 1 1 20%">
+          <div class="fc-3">
             <h6 class="text-white text-left p-3" style="font-size:1rem">Helpful Links</h6>
             <ul>
               <li><a href="{{route('site.terms')}}" class="nav nav-link text-left text-gray">Terms &amp; Conditions</a></li>
@@ -150,7 +150,7 @@
               <li><a href="{{route('site.faq')}}" class="nav nav-link text-left text-gray">FAQs</a></li>
             </ul>
           </div>
-          <div style="flex: 1 1 auto">
+          <div class="fc-4">
             <h6 class="text-white text-left">Subscribe for updates</h6>
             <form id="subscribeForm" class="text-left" action="{{ route('subscribers.store') }}" method="POST">
               @csrf
