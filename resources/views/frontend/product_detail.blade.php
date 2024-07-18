@@ -57,9 +57,11 @@
         <div class="mt-1" data-aos="fade-up" data-aos-delay="100" data-aos-duration="500">
           <a href="#productFeatures"><img class=" me-2 icons1" src="/frontend_assets/images/features-Icon.png" alt=""><span class="fixed w-75 tabs"> Features</span> </a>
         </div>
-        <div class="mt-1" data-aos="fade-up" data-aos-delay="200" data-aos-duration="500">
-          <a href="#productSS"><img class=" me-2 icons1" src="/frontend_assets/images/screenshots-Icon.png" alt=""><span class="fixed w-75 tabs"> Screenshots</span> </a>
-        </div>
+        @if ($portfolio->images->isNotEmpty())
+          <div class="mt-1" data-aos="fade-up" data-aos-delay="200" data-aos-duration="500">
+            <a href="#productSS"><img class=" me-2 icons1" src="/frontend_assets/images/screenshots-Icon.png" alt=""><span class="fixed w-75 tabs"> Screenshots</span> </a>
+          </div>
+        @endif
         <div class="mt-1" data-aos="fade-up" data-aos-delay="300" data-aos-duration="500">
           <a href="#productPrice"><img class=" me-2 icons1" src="/frontend_assets/images/pricing-Icon.png" alt=""><span class="fixed w-75 tabs">
               Pricing</span> </a>
@@ -82,24 +84,26 @@
     </div>
   </section>
 
-  <section id="productSS">
-    <div class="container mt-4">
-      <div data-aos="fade-up" data-aos-delay="50">
-        <h2 class="mt-1">{{ $portfolio->name }} Screenshots </h2>
-      </div>
-      <div class="screenshot-wrapper">
-        @foreach ($portfolio->images as $image)
-          <a href="{{ asset('frontend_assets/images/portfolio/' . $image->images) }}" data-lightbox="example-set" data-aos="zoom-in" data-aos-delay="50" data-aos-duration="1000">
-            <div class=" mt-3 screensht">
-              <div class="screensht-bg">
-                <img src="{{ asset('frontend_assets/images/portfolio/' . $image->images) }}" alt="" class="w-100 h-100">
+  @if ($portfolio->images->isNotEmpty())
+    <section id="productSS">
+      <div class="container mt-4">
+        <div data-aos="fade-up" data-aos-delay="50">
+          <h2 class="mt-1">{{ $portfolio->name }} Screenshots </h2>
+        </div>
+        <div class="screenshot-wrapper">
+          @foreach ($portfolio->images as $image)
+            <a href="{{ asset('frontend_assets/images/portfolio/' . $image->images) }}" data-lightbox="example-set" data-aos="zoom-in" data-aos-delay="50" data-aos-duration="1000">
+              <div class=" mt-3 screensht">
+                <div class="screensht-bg">
+                  <img src="{{ asset('frontend_assets/images/portfolio/' . $image->images) }}" alt="" class="w-100 h-100">
+                </div>
               </div>
-            </div>
-          </a>
-        @endforeach
+            </a>
+          @endforeach
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
+  @endif
 
   <section id="productPrice" class="pb-5">
     <div class="container mt-4">
