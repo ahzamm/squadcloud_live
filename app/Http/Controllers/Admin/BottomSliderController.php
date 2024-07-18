@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\BottomSlider;
 use Illuminate\Support\Str;
-use App\Http\Requests\BottomSlider\{ViewBottomSliderRequest, CreateBottomSliderRequest, StoreBottomSliderRequest, EditBottomSliderRequest, UpdateBottomSliderRequest, DeleteBottomSliderRequest};
+use App\Http\Requests\Admin\BottomSlider\{ViewBottomSliderRequest, CreateBottomSliderRequest, StoreBottomSliderRequest, EditBottomSliderRequest, UpdateBottomSliderRequest, DeleteBottomSliderRequest};
 
 class BottomSliderController extends Controller
 {

@@ -1,30 +1,25 @@
 <?php
 
-namespace App\Http\Requests\PortfolioDemoRequest;
+namespace App\Http\Requests\Admin\BottomSlider;
 
 use Illuminate\Foundation\Http\FormRequest;
 use App\Models\SubMenu;
-use App\Models\UserMenuAccess;
 use Auth;
+use App\Models\UserMenuAccess;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class ViewPortfolioDemoRequest extends FormRequest
+class CreateBottomSliderRequest extends FormRequest
 {
     public function authorize()
     {
-        $subMenuid = SubMenu::where('route_name', 'portfolio_demo_requests.index')->first();
-        $userOperation = 'view_status';
+        $subMenuid = SubMenu::where('route_name', 'bottom_sliders.index')->first();
+        $userOperation = 'create_status';
         $userId = Auth::user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
         if (!$crudAccess) {
-            throw new HttpResponseException(redirect()->back()->withInput()->with('error', 'No right to View Portfolio Demo Requests'));
+            throw new HttpResponseException(redirect()->back()->withInput()->with('error', 'No right to Add Bottom Slider'));
         }
         return true;
-    }
-
-    public function rules()
-    {
-        return [];
     }
 
     public function crud_access($submenuId = null, $operation = null, $uId = null)
@@ -38,5 +33,10 @@ class ViewPortfolioDemoRequest extends FormRequest
                 return false;
             }
         }
+    }
+
+    public function rules()
+    {
+        return [];
     }
 }

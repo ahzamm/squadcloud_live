@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\PortfolioDemoRequest;
+namespace App\Http\Requests\Admin\Portfolio;
 
 use Illuminate\Foundation\Http\FormRequest;
 use App\Models\SubMenu;
@@ -8,16 +8,16 @@ use App\Models\UserMenuAccess;
 use Auth;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class DeletePortfolioDemoRequest extends FormRequest
+class ViewPortfolioRequest extends FormRequest
 {
     public function authorize()
     {
-        $subMenuid = SubMenu::where('route_name', 'portfolio_demo_requests.index')->first();
-        $userOperation = 'delete_status';
+        $subMenuid = SubMenu::where('route_name', 'portfolios.index')->first();
+        $userOperation = 'view_status';
         $userId = Auth::user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
         if (!$crudAccess) {
-            throw new HttpResponseException(response()->json(['unauthorized' => true]));
+            throw new HttpResponseException(redirect()->back()->withInput()->with('error', 'No right to View Service'));
         }
         return true;
     }

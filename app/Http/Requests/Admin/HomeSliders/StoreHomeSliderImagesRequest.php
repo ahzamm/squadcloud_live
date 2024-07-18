@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\HomeSliders;
+namespace App\Http\Requests\Admin\HomeSliders;
 
 class StoreHomeSliderImagesRequest extends CreateHomeSliderRequest
 {

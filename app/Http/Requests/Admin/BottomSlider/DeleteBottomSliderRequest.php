@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\BottomSlider;
+namespace App\Http\Requests\Admin\BottomSlider;
 
 use Illuminate\Foundation\Http\FormRequest;
 use App\Models\SubMenu;

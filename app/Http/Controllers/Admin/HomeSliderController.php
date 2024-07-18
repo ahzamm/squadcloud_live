@@ -10,7 +10,7 @@ use App\Models\UserMenuAccess;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
 use DB;
-use App\Http\Requests\HomeSliders\{ViewHomeSliderRequest, CreateHomeSliderRequest};
+use App\Http\Requests\Admin\HomeSliders\{ViewHomeSliderRequest, CreateHomeSliderRequest};
 
 use Auth;
 

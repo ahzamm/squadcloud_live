@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\PortfolioDemoRequest;
-use App\Http\Requests\PortfolioDemoRequest\{ViewPortfolioDemoRequest, DeletePortfolioDemoRequest};
+use App\Http\Requests\Admin\PortfolioDemoRequest\{ViewPortfolioDemoRequest, DeletePortfolioDemoRequest};
 
 class PortfolioRequestController extends Controller
 {

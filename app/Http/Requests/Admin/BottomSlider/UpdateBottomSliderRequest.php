@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\BottomSlider;
+namespace App\Http\Requests\Admin\BottomSlider;
 
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Contracts\Validation\Validator;

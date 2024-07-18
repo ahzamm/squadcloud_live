@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Portfolio;
+namespace App\Http\Requests\Admin\PortfolioDemoRequest;
 
 use Illuminate\Foundation\Http\FormRequest;
 use App\Models\SubMenu;
@@ -8,11 +8,11 @@ use App\Models\UserMenuAccess;
 use Auth;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class DeletePortfolioRequest extends FormRequest
+class DeletePortfolioDemoRequest extends FormRequest
 {
     public function authorize()
     {
-        $subMenuid = SubMenu::where('route_name', 'portfolios.index')->first();
+        $subMenuid = SubMenu::where('route_name', 'portfolio_demo_requests.index')->first();
         $userOperation = 'delete_status';
         $userId = Auth::user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);

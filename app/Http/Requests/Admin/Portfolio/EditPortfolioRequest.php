@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Portfolio;
+namespace App\Http\Requests\Admin\Portfolio;
 
 use Illuminate\Foundation\Http\FormRequest;
 use App\Models\SubMenu;

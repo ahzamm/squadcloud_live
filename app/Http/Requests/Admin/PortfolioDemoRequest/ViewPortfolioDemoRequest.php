@@ -1,25 +1,30 @@
 <?php
 
-namespace App\Http\Requests\HomeSliders;
+namespace App\Http\Requests\Admin\PortfolioDemoRequest;
 
 use Illuminate\Foundation\Http\FormRequest;
 use App\Models\SubMenu;
-use Auth;
 use App\Models\UserMenuAccess;
+use Auth;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class CreateHomeSliderRequest extends FormRequest
+class ViewPortfolioDemoRequest extends FormRequest
 {
     public function authorize()
     {
-        $subMenuid = SubMenu::where('route_name', 'homesliders.index')->first();
-        $userOperation = 'create_status';
+        $subMenuid = SubMenu::where('route_name', 'portfolio_demo_requests.index')->first();
+        $userOperation = 'view_status';
         $userId = Auth::user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
         if (!$crudAccess) {
-            throw new HttpResponseException(redirect()->back()->withInput()->with('error', 'No right to Create Service'));
+            throw new HttpResponseException(redirect()->back()->withInput()->with('error', 'No right to View Portfolio Demo Requests'));
         }
         return true;
+    }
+
+    public function rules()
+    {
+        return [];
     }
 
     public function crud_access($submenuId = null, $operation = null, $uId = null)
@@ -33,12 +38,5 @@ class CreateHomeSliderRequest extends FormRequest
                 return false;
             }
         }
-    }
-
-    public function rules()
-    {
-        return [
-                //
-            ];
     }
 }

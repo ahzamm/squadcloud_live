@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\BottomSlider;
+namespace App\Http\Requests\Admin\HomeSliders;
 
 use Illuminate\Foundation\Http\FormRequest;
 use App\Models\SubMenu;
@@ -8,16 +8,16 @@ use App\Models\UserMenuAccess;
 use Auth;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class ViewBottomSliderRequest extends FormRequest
+class ViewHomeSliderRequest extends FormRequest
 {
     public function authorize()
     {
-        $subMenuid = SubMenu::where('route_name', 'bottom_sliders.index')->first();
+        $subMenuid = SubMenu::where('route_name', 'homesliders.index')->first();
         $userOperation = 'view_status';
         $userId = Auth::user()->id;
         $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
         if (!$crudAccess) {
-            throw new HttpResponseException(redirect()->back()->withInput()->with('error', 'No right to View Bottom Sliders'));
+            throw new HttpResponseException(redirect()->back()->withInput()->with('error', 'No right to View Home Sliders'));
         }
         return true;
     }

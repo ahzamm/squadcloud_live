@@ -13,7 +13,7 @@ use Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
-use App\Http\Requests\Portfolio\{ViewPortfolioRequest, CreatePortfolioRequest, StorePortfolioRequest, EditPortfolioRequest, DeletePortfolioRequest};
+use App\Http\Requests\Admin\Portfolio\{ViewPortfolioRequest, CreatePortfolioRequest, StorePortfolioRequest, EditPortfolioRequest, DeletePortfolioRequest};
 
 class PortfolioController extends Controller
 {
