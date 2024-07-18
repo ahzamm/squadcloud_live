@@ -31,7 +31,7 @@
   <a href="index3.html" class="brand-link" style="display: block">
     {{-- <img src="{{asset('site/images/title-white.png')}}" style="float: none;max-height: 65px;" alt="AdminLTE Logo" class="brand-image "
     style="opacity: .8"> --}}
-    <span class="brand-text font-weight-light" style="color: yellow; font-weight: light;">SquadCloud</span>
+    <span class="brand-text font-weight-light" style="color: yellow; font-weight: light;"><a href="/admin"> SquadCloud</a> </span>
   </a>
   <!-- Sidebar -->
   <div class="sidebar">
