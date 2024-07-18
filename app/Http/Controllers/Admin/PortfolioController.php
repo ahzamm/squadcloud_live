@@ -6,14 +6,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Portfolio;
 use DB;
-use App\Models\SubMenu;
-use App\Models\UserMenuAccess;
 use App\Models\PortfolioImage;
-use Auth;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
-use App\Http\Requests\Admin\Portfolio\{ViewPortfolioRequest, CreatePortfolioRequest, StorePortfolioRequest, EditPortfolioRequest, DeletePortfolioRequest};
+use App\Http\Requests\Admin\Portfolio\{ViewPortfolioRequest, CreatePortfolioRequest, StorePortfolioRequest, EditPortfolioRequest, UpdatePortfolioRequest, DeletePortfolioRequest};
 
 class PortfolioController extends Controller
 {
@@ -107,46 +103,8 @@ class PortfolioController extends Controller
         return view('admin.portfolios.edit', compact('portfolio'));
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdatePortfolioRequest $request, $id)
     {
-        $subMenuid = SubMenu::where('route_name', 'portfolios.index')->first();
-        $userOperation = 'update_status';
-        $userId = Auth::guard('admin', 'user')->user()->id;
-        $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
-        if ($crudAccess == false) {
-            return redirect()->back()->withInput()->with('error', 'No Access To Update Portfolios');
-        }
-
-        $validatedData = [
-            'title' => 'required',
-            'link' => 'required',
-            'route' => 'required',
-            'rating' => 'required',
-            'rating_number' => 'required',
-            'price' => 'required',
-            'price_description' => 'required',
-            'description' => 'required',
-            'features' => 'required',
-        ];
-        $valdiate = Validator::make($request->all(), $validatedData);
-        if ($valdiate->fails()) {
-            return redirect()->back()->withInput()->with('error', 'All Fields are required');
-        }
-
-        $validator = Validator::make($request->all(), [
-            'route' => 'required|regex:/^[a-zA-Z0-9\-]+$/',
-        ]);
-        if ($validator->fails()) {
-            return redirect()->back()->withInput()->with('error', 'Please provide a valid route');
-        }
-
-        $isDuplicateRouteExists = Portfolio::where('route', $request->route)
-            ->where('id', '!=', $id)
-            ->first();
-        if ($isDuplicateRouteExists) {
-            return redirect()->back()->withInput()->with('error', 'Provided route is already used');
-        }
-
         $portfolio = Portfolio::findOrFail($id);
         $imageFields = ['image', 'background_image'];
         $savedFiles = [];
@@ -163,13 +121,6 @@ class PortfolioController extends Controller
                     }
 
                     $file = $request->file($field);
-                    if (!$file->isValid() || !in_array($file->extension(), ['jpeg', 'png', 'jpg'])) {
-                        return redirect()
-                            ->back()
-                            ->withInput()
-                            ->with('error', 'Please provide a valid ' . ucfirst(str_replace('_', ' ', $field)) . ' file of type: jpeg, png, or jpg.');
-                    }
-
                     $filename = Str::random(40) . '.' . $file->getClientOriginalExtension();
                     $savedFiles[$field] = $filename;
                 }
@@ -243,18 +194,6 @@ class PortfolioController extends Controller
         $delete = Portfolio::find($id)->delete();
         if ($delete == true) {
             return response()->json(['status' => true]);
-        }
-    }
-    public function crud_access($submenuId = null, $operation = null, $uId = null)
-    {
-        if (!$submenuId == null) {
-            $CheckData = UserMenuAccess::where(['user_id' => $uId, 'sub_menu_Id' => $submenuId, $operation => 1, 'view_status' => 1])->count();
-
-            if ($CheckData > 0) {
-                return true;
-            } else {
-                return false;
-            }
         }
     }
 
