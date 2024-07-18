@@ -25,9 +25,9 @@ class HomeController extends Controller
         $clientCount = Client::count();
         $productCount = Product::count();
         $subscriberCount = Subscriber::count();
-        $todaysContactRequests = ContactRequest::whereDate('created_at', Carbon::today())->get();
+        $todaysContactRequests = ContactRequest::whereDate('created_at', Carbon::today())->orderBy('created_at', 'desc')->get();;
         $JobApplicationCount = JobApplication::count();
-        $jobApplication = JobApplication::whereDate('created_at', Carbon::today())->get();
+        $jobApplication = JobApplication::whereDate('created_at', Carbon::today())->orderBy('created_at', 'desc')->get();
 
         return view('admin.home.dashboard', compact('serviceCount', 'portfolioCount', 'clientCount', 'productCount', 'subscriberCount', 'todaysContactRequests', 'user', 'social', 'JobApplicationCount', 'jobApplication'));
     }

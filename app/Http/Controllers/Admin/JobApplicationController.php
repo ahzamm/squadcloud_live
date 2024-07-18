@@ -20,7 +20,7 @@ class JobApplicationController extends Controller
             return redirect()->back()->withInput()->with('error', 'No rights To View Job Applications');
         }
 
-        $job_applications = JobApplication::get();
+        $job_applications = JobApplication::orderBy('created_at', 'desc')->get();
         return view('admin.job_applications.index', compact('job_applications'));
     }
 

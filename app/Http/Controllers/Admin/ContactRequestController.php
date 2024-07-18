@@ -22,7 +22,7 @@ class ContactRequestController extends Controller
             return redirect()->back()->withInput()->with('error', 'No rights To View Messages');
         }
 
-        $contacts = ContactRequest::all();
+        $contacts = ContactRequest::orderBy('created_at', 'desc')->get();
         $data['email_contacts'] = email_contact::get();
         return view('admin.contact_requests.index', compact('contacts', 'data'));
     }
