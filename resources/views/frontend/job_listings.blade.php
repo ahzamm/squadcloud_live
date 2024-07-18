@@ -221,6 +221,7 @@
 
   function showModal(jobId) {
     $('#job-id').val(jobId);
+    refreshCaptcha();
     $('#applyModal').modal('show');
   }
 
