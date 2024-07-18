@@ -20,17 +20,17 @@
                 <div class="col-md-6">
                     <div class="form-group">
                       <label for="">Title <span style="color: red">*</span></label>
-                      <input type="text" class="form-control" name="title" placeholder="Example : 15 Mbps" required value="{{ old('title') }}">
+                      <input type="text" class="form-control" name="title" placeholder="Example : 15 Mbps" value="{{ old('title') }}">
                       @error('title')
                         <p class="text-danger mt-2 mb-0 text-sm">{{ $message }}</p>
                       @enderror
                     </div>
                   </div>
-                  
+
                   <div class="col-md-6">
                     <div class="form-group">
                       <label for="">Link <span style="color: red">*</span></label>
-                      <input type="text" class="form-control" name="link" placeholder="Example : 15 Mbps" required value="{{ old('link') }}">
+                      <input type="text" class="form-control" name="link" placeholder="Example : 15 Mbps" value="{{ old('link') }}">
                       @error('link')
                         <p class="text-danger mt-2 mb-0 text-sm">{{ $message }}</p>
                       @enderror
