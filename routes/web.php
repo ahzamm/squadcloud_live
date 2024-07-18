@@ -23,6 +23,7 @@ use App\Http\Controllers\Admin\GalleryController as AdminGalleryController;
 use App\Http\Controllers\Admin\TermController as AdminTermController;
 use App\Http\Controllers\Admin\PrivacyController as AdminPrivacyController;
 use App\Http\Controllers\Admin\FaqController as AdminFaqController;
+use App\Http\Controllers\Admin\PortfolioRequestController;
 use App\Http\Controllers\Admin\ContactRequestController;
 use App\Http\Controllers\Admin\AllowedIpController;
 use App\Http\Controllers\Admin\SocialController;
@@ -333,6 +334,9 @@ use App\Http\Controllers\Site\FaqController;
 
         Route::resource('faqs','App\Http\Controllers\Admin\FaqController');
         Route::get("/faqs/destroy/{id?}" , [AdminFaqController::class ,"destroy"])->name("faq.destroy");
+
+        Route::get("/portfolio_demo_request" , [PortfolioRequestController::class ,"index"])->name("portfolio_demo_requests.index");
+        Route::get("/portfolio_demo_request/destroy/{id?}" , [PortfolioRequestController::class ,"destroy"])->name("portfolio_demo_request.destroy");
 
     });
 });
