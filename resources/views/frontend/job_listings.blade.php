@@ -185,7 +185,7 @@
             <textarea id="applicant-coverletter" name="coverletter" rows="3"></textarea>
           </div>
           <div class="form-group">
-            <label for="applicant-resume">Resume (PDF & Doc)</label>
+            <label for="applicant-resume">Resume (PDF OR Doc)</label>
             <input type="file" id="applicant-resume" name="resume" accept=".pdf,.doc,.docx">
           </div>
           <div class="captcha-box" id="captcha-box" style="display: none;">
