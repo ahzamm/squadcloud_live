@@ -101,13 +101,10 @@
                         <tr class="table-row">
                           <td>{{ $key + 1 }}</i><input type="hidden" class="order-id"value="{{ $item->id }}"></td>
                           <td>{{ $item->service }}</td>
-                          <td><img width="40px" height="40px" src="{{ asset('frontend_assets/images/services/' . $item->logo) }}" alt="internet service provider in karachi/Clifton/pakistan" /> </td>
+                          <td><img width="40px" height="40px" src="{{ asset('frontend_assets/images/services/' . $item->logo) }}" alt="service logo" /></td>
                           <td>{{ $item->tagline }}</td>
                           <td>{{ $item->slug }}</td>
-                          <td>
-                            <img width="40px" height="40px" src="{{ asset('frontend_assets/images/services/' . $item->background_image) }}"
-                              alt="internet service provider in karachi/Clifton/pakistan" />
-                          </td>
+                          <td><img width="40px" height="40px" src="{{ asset('frontend_assets/images/services/' . $item->background_image) }}" alt="background image" /></td>
                           <td>
                             <label class="switch">
                               <input type="checkbox" class="status_check" @if ($item->is_active == 1) checked @endif data-user-id="{{ $item->id }}">
@@ -145,40 +142,113 @@
       $("#sortable").disableSelection();
     });
 
-    function initializeStatusSwitch() {
-      $(".status_check").off('change').on('change', function(e) {
-        let currentStatus = $(this).prop('checked') ? 1 : 0;
-        var status = $(this);
-        e.preventDefault();
+    // Changing Status with event delegation
+    let changeStatusUrl = "{{ route('service.status') }}";
+    $(document).on('change', '.status_check', function(e) {
+      let currentStatus = $(this).prop('checked') ? 1 : 0;
+      var status = $(this);
+      e.preventDefault();
+      $.ajax({
+        url: changeStatusUrl,
+        type: "POST",
+        data: {
+          id: $(this).attr("data-user-id"),
+          status: currentStatus
+        },
+        success: function(response) {
+          if (response == "unauthorized") {
+            swal("Error!", "Status Not Changed , Because You have No Rights To change status", "error");
+            status.prop('checked', false);
+          } else if (response == "success") {
+            swal({
+              title: 'Status Changed!',
+              text: "User Status Has been Changed!",
+              animation: false,
+              customClass: 'animated pulse',
+              type: 'success',
+            });
+          }
+        }
+      });
+    });
+
+    // Delete Service with event delegation
+    let packageDeleteUrl = "{{ route('service.destroy') }}";
+    $(document).on('click', '.btnDeleteMenu', function() {
+      id = $(this).attr('data-value');
+      swal({
+        title: 'Are you sure?',
+        text: "You want to delete this record",
+        animation: false,
+        customClass: 'animated pulse',
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, Delete it!',
+        cancelButtonText: 'No, cancel!',
+        confirmButtonClass: 'btn btn-success',
+        cancelButtonClass: 'btn btn-danger',
+        buttonsStyling: true,
+        reverseButtons: true
+      }).then(function(result) {
+        if (result.value) {
+          $.ajax({
+            url: packageDeleteUrl + '/' + id,
+            method: 'get',
+            data: {
+              "_token": "{{ csrf_token() }}",
+            },
+            success: function(res) {
+              if (res.unauthorized) {
+                swal('Error!', 'No Rights To delete Service', "error");
+              }
+              if (res.status) {
+                swal('Updated!', 'Service deleted', 'success');
+                location.reload();
+              }
+            },
+            error: function(jhxr, status, err) {
+              console.log(jhxr);
+            }
+          })
+        } else {
+          swal('Error!', 'Something Went Wrong', "error");
+        }
+      })
+    });
+
+    // Sorting Data
+    let sortTable = $("#sortfrontMenu");
+    let sortingFrontUrl = "{{ route('sort.service') }}";
+    let csrfToken = $(".csrf_token");
+
+    $(sortTable).sortable({
+      update: function(event, ui) {
+        var SortIds = $(this).find('.order-id').map(function() {
+          return $(this).val().trim();
+        }).get();
+
         $.ajax({
-          url: "{{ route('service.status') }}",
+          url: sortingFrontUrl,
           type: "POST",
           data: {
-            id: $(this).attr("data-user-id"),
-            status: currentStatus
+            sort_Ids: SortIds
+          },
+          headers: {
+            "X-CSRF-TOKEN": csrfToken.val()
           },
           success: function(response) {
-            if (response == "unauthorized") {
-              swal("Error!", "Status Not Changed , Because You have No Rights To change status", "error");
-              status.prop('checked', false);
-            } else if (response == "success") {
-              swal({
-                title: 'Status Changed!',
-                text: "User Status Has been Changed!",
-                animation: false,
-                customClass: 'animated pulse',
-                type: 'success',
-              });
-            }
+            reloadTableData(response);
           }
         });
-      });
-    }
+      }
+    });
 
     function reloadTableData(data) {
       let table = "";
       $(data).each(function(index, value) {
-        table += `<tr>
+        table += `<tr class="table-row">
           <td>${index + 1}
           <input type="hidden" class="order-id" value="${value.id}">
           </td>
@@ -186,7 +256,7 @@
           <td><img width="40px" height="40px" src="{{ asset('frontend_assets/images/services/') }}/${value.logo}" alt="service logo" /></td>
           <td>${value.tagline}</td>
           <td>${value.slug}</td>
-          <td><img width="40px" height="40px" src="{{ asset('frontend_assets/images/services/') }}/${value.background_image}" alt="service logo" /></td>
+          <td><img width="40px" height="40px" src="{{ asset('frontend_assets/images/services/') }}/${value.background_image}" alt="background image" /></td>
           <td>
             <label class="switch">
               <input type="checkbox" class="status_check" ${value.is_active == 1 ? 'checked' : ''} data-user-id="${value.id}">
@@ -195,44 +265,15 @@
           </td>
           <td>
             <a href="{{ route('service.edit', '') }}/${value.id}" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></a>
-            <button class="btn btn-danger btn-sm deleteRecord" data-id="${value.id}">
+            <button class="btn btn-danger btn-sm btnDeleteMenu" data-value="${value.id}">
               <i class="fa fa-trash"></i>
             </button>
           </td>
         </tr>`;
       });
       $("#sortfrontMenu").html(table);
+      // Reinitialize the event handlers
       initializeStatusSwitch();
     }
-
-    $(document).ready(function() {
-      initializeStatusSwitch();
-
-      let sortTable = $("#sortfrontMenu");
-      let sortingFrontUrl = "{{ route('sort.service') }}";
-      let csrfToken = $(".csrf_token");
-
-      $(sortTable).sortable({
-        update: function(event, ui) {
-          var SortIds = $(this).find('.order-id').map(function() {
-            return $(this).val().trim();
-          }).get();
-
-          $.ajax({
-            url: sortingFrontUrl,
-            type: "POST",
-            data: {
-              sort_Ids: SortIds
-            },
-            headers: {
-              "X-CSRF-TOKEN": csrfToken.val()
-            },
-            success: function(response) {
-              reloadTableData(response);
-            }
-          });
-        }
-      });
-    });
   </script>
 @endpush

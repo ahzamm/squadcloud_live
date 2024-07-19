@@ -164,145 +164,150 @@
   });
 </script>
 <script type="text/javascript">
-  // Changing Status
-  let changeStatusUrl = "{{ route('frontmenu.status') }}";
-  $(".status_check").on('change', function(e) {
-    let currentStatus = "";
-    if ($(this).prop('checked') == true) {
-      currentStatus = 1;
-      $(this).closest('tr').find('.status').text('active');
-    } else {
-      currentStatus = 0;
-      $(this).closest('tr').find('.status').text('deactive');
-    }
-    var status = $(this);
-    e.preventDefault();
-    $.ajax({
-      url: changeStatusUrl,
-      type: "Post",
-      data: {
-        id: $(this).attr("data-user-id"),
-        status: currentStatus
-      },
-      success: function(response) {
-        if (response == "unauthorized") {
-          e.preventDefault();
-          swal("Error!", "Status Not Changed , Because You have No Rights To change status", "error");
-          status.prop('checked', false);
-        }
-        if (response == "success") {
-          swal({
-            title: 'Status Changed!',
-            text: "User Status Has been Changed!",
-            animation: false,
-            customClass: 'animated pulse',
-            type: 'success',
-          });
-        }
-      }
-    })
-  })
+  $(document).ready(function() {
+    // Initialize DataTable
+    $('#example').DataTable();
 
-  // Delete Front Menu
-  $(document).on('click', '.btnDeleteMenu', function() {
-    var frontmenu = $(this).data("id");
-    var token = $("meta[name='csrf-token']").attr("content");
-    row = $(this);
-    swal({
-      title: 'Are you sure?',
-      text: "You want to delete this record",
-      animation: false,
-      customClass: 'animated pulse',
-      type: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, Delete it!',
-      cancelButtonText: 'No, cancel!',
-      confirmButtonClass: 'btn btn-success',
-      cancelButtonClass: 'btn btn-danger',
-      buttonsStyling: true,
-      reverseButtons: true
-    }).then(function(result) {
-      if (result.value) {
+    // Changing Status with event delegation
+    let changeStatusUrl = "{{ route('frontmenu.status') }}";
+    $(document).on('change', '.status_check', function(e) {
+      let currentStatus = "";
+      if ($(this).prop('checked') == true) {
+        currentStatus = 1;
+        $(this).closest('tr').find('.status').text('active');
+      } else {
+        currentStatus = 0;
+        $(this).closest('tr').find('.status').text('deactive');
+      }
+      var status = $(this);
+      e.preventDefault();
+      $.ajax({
+        url: changeStatusUrl,
+        type: "Post",
+        data: {
+          id: $(this).attr("data-user-id"),
+          status: currentStatus
+        },
+        success: function(response) {
+          if (response == "unauthorized") {
+            e.preventDefault();
+            swal("Error!", "Status Not Changed , Because You have No Rights To change status", "error");
+            status.prop('checked', false);
+          }
+          if (response == "success") {
+            swal({
+              title: 'Status Changed!',
+              text: "User Status Has been Changed!",
+              animation: false,
+              customClass: 'animated pulse',
+              type: 'success',
+            });
+          }
+        }
+      })
+    });
+
+    // Delete Front Menu with event delegation
+    $(document).on('click', '.btnDeleteMenu', function() {
+      var frontmenu = $(this).data("id");
+      var token = $("meta[name='csrf-token']").attr("content");
+      var row = $(this);
+      swal({
+        title: 'Are you sure?',
+        text: "You want to delete this record",
+        animation: false,
+        customClass: 'animated pulse',
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, Delete it!',
+        cancelButtonText: 'No, cancel!',
+        confirmButtonClass: 'btn btn-success',
+        cancelButtonClass: 'btn btn-danger',
+        buttonsStyling: true,
+        reverseButtons: true
+      }).then(function(result) {
+        if (result.value) {
+          $.ajax({
+            url: '/admin/frontmenu/' + frontmenu,
+            method: 'DELETE',
+            dataType: 'json',
+            data: {
+              "frontmenu": frontmenu,
+              "_token": token,
+            },
+            success: function(res) {
+              if (res.unauthorized == true) {
+                swal('Error!', 'No rights To Delete Front Menu', 'error');
+              }
+              if (res.status) {
+                $(row).parents('tr').remove();
+                swal('Updated!', 'Front Menu deleted', 'success');
+              }
+            },
+            error: function(jhxr, status, err) {
+              console.log(jhxr);
+            }
+          })
+        }
+      })
+    });
+
+    // Sorting Data
+    let sortTable = $("#sortfrontMenu");
+    let sortingFrontUrl = "{{ route('sort.front.menu') }}";
+    let csrfToken = $(".csrf_token");
+    var editUrlFront = "{{ route('front.edit') }}";
+    $(sortTable).sortable({
+      update: function(event, ui) {
+        var SortIds = $(this).find('.order-id').map(function() {
+          return $(this).val().trim();
+        }).get();
+        // Getting The Order id of each sortIds
+        $(this).find('.order-id').each(function(index) {
+          $(this).text(SortIds[index]);
+        });
+        //Sending Ajax to update the sort ids and change the data sorting
         $.ajax({
-          url: '/admin/frontmenu/' + frontmenu,
-          method: 'DELETE',
-          dataType: 'json',
+          url: sortingFrontUrl,
+          type: "post",
           data: {
-            "frontmenu": frontmenu,
-            "_token": token,
+            sort_Ids: SortIds
           },
-          success: function(res) {
-            if (res.unauthorized == true) {
-              swal('Error!', 'No rights To Delete Front Menu', 'error');
-            }
-            if (res.status) {
-              $(row).parents('tr').remove();
-              swal('Updated!', 'Front Menu deleted', 'success');
-            }
+          headers: {
+            "X-CSRF-TOKEN": csrfToken.val()
           },
-          error: function(jhxr, status, err) {
-            console.log(jhxr);
+          success: function(response) {
+            let table = "";
+            $(response).each(function(index, value) {
+              table += ` <tr>
+                      <td>${index + 1 }
+                      <input type="hidden" class="order-id" value="${value.id}">
+                      </td>
+                      <td >${value.menu}</td>
+                      <td>${value.slug}</td>
+                      <td>${value.tagline}</td>
+                      <td> <img width="100px" height="40px" src="{{ asset('frontend_assets/images/title/') }}/${value.title_image}" alt="service logo" /></td>
+                      <td>${value.page_title}</td>
+                      <td>
+                <label class="switch">
+                  <input type="checkbox" class="status_check" ${value.is_active == 1 ? 'checked' : ''} data-user-id="${value.id}">
+                  <span class="slider round"></span>
+                </label>
+              </td>
+                      <td>
+                      <a href="` + editUrlFront + "/" + value.id + `" class="btn btn-sm btn-info"><i class="fa fa-edit"></i></a>
+                      <button class="btn btn-danger btn-sm btnDeleteMenu" data-id="${value.id}">
+                      <i class="fa fa-trash"></i> </button>
+                      </td>
+                      </tr>`;
+            });
+            $(sortTable).html(table);
           }
         })
       }
-    })
-  })
-  // Sorting Data
-  let sortTable = $("#sortfrontMenu");
-  let sortingFrontUrl = "{{ route('sort.front.menu') }}";
-  let csrfToken = $(".csrf_token");
-  var editUrlFront = "{{ route('front.edit') }}";
-  $(sortTable).sortable({
-    update: function(event, ui) {
-      var SortIds = $(this).find('.order-id').map(function() {
-        return $(this).val().trim();
-      }).get();
-      // Getting The Order id of each sortIds
-      $(this).find('.order-id').each(function(index) {
-        $(this).text(SortIds[index]);
-      });
-      //Sending Ajax to update the sort ids and change the data sorting
-      $.ajax({
-        url: sortingFrontUrl,
-        type: "post",
-        data: {
-          sort_Ids: SortIds
-        },
-        headers: {
-          "X-CSRF-TOKEN": csrfToken.val()
-        },
-        success: function(response) {
-          let table = "";
-          $(response).each(function(index, value) {
-            table += ` <tr>
-
-                  <td>${index + 1 }
-                  <input type="hidden" class="order-id" value="${value.id}">
-                  </td>
-                  <td >${value.menu}</td>
-                  <td>${value.slug}</td>
-                  <td>${value.tagline}</td>
-                  <td> <img width="100px" height="40px" src="{{ asset('frontend_assets/images/title/') }}/${value.title_image}" alt="service logo" /></td>
-                  <td>${value.page_title}</td>
-                  <td>
-            <label class="switch">
-              <input type="checkbox" class="status_check" ${value.is_active == 1 ? 'checked' : ''} data-user-id="${value.id}">
-              <span class="slider round"></span>
-            </label>
-          </td>
-                  <td>
-                  <a href="` + editUrlFront + "/" + value.id + `" class="btn btn-sm btn-info"><i class="fa fa-edit"></i></a>
-                  <button class="btn btn-danger btn-sm deleteRecord" data-id="${value.id}">
-                  <i class="fa fa-trash"></i> </button>
-                  </td>
-                  </tr>`;
-          });
-          $(sortTable).html(table);
-        }
-      })
-    }
+    });
   });
 </script>
 @endpush

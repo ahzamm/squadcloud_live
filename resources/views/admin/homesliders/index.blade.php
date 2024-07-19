@@ -171,105 +171,179 @@
       $("#sortable").disableSelection();
     });
   </script>
-  <script>
-    // Changing Status
-    let changeStatusUrl = "{{ route('homeslider.status') }}";
-    $(".status_check").on('change', function(e) {
-      let currentStatus = "";
-      if ($(this).prop('checked') == true) {
-        currentStatus = 1;
-        $(this).closest('tr').find('.status').text('active');
-      } else {
-        currentStatus = 0;
-        $(this).closest('tr').find('.status').text('deactive');
-      }
-      var status = $(this);
-      e.preventDefault();
-      $.ajax({
-        url: changeStatusUrl,
-        type: "Post",
-        data: {
-          id: $(this).attr("data-user-id"),
-          status: currentStatus
-        },
-        success: function(response) {
-          if (response == "unauthorized") {
-            e.preventDefault();
-            swal("Error!", "Status Not Changed , Because You have No Rights To change status", "error");
-            status.prop('checked', false);
-          }
-          if (response == "success") {
-            swal({
-              title: 'Status Changed!',
-              text: "User Status Has been Changed!",
-              animation: false,
-              customClass: 'animated pulse',
-              type: 'success',
-            });
-          }
-        }
-      })
-    })
+ <script>
+    $(document).ready(function() {
+      // Initialize DataTable
+      $('#example1').DataTable({
+        "responsive": true
+      });
 
-    //   Delete HomeSlider
-    let packageDeleteUrl = "{{ route('homeslider.destroy') }}";
-    $(document).on('click', '.btnDeleteMenu', function() {
-      id = $(this).attr('data-value');
-      swal({
-        title: 'Are you sure?',
-        text: "You want to delete this record",
-        animation: false,
-        customClass: 'animated pulse',
-        type: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, Delete it!',
-        cancelButtonText: 'No, cancel!',
-        confirmButtonClass: 'btn btn-success',
-        cancelButtonClass: 'btn btn-danger',
-        buttonsStyling: true,
-        reverseButtons: true
-      }).then(function(result) {
-        if (result.value) {
-          console.log("Delete URL : " + packageDeleteUrl + '/' + id)
-          $.ajax({
-            url: packageDeleteUrl + '/' + id,
-            method: 'get',
-            dataType: 'json',
-            success: function(res) {
-              if (res.unauthorized) {
-                swal('Error!', 'No Rights To delete Service', "error");
-              }
-              if (res.status) {
-                swal('Updated!', 'Service deleted', 'success');
-                location.reload();
-              }
-
-            },
-            error: function(jhxr, status, err) {
-              console.log(jhxr);
-            }
-          })
+      // Changing Status with event delegation
+      let changeStatusUrl = "{{ route('homeslider.status') }}";
+      $(document).on('change', '.status_check', function(e) {
+        let currentStatus = "";
+        if ($(this).prop('checked') == true) {
+          currentStatus = 1;
+          $(this).closest('tr').find('.status').text('active');
         } else {
-          swal('Error!', 'Something Went Wrong', "error");
+          currentStatus = 0;
+          $(this).closest('tr').find('.status').text('deactive');
         }
-      })
-    })
-    //delete menu end
+        var status = $(this);
+        e.preventDefault();
+        $.ajax({
+          url: changeStatusUrl,
+          type: "Post",
+          data: {
+            id: $(this).attr("data-user-id"),
+            status: currentStatus
+          },
+          success: function(response) {
+            if (response == "unauthorized") {
+              e.preventDefault();
+              swal("Error!", "Status Not Changed , Because You have No Rights To change status", "error");
+              status.prop('checked', false);
+            }
+            if (response == "success") {
+              swal({
+                title: 'Status Changed!',
+                text: "User Status Has been Changed!",
+                animation: false,
+                customClass: 'animated pulse',
+                type: 'success',
+              });
+            }
+          }
+        })
+      });
+
+      // Delete HomeSlider with event delegation
+      let packageDeleteUrl = "{{ route('homeslider.destroy') }}";
+      $(document).on('click', '.btnDeleteMenu', function() {
+        id = $(this).attr('data-value');
+        swal({
+          title: 'Are you sure?',
+          text: "You want to delete this record",
+          animation: false,
+          customClass: 'animated pulse',
+          type: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes, Delete it!',
+          cancelButtonText: 'No, cancel!',
+          confirmButtonClass: 'btn btn-success',
+          cancelButtonClass: 'btn btn-danger',
+          buttonsStyling: true,
+          reverseButtons: true
+        }).then(function(result) {
+          if (result.value) {
+            console.log("Delete URL : " + packageDeleteUrl + '/' + id)
+            $.ajax({
+              url: packageDeleteUrl + '/' + id,
+              method: 'get',
+              dataType: 'json',
+              success: function(res) {
+                if (res.unauthorized) {
+                  swal('Error!', 'No Rights To delete Service', "error");
+                }
+                if (res.status) {
+                  swal('Updated!', 'Service deleted', 'success');
+                  location.reload();
+                }
+              },
+              error: function(jhxr, status, err) {
+                console.log(jhxr);
+              }
+            })
+          } else {
+            swal('Error!', 'Something Went Wrong', "error");
+          }
+        })
+      });
+
+      // Sorting Data
+      let sortTable = $("#sortfrontMenu");
+      let sortingFrontUrl = "{{ route('sort.homeslider') }}";
+      let csrfToken = $(".csrf_token");
+      var editUrlFront = "{{ route('front.edit') }}";
+      $(sortTable).sortable({
+        update: function(event, ui) {
+          var SortIds = $(this).find('.order-id').map(function() {
+            return $(this).val().trim();
+          }).get();
+          // Getting The Order id of each sortIds
+          $(this).find('.order-id').each(function(index) {
+            $(this).text(SortIds[index]);
+          });
+          // Sending Ajax to update the sort ids and change the data sorting
+          $.ajax({
+            url: sortingFrontUrl,
+            type: "post",
+            data: {
+              sort_Ids: SortIds
+            },
+            headers: {
+              "X-CSRF-TOKEN": csrfToken.val()
+            },
+            success: function(response) {
+              let table = "";
+              $(response).each(function(index, value) {
+                table += `<tr class="table-row">
+                          <td>${index + 1 }
+                          <input type="hidden" class="order-id" value="${value.id}">
+                          </td>
+                          <td>${value.heading ? value.heading : ''}</td>
+                          <td>${value.subheading ? value.subheading : ''}</td>
+                          <td>${value.description ? value.description : ''}</td>
+                          <td>`;
+                if (value.images) {
+                  let images = JSON.parse(value.images);
+                  images.forEach((image, idx) => {
+                    table += `<img width="60px" height="40px" src="{{ asset('frontend_assets/images/home_sliders/') }}/${image}" />`;
+                    if (idx < images.length - 1) {
+                      table += `<span style="font-size: 24px; font-weight: bold; margin: 0 10px;">|</span>`;
+                    }
+                  });
+                } else if (value.video) {
+                  table += `<video controls width="200" height="120">
+                                    <source src="{{ asset('frontend_assets/images/home_sliders/') }}/${value.video}" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>`;
+                }
+                table += `</td>
+                <td>
+              <label class="switch">
+                <input type="checkbox" class="status_check" ${value.is_active == 1 ? 'checked' : ''} data-user-id="${value.id}">
+                <span class="slider round"></span>
+              </label>
+            </td>
+                          <td class="d-flex justify-content-center" style="gap: 5px;">
+                              <a href="${editUrlFront}/${value.id}" class="btn btn-sm btn-info"><i class="fa fa-edit"></i></a>
+                              <button class="btn btn-danger btn-sm btnDeleteMenu" data-value="${value.id}">
+                                  <i class="fa fa-trash"></i>
+                              </button>
+                          </td>
+                          </tr>`;
+              });
+              $(sortTable).html(table);
+            }
+          });
+        }
+      });
+    });
+
+    // Email validation
     function validateEmail(email) {
       const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       return re.test(String(email).toLowerCase());
     }
-    $(function() {
-      $("#example1").DataTable({
-        "responsive": true
-      });
-    });
+
+    // Handle front pages view
     $(document).on('click', '.viewFrontPages', function() {
       $('#frontPagesModal').modal('show').find('.modal-content').html(`<div class="modal-body">
-            <div class="overlay text-center"><i class="fas fa-2x fa-sync-alt fa-spin text-light"></i></div>
-            </div>`);
+        <div class="overlay text-center"><i class="fas fa-2x fa-sync-alt fa-spin text-light"></i></div>
+        </div>`);
       id = $(this).attr('data-value');
       $.ajax({
         method: 'get',
@@ -279,11 +353,13 @@
           $('#frontPagesModal').find('.modal-content').html(res);
         }
       })
-    })
+    });
+
+    // Handle partner emails
     $(document).on('click', '#emailEditP, #emailEditC', function() {
       $('#frontPagesModal').modal('show').find('.modal-content').html(`<div class="modal-body">
-            <div class="overlay text-center"><i class="fas fa-2x fa-sync-alt fa-spin text-light"></i></div>
-            </div>`);
+        <div class="overlay text-center"><i class="fas fa-2x fa-sync-alt fa-spin text-light"></i></div>
+        </div>`);
       valFlag = $(this).attr('data-value');
       $.ajax({
         method: 'get',
@@ -296,26 +372,31 @@
           console.log(jhxr);
         }
       })
-    })
+    });
+
+    // Remove email
     $(document).on('click', '.removeMail', function() {
       $(this).parents('li').remove();
     });
+
+    // Add email
     $(document).on('click', '#addEmail', function() {
       email = $('#email').val();
       if (email != '' && validateEmail(email)) {
         $('.todo-list').append(`<li>
-              <span class="text">${email}</span>
-              <span class="float-right removeMail" style="cursor: pointer">
-              <i class="fas fa-times"></i>
-              </span>
-              <input type="hidden" name="emails[]" value="${email}">
-              </li>`);
+          <span class="text">${email}</span>
+          <span class="float-right removeMail" style="cursor: pointer">
+            <i class="fas fa-times"></i>
+          </span>
+          <input type="hidden" name="emails[]" value="${email}">
+        </li>`);
         $('#email').removeClass('is-invalid').val('');
       } else {
         $('#email').addClass('is-invalid')
       }
-    })
-    // changeContactEmail
+    });
+
+    // Update emails
     $(document).on('click', '#updateEmails', function() {
       $.ajax({
         url: "/admin/partner-emails",
@@ -338,92 +419,6 @@
         complete: function() {}
       });
     });
-    // Delete Function
   </script>
-  <script>
-    $(document).on('click', '.viewFrontPages', function() {
-      $('#frontPagesModal').modal('show').find('.modal-content').html(`<div class="modal-body">
-    <div class="overlay text-center"><i class="fas fa-2x fa-sync-alt fa-spin text-light"></i></div>
-    </div>`);
-      id = $(this).attr('data-value');
-      $.ajax({
-        method: 'get',
-        url: '/admin/homesliders/' + id,
-        dataType: 'html',
-        success: function(res) {
-          $('#frontPagesModal').find('.modal-content').html(res);
-        }
-      });
-    });
 
-    // Sorting Data
-    let sortTable = $("#sortfrontMenu");
-    let sortingFrontUrl = "{{ route('sort.homeslider') }}";
-    let csrfToken = $(".csrf_token");
-    var editUrlFront = "{{ route('front.edit') }}";
-    $(sortTable).sortable({
-      update: function(event, ui) {
-        var SortIds = $(this).find('.order-id').map(function() {
-          return $(this).val().trim();
-        }).get();
-        // Getting The Order id of each sortIds
-        $(this).find('.order-id').each(function(index) {
-          $(this).text(SortIds[index]);
-        });
-        // Sending Ajax to update the sort ids and change the data sorting
-        $.ajax({
-          url: sortingFrontUrl,
-          type: "post",
-          data: {
-            sort_Ids: SortIds
-          },
-          headers: {
-            "X-CSRF-TOKEN": csrfToken.val()
-          },
-          success: function(response) {
-            let table = "";
-            $(response).each(function(index, value) {
-              table += `<tr class="table-row">
-                        <td>${index + 1 }
-                        <input type="hidden" class="order-id" value="${value.id}">
-                        </td>
-                        <td>${value.heading ? value.heading : ''}</td>
-                        <td>${value.subheading ? value.subheading : ''}</td>
-                        <td>${value.description ? value.description : ''}</td>
-                        <td>`;
-              if (value.images) {
-                let images = JSON.parse(value.images);
-                images.forEach((image, idx) => {
-                  table += `<img width="60px" height="40px" src="{{ asset('frontend_assets/images/home_sliders/') }}/${image}" />`;
-                  if (idx < images.length - 1) {
-                    table += `<span style="font-size: 24px; font-weight: bold; margin: 0 10px;">|</span>`;
-                  }
-                });
-              } else if (value.video) {
-                table += `<video controls width="200" height="120">
-                                  <source src="{{ asset('frontend_assets/images/home_sliders/') }}/${value.video}" type="video/mp4">
-                                  Your browser does not support the video tag.
-                              </video>`;
-              }
-              table += `</td>
-              <td>
-            <label class="switch">
-              <input type="checkbox" class="status_check" ${value.is_active == 1 ? 'checked' : ''} data-user-id="${value.id}">
-              <span class="slider round"></span>
-            </label>
-          </td>
-                        <td class="d-flex justify-content-center" style="gap: 5px;">
-                            <a href="${editUrlFront}/${value.id}" class="btn btn-sm btn-info"><i class="fa fa-edit"></i></a>
-                            <button class="btn btn-danger btn-sm deleteRecord" data-id="${value.id}">
-                                <i class="fa fa-trash"></i>
-                            </button>
-                        </td>
-                        </tr>`;
-            });
-            $(sortTable).html(table);
-          }
-        });
-      }
-    });
-  </script>
 @endpush

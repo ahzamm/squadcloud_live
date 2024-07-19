@@ -142,33 +142,25 @@
   <script>
     $(document).ready(function() {
       $('#example').DataTable();
-      // Changing Status
+
+      // Changing Status with event delegation
       let changeStatusUrl = "{{ route('social.status') }}";
-      $(".status_check").on('change', function(e) {
-        let currentStatus = "";
-        if ($(this).prop('checked') == true) {
-          currentStatus = 1;
-          $(this).closest('tr').find('.status').text('active');
-        } else {
-          currentStatus = 0;
-          $(this).closest('tr').find('.status').text('deactive');
-        }
+      $(document).on('change', '.status_check', function(e) {
+        let currentStatus = $(this).prop('checked') ? 1 : 0;
         var status = $(this);
         e.preventDefault();
         $.ajax({
           url: changeStatusUrl,
-          type: "Post",
+          type: "POST",
           data: {
             id: $(this).attr("data-user-id"),
             status: currentStatus
           },
           success: function(response) {
             if (response == "unauthorized") {
-              e.preventDefault();
               swal("Error!", "Status Not Changed , Because You have No Rights To change status", "error");
               status.prop('checked', false);
-            }
-            if (response == "success") {
+            } else if (response == "success") {
               swal({
                 title: 'Status Changed!',
                 text: "User Status Has been Changed!",
@@ -178,14 +170,14 @@
               });
             }
           }
-        })
-      })
+        });
+      });
 
-      // Delete Script
-      let deleteUrl = "{{ route('social.destroy') }}";
-      $('.btnDeleteMenu').click(function() {
-        menuId = $(this).attr('data-value');
-        row = $(this);
+      // Delete Social Link with event delegation
+      let deleteUrl = "{{ route('social.destroy', ':id') }}";
+      $(document).on('click', '.btnDeleteMenu', function() {
+        let menuId = $(this).attr('data-value');
+        let row = $(this);
         swal({
           title: 'Are you sure?',
           text: "You want to delete this record",
@@ -204,9 +196,11 @@
         }).then(function(result) {
           if (result.value) {
             $.ajax({
-              url: deleteUrl + '/' + menuId,
+              url: deleteUrl.replace(':id', menuId),
               method: 'get',
-              dataType: 'json',
+              data: {
+                "_token": "{{ csrf_token() }}",
+              },
               success: function(res) {
                 if (res.status == true) {
                   $(row).parents('tr').remove();
@@ -220,60 +214,89 @@
               }
             })
           }
-        })
-      })
-      //delete menu end
-    })
-    // Sorting Data
-    let sortTable = $("#sortfrontMenu");
-    let sortingFrontUrl = "{{ route('sort.social') }}";
-    let csrfToken = $(".csrf_token");
-    var editUrlFront = "{{ route('social.edit') }}";
-    $(sortTable).sortable({
-      update: function(event, ui) {
-        var SortIds = $(this).find('.order-id').map(function() {
-          return $(this).val().trim();
-        }).get();
-        // Getting The Order id of each sortIds
-        $(this).find('.order-id').each(function(index) {
-          $(this).text(SortIds[index]);
         });
-        //Sending Ajax to update the sort ids and change the data sorting
-        $.ajax({
-          url: sortingFrontUrl,
-          type: "post",
-          data: {
-            sort_Ids: SortIds
-          },
-          headers: {
-            "X-CSRF-TOKEN": csrfToken.val()
-          },
-          success: function(response) {
-            let table = "";
-            $(response).each(function(index, value) {
-              table += ` <tr>
-                  <td>${index + 1 }<input type="hidden" class="order-id" value="${value.id}"></td>
-                  <td >${value.name}</td>
+      });
+
+      // Sorting Data
+      let sortTable = $("#sortfrontMenu");
+      let sortingFrontUrl = "{{ route('sort.social') }}";
+      let csrfToken = $(".csrf_token");
+      var editUrlFront = "{{ route('social.edit', ':id') }}";
+
+      $(sortTable).sortable({
+        update: function(event, ui) {
+          var SortIds = $(this).find('.order-id').map(function() {
+            return $(this).val().trim();
+          }).get();
+
+          $.ajax({
+            url: sortingFrontUrl,
+            type: "POST",
+            data: {
+              sort_Ids: SortIds
+            },
+            headers: {
+              "X-CSRF-TOKEN": csrfToken.val()
+            },
+            success: function(response) {
+              let table = "";
+              $(response).each(function(index, value) {
+                table += `<tr>
+                  <td>${index + 1}<input type="hidden" class="order-id" value="${value.id}"></td>
+                  <td>${value.name}</td>
                   <td><i class="${value.icon}"></i></td>
                   <td>${value.url}</td>
                   <td><center><button class="rounded" disabled style="width: 50px; height:20px; background-color:${value.color};box-shadow:0 0 10px grey ; border:none"></button></center></td>
                   <td>
-            <label class="switch">
-              <input type="checkbox" class="status_check" ${value.is_active == 1 ? 'checked' : ''} data-user-id="${value.id}">
-              <span class="slider round"></span>
-            </label>
-          </td>
-                  <td>
-                  <a href="` + editUrlFront + "/" + value.id + `" class="btn btn-sm btn-info"><i class="fa fa-edit"></i></a>
-                  <button class="btn btn-danger btn-sm deleteRecord" data-id="${value.id}">
-                  <i class="fa fa-trash"></i> </button>
+                    <label class="switch">
+                      <input type="checkbox" class="status_check" ${value.is_active == 1 ? 'checked' : ''} data-user-id="${value.id}">
+                      <span class="slider round"></span>
+                    </label>
                   </td>
-                  </tr>`;
-            });
-            $(sortTable).html(table);
-          }
-        })
-      }
+                  <td>
+                    <a href="${editUrlFront.replace(':id', value.id)}" class="btn btn-sm btn-info"><i class="fa fa-edit"></i></a>
+                    <button class="btn btn-danger btn-sm deleteRecord" data-value="${value.id}">
+                      <i class="fa fa-trash"></i>
+                    </button>
+                  </td>
+                </tr>`;
+              });
+              $(sortTable).html(table);
+
+              // Re-initialize status check event delegation after sorting
+              $(document).on('change', '.status_check', function(e) {
+                let currentStatus = $(this).prop('checked') ? 1 : 0;
+                var status = $(this);
+                e.preventDefault();
+                $.ajax({
+                  url: changeStatusUrl,
+                  type: "POST",
+                  data: {
+                    id: $(this).attr("data-user-id"),
+                    status: currentStatus
+                  },
+                  success: function(response) {
+                    if (response == "unauthorized") {
+                      swal("Error!", "Status Not Changed , Because You have No Rights To change status", "error");
+                      status.prop('checked', false);
+                    } else if (response == "success") {
+                      swal({
+                        title: 'Status Changed!',
+                        text: "User Status Has been Changed!",
+                        animation: false,
+                        customClass: 'animated pulse',
+                        type: 'success',
+                      });
+                    }
+                  }
+                });
+              });
+            }
+          });
+        }
+      });
     });
   </script>
 @endpush
+
+

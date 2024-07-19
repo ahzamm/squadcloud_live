@@ -138,234 +138,163 @@
       $("#sortable").sortable();
       $("#sortable").disableSelection();
     });
-  </script>
-  <script>
-    // Changing Status
-    let changeStatusUrl = "{{ route('bottom_slider.status') }}";
-    $(".status_check").on('change', function(e) {
-      let currentStatus = "";
-      if ($(this).prop('checked') == true) {
-        currentStatus = 1;
-        $(this).closest('tr').find('.status').text('active');
-      } else {
-        currentStatus = 0;
-        $(this).closest('tr').find('.status').text('deactive');
-      }
-      var status = $(this);
-      e.preventDefault();
-      $.ajax({
-        url: changeStatusUrl,
-        type: "Post",
-        data: {
-          id: $(this).attr("data-user-id"),
-          status: currentStatus
-        },
-        success: function(response) {
-          if (response == "unauthorized") {
-            e.preventDefault();
-            swal("Error!", "Status Not Changed , Because You have No Rights To change status", "error");
-            status.prop('checked', false);
-          }
-          if (response == "success") {
-            swal({
-              title: 'Status Changed!',
-              text: "User Status Has been Changed!",
-              animation: false,
-              customClass: 'animated pulse',
-              type: 'success',
-            });
-          }
-        }
-      })
-    })
-    //   Delete BottomSlider
-    let packageDeleteUrl = "{{ route('bottom_slider.destroy') }}";
-    $(document).on('click', '.btnDeleteMenu', function() {
-      id = $(this).attr('data-value');
-      swal({
-        title: 'Are you sure?',
-        text: "You want to delete this record",
-        animation: false,
-        customClass: 'animated pulse',
-        type: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, Delete it!',
-        cancelButtonText: 'No, cancel!',
-        confirmButtonClass: 'btn btn-success',
-        cancelButtonClass: 'btn btn-danger',
-        buttonsStyling: true,
-        reverseButtons: true
-      }).then(function(result) {
-        if (result.value) {
-          $.ajax({
-            url: packageDeleteUrl + '/' + id,
-            method: 'get',
-            dataType: 'json',
-            success: function(res) {
-              if (res.unauthorized) {
-                swal('Error!', 'No Rights To delete Bottom Slider', "error");
-              }
-              if (res.status) {
-                swal('Updated!', 'Bottom Slider deleted', 'success');
-                location.reload();
-              }
-            },
-            error: function(jhxr, status, err) {
-              console.log(jhxr);
-            }
-          })
-        }
-      })
-    })
-    //delete menu end
-    function validateEmail(email) {
-      const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-      return re.test(String(email).toLowerCase());
-    }
-    $(function() {
+
+    $(document).ready(function() {
       $("#example1").DataTable({
         "responsive": true
       });
-    });
-    $(document).on('click', '.viewFrontPages', function() {
-      $('#frontPagesModal').modal('show').find('.modal-content').html(`<div class="modal-body">
-            <div class="overlay text-center"><i class="fas fa-2x fa-sync-alt fa-spin text-light"></i></div>
-            </div>`);
-      id = $(this).attr('data-value');
-      $.ajax({
-        method: 'get',
-        url: '/admin/front-pages/' + id,
-        dataType: 'html',
-        success: function(res) {
-          $('#frontPagesModal').find('.modal-content').html(res);
-        }
-      })
-    })
-    $(document).on('click', '#emailEditP, #emailEditC', function() {
-      $('#frontPagesModal').modal('show').find('.modal-content').html(`<div class="modal-body">
-            <div class="overlay text-center"><i class="fas fa-2x fa-sync-alt fa-spin text-light"></i></div>
-            </div>`);
-      valFlag = $(this).attr('data-value');
-      $.ajax({
-        method: 'get',
-        url: '/admin/partner-emails/' + valFlag,
-        dataType: 'html',
-        success: function(res) {
-          $('#frontPagesModal').find('.modal-content').html(res);
-        },
-        error: function(jhxr, err, status) {
-          console.log(jhxr);
-        }
-      })
-    })
-    $(document).on('click', '.removeMail', function() {
-      $(this).parents('li').remove();
-    });
-    $(document).on('click', '#addEmail', function() {
-      email = $('#email').val();
-      if (email != '' && validateEmail(email)) {
-        $('.todo-list').append(`<li>
-              <span class="text">${email}</span>
-              <span class="float-right removeMail" style="cursor: pointer">
-              <i class="fas fa-times"></i>
-              </span>
-              <input type="hidden" name="emails[]" value="${email}">
-              </li>`);
-        $('#email').removeClass('is-invalid').val('');
-      } else {
-        $('#email').addClass('is-invalid')
-      }
-    })
-    // changeContactEmail
-    $(document).on('click', '#updateEmails', function() {
-      $.ajax({
-        url: "/admin/partner-emails",
-        type: "POST",
-        data: new FormData(document.forms.namedItem("changeContactEmail")),
-        contentType: false,
-        cache: false,
-        processData: false,
-        dataType: 'JSON',
-        beforeSend: function() {},
-        success: function(res) {
-          if (res.status) {
-            $('#frontPagesModal').modal('hide');
-            toastr.info('Emails Updated Successfully');
-          }
-        },
-        error: function(jhxr, status, err) {
-          console.log(jhxr);
-        },
-        complete: function() {}
-      });
-    });
-    // Delete Function
-  </script>
-  <script>
-    $(document).on('click', '.viewFrontPages', function() {
-      $('#frontPagesModal').modal('show').find('.modal-content').html(`<div class="modal-body">
-      <div class="overlay text-center"><i class="fas fa-2x fa-sync-alt fa-spin text-light"></i></div>
-      </div>`);
-      id = $(this).attr('data-value');
-      $.ajax({
-        method: 'get',
-        url: '/admin/bottom_sliders/' + id,
-        dataType: 'html',
-        success: function(res) {
-          $('#frontPagesModal').find('.modal-content').html(res);
-        }
-      })
-    })
 
-    let sortTable = $("#sortfrontMenu");
-    let sortingFrontUrl = "{{ route('sort.bottom_slider') }}";
-    let csrfToken = $(".csrf_token");
-    var editUrlFront = "{{ route('bottom_slider.edit') }}";
-    $(sortTable).sortable({
-      update: function(event, ui) {
-        var SortIds = $(this).find('.order-id').map(function() {
-          return $(this).val().trim();
-        }).get();
-        // Getting The Order id of each sortIds
-        $(this).find('.order-id').each(function(index) {
-          $(this).text(SortIds[index]);
-        });
-        //Sending Ajax to update the sort ids and change the data sorting
+      // Changing Status with event delegation
+      let changeStatusUrl = "{{ route('bottom_slider.status') }}";
+      $(document).on('change', '.status_check', function(e) {
+        let currentStatus = $(this).prop('checked') ? 1 : 0;
+        var status = $(this);
+        e.preventDefault();
         $.ajax({
-          url: sortingFrontUrl,
-          type: "post",
+          url: changeStatusUrl,
+          type: "POST",
           data: {
-            sort_Ids: SortIds
-          },
-          headers: {
-            "X-CSRF-TOKEN": csrfToken.val()
+            id: $(this).attr("data-user-id"),
+            status: currentStatus
           },
           success: function(response) {
-            let table = "";
-            $(response).each(function(index, value) {
-              table += ` <tr>
-                  <td>${index + 1 }<input type="hidden" class="order-id" value="${value.id}"></td>
-                  <td> <img width="100px" height="40px" src="{{ asset('frontend_assets/images/bottom_sliders/') }}/${value.image}" alt="service logo" /></td>
-                   <td>${value.title}</td>
-                   <td>
-                        <label class="switch">
-                        <input type="checkbox" class="status_check" ${value.is_active == 1 ? 'checked' : ''} data-user-id="${value.id}">
-                        <span class="slider round"></span>
-                        </label>
-                    </td>
-                  <td>
-                  <a href="` + editUrlFront + "/" + value.id + `" class="btn btn-sm btn-info"><i class="fa fa-edit"></i></a>
-                  <button class="btn btn-danger btn-sm deleteRecord" data-id="${value.id}">
-                  <i class="fa fa-trash"></i> </button>
-                  </td>
-                  </tr>`;
-            });
-            $(sortTable).html(table);
+            if (response == "unauthorized") {
+              swal("Error!", "Status Not Changed, Because You have No Rights To change status", "error");
+              status.prop('checked', false);
+            } else if (response == "success") {
+              swal({
+                title: 'Status Changed!',
+                text: "User Status Has been Changed!",
+                animation: false,
+                customClass: 'animated pulse',
+                type: 'success',
+              });
+            }
           }
-        })
-      }
+        });
+      });
+
+      // Delete BottomSlider with event delegation
+      let deleteUrl = "{{ route('bottom_slider.destroy', ':id') }}";
+      $(document).on('click', '.btnDeleteMenu', function() {
+        let sliderId = $(this).attr('data-value');
+        let row = $(this);
+        swal({
+          title: 'Are you sure?',
+          text: "You want to delete this record",
+          animation: false,
+          customClass: 'animated pulse',
+          type: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes, Delete it!',
+          cancelButtonText: 'No, cancel!',
+          confirmButtonClass: 'btn btn-success',
+          cancelButtonClass: 'btn btn-danger',
+          buttonsStyling: true,
+          reverseButtons: true
+        }).then(function(result) {
+          if (result.value) {
+            $.ajax({
+              url: deleteUrl.replace(':id', sliderId),
+              method: 'get',
+              data: {
+                "_token": "{{ csrf_token() }}",
+              },
+              success: function(res) {
+                if (res.status == true) {
+                  $(row).parents('tr').remove();
+                  swal('Updated!', 'Bottom Slider Has been deleted', 'success');
+                } else if (res.status == "no Access") {
+                  swal('Error!', 'You have no access to delete bottom sliders', 'error');
+                }
+              },
+              error: function(jhxr, status, err) {
+                console.log(jhxr);
+              }
+            })
+          }
+        });
+      });
+
+      // Sorting Data
+      let sortTable = $("#sortfrontMenu");
+      let sortingFrontUrl = "{{ route('sort.bottom_slider') }}";
+      let csrfToken = $(".csrf_token");
+      var editUrlFront = "{{ route('bottom_slider.edit', ':id') }}";
+
+      $(sortTable).sortable({
+        update: function(event, ui) {
+          var SortIds = $(this).find('.order-id').map(function() {
+            return $(this).val().trim();
+          }).get();
+
+          $.ajax({
+            url: sortingFrontUrl,
+            type: "POST",
+            data: {
+              sort_Ids: SortIds
+            },
+            headers: {
+              "X-CSRF-TOKEN": csrfToken.val()
+            },
+            success: function(response) {
+              let table = "";
+              $(response).each(function(index, value) {
+                table += `<tr>
+                  <td>${index + 1}<input type="hidden" class="order-id" value="${value.id}"></td>
+                  <td><img width="100px" height="40px" src="{{ asset('frontend_assets/images/bottom_sliders/') }}/${value.image}" alt="slider image"></td>
+                  <td>${value.title}</td>
+                  <td>
+                    <label class="switch">
+                      <input type="checkbox" class="status_check" ${value.is_active == 1 ? 'checked' : ''} data-user-id="${value.id}">
+                      <span class="slider round"></span>
+                    </label>
+                  </td>
+                  <td>
+                    <a href="${editUrlFront.replace(':id', value.id)}" class="btn btn-sm btn-info"><i class="fa fa-edit"></i></a>
+                    <button class="btn btn-danger btn-sm btnDeleteMenu" data-value="${value.id}">
+                      <i class="fa fa-trash"></i>
+                    </button>
+                  </td>
+                </tr>`;
+              });
+              $(sortTable).html(table);
+
+              // Re-initialize status check event delegation after sorting
+              $(document).on('change', '.status_check', function(e) {
+                let currentStatus = $(this).prop('checked') ? 1 : 0;
+                var status = $(this);
+                e.preventDefault();
+                $.ajax({
+                  url: changeStatusUrl,
+                  type: "POST",
+                  data: {
+                    id: $(this).attr("data-user-id"),
+                    status: currentStatus
+                  },
+                  success: function(response) {
+                    if (response == "unauthorized") {
+                      swal("Error!", "Status Not Changed, Because You have No Rights To change status", "error");
+                      status.prop('checked', false);
+                    } else if (response == "success") {
+                      swal({
+                        title: 'Status Changed!',
+                        text: "User Status Has been Changed!",
+                        animation: false,
+                        customClass: 'animated pulse',
+                        type: 'success',
+                      });
+                    }
+                  }
+                });
+              });
+            }
+          });
+        }
+      });
     });
   </script>
 @endpush
+
