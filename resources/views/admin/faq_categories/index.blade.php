@@ -20,7 +20,7 @@
               <div class="card-header">
                 <h3 class="card-title"><span><i class="fa-solid fa-box-open"></i></span> FAQs</h3>
                 <a class="btn btn-success btn-sm float-right ml-2 btnAddCategory">Add FAQ Categories</a>
-                <a class="btn btn-success btn-sm float-right" href="{{ route('faqs.index') }}"><i class="fa fa-plus"></i> Back</a>
+                <a class="btn btn-success btn-sm float-right" href="{{ route('faqs.index') }}"> <i class="fa fa-arrow-left"></i> Back</a>
               </div>
 
               <div class="card-body">
