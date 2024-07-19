@@ -18,6 +18,19 @@
               <div class="card-body pad">
                 @csrf
                 <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="faq_category">Faq Category <span style="color: red">*</span></label>
+                            <select class="form-control" id="faq_category" name="faq_category">
+                                @foreach ($categories as $category)
+                                    <option value="{{ $category->id }}"
+                                            {{ (old('faq_category') ?? $faq->category_id) == $category->id ? 'selected' : '' }}>
+                                        {{ $category->category }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
                   <div class="col-md-12">
                     <div class="form-group">
                       <label for="">Question <span style="color: red">*</span></label>

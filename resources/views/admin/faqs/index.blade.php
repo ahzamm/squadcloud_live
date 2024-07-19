@@ -30,6 +30,7 @@
                         <th>Serial#</th>
                         <th>Question</th>
                         <th>Answer</th>
+                        <th>Catagory</th>
                         <th>Status</th>
                         <th>Action</th>
                       </tr>
@@ -41,6 +42,7 @@
                           <td>{{ $key + 1 }}<input type="hidden" class="order-id"value="{{ $item->id }}"></td>
                           <td>{!! $item->question !!}</td>
                           <td>{!! $item->answer !!}</td>
+                          <td>{{ $item->category->category }}</td>
                           <td>{{ $item->is_active == 1 ? 'active' : 'deactive' }}</td>
                           <td class="d-flex justify-content-center" style="gap: 5px;">
                             <a class="btn btn-primary btn-sm" href="{{ route('faq.edit', $item->id) }}"><i class="fa fa-edit"></i></a>

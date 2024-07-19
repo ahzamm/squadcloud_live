@@ -29,6 +29,7 @@
                                             <th>Serial#</th>
                                             <th>Questions</th>
                                             <th>Answers</th>
+                                            <th>Catagory</th>
                                             <th>Status</th>
                                             <th>In Order</th>
                                             <th>Action</th>
@@ -40,6 +41,7 @@
                                             <td>{{++$key}}</td>
                                             <td>{!!$item->question!!}</td>
                                             <td>{!!$item->answer!!}</td>
+                                            <td>{{$item->catagory->catagory}}</td>
                                             <td>{{$item->active == 1?'active':'deactive'}}</td>
                                             <td>{{$item->faq_order}}</td>
                                             <td class="d-flex g-2">
@@ -111,7 +113,7 @@
             }
         })
     });
-    //   delete 
+    //   delete
     let deleteUrl = "{{ route('faq.destroy')}}";
     $(document).on('click', '.deleteRecord', function() {
         var id = $(this).data("id");
@@ -141,7 +143,7 @@
                         if (res.status) {
                             swal('Updated!', 'Front Faq deleted', 'success');
                             location.reload();
-                        } 
+                        }
                         if (res.unauthorized == true) {
                         swal('Error!', 'No rights To delete FAQ', 'error');
                         }   else {

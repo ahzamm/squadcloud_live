@@ -19,6 +19,17 @@
                 <div class="row">
                   <div class="col-md-12">
                     <div class="form-group">
+                        <label for="faq_category">Faq Category <span style="color: red">*</span></label>
+                        <select class="form-control" id="faq_category" name="faq_category">
+                            <option value="" disabled selected>Select Faq Category</option>
+                            @foreach ($categories as $category)
+                                <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>{{ $category->category }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group">
                       <label for="">Question <span style="color: red">*</span></label>
                       <textarea name="question" rows="4" placeholder="" class="form-control summernote">{{ old('question') }}</textarea>
                     </div>

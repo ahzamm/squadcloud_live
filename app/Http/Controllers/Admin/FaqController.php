@@ -3,13 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\FaqCategory;
 use Illuminate\Http\Request;
 use App\Models\Service;
 use App\Models\SubMenu;
 use App\Models\UserMenuAccess;
 use App\Models\Faq;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Str;
 use Auth;
 
 class FaqController extends Controller
@@ -38,7 +38,8 @@ class FaqController extends Controller
             return redirect()->back()->withInput()->with('error', 'No rights To Create Vacency');
         }
 
-        return view('admin.faqs.create');
+        $categories = FaqCategory::all();
+        return view('admin.faqs.create', compact('categories'));
     }
 
     public function store(Request $request)
@@ -52,10 +53,10 @@ class FaqController extends Controller
         }
 
         $validatedData = [
+            'faq_category' => 'required',
             'question' => 'required',
             'answer' => 'required',
         ];
-
         $valdiate = Validator::make($request->all(), $validatedData);
         if ($valdiate->fails()) {
             return redirect()->back()->withInput()->with('error', 'All Fields are required');
@@ -65,6 +66,7 @@ class FaqController extends Controller
         $faq = new Faq();
         $faq->question = $request['question'];
         $faq->answer = $request['answer'];
+        $faq->category_id = $request['faq_category'];
         $faq->is_active = $request->has('is_active') ? 1 : 0;
         $faq->sortIds = $maxSortId !== null ? $maxSortId + 1 : 0;
         $faq->save();
@@ -89,7 +91,8 @@ class FaqController extends Controller
         }
 
         $faq = Faq::find($id);
-        return view('admin.faqs.edit', compact('faq'));
+        $categories = FaqCategory::all();
+        return view('admin.faqs.edit', compact('faq', 'categories'));
     }
 
     public function update(Request $request, $id)
@@ -104,6 +107,7 @@ class FaqController extends Controller
         }
 
         $validatedData = [
+            'faq_category' => 'required',
             'question' => 'required',
             'answer' => 'required',
         ];
@@ -118,6 +122,7 @@ class FaqController extends Controller
 
         $faq->question = $request['question'];
         $faq->answer = $request['answer'];
+        $faq->category_id = $request['faq_category'];
         $faq->is_active = $request->has('is_active') ? 1 : 0;
         $faq->save();
 
