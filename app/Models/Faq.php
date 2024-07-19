@@ -6,10 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Faq extends Model
 {
-    protected $fillable = ['question', 'answer', 'catagory_id'];
+    protected $fillable = ['question', 'answer', 'category_id'];
 
     public function category()
     {
-        return $this->belongsTo(FaqCategory::class);
+        return $this->belongsTo(FaqCategory::class, 'category_id');
     }
 }
