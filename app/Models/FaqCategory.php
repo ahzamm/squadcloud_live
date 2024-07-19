@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class FaqCategory extends Model
 {
     protected $table = 'faq_categories';
-    protected $fillable = ['category'];
+    protected $fillable = ['category', 'is_active', 'sortIds'];
 
     public function faqs()
     {

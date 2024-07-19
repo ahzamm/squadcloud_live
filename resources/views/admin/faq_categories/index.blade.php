@@ -19,8 +19,8 @@
             <div class="card mt-3 card-outline card-info">
               <div class="card-header">
                 <h3 class="card-title"><span><i class="fa-solid fa-box-open"></i></span> FAQs</h3>
-                <a class="btn btn-success btn-sm float-right ml-2" href="{{ route('faq_categories.index') }}">FAQ Categories</a>
-                <a class="btn btn-success btn-sm float-right" href="{{ route('faqs.create') }}"><i class="fa fa-plus"></i> Add FAQ</a>
+                <a class="btn btn-success btn-sm float-right ml-2 btnAddCategory">Add FAQ Categories</a>
+                <a class="btn btn-success btn-sm float-right" href="{{ route('faqs.index') }}"><i class="fa fa-plus"></i> Back</a>
               </div>
 
               <div class="card-body">
@@ -30,24 +30,22 @@
                       <tr>
                         <th>Sort</th>
                         <th>Serial#</th>
-                        <th>Question</th>
-                        <th>Answer</th>
-                        <th>Catagory</th>
+                        <th>Category</th>
                         <th>Status</th>
                         <th>Action</th>
                       </tr>
                     </thead>
+                    <input type="hidden" class="csrf_token" value="{{ csrf_token() }}">
                     <tbody id="sortfrontMenu" class="move">
-                      @foreach ($faqs as $key => $item)
+                      @foreach ($faq_categories as $key => $item)
                         <tr class="table-row">
                           <td><i class="fas fa-sort" id="sort-serial"></i></td>
                           <td>{{ $key + 1 }}<input type="hidden" class="order-id"value="{{ $item->id }}"></td>
-                          <td>{!! $item->question !!}</td>
-                          <td>{!! $item->answer !!}</td>
-                          <td>{{ $item->category->category }}</td>
+                          <td>{{ $item->category }}</td>
                           <td>{{ $item->is_active == 1 ? 'active' : 'deactive' }}</td>
                           <td class="d-flex justify-content-center" style="gap: 5px;">
-                            <a class="btn btn-primary btn-sm" href="{{ route('faq.edit', $item->id) }}"><i class="fa fa-edit"></i></a>
+                            <a class="btn btn-primary btn-sm btnEditCategory" data-id="{{ $item->id }}" data-category="{{ $item->category }}" data-is_active="{{ $item->is_active }}"><i
+                                class="fa fa-edit"></i></a>
                             <button class="btn btn-danger btn-sm btnDeleteMenu" data-value="{{ $item->id }}"><i class="fa fa-trash"></i></button>
                           </td>
                         </tr>
@@ -62,6 +60,38 @@
       </div>
     </section>
   </div>
+  <!-- Modal -->
+  <div class="modal fade" id="categoryModal" tabindex="-1" aria-labelledby="applyModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="applyModalLabel">Category</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
+        </div>
+        <div class="modal-body">
+          <form id="categoryForm" action="" method="POST" enctype="multipart/form-data">
+            @csrf
+            <input type="hidden" id="formMethod" name="_method" value="POST">
+            <div class="form-group">
+              <label for="category-name">Category</label>
+              <input type="text" id="category-name" name="category" class="form-control" required>
+            </div>
+            <div class="form-group clearfix">
+              <div class="icheck-success d-inline">
+                <input type="checkbox" {{ old('is_active') != null ? 'checked' : 'unchecked' }} name="is_active" id="checkboxSuccess1">
+                <label for="checkboxSuccess1">
+                  Status (On & Off)
+                </label>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary" id="submitButton">Submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
   @include('admin.front-faq._modal')
 @endsection
 @push('scripts')
@@ -78,7 +108,46 @@
     });
   </script>
   <script>
-    let packageDeleteUrl = "{{ route('faq.destroy') }}";
+    var storeRoute = "{{ route('faq_categories.store') }}";
+    var updateRoute = "{{ route('faq_categories.update', ':id') }}";
+</script>
+
+<script>
+    function showAddModal() {
+        $('#categoryModal').modal('show');
+        $('#categoryForm').attr('action', storeRoute);
+        $('#formMethod').val('POST');
+        $('#category-name').val('');
+        $('#checkboxSuccess1').prop('checked', false); // Ensure checkbox is unchecked when adding
+    }
+
+    function showEditModal(id, category, isActive) {
+        $('#categoryModal').modal('show');
+
+        // Replace the placeholder with the actual ID
+        var actionUrl = updateRoute.replace(':id', id);
+
+        $('#categoryForm').attr('action', actionUrl);
+        $('#formMethod').val('PUT');
+        $('#category-name').val(category);
+        $('#checkboxSuccess1').prop('checked', isActive); // Set checkbox based on isActive value
+    }
+
+    $(document).on('click', '.btnAddCategory', function() {
+        showAddModal();
+    });
+
+    $(document).on('click', '.btnEditCategory', function() {
+        const id = $(this).data('id');
+        const category = $(this).data('category');
+        const isActive = $(this).data('is_active'); // Get is_active value
+        showEditModal(id, category, isActive);
+    });
+</script>
+
+
+  <script>
+    let packageDeleteUrl = "{{ route('faq_category.destroy') }}";
     $(document).on('click', '.btnDeleteMenu', function() {
       id = $(this).attr('data-value');
       swal({
@@ -104,10 +173,10 @@
             dataType: 'json',
             success: function(res) {
               if (res.unauthorized) {
-                swal('Error!', 'No Rights To delete Job', "error");
+                swal('Error!', 'No Rights To delete Category', "error");
               }
               if (res.status) {
-                swal('Updated!', 'Job deleted', 'success');
+                swal('Updated!', 'Category deleted', 'success');
                 location.reload();
               }
             },
@@ -203,65 +272,67 @@
     });
     // Delete Function
   </script>
-  <script>
+ <script>
     $(document).on('click', '.viewFrontPages', function() {
-      $('#frontPagesModal').modal('show').find('.modal-content').html(`<div class="modal-body">
-      <div class="overlay text-center"><i class="fas fa-2x fa-sync-alt fa-spin text-light"></i></div>
-      </div>`);
-      id = $(this).attr('data-value');
-      $.ajax({
-        method: 'get',
-        url: '/admin/jobs/' + id,
-        dataType: 'html',
-        success: function(res) {
-          $('#frontPagesModal').find('.modal-content').html(res);
-        }
-      })
-    })
+        $('#frontPagesModal').modal('show').find('.modal-content').html(`<div class="modal-body">
+            <div class="overlay text-center"><i class="fas fa-2x fa-sync-alt fa-spin text-light"></i></div>
+        </div>`);
+        id = $(this).attr('data-value');
+        $.ajax({
+            method: 'get',
+            url: '/admin/jobs/' + id,
+            dataType: 'html',
+            success: function(res) {
+                $('#frontPagesModal').find('.modal-content').html(res);
+            }
+        })
+    });
 
     let sortTable = $("#sortfrontMenu");
-    let sortingFrontUrl = "{{ route('sort.faq') }}";
-    let csrfToken = $(".csrf_token");
-    var editUrlFront = "{{ route('faq.edit') }}";
+    let sortingFrontUrl = "{{ route('sort.faq_category') }}";
+    let csrfToken = $('meta[name="csrf-token"]').attr('content'); // Get CSRF token from meta tag
+
     $(sortTable).sortable({
-      update: function(event, ui) {
-        var SortIds = $(this).find('.order-id').map(function() {
-          return $(this).val().trim();
-        }).get();
-        // Getting The Order id of each sortIds
-        $(this).find('.order-id').each(function(index) {
-          $(this).text(SortIds[index]);
-        });
-        //Sending Ajax to update the sort ids and change the data sorting
-        $.ajax({
-          url: sortingFrontUrl,
-          type: "post",
-          data: {
-            sort_Ids: SortIds
-          },
-          headers: {
-            "X-CSRF-TOKEN": csrfToken.val()
-          },
-          success: function(response) {
-            let table = "";
-            $(response).each(function(index, value) {
-              table += ` <tr>
-                            <td><i class="fas fa-sort" id="sort-serial"></i></td>
-                  <td>${index + 1 }<input type="hidden" class="order-id" value="${value.id}"></td>
-                   <td>${value.question}</td>
-                   <td>${value.answer}</td>
-                  <td>${value.is_active == 1?'active':'deactive'}</td>
-                  <td>
-                  <a href="` + editUrlFront + "/" + value.id + `" class="btn btn-sm btn-info"><i class="fa fa-edit"></i></a>
-                  <button class="btn btn-danger btn-sm deleteRecord" data-id="${value.id}">
-                  <i class="fa fa-trash"></i> </button>
-                  </td>
-                  </tr>`;
+        update: function(event, ui) {
+            var SortIds = $(this).find('.order-id').map(function() {
+                return $(this).val().trim();
+            }).get();
+
+            $.ajax({
+                url: sortingFrontUrl,
+                type: "post",
+                data: {
+                    sort_Ids: SortIds
+                },
+                headers: {
+                    "X-CSRF-TOKEN": csrfToken
+                },
+                success: function(response) {
+                    updateTable(response);
+                },
+                error: function(xhr, status, error) {
+                    console.error(xhr);
+                }
             });
-            $(sortTable).html(table);
-          }
-        })
-      }
+        }
     });
-  </script>
+
+    function updateTable(data) {
+        let table = "";
+        $(data).each(function(index, value) {
+            table += `<tr class="table-row">
+                        <td><i class="fas fa-sort" id="sort-serial"></i></td>
+                        <td>${index + 1}<input type="hidden" class="order-id" value="${value.id}"></td>
+                        <td>${value.category}</td>
+                        <td>${value.is_active == 1 ? 'active' : 'deactive'}</td>
+                        <td class="d-flex justify-content-center" style="gap: 5px;">
+                            <a class="btn btn-primary btn-sm btnEditCategory" data-id="${value.id}" data-category="${value.category}" data-is_active="${value.is_active}"><i class="fa fa-edit"></i></a>
+                            <button class="btn btn-danger btn-sm btnDeleteMenu" data-value="${value.id}"><i class="fa fa-trash"></i></button>
+                        </td>
+                    </tr>`;
+        });
+        $(sortTable).html(table);
+    }
+</script>
+
 @endpush
