@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use App\Models\FrontMenu;
 use Route;
 use Illuminate\Support\Str;
+use App\Models\SubMenu;
+use App\Models\UserMenuAccess;
+use Auth;
 use App\Http\Requests\Admin\FrontMenu\{ViewFrontMenuRequest, CreateFrontMenuRequest, StoreFrontMenuRequest, EditFrontMenuRequest, UpdateFrontMenuRequest, DeleteFrontMenuRequest};
 
 class FrontMenuController extends Controller
@@ -109,5 +112,18 @@ class FrontMenuController extends Controller
         }
         $frontValue = FrontMenu::orderby('sortIds', 'asc')->get();
         return response()->json($frontValue);
+    }
+
+    public function change_status(EditFrontMenuRequest $request)
+    {
+        $status = $request->status;
+        $id = $request->id;
+
+        $statusChange = FrontMenu::where('id', $id)->update(['is_active' => $status]);
+        if ($statusChange) {
+            return response()->json('success');
+        } else {
+            return response()->json('error');
+        }
     }
 }

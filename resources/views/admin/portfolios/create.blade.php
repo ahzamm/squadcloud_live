@@ -130,16 +130,6 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-md-6">
-                  <div class="form-group clearfix">
-                    <div class="icheck-success d-inline">
-                      <input type="checkbox" {{ old('status') != null ? 'checked' : 'unchecked' }} name="status" id="checkboxSuccess1">
-                      <label for="checkboxSuccess1">
-                        Status (On & Off)
-                      </label>
-                    </div>
-                  </div>
-                </div>
               </div>
           </div>
           <div class="card-footer">

@@ -227,4 +227,26 @@ class JobController extends Controller
         $frontValue = Job::orderby('sortIds', 'asc')->get();
         return response()->json($frontValue);
     }
+
+    public function change_status(Request $request)
+    {
+        $subMenuid = SubMenu::where('route_name', 'jobs.index')->first();
+        $userOperation = 'update_status';
+        $userId = Auth::guard('admin', 'user')->user()->id;
+        $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
+
+        if ($crudAccess == false) {
+            return response()->json(['unauthorized' => true]);
+        }
+
+        $status = $request->status;
+        $id = $request->id;
+
+        $statusChange = Job::where('id', $id)->update(['is_active' => $status]);
+        if ($statusChange) {
+            return response()->json('success');
+        } else {
+            return response()->json('error');
+        }
+    }
 }

@@ -70,16 +70,6 @@
                           <input name="page_title" type="text" class="form-control" placeholder="Example : Contact Us" value="{{ $menus->page_title }}">
                         </div>
                       </div>
-                      <div class="col-md-6">
-                        <div class="form-group clearfix">
-                          <div class="icheck-success d-inline">
-                            <input type="checkbox" {{ $menus->is_active == 1 ? 'checked' : 'unchecked' }} name="status" id="checkboxSuccess1">
-                            <label for="checkboxSuccess1">
-                              Status (On & Off)
-                            </label>
-                          </div>
-                        </div>
-                      </div>
                       <div class="col-md-12">
                         <div class="form-group">
                           <a class="btn btn-outline-secondary btn-sm float-right ml-2" href="{{ route('frontmenu.index') }}">Cancel</a>

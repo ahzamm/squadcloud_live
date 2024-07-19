@@ -9,6 +9,65 @@
     .move {
       cursor: move;
     }
+
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 55px;
+      height: 27px;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      -webkit-transition: .4s;
+      transition: .4s;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 20px;
+      width: 20px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      -webkit-transition: .4s;
+      transition: .4s;
+    }
+
+    input:checked+.slider {
+      background-color: green;
+    }
+
+    input:focus+.slider {
+      box-shadow: 0 0 1px #2196F3;
+    }
+
+    input:checked+.slider:before {
+      -webkit-transform: translateX(26px);
+      -ms-transform: translateX(26px);
+      transform: translateX(26px);
+    }
+
+    .slider.round {
+      border-radius: 34px;
+    }
+
+    .slider.round:before {
+      border-radius: 50%;
+    }
   </style>
   <div class="content-wrapper">
     <section class="content">
@@ -50,7 +109,12 @@
                           <td>
                             <center><button class="rounded" disabled style="width: 50px; height:20px; background-color:{{ $item->color }};box-shadow:0 0 10px grey ; border:none"></button></center>
                           </td>
-                          <td>{{ $item->status == 1 ? 'active' : 'deactive' }}</td>
+                          <td>
+                            <label class="switch">
+                              <input type="checkbox" class="status_check" @if ($item->status == 1) checked @endif data-user-id="{{ $item->id }}">
+                              <span class="slider round"></span>
+                            </label>
+                          </td>
                           <td>
                             <a href="{{ route('social.edit', $item->id) }}" class="btn btn-primary btn-sm"><i class="fa fa-pen"></i></a>
                             <a class="btn btn-danger btn-sm btnDeleteMenu text-white" data-value="{{ $item->id }}"><i class="fa fa-trash"></i></a>
@@ -78,6 +142,45 @@
   <script>
     $(document).ready(function() {
       $('#example').DataTable();
+      // Changing Status
+      let changeStatusUrl = "{{ route('social.status') }}";
+      $(".status_check").on('change', function(e) {
+        let currentStatus = "";
+        if ($(this).prop('checked') == true) {
+          currentStatus = 1;
+          $(this).closest('tr').find('.status').text('active');
+        } else {
+          currentStatus = 0;
+          $(this).closest('tr').find('.status').text('deactive');
+        }
+        var status = $(this);
+        e.preventDefault();
+        $.ajax({
+          url: changeStatusUrl,
+          type: "Post",
+          data: {
+            id: $(this).attr("data-user-id"),
+            status: currentStatus
+          },
+          success: function(response) {
+            if (response == "unauthorized") {
+              e.preventDefault();
+              swal("Error!", "Status Not Changed , Because You have No Rights To change status", "error");
+              status.prop('checked', false);
+            }
+            if (response == "success") {
+              swal({
+                title: 'Status Changed!',
+                text: "User Status Has been Changed!",
+                animation: false,
+                customClass: 'animated pulse',
+                type: 'success',
+              });
+            }
+          }
+        })
+      })
+
       // Delete Script
       let deleteUrl = "{{ route('social.destroy') }}";
       $('.btnDeleteMenu').click(function() {
@@ -154,7 +257,12 @@
                   <td><i class="${value.icon}"></i></td>
                   <td>${value.url}</td>
                   <td><center><button class="rounded" disabled style="width: 50px; height:20px; background-color:${value.color};box-shadow:0 0 10px grey ; border:none"></button></center></td>
-                  <td>${value.status == 1 ? 'active' : 'deactive'}</td>
+                  <td>
+            <label class="switch">
+              <input type="checkbox" class="status_check" ${value.is_active == 1 ? 'checked' : ''} data-user-id="${value.id}">
+              <span class="slider round"></span>
+            </label>
+          </td>
                   <td>
                   <a href="` + editUrlFront + "/" + value.id + `" class="btn btn-sm btn-info"><i class="fa fa-edit"></i></a>
                   <button class="btn btn-danger btn-sm deleteRecord" data-id="${value.id}">

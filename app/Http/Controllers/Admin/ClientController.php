@@ -114,4 +114,17 @@ class ClientController extends Controller
         $frontValue = Client::orderby('sortIds', 'asc')->get();
         return response()->json($frontValue);
     }
+
+    public function change_status(EditClientRequest $request)
+    {
+        $status = $request->status;
+        $id = $request->id;
+
+        $statusChange = Client::where('id', $id)->update(['is_active' => $status]);
+        if ($statusChange) {
+            return response()->json('success');
+        } else {
+            return response()->json('error');
+        }
+    }
 }

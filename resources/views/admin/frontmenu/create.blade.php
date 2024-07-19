@@ -64,16 +64,6 @@
                             <input name="page_title" type="text" class="form-control" placeholder="Example : Contact Us" value="{{ old('page_title') }}">
                           </div>
                         </div>
-                        <div class="col-lg-12 col-sm-12 col-xs-12">
-                          <div class="form-group clearfix">
-                            <div class="icheck-success d-inline">
-                              <input type="checkbox" {{ old('is_active') != null ? 'checked' : 'unchecked' }} name="is_active" id="checkboxSuccess1">
-                              <label for="checkboxSuccess1">
-                                Status (On & Off)
-                              </label>
-                            </div>
-                          </div>
-                        </div>
                       </div>
                       <div class="col-md-12" id="singleRoute" style="display: none">
                       </div>

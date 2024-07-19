@@ -314,4 +314,24 @@ class HomeSliderController extends Controller
         $frontValue = HomeSlider::orderby('sortIds', 'asc')->get();
         return response()->json($frontValue);
     }
+
+    public function change_status(Request $request)
+    {
+        $subMenuid = SubMenu::where('route_name', 'homesliders.index')->first();
+        $userOperation = 'update_status';
+        $userId = Auth::user()->id;
+        $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
+        if (!$crudAccess) {
+            return response()->json(['unauthorized' => true]);
+        }
+        $status = $request->status;
+        $id = $request->id;
+
+        $statusChange = HomeSlider::where('id', $id)->update(['is_active' => $status]);
+        if ($statusChange) {
+            return response()->json('success');
+        } else {
+            return response()->json('error');
+        }
+    }
 }

@@ -102,4 +102,17 @@ class BottomSliderController extends Controller
         $frontValue = BottomSlider::orderby('sortIds', 'asc')->get();
         return response()->json($frontValue);
     }
+
+    public function change_status(EditBottomSliderRequest $request)
+    {
+        $status = $request->status;
+        $id = $request->id;
+
+        $statusChange = BottomSlider::where('id', $id)->update(['is_active' => $status]);
+        if ($statusChange) {
+            return response()->json('success');
+        } else {
+            return response()->json('error');
+        }
+    }
 }

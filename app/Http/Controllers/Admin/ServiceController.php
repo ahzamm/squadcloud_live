@@ -125,4 +125,17 @@ class ServiceController extends Controller
         $frontValue = Service::orderby('sortIds', 'asc')->get();
         return response()->json($frontValue);
     }
+
+    public function change_status(EditServiceRequest $request)
+    {
+        $status = $request->status;
+        $id = $request->id;
+
+        $statusChange = Service::where('id', $id)->update(['is_active' => $status]);
+        if ($statusChange) {
+            return response()->json('success');
+        } else {
+            return response()->json('error');
+        }
+    }
 }

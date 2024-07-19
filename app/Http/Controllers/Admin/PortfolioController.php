@@ -210,4 +210,17 @@ class PortfolioController extends Controller
         $frontValue = Portfolio::orderby('sortIds', 'asc')->get();
         return response()->json($frontValue);
     }
+
+    public function change_status(EditPortfolioRequest $request)
+    {
+        $status = $request->status;
+        $id = $request->id;
+
+        $statusChange = Portfolio::where('id', $id)->update(['is_active' => $status]);
+        if ($statusChange) {
+            return response()->json('success');
+        } else {
+            return response()->json('error');
+        }
+    }
 }

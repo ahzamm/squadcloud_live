@@ -12,9 +12,9 @@
 
     .tag-container {
       /* display: flex;
-      flex-wrap: wrap; */
+        flex-wrap: wrap; */
       /* padding: 5px;
-      width: 300px; */
+        width: 300px; */
       border: 1px solid #ccc;
       /* background-color: #fff; */
       border-radius: 5px;
@@ -77,7 +77,7 @@
                       <input type="text" class="form-control" name="title" placeholder="Example : 15 Mbps" required value="{{ old('title') }}">
                     </div>
                   </div>
-                  
+
                   <div class="col-md-6">
                     <div class="form-group">
                       <label for="">Company <span style="color: red">*</span></label>
@@ -109,11 +109,11 @@
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
-                    <label for="">Tag </label>
-                    <div class="tag-container">
-                      <input type="text" id="tag-input" placeholder="Add a tag without spaces and press Enter" >
-                      <input type="hidden" name="tags" id="tags">
-                    </div>
+                      <label for="">Tag </label>
+                      <div class="tag-container">
+                        <input type="text" id="tag-input" placeholder="Add a tag without spaces and press Enter">
+                        <input type="hidden" name="tags" id="tags">
+                      </div>
                     </div>
                   </div>
                   <div class="col-md-6">
@@ -126,17 +126,6 @@
                     <div class="form-group">
                       <label for="">Description <span style="color: red">*</span></label>
                       <textarea name="description" rows="4" placeholder="" class="form-control summernote">{{ old('description') }}</textarea>
-                    </div>
-                  </div>
-                  
-                  <div class="col-md-6">
-                    <div class="form-group clearfix">
-                      <div class="icheck-success d-inline">
-                        <input type="checkbox" {{ old('is_active') != null ? 'checked' : 'unchecked' }} name="is_active" id="checkboxSuccess1">
-                        <label for="checkboxSuccess1">
-                          Status (On & Off)
-                        </label>
-                      </div>
                     </div>
                   </div>
                 </div>

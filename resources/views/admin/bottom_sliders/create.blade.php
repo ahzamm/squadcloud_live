@@ -28,22 +28,11 @@
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
-                      <label for="">Bottom Slider Image <span style="color: red">*</span></label><br/>
+                      <label for="">Bottom Slider Image <span style="color: red">*</span></label><br />
                       <input type="file" name="image">
                       @error('logo')
                         <p class="text-danger mt-2 mb-0 text-sm">{{ $message }}</p>
                       @enderror
-                    </div>
-                  </div>
-                  
-                  <div class="col-md-6">
-                    <div class="form-group clearfix">
-                      <div class="icheck-success d-inline">
-                        <input type="checkbox" {{ old('is_active') != null ? 'checked' : 'unchecked' }} name="is_active" id="checkboxSuccess1">
-                        <label for="checkboxSuccess1">
-                          Status (On & Off)
-                        </label>
-                      </div>
                     </div>
                   </div>
                 </div>

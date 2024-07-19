@@ -18,7 +18,7 @@
               <div class="card-body pad">
                 @csrf
                 <div class="row">
-                <div class="col-md-6">
+                  <div class="col-md-6">
                     <div class="form-group">
                       <label for="">Title <span style="color: red">*</span></label>
                       <input type="text" class="form-control" name="title" value="{{ old('title') == null ? $bottom_slider->title : old('title') }}">
@@ -38,18 +38,6 @@
                       @error('image')
                         <p class="text-danger mt-2 mb-0 text-sm">{{ $message }}</p>
                       @enderror
-                    </div>
-                  </div>
-
-                
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group clearfix">
-                    <div class="icheck-success d-inline">
-                      <input type="checkbox" {{ $bottom_slider->is_active == 1 ? 'checked' : 'unchecked' }} name="is_active" id="checkboxSuccess1">
-                      <label for="checkboxSuccess1">
-                        Status (On & Off)
-                      </label>
                     </div>
                   </div>
                 </div>

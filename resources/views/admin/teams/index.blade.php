@@ -10,6 +10,65 @@
     .move {
       cursor: move;
     }
+
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 55px;
+      height: 27px;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      -webkit-transition: .4s;
+      transition: .4s;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 20px;
+      width: 20px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      -webkit-transition: .4s;
+      transition: .4s;
+    }
+
+    input:checked+.slider {
+      background-color: green;
+    }
+
+    input:focus+.slider {
+      box-shadow: 0 0 1px #2196F3;
+    }
+
+    input:checked+.slider:before {
+      -webkit-transform: translateX(26px);
+      -ms-transform: translateX(26px);
+      transform: translateX(26px);
+    }
+
+    .slider.round {
+      border-radius: 34px;
+    }
+
+    .slider.round:before {
+      border-radius: 50%;
+    }
   </style>
   <div class="content-wrapper">
     <section class="content">
@@ -44,7 +103,12 @@
                           <td><img width="40px" height="40px" src="{{ asset('frontend_assets/images/teams/' . $item->image) }}" alt="internet team provider in karachi/Clifton/pakistan" /> </td>
                           <td>{{ $item->designation }}</td>
                           <td>{{ $item->linkedin }}</td>
-                          <td>{{ $item->is_active == 1 ? 'active' : 'deactive' }}</td>
+                          <td>
+                            <label class="switch">
+                              <input type="checkbox" class="status_check" @if ($item->is_active == 1) checked @endif data-user-id="{{ $item->id }}">
+                              <span class="slider round"></span>
+                            </label>
+                          </td>
                           <td class="d-flex justify-content-center" style="gap: 5px;">
                             <a class="btn btn-primary btn-sm" href="{{ route('team.edit', $item->id) }}"><i class="fa fa-edit"></i></a>
                             <button class="btn btn-danger btn-sm btnDeleteMenu" data-value="{{ $item->id }}"><i class="fa fa-trash"></i></button>
@@ -78,6 +142,46 @@
     });
   </script>
   <script>
+    // Changing Status
+    let changeStatusUrl = "{{ route('team.status') }}";
+    $(".status_check").on('change', function(e) {
+      let currentStatus = "";
+      if ($(this).prop('checked') == true) {
+        currentStatus = 1;
+        $(this).closest('tr').find('.status').text('active');
+      } else {
+        currentStatus = 0;
+        $(this).closest('tr').find('.status').text('deactive');
+      }
+      var status = $(this);
+      e.preventDefault();
+      $.ajax({
+        url: changeStatusUrl,
+        type: "Post",
+        data: {
+          id: $(this).attr("data-user-id"),
+          status: currentStatus
+        },
+        success: function(response) {
+          if (response == "unauthorized") {
+            e.preventDefault();
+            swal("Error!", "Status Not Changed , Because You have No Rights To change status", "error");
+            status.prop('checked', false);
+          }
+          if (response == "success") {
+            swal({
+              title: 'Status Changed!',
+              text: "User Status Has been Changed!",
+              animation: false,
+              customClass: 'animated pulse',
+              type: 'success',
+            });
+          }
+        }
+      })
+    })
+
+    //   Delete
     let packageDeleteUrl = "{{ route('team.destroy') }}";
     $(document).on('click', '.btnDeleteMenu', function() {
       id = $(this).attr('data-value');
@@ -254,7 +358,12 @@
                   <td> <img width="40px" height="40px" src="{{ asset('frontend_assets/images/teams/') }}/${value.image}" alt="team logo" /></td>
                   <td>${value.designation}</td>
                   <td>${value.linkedin}</td>
-                  <td>${value.is_active == 1?'active':'deactive'}</td>
+                  <td>
+            <label class="switch">
+              <input type="checkbox" class="status_check" ${value.is_active == 1 ? 'checked' : ''} data-user-id="${value.id}">
+              <span class="slider round"></span>
+            </label>
+          </td>
                   <td>
                   <a href="` + editUrlFront + "/" + value.id + `" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></a>
                   <button class="btn btn-danger btn-sm deleteRecord" data-id="${value.id}">
