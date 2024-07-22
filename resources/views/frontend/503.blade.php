@@ -66,9 +66,22 @@
             color: #a91525;
             font-family: system-ui;">Site Maintenance in Progress!
         </p>
+
+        @php
+          use Illuminate\Support\Facades\DB;
+          $socials = DB::table('socials')->where('status', 1)->orderBy('sortIds', 'asc')->get();
+        @endphp
+
         <p style="font-size: 30px;margin-bottom: 0;
             margin-top: 24px;">We are currently performing maintenance on our site. We apologize for any inconvenience this may cause. Please check
-          back soon as we expect to be back up and running shortly. Thank you for your patience.</p>
+          back soon as we expect to be back up and running shortly. Thank you for your patience. <br>In the meantime, please check our social media channels for real-time updates. </p>
+        <br>
+
+        <div class="d-flex align-items-center justify-content-center mt-4" style="column-gap: 12px">
+          @foreach ($socials as $index => $social)
+            <a href="{{ $social->url }}" class="social-btn" data-aos="fade-{{ $index % 2 == 0 ? 'up' : 'down' }}" data-aos-duration="1000"><i class="{{ $social->icon }}"></i></a>
+          @endforeach
+        </div>
       </div>
     </div>
   </section>
