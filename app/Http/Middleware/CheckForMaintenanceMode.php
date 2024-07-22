@@ -22,7 +22,7 @@ class CheckForMaintenanceMode extends Middleware
             // Check if the request IP is in the allowed IPs list
             if (!in_array($requestIp, $allowedIps)) {
                 Log::warning('IP not allowed: ' . $requestIp);
-                throw new ServiceUnavailableHttpException(null, 'Service Unavailable', null, 503);
+                return response()->view('frontend.503', [], 503);
             } else {
                 Log::info('IP allowed: ' . $requestIp);
             }
