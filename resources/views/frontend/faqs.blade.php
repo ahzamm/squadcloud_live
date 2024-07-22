@@ -146,7 +146,9 @@
 
   <section id="faq-section" class="position-relative">
     <div class="container">
-      <h1 class="faq-title">Frequently Asked Questions</h1>
+      <div class="title-img d-flex align-items-center justify-content-center flex-column mb-5" data-aos="zoom-in-down">
+        <img src="frontend_assets/images/title/{{ $title_image }}" alt="" style="width: 50%;">
+      </div>
       <div class="row">
         <div class="col-lg-4">
           <div class="nav nav-pills faq-nav" id="faq-tabs" role="tablist" aria-orientation="vertical">

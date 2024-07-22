@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Site;
 use App\Http\Controllers\Controller;
 use App\Models\Faq;
 use App\Models\FaqCategory;
+use App\Models\FaqImage;
 use Illuminate\Http\Request;
 
 class FaqController extends Controller
@@ -18,7 +19,8 @@ class FaqController extends Controller
             }])
             ->orderBy('sortIds', 'asc')
             ->get();
+            $title_image = FaqImage::first()->title_image;
 
-        return view('frontend.faqs', compact('faq_categories'));
+        return view('frontend.faqs', compact('faq_categories', 'title_image'));
     }
 }
