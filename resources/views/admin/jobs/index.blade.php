@@ -203,6 +203,7 @@
     let packageDeleteUrl = "{{ route('job.destroy') }}";
     $(document).on('click', '.btnDeleteMenu', function() {
       id = $(this).attr('data-value');
+      var row = $(this);
       swal({
         title: 'Are you sure?',
         text: "You want to delete this record",
@@ -231,8 +232,8 @@
                 swal('Error!', 'No Rights To delete Job', "error");
               }
               if (res.status) {
+                $(row).parents('tr').remove();
                 swal('Updated!', 'Job deleted', 'success');
-                location.reload();
               }
             },
             error: function(jhxr, status, err) {
