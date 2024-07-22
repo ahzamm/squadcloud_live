@@ -344,6 +344,7 @@ Route::prefix('admin')->group(function () {
 
         Route::resource('faqs', 'App\Http\Controllers\Admin\FaqController');
         Route::get('/faqs/destroy/{id?}', [AdminFaqController::class, 'destroy'])->name('faq.destroy');
+        Route::post('/faq/title-image', [AdminFaqController::class, 'uploadImage'])->name('faq.image.store');
 
         Route::resource('faq_categories', 'App\Http\Controllers\Admin\FaqCategoryController');
         Route::get('/faq_catagory/destroy/{id?}', [FaqCategoryController::class, 'destroy'])->name('faq_category.destroy');

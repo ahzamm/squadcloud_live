@@ -20,7 +20,8 @@
               <div class="card-header">
                 <h3 class="card-title"><span><i class="fa-solid fa-box-open"></i></span> FAQs</h3>
                 <a class="btn btn-success btn-sm float-right ml-2" href="{{ route('faq_categories.index') }}">FAQ Categories</a>
-                <a class="btn btn-success btn-sm float-right" href="{{ route('faqs.create') }}"><i class="fa fa-plus"></i> Add FAQ</a>
+                <a class="btn btn-success btn-sm float-right ml-1 btnAddImage"><i class="fa fa-plus"></i> Add Title Image</a>
+                <a class="btn btn-success btn-sm float-right ml-0" href="{{ route('faqs.create') }}"><i class="fa fa-plus"></i> Add FAQ</a>
               </div>
 
               <div class="card-body">
@@ -32,7 +33,7 @@
                         <th>Serial#</th>
                         <th>Question</th>
                         <th>Answer</th>
-                        <th>Catagory</th>
+                        <th>Category</th>
                         <th>Status</th>
                         <th>Action</th>
                       </tr>
@@ -62,7 +63,31 @@
       </div>
     </section>
   </div>
-  @include('admin.front-faq._modal')
+
+  {{-- Title Image Modal --}}
+  <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="applyModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="applyModalLabel">Title Image</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
+        </div>
+        <div class="modal-body">
+          <form id="imageForm" action="{{ route('faq.image.store') }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            <div class="form-group">
+              @isset($faq_image->title_image)
+                <img src="{{ asset('frontend_assets/images/title/' . $faq_image->title_image) }}" height="60" width="120" alt="">
+              @endisset
+              <br><br>
+              <input type="file" name="title_image">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 @endsection
 @push('scripts')
   <script src="{{ asset('backend/plugins/toastr/toastr.min.js') }}"></script>
@@ -76,8 +101,7 @@
       $("#sortable").sortable();
       $("#sortable").disableSelection();
     });
-  </script>
-  <script>
+
     let packageDeleteUrl = "{{ route('faq.destroy') }}";
     $(document).on('click', '.btnDeleteMenu', function() {
       id = $(this).attr('data-value');
@@ -117,107 +141,13 @@
           })
         }
       })
-    })
-    //delete menu end
-    function validateEmail(email) {
-      const re =
-        /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-      return re.test(String(email).toLowerCase());
-    }
+    });
+
     $(function() {
       $("#example1").DataTable({
         "responsive": true
       });
     });
-    $(document).on('click', '.viewFrontPages', function() {
-      $('#frontPagesModal').modal('show').find('.modal-content').html(`<div class="modal-body">
-            <div class="overlay text-center"><i class="fas fa-2x fa-sync-alt fa-spin text-light"></i></div>
-            </div>`);
-      id = $(this).attr('data-value');
-      $.ajax({
-        method: 'get',
-        url: '/admin/front-pages/' + id,
-        dataType: 'html',
-        success: function(res) {
-          $('#frontPagesModal').find('.modal-content').html(res);
-        }
-      })
-    })
-    $(document).on('click', '#emailEditP, #emailEditC', function() {
-      $('#frontPagesModal').modal('show').find('.modal-content').html(`<div class="modal-body">
-            <div class="overlay text-center"><i class="fas fa-2x fa-sync-alt fa-spin text-light"></i></div>
-            </div>`);
-      valFlag = $(this).attr('data-value');
-      $.ajax({
-        method: 'get',
-        url: '/admin/partner-emails/' + valFlag,
-        dataType: 'html',
-        success: function(res) {
-          $('#frontPagesModal').find('.modal-content').html(res);
-        },
-        error: function(jhxr, err, status) {
-          console.log(jhxr);
-        }
-      })
-    })
-    $(document).on('click', '.removeMail', function() {
-      $(this).parents('li').remove();
-    });
-    $(document).on('click', '#addEmail', function() {
-      email = $('#email').val();
-      if (email != '' && validateEmail(email)) {
-        $('.todo-list').append(`<li>
-              <span class="text">${email}</span>
-              <span class="float-right removeMail" style="cursor: pointer">
-              <i class="fas fa-times"></i>
-              </span>
-              <input type="hidden" name="emails[]" value="${email}">
-              </li>`);
-        $('#email').removeClass('is-invalid').val('');
-      } else {
-        $('#email').addClass('is-invalid')
-      }
-    })
-    // changeContactEmail
-    $(document).on('click', '#updateEmails', function() {
-      $.ajax({
-        url: "/admin/partner-emails",
-        type: "POST",
-        data: new FormData(document.forms.namedItem("changeContactEmail")),
-        contentType: false,
-        cache: false,
-        processData: false,
-        dataType: 'JSON',
-        beforeSend: function() {},
-        success: function(res) {
-          if (res.status) {
-            $('#frontPagesModal').modal('hide');
-            toastr.info('Emails Updated Successfully');
-          }
-        },
-        error: function(jhxr, status, err) {
-          console.log(jhxr);
-        },
-        complete: function() {}
-      });
-    });
-    // Delete Function
-  </script>
-  <script>
-    $(document).on('click', '.viewFrontPages', function() {
-      $('#frontPagesModal').modal('show').find('.modal-content').html(`<div class="modal-body">
-      <div class="overlay text-center"><i class="fas fa-2x fa-sync-alt fa-spin text-light"></i></div>
-      </div>`);
-      id = $(this).attr('data-value');
-      $.ajax({
-        method: 'get',
-        url: '/admin/jobs/' + id,
-        dataType: 'html',
-        success: function(res) {
-          $('#frontPagesModal').find('.modal-content').html(res);
-        }
-      })
-    })
 
     let sortTable = $("#sortfrontMenu");
     let sortingFrontUrl = "{{ route('sort.faq') }}";
@@ -262,6 +192,10 @@
           }
         })
       }
+    });
+
+    $(document).on('click', '.btnAddImage', function() {
+      $('#imageModal').modal('show');
     });
   </script>
 @endpush

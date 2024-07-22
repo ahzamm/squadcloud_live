@@ -7,9 +7,11 @@ use App\Models\FaqCategory;
 use Illuminate\Http\Request;
 use App\Models\Service;
 use App\Models\SubMenu;
+use App\Models\FaqImage;
 use App\Models\UserMenuAccess;
 use App\Models\Faq;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 use Auth;
 
 class FaqController extends Controller
@@ -25,7 +27,8 @@ class FaqController extends Controller
         }
 
         $faqs = Faq::orderby('sortIds', 'asc')->get();
-        return view('admin.faqs.index', compact('faqs'));
+        $faq_image = FaqImage::first();
+        return view('admin.faqs.index', compact('faqs', 'faq_image'));
     }
 
     public function create()
@@ -166,7 +169,6 @@ class FaqController extends Controller
     public function updateSorting(Request $request)
     {
         $sortIds = $request->sort_Ids;
-        // dd($sortIds);
         foreach ($sortIds as $key => $value) {
             $menu = Faq::find($value);
             if ($menu) {
@@ -176,5 +178,40 @@ class FaqController extends Controller
         }
         $frontValue = Faq::orderby('sortIds', 'asc')->get();
         return response()->json($frontValue);
+    }
+
+    public function uploadImage(Request $request)
+    {
+        $subMenuid = SubMenu::where('route_name', 'faqs.index')->first();
+        $userOperation = 'update_status';
+        $userId = Auth::guard('admin', 'user')->user()->id;
+        $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
+
+        if ($crudAccess == false) {
+            return redirect()->back()->withInput()->with('error', 'No right to edit a vacency');
+        }
+
+        $faq_image = FaqImage::first();
+
+        if ($request->hasFile('title_image')) {
+            if (!$request->file('title_image')->isValid() || !in_array($request->file('title_image')->extension(), ['jpeg', 'png', 'jpg'])) {
+                return redirect()->back()->withInput()->with('error', 'Please provide a valid Title image file of type: jpeg, png, or jpg.');
+            }
+        }
+
+        if ($request->hasFile('title_image')) {
+            if ($faq_image->title_image && file_exists(public_path('frontend_assets/images/title/' . $faq_image->title_image))) {
+                unlink(public_path('frontend_assets/images/title/' . $faq_image->title_image));
+            }
+            $file = $request->file('title_image');
+            $extension = $file->getClientOriginalExtension();
+            $filename = Str::random(40) . '.' . $extension;
+            $file->move(public_path('frontend_assets/images/title'), $filename);
+            $faq_image->title_image = $filename;
+        }
+
+        $faq_image->save();
+
+        return redirect()->route('faqs.index')->with('success', 'Title Image updated successfully!');
     }
 }
