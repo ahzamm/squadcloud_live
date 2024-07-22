@@ -287,9 +287,9 @@
                       </td>
                       <td >${value.menu}</td>
                       <td>${value.slug}</td>
+                      <td>${value.page_title}</td>
                       <td>${value.tagline}</td>
                       <td> <img width="100px" height="40px" src="{{ asset('frontend_assets/images/title/') }}/${value.title_image}" alt="service logo" /></td>
-                      <td>${value.page_title}</td>
                       <td>
                 <label class="switch">
                   <input type="checkbox" class="status_check" ${value.is_active == 1 ? 'checked' : ''} data-user-id="${value.id}">

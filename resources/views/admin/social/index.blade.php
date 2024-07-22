@@ -249,7 +249,7 @@
                   <td><center><button class="rounded" disabled style="width: 50px; height:20px; background-color:${value.color};box-shadow:0 0 10px grey ; border:none"></button></center></td>
                   <td>
                     <label class="switch">
-                      <input type="checkbox" class="status_check" ${value.is_active == 1 ? 'checked' : ''} data-user-id="${value.id}">
+                      <input type="checkbox" class="status_check" ${value.status == 1 ? 'checked' : ''} data-user-id="${value.id}">
                       <span class="slider round"></span>
                     </label>
                   </td>
