@@ -41,7 +41,7 @@ class FaqController extends Controller
             return redirect()->back()->withInput()->with('error', 'No rights To Create Vacency');
         }
 
-        $categories = FaqCategory::all();
+        $categories = FaqCategory::orderby('sortIds', 'asc')->get();
         return view('admin.faqs.create', compact('categories'));
     }
 
