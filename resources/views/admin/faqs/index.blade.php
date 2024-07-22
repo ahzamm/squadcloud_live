@@ -251,8 +251,8 @@
                    <td>${value.question}</td>
                    <td>${value.answer}</td>
                   <td>${value.is_active == 1?'active':'deactive'}</td>
-                  <td>
-                  <a href="` + editUrlFront + "/" + value.id + `" class="btn btn-sm btn-info"><i class="fa fa-edit"></i></a>
+                  <td class="d-flex justify-content-center" style="gap: 5px;">
+                                <a class="btn btn-primary btn-sm" href="` + editUrlFront + "/" + value.id + `" class="btn btn-sm btn-info"><i class="fa fa-edit"></i></a>
                   <button class="btn btn-danger btn-sm deleteRecord" data-id="${value.id}">
                   <i class="fa fa-trash"></i> </button>
                   </td>

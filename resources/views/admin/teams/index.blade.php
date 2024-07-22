@@ -252,7 +252,7 @@
                     </label>
                   </td>
                   <td class="d-flex justify-content-center" style="gap: 5px;">
-                    <a href="${editUrlFront.replace(':team', value.id)}" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></a>
+                                <a class="btn btn-primary btn-sm"  href="${editUrlFront.replace(':team', value.id)}" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></a>
                     <button class="btn btn-danger btn-sm btnDeleteMenu" data-value="${value.id}">
                       <i class="fa fa-trash"></i>
                     </button>

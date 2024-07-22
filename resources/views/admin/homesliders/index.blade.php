@@ -171,7 +171,7 @@
       $("#sortable").disableSelection();
     });
   </script>
- <script>
+  <script>
     $(document).ready(function() {
       // Initialize DataTable
       $('#example1').DataTable({
@@ -318,8 +318,8 @@
                 <span class="slider round"></span>
               </label>
             </td>
-                          <td class="d-flex justify-content-center" style="gap: 5px;">
-                              <a href="${editUrlFront}/${value.id}" class="btn btn-sm btn-info"><i class="fa fa-edit"></i></a>
+            <td class="d-flex justify-content-center" style="gap: 5px;">
+                                <a class="btn btn-primary btn-sm" href="${editUrlFront}/${value.id}" class="btn btn-sm btn-info"><i class="fa fa-edit"></i></a>
                               <button class="btn btn-danger btn-sm btnDeleteMenu" data-value="${value.id}">
                                   <i class="fa fa-trash"></i>
                               </button>
@@ -332,93 +332,5 @@
         }
       });
     });
-
-    // Email validation
-    function validateEmail(email) {
-      const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-      return re.test(String(email).toLowerCase());
-    }
-
-    // Handle front pages view
-    $(document).on('click', '.viewFrontPages', function() {
-      $('#frontPagesModal').modal('show').find('.modal-content').html(`<div class="modal-body">
-        <div class="overlay text-center"><i class="fas fa-2x fa-sync-alt fa-spin text-light"></i></div>
-        </div>`);
-      id = $(this).attr('data-value');
-      $.ajax({
-        method: 'get',
-        url: '/admin/front-pages/' + id,
-        dataType: 'html',
-        success: function(res) {
-          $('#frontPagesModal').find('.modal-content').html(res);
-        }
-      })
-    });
-
-    // Handle partner emails
-    $(document).on('click', '#emailEditP, #emailEditC', function() {
-      $('#frontPagesModal').modal('show').find('.modal-content').html(`<div class="modal-body">
-        <div class="overlay text-center"><i class="fas fa-2x fa-sync-alt fa-spin text-light"></i></div>
-        </div>`);
-      valFlag = $(this).attr('data-value');
-      $.ajax({
-        method: 'get',
-        url: '/admin/partner-emails/' + valFlag,
-        dataType: 'html',
-        success: function(res) {
-          $('#frontPagesModal').find('.modal-content').html(res);
-        },
-        error: function(jhxr, err, status) {
-          console.log(jhxr);
-        }
-      })
-    });
-
-    // Remove email
-    $(document).on('click', '.removeMail', function() {
-      $(this).parents('li').remove();
-    });
-
-    // Add email
-    $(document).on('click', '#addEmail', function() {
-      email = $('#email').val();
-      if (email != '' && validateEmail(email)) {
-        $('.todo-list').append(`<li>
-          <span class="text">${email}</span>
-          <span class="float-right removeMail" style="cursor: pointer">
-            <i class="fas fa-times"></i>
-          </span>
-          <input type="hidden" name="emails[]" value="${email}">
-        </li>`);
-        $('#email').removeClass('is-invalid').val('');
-      } else {
-        $('#email').addClass('is-invalid')
-      }
-    });
-
-    // Update emails
-    $(document).on('click', '#updateEmails', function() {
-      $.ajax({
-        url: "/admin/partner-emails",
-        type: "POST",
-        data: new FormData(document.forms.namedItem("changeContactEmail")),
-        contentType: false,
-        cache: false,
-        processData: false,
-        dataType: 'JSON',
-        beforeSend: function() {},
-        success: function(res) {
-          if (res.status) {
-            $('#frontPagesModal').modal('hide');
-            toastr.info('Emails Updated Successfully');
-          }
-        },
-        error: function(jhxr, status, err) {
-          console.log(jhxr);
-        },
-        complete: function() {}
-      });
-    });
   </script>
-
 @endpush

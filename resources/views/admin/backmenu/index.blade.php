@@ -47,8 +47,8 @@
                             <td>{{ $key + 1 }}<input type="hidden" class="order-id"value="{{ $menu->id }}"></td>
                             <td>{{ $menu->menu }}</td>
                             <td>{{ $menu->submenus->count() }}</td>
-                            <td>
-                              <a href="{{ route('menu.edit', $menu->id) }}" class="btn btn-sm btn-info"><i class="fa fa-edit"></i></a>
+                            <td class="d-flex justify-content-center" style="gap: 5px;">
+                              <a class="btn btn-primary btn-sm" href="{{ route('menu.edit', $menu->id) }}" class="btn btn-sm btn-info"><i class="fa fa-edit"></i></a>
                               <button class="btn btn-sm btn-danger btnDeleteMenu" data-value="{{ $menu->id }}"><i class="fa fa-trash"></i></button>
                             </td>
                           </tr>
@@ -231,8 +231,8 @@
                   <td>${index + 1 }<input type="hidden" class="order-id" value="${value.id}"></td>
                   <td>${value.menu} </td>
                   <td>${value.submenus.length}</td>
-                  <td>
-                  <a href="${editUrlFront}/${value.id}" class="btn btn-sm btn-info"><i class="fa fa-edit"></i></a>
+                  <td class="d-flex justify-content-center" style="gap: 5px;">
+                                <a class="btn btn-primary btn-sm" href="${editUrlFront}/${value.id}" class="btn btn-sm btn-info"><i class="fa fa-edit"></i></a>
                   <button  class="btn btn-sm btn-danger btnDeleteMenu" data-value="${value.id}"><i class="fa fa-trash"></i></button>
                   </td>
                   </tr>`;

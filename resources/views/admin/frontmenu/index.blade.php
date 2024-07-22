@@ -130,8 +130,8 @@
                                 <span class="slider round"></span>
                               </label>
                             </td>
-                            <td>
-                              <a href="{{ route('front.edit', $menu->id) }}" class="btn btn-sm btn-info"><i class="fa fa-edit"></i></a>
+                            <td class="d-flex justify-content-center" style="gap: 5px;">
+                              <a class="btn btn-primary btn-sm" href="{{ route('front.edit', $menu->id) }}" class="btn btn-sm btn-info"><i class="fa fa-edit"></i></a>
                               <button class="btn btn-danger btn-sm btnDeleteMenu" data-id="{{ $menu->id }}">
                                 <i class="fa fa-trash"></i> </button>
                             </td>
@@ -296,8 +296,8 @@
                   <span class="slider round"></span>
                 </label>
               </td>
-                      <td>
-                      <a href="` + editUrlFront + "/" + value.id + `" class="btn btn-sm btn-info"><i class="fa fa-edit"></i></a>
+              <td class="d-flex justify-content-center" style="gap: 5px;">
+                            <a class="btn btn-primary btn-sm" href="` + editUrlFront + "/" + value.id + `" class="btn btn-sm btn-info"><i class="fa fa-edit"></i></a>
                       <button class="btn btn-danger btn-sm btnDeleteMenu" data-id="${value.id}">
                       <i class="fa fa-trash"></i> </button>
                       </td>

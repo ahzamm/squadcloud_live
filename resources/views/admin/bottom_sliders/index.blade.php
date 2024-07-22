@@ -252,8 +252,8 @@
                       <span class="slider round"></span>
                     </label>
                   </td>
-                  <td>
-                    <a href="${editUrlFront.replace(':id', value.id)}" class="btn btn-sm btn-info"><i class="fa fa-edit"></i></a>
+                  <td class="d-flex justify-content-center" style="gap: 5px;">
+                                <a class="btn btn-primary btn-sm" href="${editUrlFront.replace(':id', value.id)}" class="btn btn-sm btn-info"><i class="fa fa-edit"></i></a>
                     <button class="btn btn-danger btn-sm btnDeleteMenu" data-value="${value.id}">
                       <i class="fa fa-trash"></i>
                     </button>
@@ -297,4 +297,3 @@
     });
   </script>
 @endpush
-
