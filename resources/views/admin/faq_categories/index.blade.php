@@ -414,7 +414,12 @@
                         <td><i class="fas fa-sort" id="sort-serial"></i></td>
                         <td>${index + 1}<input type="hidden" class="order-id" value="${value.id}"></td>
                         <td>${value.category}</td>
-                        <td>${value.is_active == 1 ? 'active' : 'deactive'}</td>
+                        <td>
+          <label class="switch">
+            <input type="checkbox" class="status_check" ${value.is_active == 1 ? 'checked' : ''} data-user-id="${value.id}">
+            <span class="slider round"></span>
+          </label>
+        </td>
                         <td class="d-flex justify-content-center" style="gap: 5px;">
                             <a class="btn btn-primary btn-sm btnEditCategory" data-id="${value.id}" data-category="${value.category}" data-is_active="${value.is_active}"><i class="fa fa-edit"></i></a>
                             <button class="btn btn-danger btn-sm btnDeleteMenu" data-value="${value.id}"><i class="fa fa-trash"></i></button>
