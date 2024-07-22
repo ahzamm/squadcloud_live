@@ -10,6 +10,23 @@
   .move {
     cursor: move;
   }
+
+  .ui-sortable-helper {
+    display: table;
+    width: 100%;
+    background: #fff;
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  }
+
+  .ui-sortable-placeholder {
+    display: table;
+    width: 100%;
+    visibility: visible !important;
+    background: #f0f0f0;
+    border: 1px dashed #ddd;
+    height: 40px;
+  }
 </style>
 <div class="content-wrapper">
   <section class="content">
@@ -98,7 +115,15 @@
 <script src="{{ asset('site/sweet-alert/sweetalert2.min.js') }}"></script>
 <script>
   $(function() {
-    $("#sortable").sortable();
+    $("#sortfrontMenu").sortable({
+      helper: function(e, ui) {
+        ui.children().each(function() {
+          $(this).width($(this).width());
+        });
+        return ui;
+      },
+      placeholder: "ui-sortable-placeholder"
+    });
     $("#sortable").disableSelection();
   });
   $(document).ready(function() {
@@ -240,7 +265,14 @@
           $(sortTable).html(table);
         }
       })
-    }
+    },
+    helper: function(e, ui) {
+      ui.children().each(function() {
+        $(this).width($(this).width());
+      });
+      return ui;
+    },
+    placeholder: "ui-sortable-placeholder"
   });
 </script>
 @endpush

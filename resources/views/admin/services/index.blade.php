@@ -69,6 +69,23 @@
     .slider.round:before {
       border-radius: 50%;
     }
+
+    .ui-sortable-helper {
+      display: table;
+      width: 100%;
+      background: #fff;
+      border: 1px solid #ddd;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    .ui-sortable-placeholder {
+      display: table;
+      width: 100%;
+      visibility: visible !important;
+      background: #f0f0f0;
+      border: 1px dashed #ddd;
+      height: 40px;
+    }
   </style>
   <div class="content-wrapper">
     <section class="content">
@@ -99,7 +116,7 @@
                     <tbody id="sortfrontMenu" class="move">
                       @foreach ($services as $key => $item)
                         <tr class="table-row">
-                          <td>{{ $key + 1 }}</i><input type="hidden" class="order-id"value="{{ $item->id }}"></td>
+                          <td>{{ $key + 1 }}</i><input type="hidden" class="order-id" value="{{ $item->id }}"></td>
                           <td>{{ $item->service }}</td>
                           <td><img width="40px" height="40px" src="{{ asset('frontend_assets/images/services/' . $item->logo) }}" alt="service logo" /></td>
                           <td>{{ $item->tagline }}</td>
@@ -138,7 +155,16 @@
   <script src="{{ asset('site/sweet-alert/sweetalert2.min.js') }}"></script>
   <script>
     $(function() {
-      $("#sortable").sortable();
+
+      $("#sortfrontMenu").sortable({
+        helper: function(e, ui) {
+          ui.children().each(function() {
+            $(this).width($(this).width());
+          });
+          return ui;
+        },
+        placeholder: "ui-sortable-placeholder"
+      });
       $("#sortable").disableSelection();
     });
 
@@ -242,7 +268,14 @@
             reloadTableData(response);
           }
         });
-      }
+      },
+      helper: function(e, ui) {
+        ui.children().each(function() {
+          $(this).width($(this).width());
+        });
+        return ui;
+      },
+      placeholder: "ui-sortable-placeholder"
     });
 
     function reloadTableData(data) {
