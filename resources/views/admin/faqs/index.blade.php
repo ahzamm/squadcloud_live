@@ -19,9 +19,9 @@
             <div class="card mt-3 card-outline card-info">
               <div class="card-header">
                 <h3 class="card-title"><span><i class="fa-solid fa-box-open"></i></span> FAQs</h3>
-                <a class="btn btn-success btn-sm float-right ml-2" href="{{ route('faq_categories.index') }}">FAQ Categories</a>
+                <a class="btn btn-success btn-sm float-right ml-1" href="{{ route('faq_categories.index') }}">FAQ Categories</a>
                 <a class="btn btn-success btn-sm float-right ml-1 btnAddImage"><i class="fa fa-plus"></i> Add Title Image</a>
-                <a class="btn btn-success btn-sm float-right ml-0" href="{{ route('faqs.create') }}"><i class="fa fa-plus"></i> Add FAQ</a>
+                <a class="btn btn-success btn-sm float-right ml-1" href="{{ route('faqs.create') }}"><i class="fa fa-plus"></i> Add FAQ</a>
               </div>
 
               <div class="card-body">
