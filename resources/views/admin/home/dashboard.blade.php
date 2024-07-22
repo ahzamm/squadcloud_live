@@ -74,11 +74,11 @@
             </a>
           </div>
           <div class="col-lg-3 col-6">
-            <a href="{{ route('products.index') }}">
+            <a href="{{ route('portfolio_demo_requests.index') }}">
               <div class="small-box bg-info">
                 <div class="inner">
-                  <h3>{{ $productCount }}</h3>
-                  <p>Products</p>
+                  <h3>{{ $portfolioDemoRequestCount }}</h3>
+                  <p>Demo Requests</p>
                 </div>
                 <div class="icon">
                   <i class="ion ion-navigate"></i>
@@ -120,7 +120,7 @@
             <a href="{{ route('jobs.index') }}" class="small-box-footer">
               <div class="small-box bg-teal">
                 <div class="inner">
-                  <h3>{{ $social }}</h3>
+                  <h3>{{ $jobsCount }}</h3>
                   <p>
                     Job Post
                   </p>
