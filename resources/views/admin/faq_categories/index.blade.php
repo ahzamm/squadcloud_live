@@ -10,6 +10,65 @@
     .move {
       cursor: move;
     }
+
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 55px;
+      height: 27px;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      -webkit-transition: .4s;
+      transition: .4s;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 20px;
+      width: 20px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      -webkit-transition: .4s;
+      transition: .4s;
+    }
+
+    input:checked+.slider {
+      background-color: green;
+    }
+
+    input:focus+.slider {
+      box-shadow: 0 0 1px #2196F3;
+    }
+
+    input:checked+.slider:before {
+      -webkit-transform: translateX(26px);
+      -ms-transform: translateX(26px);
+      transform: translateX(26px);
+    }
+
+    .slider.round {
+      border-radius: 34px;
+    }
+
+    .slider.round:before {
+      border-radius: 50%;
+    }
   </style>
   <div class="content-wrapper">
     <section class="content">
@@ -42,7 +101,12 @@
                           <td><i class="fas fa-sort" id="sort-serial"></i></td>
                           <td>{{ $key + 1 }}<input type="hidden" class="order-id"value="{{ $item->id }}"></td>
                           <td>{{ $item->category }}</td>
-                          <td>{{ $item->is_active == 1 ? 'active' : 'deactive' }}</td>
+                          <td>
+                            <label class="switch">
+                              <input type="checkbox" class="status_check" @if ($item->is_active == 1) checked @endif data-user-id="{{ $item->id }}">
+                              <span class="slider round"></span>
+                            </label>
+                          </td>
                           <td class="d-flex justify-content-center" style="gap: 5px;">
                             <a class="btn btn-primary btn-sm btnEditCategory" data-id="{{ $item->id }}" data-category="{{ $item->category }}" data-is_active="{{ $item->is_active }}"><i
                                 class="fa fa-edit"></i></a>
@@ -76,14 +140,6 @@
               <label for="category-name">Category</label>
               <input type="text" id="category-name" name="category" class="form-control" required>
             </div>
-            <div class="form-group clearfix">
-              <div class="icheck-success d-inline">
-                <input type="checkbox" {{ old('is_active') != null ? 'checked' : 'unchecked' }} name="is_active" id="checkboxSuccess1">
-                <label for="checkboxSuccess1">
-                  Status (On & Off)
-                </label>
-              </div>
-            </div>
             <button type="submit" class="btn btn-primary" id="submitButton">Submit</button>
           </form>
         </div>
@@ -110,43 +166,77 @@
   <script>
     var storeRoute = "{{ route('faq_categories.store') }}";
     var updateRoute = "{{ route('faq_categories.update', ':id') }}";
-</script>
 
-<script>
     function showAddModal() {
-        $('#categoryModal').modal('show');
-        $('#categoryForm').attr('action', storeRoute);
-        $('#formMethod').val('POST');
-        $('#category-name').val('');
-        $('#checkboxSuccess1').prop('checked', false); // Ensure checkbox is unchecked when adding
+      $('#categoryModal').modal('show');
+      $('#categoryForm').attr('action', storeRoute);
+      $('#formMethod').val('POST');
+      $('#category-name').val('');
+      $('#checkboxSuccess1').prop('checked', false); // Ensure checkbox is unchecked when adding
     }
 
     function showEditModal(id, category, isActive) {
-        $('#categoryModal').modal('show');
+      $('#categoryModal').modal('show');
 
-        // Replace the placeholder with the actual ID
-        var actionUrl = updateRoute.replace(':id', id);
+      // Replace the placeholder with the actual ID
+      var actionUrl = updateRoute.replace(':id', id);
 
-        $('#categoryForm').attr('action', actionUrl);
-        $('#formMethod').val('PUT');
-        $('#category-name').val(category);
-        $('#checkboxSuccess1').prop('checked', isActive); // Set checkbox based on isActive value
+      $('#categoryForm').attr('action', actionUrl);
+      $('#formMethod').val('PUT');
+      $('#category-name').val(category);
+      $('#checkboxSuccess1').prop('checked', isActive); // Set checkbox based on isActive value
     }
 
     $(document).on('click', '.btnAddCategory', function() {
-        showAddModal();
+      showAddModal();
     });
 
     $(document).on('click', '.btnEditCategory', function() {
-        const id = $(this).data('id');
-        const category = $(this).data('category');
-        const isActive = $(this).data('is_active'); // Get is_active value
-        showEditModal(id, category, isActive);
+      const id = $(this).data('id');
+      const category = $(this).data('category');
+      const isActive = $(this).data('is_active'); // Get is_active value
+      showEditModal(id, category, isActive);
     });
-</script>
 
+    // Changing Status with event delegation
+    let changeStatusUrl = "{{ route('faq_category.status') }}";
+    $(document).on('change', '.status_check', function(e) {
+      let currentStatus = "";
+      if ($(this).prop('checked') == true) {
+        currentStatus = 1;
+        $(this).closest('tr').find('.status').text('active');
+      } else {
+        currentStatus = 0;
+        $(this).closest('tr').find('.status').text('deactive');
+      }
+      var status = $(this);
+      e.preventDefault();
+      $.ajax({
+        url: changeStatusUrl,
+        type: "Post",
+        data: {
+          id: $(this).attr("data-user-id"),
+          status: currentStatus
+        },
+        success: function(response) {
+          if (response == "unauthorized") {
+            e.preventDefault();
+            swal("Error!", "Status Not Changed , Because You have No Rights To change status", "error");
+            status.prop('checked', false);
+          }
+          if (response == "success") {
+            swal({
+              title: 'Status Changed!',
+              text: "Faq Status Has been Changed!",
+              animation: false,
+              customClass: 'animated pulse',
+              type: 'success',
+            });
+          }
+        }
+      })
+    });
 
-  <script>
     let packageDeleteUrl = "{{ route('faq_category.destroy') }}";
     $(document).on('click', '.btnDeleteMenu', function() {
       id = $(this).attr('data-value');
@@ -272,20 +362,20 @@
     });
     // Delete Function
   </script>
- <script>
+  <script>
     $(document).on('click', '.viewFrontPages', function() {
-        $('#frontPagesModal').modal('show').find('.modal-content').html(`<div class="modal-body">
+      $('#frontPagesModal').modal('show').find('.modal-content').html(`<div class="modal-body">
             <div class="overlay text-center"><i class="fas fa-2x fa-sync-alt fa-spin text-light"></i></div>
         </div>`);
-        id = $(this).attr('data-value');
-        $.ajax({
-            method: 'get',
-            url: '/admin/jobs/' + id,
-            dataType: 'html',
-            success: function(res) {
-                $('#frontPagesModal').find('.modal-content').html(res);
-            }
-        })
+      id = $(this).attr('data-value');
+      $.ajax({
+        method: 'get',
+        url: '/admin/jobs/' + id,
+        dataType: 'html',
+        success: function(res) {
+          $('#frontPagesModal').find('.modal-content').html(res);
+        }
+      })
     });
 
     let sortTable = $("#sortfrontMenu");
@@ -293,34 +383,34 @@
     let csrfToken = $('meta[name="csrf-token"]').attr('content'); // Get CSRF token from meta tag
 
     $(sortTable).sortable({
-        update: function(event, ui) {
-            var SortIds = $(this).find('.order-id').map(function() {
-                return $(this).val().trim();
-            }).get();
+      update: function(event, ui) {
+        var SortIds = $(this).find('.order-id').map(function() {
+          return $(this).val().trim();
+        }).get();
 
-            $.ajax({
-                url: sortingFrontUrl,
-                type: "post",
-                data: {
-                    sort_Ids: SortIds
-                },
-                headers: {
-                    "X-CSRF-TOKEN": csrfToken
-                },
-                success: function(response) {
-                    updateTable(response);
-                },
-                error: function(xhr, status, error) {
-                    console.error(xhr);
-                }
-            });
-        }
+        $.ajax({
+          url: sortingFrontUrl,
+          type: "post",
+          data: {
+            sort_Ids: SortIds
+          },
+          headers: {
+            "X-CSRF-TOKEN": csrfToken
+          },
+          success: function(response) {
+            updateTable(response);
+          },
+          error: function(xhr, status, error) {
+            console.error(xhr);
+          }
+        });
+      }
     });
 
     function updateTable(data) {
-        let table = "";
-        $(data).each(function(index, value) {
-            table += `<tr class="table-row">
+      let table = "";
+      $(data).each(function(index, value) {
+        table += `<tr class="table-row">
                         <td><i class="fas fa-sort" id="sort-serial"></i></td>
                         <td>${index + 1}<input type="hidden" class="order-id" value="${value.id}"></td>
                         <td>${value.category}</td>
@@ -330,9 +420,8 @@
                             <button class="btn btn-danger btn-sm btnDeleteMenu" data-value="${value.id}"><i class="fa fa-trash"></i></button>
                         </td>
                     </tr>`;
-        });
-        $(sortTable).html(table);
+      });
+      $(sortTable).html(table);
     }
-</script>
-
+  </script>
 @endpush

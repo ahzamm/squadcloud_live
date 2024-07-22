@@ -19,13 +19,13 @@
                 <div class="row">
                   <div class="col-md-12">
                     <div class="form-group">
-                        <label for="faq_category">Faq Category <span style="color: red">*</span></label>
-                        <select class="form-control" id="faq_category" name="faq_category">
-                            <option value="" disabled selected>Select Faq Category</option>
-                            @foreach ($categories as $category)
-                                <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>{{ $category->category }}</option>
-                            @endforeach
-                        </select>
+                      <label for="faq_category">Faq Category <span style="color: red">*</span></label>
+                      <select class="form-control" id="faq_category" name="faq_category">
+                        <option value="" disabled selected>Select Faq Category</option>
+                        @foreach ($categories as $category)
+                          <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>{{ $category->category }}</option>
+                        @endforeach
+                      </select>
                     </div>
                   </div>
                   <div class="col-md-12">
@@ -38,16 +38,6 @@
                     <div class="form-group">
                       <label for="">Answer <span style="color: red">*</span></label>
                       <textarea name="answer" rows="4" placeholder="" class="form-control summernote">{{ old('answer') }}</textarea>
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group clearfix">
-                      <div class="icheck-success d-inline">
-                        <input type="checkbox" {{ old('is_active') != null ? 'checked' : 'unchecked' }} name="is_active" id="checkboxSuccess1">
-                        <label for="checkboxSuccess1">
-                          Status (On & Off)
-                        </label>
-                      </div>
                     </div>
                   </div>
                 </div>

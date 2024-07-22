@@ -87,15 +87,14 @@ class FaqCategoryController extends Controller
 
     public function destroy($id = null)
     {
-            // dd("sdf");
-            $faq_category = FaqCategory::find($id);
-            if ($faq_category) {
-                $faq_category->delete();
+        $faq_category = FaqCategory::find($id);
+        if ($faq_category) {
+            $faq_category->delete();
 
-                return response()->json(['status' => true]);
-            } else {
-                return response()->json(['status' => false, 'message' => 'Category not found not found.']);
-            }
+            return response()->json(['status' => true]);
+        } else {
+            return response()->json(['status' => false, 'message' => 'Category not found not found.']);
+        }
     }
 
     public function crud_access($submenuId = null, $operation = null, $uId = null)
@@ -123,5 +122,26 @@ class FaqCategoryController extends Controller
         }
         $frontValue = FaqCategory::orderby('sortIds', 'asc')->get();
         return response()->json($frontValue);
+    }
+
+    public function change_status(Request $request)
+    {
+        $subMenuid = SubMenu::where('route_name', 'faqs.index')->first();
+        $userOperation = 'update_status';
+        $userId = Auth::user()->id;
+        $crudAccess = $this->crud_access($subMenuid->id, $userOperation, $userId);
+        if (!$crudAccess) {
+            return response()->json(['unauthorized' => true]);
+        }
+
+        $status = $request->status;
+        $id = $request->id;
+
+        $statusChange = FaqCategory::where('id', $id)->update(['is_active' => $status]);
+        if ($statusChange) {
+            return response()->json('success');
+        } else {
+            return response()->json('error');
+        }
     }
 }

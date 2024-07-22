@@ -345,9 +345,11 @@ Route::prefix('admin')->group(function () {
         Route::resource('faqs', 'App\Http\Controllers\Admin\FaqController');
         Route::get('/faqs/destroy/{id?}', [AdminFaqController::class, 'destroy'])->name('faq.destroy');
         Route::post('/faq/title-image', [AdminFaqController::class, 'uploadImage'])->name('faq.image.store');
+        Route::post('/faqs/change_status/{id?}', [AdminFaqController::class, 'change_status'])->name('faq.status');
 
         Route::resource('faq_categories', 'App\Http\Controllers\Admin\FaqCategoryController');
         Route::get('/faq_catagory/destroy/{id?}', [FaqCategoryController::class, 'destroy'])->name('faq_category.destroy');
+        Route::post('/faq_catagory/change_status/{id?}', [FaqCategoryController::class, 'change_status'])->name('faq_category.status');
 
         Route::get('/portfolio_demo_request', [PortfolioRequestController::class, 'index'])->name('portfolio_demo_requests.index');
         Route::get('/portfolio_demo_request/destroy/{id?}', [PortfolioRequestController::class, 'destroy'])->name('portfolio_demo_request.destroy');
