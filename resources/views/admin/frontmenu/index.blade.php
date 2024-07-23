@@ -193,6 +193,13 @@
     // Initialize DataTable
     $('#example').DataTable();
 
+    // Function to update serial numbers
+    function updateSerialNumbers() {
+      $('#example tbody tr').each(function(index) {
+        $(this).find('td').first().text(index + 1); // Assuming the serial number is in the first column
+      });
+    }
+
     // Changing Status with event delegation
     let changeStatusUrl = "{{ route('frontmenu.status') }}";
     $(document).on('change', '.status_check', function(e) {
@@ -236,7 +243,7 @@
     $(document).on('click', '.btnDeleteMenu', function() {
       var frontmenu = $(this).data("id");
       var token = $("meta[name='csrf-token']").attr("content");
-      var row = $(this);
+      var row = $(this).closest('tr');
       swal({
         title: 'Are you sure?',
         text: "You want to delete this record",
@@ -267,7 +274,8 @@
                 swal('Error!', 'No rights To Delete Front Menu', 'error');
               }
               if (res.status) {
-                $(row).parents('tr').remove();
+                row.remove();
+                updateSerialNumbers(); // Update serial numbers after row removal
                 swal('Updated!', 'Front Menu deleted', 'success');
               }
             },
@@ -307,28 +315,29 @@
             let table = "";
             $(response).each(function(index, value) {
               table += ` <tr>
-                      <td>${index + 1 }
-                      <input type="hidden" class="order-id" value="${value.id}">
-                      </td>
-                      <td >${value.menu}</td>
-                      <td>${value.slug}</td>
-                      <td>${value.page_title}</td>
-                      <td>${value.tagline}</td>
-                      <td> <img width="100px" height="40px" src="{{ asset('frontend_assets/images/title/') }}/${value.title_image}" alt="service logo" /></td>
-                      <td>
-                <label class="switch">
-                  <input type="checkbox" class="status_check" ${value.is_active == 1 ? 'checked' : ''} data-user-id="${value.id}">
-                  <span class="slider round"></span>
-                </label>
-              </td>
-              <td class="d-flex justify-content-center" style="gap: 5px;">
-                            <a class="btn btn-primary btn-sm" href="` + editUrlFront + "/" + value.id + `" class="btn btn-sm btn-info"><i class="fa fa-edit"></i></a>
-                      <button class="btn btn-danger btn-sm btnDeleteMenu" data-id="${value.id}">
-                      <i class="fa fa-trash"></i> </button>
-                      </td>
-                      </tr>`;
+                        <td>${index + 1 }
+                        <input type="hidden" class="order-id" value="${value.id}">
+                        </td>
+                        <td >${value.menu}</td>
+                        <td>${value.slug}</td>
+                        <td>${value.page_title}</td>
+                        <td>${value.tagline}</td>
+                        <td> <img width="100px" height="40px" src="{{ asset('frontend_assets/images/title/') }}/${value.title_image}" alt="service logo" /></td>
+                        <td>
+                  <label class="switch">
+                    <input type="checkbox" class="status_check" ${value.is_active == 1 ? 'checked' : ''} data-user-id="${value.id}">
+                    <span class="slider round"></span>
+                  </label>
+                </td>
+                <td class="d-flex justify-content-center" style="gap: 5px;">
+                              <a class="btn btn-primary btn-sm" href="` + editUrlFront + "/" + value.id + `" class="btn btn-sm btn-info"><i class="fa fa-edit"></i></a>
+                        <button class="btn btn-danger btn-sm btnDeleteMenu" data-id="${value.id}">
+                        <i class="fa fa-trash"></i> </button>
+                        </td>
+                        </tr>`;
             });
             $(sortTable).html(table);
+            updateSerialNumbers(); // Update serial numbers after sorting
           }
         })
       },

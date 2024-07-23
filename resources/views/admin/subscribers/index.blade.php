@@ -28,7 +28,7 @@
                     <tbody class="move">
                       @foreach ($subscribers as $key => $item)
                         <tr class="table-row">
-                          <td>{{ $key + 1 }}<input type="hidden" class="order-id" value="{{ $item->id }}"></td>
+                          <td class="serial-number">{{ $key + 1 }}<input type="hidden" class="order-id" value="{{ $item->id }}"></td>
                           <td>{{ $item->email }}</td>
                           <td class="d-flex justify-content-center" style="gap: 5px;">
                             <button class="btn btn-danger btn-sm btnDeleteMenu" data-value="{{ $item->id }}"><i class="fa fa-trash"></i></button>
@@ -56,9 +56,17 @@
   <script src="{{ asset('site/sweet-alert/sweetalert2.min.js') }}"></script>
   <script>
     let packageDeleteUrl = "{{ route('subscriber.destroy') }}";
+
+      // Function to update serial numbers
+   function updateSerialNumbers() {
+      $('#example1 tbody tr').each(function(index) {
+        $(this).find('td').first().text(index + 1); // Assuming the serial number is in the first column
+      });
+    }
+
     $(document).on('click', '.btnDeleteMenu', function() {
       id = $(this).attr('data-value');
-      var row = $(this);
+      var row = $(this).closest('tr');
       swal({
         title: 'Are you sure?',
         text: "You want to delete this record",
@@ -85,7 +93,8 @@
                 swal('Error!', 'No Rights To delete Subscriber', "error");
               }
               if (res.status) {
-                $(row).parents('tr').remove();
+                row.remove();
+                updateSerialNumbers();
                 swal('Updated!', 'Subscriber deleted', 'success');
               }
             },

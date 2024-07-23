@@ -96,7 +96,7 @@
                     <tbody>
                       @foreach ($data['email'] as $item)
                         <tr>
-                          <td>{{ $loop->iteration }}</td>
+                          <td class="serial-number">{{ $loop->iteration }}</td>
                           <td>{{ $item->smtp_server }}</td>
                           <td>{{ $item->port }}</td>
                           <td>{{ $item->emails }}</td>
@@ -174,9 +174,17 @@
       })
       // Delete Script
       let deleteUrl = "{{ route('email.destroy') }}";
+
+      // Function to update serial numbers
+   function updateSerialNumbers() {
+      $('#example tbody tr').each(function(index) {
+        $(this).find('td').first().text(index + 1); // Assuming the serial number is in the first column
+      });
+    }
+
       $(document).on('click', '.btnDeleteMenu', function() {
         menuId = $(this).attr('data-value');
-        row = $(this);
+      var row = $(this).closest('tr');
         swal({
           title: 'Are you sure?',
           text: "You want to delete this record",
@@ -204,7 +212,8 @@
                   location.reload();
                 }
                 if (res.status) {
-                  $(row).parents('tr').remove();
+                row.remove();
+                updateSerialNumbers();
                   swal('Deleted!', 'Email Has been deleted', 'success');
                 }
               },

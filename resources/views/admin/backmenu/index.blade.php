@@ -61,7 +61,7 @@
                         <input type="hidden" class="csrf_token" value="{{ csrf_token() }}">
                         @foreach ($collection as $key => $menu)
                           <tr>
-                            <td>{{ $key + 1 }}<input type="hidden" class="order-id"value="{{ $menu->id }}"></td>
+                            <td class="serial-number">{{ $key + 1 }}<input type="hidden" class="order-id" value="{{ $menu->id }}"></td>
                             <td>{{ $menu->menu }}</td>
                             <td>{{ $menu->submenus->count() }}</td>
                             <td class="d-flex justify-content-center" style="gap: 5px;">
@@ -129,9 +129,17 @@
   $(document).ready(function() {
     $('#example').DataTable();
     //Delete Menu
+
+     // Function to update serial numbers
+     function updateSerialNumbers() {
+      $('#example tbody tr').each(function(index) {
+        $(this).find('td').first().text(index + 1); // Assuming the serial number is in the first column
+      });
+    }
+
     $(document).on('click', '.btnDeleteMenu', function() {
       menuId = $(this).attr('data-value');
-      row = $(this);
+      var row = $(this).closest('tr');
       swal({
         title: 'Are you sure?',
         text: "You want to delete this record",
@@ -155,7 +163,8 @@
             dataType: 'json',
             success: function(res) {
               if (res.status) {
-                $(row).parents('tr').remove();
+                row.remove();
+                updateSerialNumbers();
                 swal('Updated!', 'Menu / SubMenus deleted', 'success');
               }
             },

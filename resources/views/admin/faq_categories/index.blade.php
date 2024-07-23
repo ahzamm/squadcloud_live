@@ -117,7 +117,7 @@
                       @foreach ($faq_categories as $key => $item)
                         <tr class="table-row">
                           <td><i class="fas fa-sort" id="sort-serial"></i></td>
-                          <td>{{ $key + 1 }}<input type="hidden" class="order-id"value="{{ $item->id }}"></td>
+                          <td class="serial-number">{{ $key + 1 }}<input type="hidden" class="order-id" value="{{ $item->id }}"></td>
                           <td>{{ $item->category }}</td>
                           <td>
                             <label class="switch">
@@ -265,9 +265,17 @@
 
     // Delete
     let packageDeleteUrl = "{{ route('faq_category.destroy') }}";
+
+      // Function to update serial numbers
+   function updateSerialNumbers() {
+      $('#example1 tbody tr').each(function(index) {
+        $(this).find('td').first().text(index + 1); // Assuming the serial number is in the first column
+      });
+    }
+
     $(document).on('click', '.btnDeleteMenu', function() {
       id = $(this).attr('data-value');
-      var row = $(this);
+      var row = $(this).closest('tr');
       swal({
         title: 'Are you sure?',
         text: "You want to delete this record",
@@ -294,7 +302,8 @@
                 swal('Error!', 'No Rights To delete Category', "error");
               }
               if (res.status) {
-                $(row).parents('tr').remove();
+                row.remove();
+                updateSerialNumbers();
                 swal('Updated!', 'Category deleted', 'success');
               }
             },

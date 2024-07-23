@@ -96,7 +96,7 @@
                     <tbody>
                       @foreach ($data['users'] as $item)
                         <tr>
-                          <td>{{ $loop->iteration }}</td>
+                          <td class="serial-number">{{ $loop->iteration }}</td>
                           <td>{{ $item->name }}</td>
                           <td>{{ $item->first_name }} &nbsp; {{ $item->last_name }}</td>
                           <td>{{ $item->email }}</td>
@@ -200,9 +200,17 @@
       })
       // Delete Script
       let deleteUrl = "{{ route('user.destroy') }}";
+
+     // Function to update serial numbers
+     function updateSerialNumbers() {
+      $('#example tbody tr').each(function(index) {
+        $(this).find('td').first().text(index + 1); // Assuming the serial number is in the first column
+      });
+    }
+
       $(document).on('click', '.btnDeleteMenu', function() {
         menuId = $(this).attr('data-value');
-        row = $(this);
+      var row = $(this).closest('tr');
         swal({
           title: 'Are you sure?',
           text: "You want to delete this record",
@@ -229,7 +237,8 @@
                   swal("Error!", "No Rights To Delete Users", "error");
                 }
                 if (res.status) {
-                  $(row).parents('tr').remove();
+                row.remove();
+                updateSerialNumbers();
                   swal('Deleted!', 'User Has been deleted', 'success');
                 }
               },

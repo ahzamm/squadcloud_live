@@ -102,7 +102,7 @@
               </div>
               <div class="card-body ">
                 <div class="table-responsive ">
-                  <table class="table table-bordered table-striped" id="">
+                  <table class="table table-bordered table-striped" id="example">
                     <thead>
                       <tr>
                         <th>Serial#</th>
@@ -117,7 +117,7 @@
                     <tbody id="sortfrontMenu" class="move">
                       @foreach ($socials as $key => $item)
                         <tr>
-                          <td>{{ $key + 1 }}<input type="hidden" class="order-id"value="{{ $item->id }}"></td>
+                            <td class="serial-number">{{ $key + 1 }}<input type="hidden" class="order-id" value="{{ $item->id }}"></td>
                           <input type="hidden" class="order-id" value="{{ $item->id }}">
                           </td>
                           <td>{{ $item->name }}</td>
@@ -192,9 +192,17 @@
 
       // Delete Social Link with event delegation
       let deleteUrl = "{{ route('social.destroy', ':id') }}";
+
+      // Function to update serial numbers
+   function updateSerialNumbers() {
+      $('#example tbody tr').each(function(index) {
+        $(this).find('td').first().text(index + 1); // Assuming the serial number is in the first column
+      });
+    }
+
       $(document).on('click', '.btnDeleteMenu', function() {
         let menuId = $(this).attr('data-value');
-        let row = $(this);
+      var row = $(this).closest('tr');
         swal({
           title: 'Are you sure?',
           text: "You want to delete this record",
@@ -220,7 +228,8 @@
               },
               success: function(res) {
                 if (res.status == true) {
-                  $(row).parents('tr').remove();
+                row.remove();
+                updateSerialNumbers();
                   swal('Updated!', 'Social Link Has been deleted', 'success');
                 } else if (res.status == "no Access") {
                   swal('Error!', 'You have no access to delete social links', 'error');

@@ -113,7 +113,7 @@
                       @foreach ($bottom_sliders as $key => $item)
                         <tr class="table-row">
                           <!-- <td><i class="fas fa-sort" id="sort-serial"></i></td> -->
-                          <td>{{ $key + 1 }}<input type="hidden" class="order-id"value="{{ $item->id }}"></td>
+                          <td class="serial-number">{{ $key + 1 }}<input type="hidden" class="order-id" value="{{ $item->id }}"></td>
                           <td>
                             <img width="100px" height="40px" src="{{ asset('frontend_assets/images/bottom_sliders/' . $item->image) }}" alt="internet product provider in karachi/Clifton/pakistan" />
                           </td>
@@ -201,9 +201,17 @@
 
       // Delete BottomSlider with event delegation
       let deleteUrl = "{{ route('bottom_slider.destroy', ':id') }}";
+
+     // Function to update serial numbers
+     function updateSerialNumbers() {
+      $('#example1 tbody tr').each(function(index) {
+        $(this).find('td').first().text(index + 1); // Assuming the serial number is in the first column
+      });
+    }
+
       $(document).on('click', '.btnDeleteMenu', function() {
         let sliderId = $(this).attr('data-value');
-        let row = $(this);
+      var row = $(this).closest('tr');
         swal({
           title: 'Are you sure?',
           text: "You want to delete this record",
@@ -229,7 +237,8 @@
               },
               success: function(res) {
                 if (res.status == true) {
-                  $(row).parents('tr').remove();
+                row.remove();
+                updateSerialNumbers();
                   swal('Updated!', 'Bottom Slider Has been deleted', 'success');
                 } else if (res.status == "no Access") {
                   swal('Error!', 'You have no access to delete bottom sliders', 'error');

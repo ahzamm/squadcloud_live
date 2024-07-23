@@ -115,7 +115,7 @@
                     <tbody id="sortfrontMenu" class="move">
                       @foreach ($teams as $key => $item)
                         <tr class="table-row">
-                          <td>{{ $key + 1 }}</i><input type="hidden" class="order-id"value="{{ $item->id }}"></td>
+                            <td class="serial-number">{{ $key + 1 }}<input type="hidden" class="order-id" value="{{ $item->id }}"></td>
                           <td>{{ $item->name }}</td>
                           <td><img width="40px" height="40px" src="{{ asset('frontend_assets/images/teams/' . $item->image) }}" alt="internet team provider in karachi/Clifton/pakistan" /> </td>
                           <td>{{ $item->designation }}</td>
@@ -198,9 +198,17 @@
 
     // Delete Team Member with event delegation
     let packageDeleteUrl = "{{ route('team.destroy') }}";
+
+      // Function to update serial numbers
+   function updateSerialNumbers() {
+      $('#example tbody tr').each(function(index) {
+        $(this).find('td').first().text(index + 1); // Assuming the serial number is in the first column
+      });
+    }
+
     $(document).on('click', '.btnDeleteMenu', function() {
       id = $(this).attr('data-value');
-      var row = $(this);
+      var row = $(this).closest('tr');
       swal({
         title: 'Are you sure?',
         text: "You want to delete this record",
@@ -229,7 +237,8 @@
                 swal('Error!', 'No Rights To delete Team', "error");
               }
               if (res.status) {
-                $(row).parents('tr').remove();
+                row.remove();
+                updateSerialNumbers();
                 swal('Updated!', 'Team deleted', 'success');
               }
             },
