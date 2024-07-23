@@ -196,16 +196,27 @@ class PortfolioController extends Controller
 
     public function destroy(DeletePortfolioRequest $request, $id = null)
     {
-        $delete = Portfolio::find($id)->delete();
-        if ($delete == true) {
+        $portfolio = Portfolio::find($id);
+
+        if ($portfolio->image && file_exists(public_path('frontend_assets/images/portfolio/' . $portfolio->image))) {
+            unlink(public_path('frontend_assets/images/portfolio/' . $portfolio->image));
+        }
+        if ($portfolio->background_image && file_exists(public_path('frontend_assets/images/portfolio/' . $portfolio->background_image))) {
+            unlink(public_path('frontend_assets/images/portfolio/' . $portfolio->background_image));
+        }
+
+        if ($portfolio->delete()) {
             return response()->json(['status' => true]);
         }
     }
 
     public function destroySS(Request $request, $id = null)
     {
-        $delete = PortfolioImage::find($id)->delete();
-        if ($delete) {
+        $image = PortfolioImage::find($id);
+        if ($image->images && file_exists(public_path('frontend_assets/images/portfolio/' . $image->images))) {
+            unlink(public_path('frontend_assets/images/portfolio/' . $image->images));
+        }
+        if ($image->delete()) {
             return response()->json(['status' => true]);
         } else {
             return response()->json(['status' => false, 'message' => 'Failed to delete the image.']);
