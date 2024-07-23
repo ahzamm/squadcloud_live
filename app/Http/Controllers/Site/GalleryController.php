@@ -11,7 +11,7 @@ class GalleryController extends Controller
 {
     public function index(Request $request)
     {
-        $gallery = Gallary::all();
+        $gallery = Gallary::where('is_active', 1)->orderby('sortIds', 'asc')->get();
         $gallery_menu = FrontMenu::where('menu', 'Gallery')->first();
 
         return view('frontend.gallery', compact('gallery', 'gallery_menu'));

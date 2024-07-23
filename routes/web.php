@@ -211,6 +211,7 @@ Route::prefix('admin')->group(function () {
         Route::post('sortJob', [AdminJobController::class, 'updateSorting'])->name('sort.job');
         Route::post('sortFaq', [AdminFaqController::class, 'updateSorting'])->name('sort.faq');
         Route::post('sortFaqCategory', [FaqCategoryController::class, 'updateSorting'])->name('sort.faq_category');
+        Route::post('sortGallery', [AdminGalleryController::class, 'updateSorting'])->name('sort.gallery');
 
         // Social Links Routes
         Route::get('/social/', [SocialController::class, 'index'])->name('social.index');
@@ -334,7 +335,9 @@ Route::prefix('admin')->group(function () {
         Route::put('/career', [AdminCareerController::class, 'update'])->name('careers.update');
 
         Route::get('/gallery', [AdminGalleryController::class, 'index'])->name('gallery.index');
-        Route::put('/gallery', [AdminGalleryController::class, 'update'])->name('gallery.update');
+        Route::post('/gallery', [AdminGalleryController::class, 'store'])->name('gallery.store');
+        Route::get('/gallery/destroy/{id?}', [AdminGalleryController::class, 'destroy'])->name('gallery.destroy');
+        Route::post('/gallery/status/{id?}', [AdminGalleryController::class, 'status'])->name('gallery.status');
 
         Route::get('/terms-and-conditions', [AdminTermController::class, 'index'])->name('terms.index');
         Route::put('/terms-and-conditions', [AdminTermController::class, 'update'])->name('terms.update');

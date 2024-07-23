@@ -7,5 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 class Gallary extends Model
 {
     protected $table = 'gallary';
-    protected $fillable = ['image'];
+    protected $fillable = ['image', 'is_active', 'sortIds'];
 }
