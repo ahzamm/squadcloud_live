@@ -84,36 +84,6 @@
                       @enderror
                     </div>
                   </div>
-
-                  <div class="col-md-4">
-                    <div class="form-group">
-                      @php
-                        $images = explode('","', $portfolio->images);
-                        $images = str_ireplace(['\'', '"', ',', ';', '<', '>', '[', ']'], ' ', $images);
-                      @endphp
-
-                      <label for="">Upload Screenshots <span style="color: red">*</span></label>
-                      <table class="table table-bordered" id="dynamicTable">
-                        <tr>
-                          <td colspan="7">
-                            <input type="hidden" name="imagesToDelete" id="imagesToDelete">
-                            @foreach ($portfolio->images as $image)
-                              <div class="image-container" data-image-key="{{ $image->id }}">
-                                <img src="{{ asset('frontend_assets/images/portfolio/' . $image->images) }}" height="60" width="120" alt="" class="mb-3">
-                                <button type="button" class="btn btn-danger delete-image-btn">Delete</button>
-                              </div>
-                            @endforeach
-                          <td colspan="3">
-                            <button type="button" name="addmore[0][add]" id="add" class="btn btn-success"><i class="fa fa-plus"></i></button>
-                          </td>
-                        </tr>
-                      </table>
-                      <p id="image-error" class="text-danger mt-2 mb-0 text-sm" style="display:none;"></p>
-                      @error('image')
-                        <p class="text-danger mt-2 mb-0 text-sm">{{ $message }}</p>
-                      @enderror
-                    </div>
-                  </div>
                   <div class="col-md-6">
                     <div class="form-group">
                       <label for="">Image <span style="color: red">*</span></label> <br>
@@ -154,6 +124,36 @@
                       <label for="">Features <span style="color: red">*</span></label>
                       <textarea name="features" rows="4" class="form-control summernote">{{ $portfolio->features }}</textarea>
                       @error('features')
+                        <p class="text-danger mt-2 mb-0 text-sm">{{ $message }}</p>
+                      @enderror
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      @php
+                        $images = explode('","', $portfolio->images);
+                        $images = str_ireplace(['\'', '"', ',', ';', '<', '>', '[', ']'], ' ', $images);
+                      @endphp
+
+                      <label for="">Upload Screenshots <span style="color: red">*</span></label>
+                      <table class="table table-bordered" id="dynamicTable">
+                        <tr>
+                          <td colspan="7">
+                            <input type="hidden" name="imagesToDelete" id="imagesToDelete">
+                            @foreach ($portfolio->images as $image)
+                              <div class="image-container" data-image-key="{{ $image->id }}">
+                                <img src="{{ asset('frontend_assets/images/portfolio/' . $image->images) }}" height="60" width="120" alt="" class="mb-3">
+                                <button type="button" class="btn btn-danger delete-image-btn">Delete</button>
+                              </div>
+                            @endforeach
+                          <td colspan="3">
+                            <button type="button" name="addmore[0][add]" id="add" class="btn btn-success"><i class="fa fa-plus"></i></button>
+                          </td>
+                        </tr>
+                      </table>
+                      <p id="image-error" class="text-danger mt-2 mb-0 text-sm" style="display:none;"></p>
+                      @error('image')
                         <p class="text-danger mt-2 mb-0 text-sm">{{ $message }}</p>
                       @enderror
                     </div>
