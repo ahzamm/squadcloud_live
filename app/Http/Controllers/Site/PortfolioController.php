@@ -25,7 +25,13 @@ class PortfolioController extends Controller
 
     public function detail($route)
     {
-        $portfolio = Portfolio::where('route', $route)->first();
+        $portfolio = Portfolio::with([
+            'images' => function ($query) {
+                $query->where('is_active', 1)->orderBy('sortIds', 'asc');
+            },
+        ])
+            ->where('route', $route)
+            ->first();
         return view('frontend.product_detail', compact('portfolio'));
     }
 

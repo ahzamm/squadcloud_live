@@ -9,6 +9,7 @@ use DB;
 use App\Models\PortfolioImage;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\Admin\Portfolio\{ViewPortfolioRequest, CreatePortfolioRequest, StorePortfolioRequest, EditPortfolioRequest, UpdatePortfolioRequest, DeletePortfolioRequest};
 
 class PortfolioController extends Controller
@@ -99,7 +100,11 @@ class PortfolioController extends Controller
 
     public function edit(EditPortfolioRequest $request, $id)
     {
-        $portfolio = Portfolio::with('images')->findOrFail($id);
+        $portfolio = Portfolio::with([
+            'images' => function ($query) {
+                $query->orderBy('sortIds', 'asc');
+            },
+        ])->findOrFail($id);
         return view('admin.portfolios.edit', compact('portfolio'));
     }
 
@@ -197,6 +202,16 @@ class PortfolioController extends Controller
         }
     }
 
+    public function destroySS(Request $request, $id = null)
+    {
+        $delete = PortfolioImage::find($id)->delete();
+        if ($delete) {
+            return response()->json(['status' => true]);
+        } else {
+            return response()->json(['status' => false, 'message' => 'Failed to delete the image.']);
+        }
+    }
+
     public function updateSorting(Request $request)
     {
         $sortIds = $request->sort_Ids;
@@ -217,6 +232,71 @@ class PortfolioController extends Controller
         $id = $request->id;
 
         $statusChange = Portfolio::where('id', $id)->update(['is_active' => $status]);
+        if ($statusChange) {
+            return response()->json('success');
+        } else {
+            return response()->json('error');
+        }
+    }
+
+    public function storeSS(EditPortfolioRequest $request)
+    {
+        $validatedData = [
+            'image' => 'required|mimes:jpeg,png,jpg',
+        ];
+        // dd($request->portfolio_id);
+
+        $valdiate = Validator::make($request->all(), $validatedData);
+        if ($valdiate->fails()) {
+            return response()->json(['status' => 'error', 'message' => $valdiate->errors()->first()], 400);
+        }
+
+        if (!$request->hasFile('image')) {
+            return response()->json(['status' => 'error', 'message' => 'Image is required'], 400);
+        }
+
+        $filename = '';
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $extension = $file->getClientOriginalExtension();
+            $filename = time() . rand(1, 100) . '.' . $extension;
+            $file->move(public_path('frontend_assets/images/portfolio/'), $filename);
+        }
+
+        $portfolio_id = $request->id;
+        $maxSortId = PortfolioImage::where('id', $portfolio_id)->max('sortIds');
+        $gallary = new PortfolioImage();
+        $gallary->images = $filename;
+        $gallary->portfolio_id = $request->portfolio_id;
+        $gallary->is_active = $request->has('is_active') ? 1 : 0;
+        $gallary->sortIds = $maxSortId !== null ? $maxSortId + 1 : 0;
+        $gallary->save();
+
+        return response()->json(['status' => 'success', 'message' => 'Image added successfully!'], 200);
+    }
+
+    public function sortSS(Request $request)
+    {
+        $sortIds = $request->sort_Ids;
+
+        $portfolio_id = $request->portfolio_id;
+        foreach ($sortIds as $key => $value) {
+            $image = PortfolioImage::find($value);
+            if ($image) {
+                $image->sortIds = $key;
+                $image->save();
+            }
+        }
+        $frontValue = PortfolioImage::where('portfolio_id', $portfolio_id)->orderby('sortIds', 'asc')->get();
+        return response()->json($frontValue);
+    }
+
+    public function statusSS(EditPortfolioRequest $request)
+    {
+        $status = $request->status;
+        $id = $request->id;
+
+        $statusChange = PortfolioImage::where('id', $id)->update(['is_active' => $status]);
         if ($statusChange) {
             return response()->json('success');
         } else {

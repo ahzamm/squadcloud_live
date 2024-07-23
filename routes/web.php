@@ -212,6 +212,8 @@ Route::prefix('admin')->group(function () {
         Route::post('sortFaq', [AdminFaqController::class, 'updateSorting'])->name('sort.faq');
         Route::post('sortFaqCategory', [FaqCategoryController::class, 'updateSorting'])->name('sort.faq_category');
         Route::post('sortGallery', [AdminGalleryController::class, 'updateSorting'])->name('sort.gallery');
+        Route::post('sortGallery', [AdminGalleryController::class, 'updateSorting'])->name('sort.gallery');
+        Route::post('sortSS', [AdminPortfolioController::class, 'sortSS'])->name('sort.screenshot');
 
         // Social Links Routes
         Route::get('/social/', [SocialController::class, 'index'])->name('social.index');
@@ -283,6 +285,10 @@ Route::prefix('admin')->group(function () {
         Route::resource('portfolios', 'App\Http\Controllers\Admin\PortfolioController');
         Route::get('/portfolios/destroy/{id?}', [AdminPortfolioController::class, 'destroy'])->name('portfolio.destroy');
         Route::post('/portfolios/change_status/{id?}', [AdminPortfolioController::class, 'change_status'])->name('portfolio.status');
+
+        Route::post('/screenshot', [AdminPortfolioController::class, 'storeSS'])->name('screenshot.store');
+        Route::get('/screenshot/delete/{id?}', [AdminPortfolioController::class, 'destroySS'])->name('screenshot.delete');
+        Route::post('/screenshot/status/{id?}', [AdminPortfolioController::class, 'statusSS'])->name('screenshot.status');
 
         Route::resource('products', 'App\Http\Controllers\Admin\ProductController');
         Route::get('/products/destroy/{id?}', [AdminProductController::class, 'destroy'])->name('product.destroy');
