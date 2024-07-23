@@ -282,7 +282,7 @@
               }
             },
             error: function(jhxr, status, err) {
-              console.log(jhxr);
+                swal('Error!', err, "error");
             }
           })
         } else {
