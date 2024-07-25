@@ -33,7 +33,6 @@ class BottomSliderController extends Controller
         $bottom_slider = new BottomSlider();
         $bottom_slider->image = $filename;
         $bottom_slider->title = $request['title'];
-        $bottom_slider->is_active = $request->has('is_active') ? 1 : 0;
         $bottom_slider->sortIds = $maxSortId !== null ? $maxSortId + 1 : 0;
         $bottom_slider->save();
 
@@ -68,7 +67,6 @@ class BottomSliderController extends Controller
         }
 
         $bottom_slider->title = $request['title'];
-        $bottom_slider->is_active = $request->has('is_active') ? 1 : 0;
         $bottom_slider->save();
 
         return redirect()->route('bottom_sliders.index')->with('success', 'BottomSlider updated successfully!');

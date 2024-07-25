@@ -40,7 +40,6 @@ class FrontMenuController extends Controller
         $front_menu = new FrontMenu();
         $front_menu->fill($validatedData);
         $front_menu->title_image = $filename;
-        $front_menu->is_active = $request->has('is_active') ? 1 : 0;
         $front_menu->sortIds = $maxSortId !== null ? $maxSortId + 1 : 0;
         $front_menu->save();
 
@@ -71,9 +70,7 @@ class FrontMenuController extends Controller
             $front_menu->title_image = $filename;
         }
 
-        $front_menu->is_active = $request->has('status') ? 1 : 0;
         $front_menu->save();
-
         return redirect()->route('frontmenu.index')->with('success', 'Menu Updated successfully');
     }
 

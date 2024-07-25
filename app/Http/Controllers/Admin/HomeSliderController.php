@@ -48,45 +48,11 @@ class HomeSliderController extends Controller
         if ($valdiate->fails()) {
             return redirect()->back()->withInput()->with('error', 'All Fields are required');
         }
-
-        // $images = ['image_1', 'image_2', 'image_3', 'image_4'];
-
-        // foreach ($images as $imageField) {
-        //     if (!$request->hasFile($imageField)) {
-        //         return redirect()
-        //             ->back()
-        //             ->withInput()
-        //             ->with('error', 'Please provide an image for ' . str_replace('_', ' ', $imageField) . '.');
-        //     }
-        //     $file = $request->file($imageField);
-        //     if (!$file->isValid() || !in_array($file->extension(), ['jpeg', 'png', 'jpg'])) {
-        //         return redirect()
-        //             ->back()
-        //             ->withInput()
-        //             ->with('error', 'Please provide a valid image file for ' . str_replace('_', ' ', $imageField) . ' of type: jpeg, png, or jpg.');
-        //     }
-        // }
-
-        // $image_filenames = [];
-
-        // foreach ($images as $imageField) {
-        //     $file = $request->file($imageField);
-        //     $extension = $file->getClientOriginalExtension();
-        //     $image_filename = Str::random(40) . '.' . $extension;
-        //     $file->move(public_path('frontend_assets/images/home_sliders'), $image_filename);
-        //     $image_filenames[$imageField] = $image_filename;
-        // }
-
         $maxSortId = Homeslider::max('sortIds');
         $homeslider = new Homeslider();
         $homeslider->heading = $request['heading'];
         $homeslider->subheading = $request['subheading'];
         $homeslider->description = $request['description'];
-        // $homeslider->image_1 = $image_filenames['image_1'];
-        // $homeslider->image_2 = $image_filenames['image_2'];
-        // $homeslider->image_3 = $image_filenames['image_3'];
-        // $homeslider->image_4 = $image_filenames['image_4'];
-        $homeslider->is_active = $request->has('is_active') ? 1 : 0;
         $homeslider->sortIds = $maxSortId !== null ? $maxSortId + 1 : 0;
         $homeslider->save();
 
@@ -122,8 +88,6 @@ class HomeSliderController extends Controller
             DB::transaction(function () use ($request) {
                 $maxSortId = HomeSlider::max('sortIds');
                 $homeSlider = new HomeSlider();
-
-                $homeSlider->is_active = $request->status != null ? true : false;
                 $homeSlider->video = '';
 
                 if (!$request->hasFile('video')) {
@@ -220,7 +184,6 @@ class HomeSliderController extends Controller
         $homeslider->heading = $request['heading'];
         $homeslider->subheading = $request['subheading'];
         $homeslider->description = $request['description'];
-        $homeslider->is_active = $request->has('is_active') ? 1 : 0;
         $homeslider->save();
 
         return redirect()->route('homesliders.index')->with('success', 'Homeslider updated successfully!');
@@ -252,7 +215,6 @@ class HomeSliderController extends Controller
                 $homeSlider->video = $videoPath->getClientOriginalName();
             }
 
-            $homeSlider->is_active = $request->has('is_active') ? 1 : 0;
             $homeSlider->save();
         }, 2);
         return redirect()->route('homesliders.index')->with('success', 'Video Updated Successfully');

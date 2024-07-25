@@ -44,7 +44,6 @@ class ServiceController extends Controller
         $service->logo = $image_filenames['logo'];
         $service->background_image = $image_filenames['background_image'];
         $service->sortIds = $maxSortId !== null ? $maxSortId + 1 : 0;
-        $service->is_active = $request->has('is_active') ? 1 : 0;
         $service->save();
 
         return redirect()->route('services.index')->with('success', 'Service created successfully!');
@@ -82,8 +81,6 @@ class ServiceController extends Controller
                 $service->$imageField = $image_filename;
             }
         }
-
-        $service->is_active = $request->has('is_active') ? 1 : 0;
         $service->save();
 
         return redirect()->route('services.index')->with('success', 'Service updated successfully!');
@@ -106,9 +103,7 @@ class ServiceController extends Controller
             $service->delete();
 
             return response()->json(['status' => true]);
-            // return redirect()->route('services.index')->with('success', 'Service deleted successfully!');
         } else {
-            // return redirect()->back()->with('error', 'Service not found.');
             return response()->json(['status' => false, 'message' => 'Service not found.']);
         }
     }

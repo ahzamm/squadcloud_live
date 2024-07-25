@@ -80,7 +80,6 @@ class TeamController extends Controller
         $team->designation = $request['designation'];
         $team->linkedin = $request['linkedin'];
         $team->image = $filename;
-        $team->is_active = $request->has('is_active') ? 1 : 0;
         $team->sortIds = $maxSortId !== null ? $maxSortId + 1 : 0;
         $team->save();
 
@@ -151,7 +150,6 @@ class TeamController extends Controller
         $team->name = $request['name'];
         $team->designation = $request['designation'];
         $team->linkedin = $request['linkedin'];
-        $team->is_active = $request->has('is_active') ? 1 : 0;
         $team->save();
 
         return redirect()->route('teams.index')->with('success', 'Team Member updated successfully!');

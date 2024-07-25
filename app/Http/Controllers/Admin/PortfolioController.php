@@ -53,7 +53,6 @@ class PortfolioController extends Controller
             $portfolio->price = $request['price'];
             $portfolio->price_description = $request['price_description'];
             $portfolio->image = $savedFiles['image'] ?? null;
-            $portfolio->is_active = $request->has('status') ? 1 : 0;
             $portfolio->sortIds = $maxSortId !== null ? $maxSortId + 1 : 0;
 
             if ($portfolio->save()) {
@@ -141,7 +140,6 @@ class PortfolioController extends Controller
             $portfolio->rating_number = $request['rating_number'];
             $portfolio->price = $request['price'];
             $portfolio->price_description = $request['price_description'];
-            $portfolio->is_active = $request->has('status') ? 1 : 0;
 
             // Update image fields
             foreach ($savedFiles as $field => $filename) {
@@ -279,7 +277,6 @@ class PortfolioController extends Controller
         $gallary = new PortfolioImage();
         $gallary->images = $filename;
         $gallary->portfolio_id = $request->portfolio_id;
-        $gallary->is_active = $request->has('is_active') ? 1 : 0;
         $gallary->sortIds = $maxSortId !== null ? $maxSortId + 1 : 0;
         $gallary->save();
 

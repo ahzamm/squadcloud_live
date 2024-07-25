@@ -94,7 +94,6 @@ class JobController extends Controller
         $job->employment_type = $request['employment_type'];
         $job->salary_range = $request['salary_range'];
         $job->tags = $request->input('tags');
-        $job->is_active = $request->has('is_active') ? 1 : 0;
         $job->sortIds = $maxSortId !== null ? $maxSortId + 1 : 0;
         $job->save();
 
@@ -173,7 +172,6 @@ class JobController extends Controller
         $job->employment_type = $request['employment_type'];
         $job->salary_range = $request['salary_range'];
         $job->tags = $request->input('tags');
-        $job->is_active = $request->has('is_active') ? 1 : 0;
         $job->save();
 
         return redirect()->route('jobs.index')->with('success', 'Job post updated successfully!');
