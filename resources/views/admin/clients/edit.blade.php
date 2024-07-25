@@ -18,7 +18,7 @@
               <div class="card-body pad">
                 @csrf
                 <div class="row">
-                  <div class="col-md-6">
+                  <div class="col-lg-4 col-md-6">
                     <div class="form-group">
                       <label for="">Title <span style="color: red">*</span></label>
                       <input type="text" class="form-control" name="title" value="{{ old('title') == null ? $client->title : old('title') }}">
@@ -28,7 +28,7 @@
                     </div>
                   </div>
 
-                  <div class="col-md-6">
+                  <div class="col-lg-4 col-md-6">
                     <div class="form-group">
                       <label for="">Link <span style="color: red">*</span></label>
                       <input type="text" class="form-control" name="link" value="{{ old('link') == null ? $client->link : old('link') }}">
@@ -37,13 +37,13 @@
                       @enderror
                     </div>
                   </div>
-                  <div class="col-md-6">
+                  <div class="col-lg-4 col-md-6">
                     <div class="form-group">
                       <label for="">Client Logo <span style="color: red">*</span></label>
                       @isset($client->logo)
-                        <img src="{{ asset('frontend_assets/images/clients/' . $client->logo) }}" height="60" width="120" alt="" srcset="">
+                        <img src="{{ asset('frontend_assets/images/clients/' . $client->logo) }}" height="60" width="120" alt="" srcset="" style="float:right">
                       @endisset
-                      <br><br>
+                      <br>
                       <input type="file" value="{{ $client->logo }}" name="logo">
                       @error('image')
                         <p class="text-danger mt-2 mb-0 text-sm">{{ $message }}</p>

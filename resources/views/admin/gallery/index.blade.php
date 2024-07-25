@@ -94,7 +94,7 @@
           <div class="col-12">
             <div class="card mt-3 card-outline card-info">
               <div class="card-header">
-                <h3 class="card-title"><span><i class="fa fa-gears"></i></span> Gallery</h3>
+                <h3 class="card-title"><span><i class="fa fa-images"></i></span> Gallery</h3>
                 <button class="btn btn-success btn-sm float-right" id="addImageBtn"><i class="fa fa-plus"></i> Add Image</button>
                 <input type="file" id="imageInput" style="display: none;" accept="image/*">
               </div>

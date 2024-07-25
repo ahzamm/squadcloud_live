@@ -1847,11 +1847,11 @@ transform: translateY(-50%);
     -moz-osx-font-smoothing: grayscale;
 }
 
-.post-list .single-post .btns li {
+.post-list .single-post .apply-button {
     display: inline-block;
     background-color: #fff;
     border: 1px solid #64050f69;
-    padding: 10px 15px;
+    padding: 5px 10px;
     -webkit-transition: all 0.3s ease 0s;
     -moz-transition: all 0.3s ease 0s;
     -o-transition: all 0.3s ease 0s;

@@ -61,7 +61,7 @@
               <div class="card-body pad">
                 @csrf
                 <div class="row">
-                  <div class="col-md-6">
+                  <div class="col-lg-4 col-md-6">
                     <div class="form-group">
                       <label for="">Location URL <span style="color: red">*</span>
                         <span class="tooltip-container">
@@ -79,7 +79,7 @@
                       @enderror
                     </div>
                   </div>
-                  <div class="col-md-6">
+                  <div class="col-lg-4 col-md-6">
                     <div class="form-group">
                       <label for="">Title <span style="color: red">*</span></label>
                       @isset($contact->title)
@@ -91,7 +91,7 @@
                       @enderror
                     </div>
                   </div>
-                  <div class="col-md-6">
+                  <div class="col-lg-4 col-md-6">
                     <div class="form-group">
                       <label for="">Tagline <span style="color: red">*</span></label>
                       @isset($contact->tagline)
@@ -103,7 +103,7 @@
                       @enderror
                     </div>
                   </div>
-                  <div class="col-md-6">
+                  <div class="col-lg-4 col-md-6">
                     <div class="form-group">
                       <label for="">Phone <span style="color: red">*</span></label>
                       @isset($contact->phone)
@@ -115,7 +115,7 @@
                       @enderror
                     </div>
                   </div>
-                  <div class="col-md-6">
+                  <div class="col-lg-4 col-md-6">
                     <div class="form-group">
                       <label for="">Email <span style="color: red">*</span></label>
                       @isset($contact->email)
@@ -127,7 +127,7 @@
                       @enderror
                     </div>
                   </div>
-                  <div class="col-md-6">
+                  <div class="col-lg-4 col-md-6">
                     <div class="form-group">
                       <label for="">Address <span style="color: red">*</span></label>
                       @isset($contact->address)
@@ -139,7 +139,7 @@
                       @enderror
                     </div>
                   </div>
-                  <div class="col-md-6">
+                  <div class="col-lg-4 col-md-6">
                     <div class="form-group">
                       <label for="">Office Openning Timming <span style="color: red">*</span></label>
                       @isset($contact->office_hours_start)
@@ -151,7 +151,7 @@
                       @enderror
                     </div>
                   </div>
-                  <div class="col-md-6">
+                  <div class="col-lg-4 col-md-6">
                     <div class="form-group">
                       <label for="">Office Colsing Timming <span style="color: red">*</span></label>
                       @isset($contact->office_hours_end)

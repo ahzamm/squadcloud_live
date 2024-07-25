@@ -66,7 +66,7 @@
       <section class="features-area">
         <div class="container">
           <div class="row">
-            <div class="col-lg-3 col-md-6">
+            <div class="col-lg-3 col-md-6 mb-2">
               <div class="single-feature">
                 <h2>01</h2>
                 <h4>Apply</h4>
@@ -75,7 +75,7 @@
                 </p>
               </div>
             </div>
-            <div class="col-lg-3 col-md-6">
+            <div class="col-lg-3 col-md-6 mb-2">
               <div class="single-feature">
                 <h2>02</h2>
                 <h4>Review</h4>
@@ -84,7 +84,7 @@
                 </p>
               </div>
             </div>
-            <div class="col-lg-3 col-md-6">
+            <div class="col-lg-3 col-md-6 mb-2">
               <div class="single-feature">
                 <h2>03</h2>
                 <h4>Interview</h4>
@@ -93,7 +93,7 @@
                 </p>
               </div>
             </div>
-            <div class="col-lg-3 col-md-6">
+            <div class="col-lg-3 col-md-6 mb-2">
               <div class="single-feature">
                 <h2>04</h2>
                 <h4>On board</h4>

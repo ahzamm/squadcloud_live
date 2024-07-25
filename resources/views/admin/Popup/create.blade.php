@@ -24,7 +24,7 @@ $parentTitle = "Edit";
       <div class="col-md-12">
         <div class="card card-outline card-info mt-2">
           <div class="card-header d-flex justify-content-between align-items-center">
-            <h3 class="card-title mb-0"><span><i class="fa-solid fa-comment-dots"></i></span> {{$parentTitle}} PoPup</h3>
+            <h3 class="card-title mb-0"><span><i class="fa fa-exclamation"></i></span> {{$parentTitle}} PoPup</h3>
             <div class="ml-auto">
               <a class="btn btn-outline-secondary btn-sm" href="{{route('popup.index')}}">
                 <i class="fa fa-arrow-left"></i> Back
@@ -36,34 +36,35 @@ $parentTitle = "Edit";
             <div class="card-body pad">
               @csrf
               <div class="row">
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label for="">Upload PopUp Image <span style="color: red">*</span></label>
-                    <input type="file" class="form-control" name="image" onchange="validateImageSize(this)">
-                  </div>
-                </div>
-                <div class="col-md-6">
+                
+                <div class="col-lg-4 col-md-6">
                   <div class="form-group">
                     <label for="">PopUp Start (YY-MM-DD) <span style="color: red">*</span></label>
                     <input type="date" class="form-control" name="s_date">
                   </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-lg-4 col-md-6">
                   <div class="form-group">
                     <label for="">PopUp Start Time <span style="color: red">*</span></label>
                     <input type="time" class="form-control" name="s_Time">
                   </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-lg-4 col-md-6">
                   <div class="form-group">
                     <label for="">PopUp End (YY-MM-DD) <span style="color: red">*</span></label>
                     <input type="date" class="form-control" name="e_date">
                   </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-lg-4 col-md-6">
                   <div class="form-group">
                     <label for="">PopUp End Time <span style="color: red">*</span></label>
                     <input type="time" class="form-control" name="e_Time">
+                  </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                  <div class="form-group">
+                    <label for="">Upload PopUp Image <span style="color: red">*</span></label>
+                    <input type="file" class="form-control" name="image" onchange="validateImageSize(this)">
                   </div>
                 </div>
               </div>

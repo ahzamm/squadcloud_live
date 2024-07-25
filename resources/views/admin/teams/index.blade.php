@@ -103,8 +103,8 @@
                     <thead>
                       <tr>
                         <th>Serial#</th>
-                        <th>Name</th>
                         <th>Photo</th>
+                        <th>Name</th>
                         <th>Designation</th>
                         <th>Linkedin</th>
                         <th>Status</th>
@@ -116,8 +116,9 @@
                       @foreach ($teams as $key => $item)
                         <tr class="table-row">
                             <td class="serial-number">{{ $key + 1 }}<input type="hidden" class="order-id" value="{{ $item->id }}"></td>
-                          <td>{{ $item->name }}</td>
+                          
                           <td><img width="40px" height="40px" src="{{ asset('frontend_assets/images/teams/' . $item->image) }}" alt="internet team provider in karachi/Clifton/pakistan" /> </td>
+                          <td>{{ $item->name }}</td>
                           <td>{{ $item->designation }}</td>
                           <td>{{ $item->linkedin }}</td>
                           <td>
@@ -276,8 +277,9 @@
             $(response).each(function(index, value) {
               table += `<tr class="table-row">
                   <td>${index + 1}<input type="hidden" class="order-id" value="${value.id}"></td>
-                  <td>${value.name}</td>
+                  
                   <td><img width="40px" height="40px" src="{{ asset('frontend_assets/images/teams/') }}/${value.image}" alt="team member photo" /></td>
+                  <td>${value.name}</td>
                   <td>${value.designation}</td>
                   <td>${value.linkedin}</td>
                   <td>

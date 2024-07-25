@@ -99,7 +99,7 @@
               <div class="card-body pad">
                 @csrf
                 <div class="row">
-                  <div class="col-md-6">
+                  <div class="col-lg-4 col-md-6">
                     <div class="form-group">
                       <label for="">Portfolio Title <span style="color: red">*</span></label>
                       <input type="text" class="form-control" name="title" value="{{ old('title') == null ? $portfolio->title : old('title') }}">
@@ -109,7 +109,7 @@
                     </div>
                   </div>
 
-                  <div class="col-md-6">
+                  <div class="col-lg-4 col-md-6">
                     <div class="form-group">
                       <label for="">Link <span style="color: red">*</span></label>
                       <input type="url" class="form-control" name="link" value="{{ old('link') == null ? $portfolio->link : old('link') }}">
@@ -119,7 +119,7 @@
                     </div>
                   </div>
 
-                  <div class="col-md-6">
+                  <div class="col-lg-4 col-md-6">
                     <div class="form-group">
                       <label for="">Route <span style="color: red">*</span></label>
                       <input type="text" class="form-control" name="route" value="{{ old('route') == null ? $portfolio->route : old('route') }}">
@@ -128,7 +128,7 @@
                       @enderror
                     </div>
                   </div>
-                  <div class="col-md-6">
+                  <div class="col-lg-4 col-md-6">
                     <div class="form-group">
                       <label for="">Rating <span style="color: red">*</span></label>
                       <input type="text" class="form-control" name="rating" value="{{ old('rating') == null ? $portfolio->rating : old('rating') }}">
@@ -137,7 +137,7 @@
                       @enderror
                     </div>
                   </div>
-                  <div class="col-md-6">
+                  <div class="col-lg-4 col-md-6">
                     <div class="form-group">
                       <label for="">Rating Number<span style="color: red">*</span></label>
                       <input type="text" class="form-control" name="rating_number" value="{{ old('rating_number') == null ? $portfolio->rating_number : old('rating_number') }}">
@@ -146,7 +146,7 @@
                       @enderror
                     </div>
                   </div>
-                  <div class="col-md-6">
+                  <div class="col-lg-4 col-md-6">
                     <div class="form-group">
                       <label for="">Price<span style="color: red">*</span></label>
                       <input type="text" class="form-control" name="price" value="{{ old('price') == null ? $portfolio->price : old('price') }}">
@@ -155,7 +155,7 @@
                       @enderror
                     </div>
                   </div>
-                  <div class="col-md-6">
+                  <div class="col-lg-4 col-md-6">
                     <div class="form-group">
                       <label for="">Price Description<span style="color: red">*</span></label>
                       <input type="text" class="form-control" name="price_description" value="{{ old('price_description') == null ? $portfolio->price_description : old('price_description') }}">
@@ -164,26 +164,26 @@
                       @enderror
                     </div>
                   </div>
-                  <div class="col-md-6">
+                  <div class="col-lg-4 col-md-6">
                     <div class="form-group">
-                      <label for="">Image <span style="color: red">*</span></label> <br>
+                      <label for="">Image <span style="color: red">*</span></label> 
                       @isset($portfolio->image)
-                        <img src="{{ asset('frontend_assets/images/portfolio/' . $portfolio->image) }}" height="60" width="120" alt="" srcset="">
+                        <img src="{{ asset('frontend_assets/images/portfolio/' . $portfolio->image) }}" height="60" width="120" alt="" srcset="" style="float:right">
                       @endisset
-                      <br><br>
+                      <br>
                       <input type="file" name="image">
                       @error('image')
                         <p class="text-danger mt-2 mb-0 text-sm">{{ $message }}</p>
                       @enderror
                     </div>
                   </div>
-                  <div class="col-md-6">
+                  <div class="col-lg-4 col-md-6">
                     <div class="form-group">
-                      <label for="">Background Image <span style="color: red">*</span></label> <br>
+                      <label for="">Background Image <span style="color: red">*</span></label> 
                       @isset($portfolio->background_image)
-                        <img src="{{ asset('frontend_assets/images/portfolio/' . $portfolio->background_image) }}" height="60" width="120" alt="" srcset="">
+                        <img src="{{ asset('frontend_assets/images/portfolio/' . $portfolio->background_image) }}" height="60" width="120" alt="" srcset="" style="float:right">
                       @endisset
-                      <br><br>
+                      <br>
                       <input type="file" name="background_image">
                       @error('background_image')
                         <p class="text-danger mt-2 mb-0 text-sm">{{ $message }}</p>

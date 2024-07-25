@@ -103,8 +103,8 @@
                     <thead>
                       <tr>
                         <th>Serial#</th>
-                        <th>Slider Image</th>
                         <th>Title</th>
+                        <th>Slider Image</th>
                         <th>Status</th>
                         <th>Action</th>
                       </tr>
@@ -114,16 +114,18 @@
                         <tr class="table-row">
                           <!-- <td><i class="fas fa-sort" id="sort-serial"></i></td> -->
                           <td class="serial-number">{{ $key + 1 }}<input type="hidden" class="order-id" value="{{ $item->id }}"></td>
+                          
+                          <td>{{ $item->title }}</td>
                           <td>
                             <img width="100px" height="40px" src="{{ asset('frontend_assets/images/bottom_sliders/' . $item->image) }}" alt="internet product provider in karachi/Clifton/pakistan" />
                           </td>
-                          <td>{{ $item->title }}</td>
                           <td>
                             <label class="switch">
                               <input type="checkbox" class="status_check" @if ($item->is_active == 1) checked @endif data-user-id="{{ $item->id }}">
                               <span class="slider round"></span>
                             </label>
                           </td>
+                          
                           <td class="d-flex justify-content-center" style="gap: 5px;">
                             <a class="btn btn-primary btn-sm" href="{{ route('bottom_sliders.edit', $item->id) }}"><i class="fa fa-edit"></i></a>
                             <button class="btn btn-danger btn-sm btnDeleteMenu" data-value="{{ $item->id }}"><i class="fa fa-trash"></i></button>
@@ -277,9 +279,9 @@
               let table = "";
               $(response).each(function(index, value) {
                 table += `<tr>
-                  <td>${index + 1}<input type="hidden" class="order-id" value="${value.id}"></td>
+                  <td>${index + 1}<input type="hidden" class="order-id" value="${value.id}"></td><td>${value.title}</td>
                   <td><img width="100px" height="40px" src="{{ asset('frontend_assets/images/bottom_sliders/') }}/${value.image}" alt="slider image"></td>
-                  <td>${value.title}</td>
+                  
                   <td>
                     <label class="switch">
                       <input type="checkbox" class="status_check" ${value.is_active == 1 ? 'checked' : ''} data-user-id="${value.id}">

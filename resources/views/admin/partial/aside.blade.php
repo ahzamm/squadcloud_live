@@ -28,21 +28,20 @@
  <!-- Main Sidebar Container -->
  <aside class="main-sidebar sidebar-dark-primary elevation-4">
   <!-- Brand Logo -->
-  <a href="index3.html" class="brand-link" style="display: block">
+  <a href="index3.html" class="brand-link" style="display: none">
     {{-- <img src="{{asset('site/images/title-white.png')}}" style="float: none;max-height: 65px;" alt="AdminLTE Logo" class="brand-image "
     style="opacity: .8"> --}}
-    <span class="brand-text font-weight-light" style="color: yellow; font-weight: light;"><a href="/admin"> SquadCloud</a> </span>
+    <div class="image" style="width: 150px; margin: auto;padding-top: 10px">
+    <a href="/admin"><?php
+        $general_configuration = \DB::table("general_configurations")->limit(1)->first();
+        ?>
+        <img src="{{asset('frontend_assets/images/' . $general_configuration->brand_logo)}}" class="" style="object-fit: contain;width:100%" alt="User Image"> </a></div>
   </a>
   <!-- Sidebar -->
   <div class="sidebar">
     <!-- Sidebar user panel (optional) -->
     <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-      <div class="image">
-        <?php
-        $general_configuration = \DB::table("general_configurations")->limit(1)->first();
-        ?>
-        <img src="{{asset('frontend_assets/images/' . $general_configuration->brand_logo)}}" class="img-circle elevation-2" style="object-fit: contain;" alt="User Image">
-      </div>
+      
       <div class="info">
         @if(Auth::check())
         <a class="d-block">{{Auth::user()->name}} ({{Auth::user()->role}})</a>

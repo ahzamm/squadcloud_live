@@ -115,7 +115,7 @@
           <li>{{ $item->menu }}</li>
         </a>
       @endforeach
-      <a href="#" target="_blank">
+      <a href="https://squadcloud.co/#project-section" onclick="hideMenuWrapper()">
         <li>Get A Project</li>
       </a>
     </ul>
@@ -129,7 +129,7 @@
           <div class="fc-1">
             <p class="text-left">
               <span style="display: inline-block;margin-top: -30px;background: #cfcfcf;padding: 10px;border-bottom-right-radius: 40px;border-bottom-left-radius:40px">
-                <img src="{{ asset('frontend_assets/images/' . $general_configuration->brand_logo) }}" alt="" class="footer--logo mb-20" style="width: 250px"></span>
+                <img src="{{ asset('frontend_assets/images/' . $general_configuration->brand_logo) }}" alt="" class="footer--logo mb-20"></span>
             </p>
             <p class="text-gray pe-5 brand-description" style="text-align:justify;padding-right: 50px;color:#d1d0d0">{!! $general_configuration->site_footer_description !!}</p>
           </div>
@@ -220,6 +220,14 @@
     });
   </script>
   <script>
+    function hideMenuWrapper() {
+      $('#responsive--menu2').hide();
+      // $('#menuToggle2 input').hide();
+      $('.nav-overlay').css('opacity', 0);
+        $('.nav-overlay').css('visibility', 'hidden');
+        $('body').css('overflow', 'auto');
+        $('#menuToggle2 input').prop('checked', false);
+    }
     $(function() {
       $('#menucheckbox').click(function() {
         if ($('#menucheckbox').is(':checked')) {

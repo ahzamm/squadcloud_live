@@ -18,7 +18,7 @@
               <div class="card-body pad">
                 @csrf
                 <div class="row">
-                  <div class="col-md-6">
+                  <div class="col-lg-4 col-md-6">
                     <div class="form-group">
                       <label for="">Service Name <span style="color: red">*</span></label>
                       <input type="text" class="form-control" name="service" value="{{ old('service') == null ? $service->service : old('service') }}">
@@ -27,7 +27,7 @@
                       @enderror
                     </div>
                   </div>
-                  <div class="col-md-6">
+                  <div class="col-lg-4 col-md-6">
                     <div class="form-group">
                       <label for="">Tagline <span style="color: red">*</span></label>
                       <input type="text" class="form-control" name="tagline" value="{{ old('tagline') == null ? $service->tagline : old('tagline') }}">
@@ -36,7 +36,7 @@
                       @enderror
                     </div>
                   </div>
-                  <div class="col-md-6">
+                  <div class="col-lg-4 col-md-6">
                     <div class="form-group">
                       <label for="">Slug <span style="color: red">*</span></label>
                       <input type="text" class="form-control" name="slug" value="{{ old('slug') == null ? $service->slug : old('slug') }}">
@@ -45,7 +45,7 @@
                       @enderror
                     </div>
                   </div>
-                  <div class="col-md-3">
+                  <div class="col-lg-4 col-md-6">
                     <div class="form-group">
                       <label for="">Service Logo <span style="color: red">*</span></label>
                       @isset($service->logo)
@@ -58,7 +58,7 @@
                       @enderror
                     </div>
                   </div>
-                  <div class="col-md-3">
+                  <div class="col-lg-4 col-md-6">
                     <div class="form-group">
                       <label for="">Background Image <span style="color: red">*</span></label>
                       @isset($service->background_image)

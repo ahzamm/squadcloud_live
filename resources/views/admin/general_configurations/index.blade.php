@@ -66,7 +66,7 @@
         <div class="col-md-12">
           <div class="card card-outline card-info">
             <div class="card-header d-flex justify-content-between align-items-center">
-              <h3 class="card-title mb-0"><span><i class="fa-solid fa-box-open"></i></span> Update General Configurations</h3>
+              <h3 class="card-title mb-0"><span><i class="fa fa-wrench"></i></span> Update General Configurations</h3>
               <div class="ml-auto">
               </div>
             </div>
@@ -75,7 +75,7 @@
               <div class="card-body pad">
                 @csrf
                 <div class="row">
-                  <div class="col-md-12">
+                  <div class="col-lg-4 col-md-6">
                     <div class="form-group">
                       <label for="">Two Factor Authentication <span style="color: red">*</span></label>
                       <label class="switch float-right">
@@ -84,13 +84,15 @@
                       </label>
                     </div>
                   </div>
-                  <div class="col-md-12">
+  </div>
+  <div class="row">
+                  <div class="col-lg-4 col-md-6">
                     <div class="form-group">
                       <label for="">Brand Logo <span style="color: red">*</span></label>
                       @isset($general_configuration->brand_logo)
-                        <img src="{{ asset('frontend_assets/images/' . $general_configuration->brand_logo) }}" height="60" width="120" alt="" srcset="">
+                        <img src="{{ asset('frontend_assets/images/' . $general_configuration->brand_logo) }}" height="60" width="120" alt="" srcset="" style="float:right">
                       @endisset
-                      <br><br>
+                      <br>
                       <input type="file" value="{{ $general_configuration->brand_logo }}" name="brand_logo">
                       @error('brand_logo')
                         <p class="text-danger mt-2 mb-0 text-sm">{{ $message }}</p>

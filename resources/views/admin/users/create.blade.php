@@ -29,7 +29,7 @@
               <div class="card-body pad">
                 @csrf
                 <div class="row">
-                  <div class="col-md-12">
+                  <div class="col-lg-4 col-md-6">
                     <div class="form-group">
                       <label for="">User Name <span style="color: red">*</label>
                       <input type="text" class="form-control" id="username" name="user_name" placeholder="Example : Administrator" value="{{ old('user_name') }}">
@@ -38,7 +38,7 @@
                       @enderror
                     </div>
                   </div>
-                  <div class="col-md-6">
+                  <div class="col-lg-4 col-md-6">
                     <div class="form-group">
                       <label for="">First Name <span style="color: red">*</label>
                       <input type="text" class="form-control" id="firstname" name="first_name" placeholder="Example : Jawad" value="{{ old('first_name') }}">
@@ -47,7 +47,7 @@
                       @enderror
                     </div>
                   </div>
-                  <div class="col-md-6">
+                  <div class="col-lg-4 col-md-6">
                     <div class="form-group">
                       <label for="">Last Name <span style="color: red">*</label>
                       <input type="text" class="form-control" id="lastname" name="last_name" placeholder="Example : Alam" value="{{ old('last_name') }}">
@@ -56,7 +56,7 @@
                       @enderror
                     </div>
                   </div>
-                  <div class="col-md-6">
+                  <div class="col-lg-4 col-md-6">
                     <div class="form-group">
                       <label for="">Email Address <span style="color: red">*</label>
                       <input type="email" class="form-control" id="email" name="email" placeholder="Example : abc@gmail.com" value="{{ old('email') }}">
@@ -65,7 +65,7 @@
                       @enderror
                     </div>
                   </div>
-                  <div class="col-md-6">
+                  <div class="col-lg-4 col-md-6">
                     <div class="form-group">
                       <label for="">Password <span style="color: red">*</label>
                       <input type="password" class="form-control" id="password" name="password" placeholder="Password must be 8 characters"value="{{ old('password') }}">
@@ -74,7 +74,7 @@
                       @enderror
                     </div>
                   </div>
-                  <div class="col-md-6">
+                  <div class="col-lg-4 col-md-6">
                     <div class="form-group">
                       <label for="">Confirm Password <span style="color: red">*</label>
                       <input type="password" class="form-control" id="confirmpassword" name="confirm_password" placeholder="Password must be 8 characters" value="{{ old('confirm_password') }}">
@@ -83,7 +83,7 @@
                       @enderror
                     </div>
                   </div>
-                  <div class="col-md-6">
+                  <div class="col-lg-4 col-md-6">
                     <div class="form-group">
                       <label for="">Contact Number <span style="color: red">*</label>
                       <input type="text" class="form-control" id="phone" name="phone" placeholder="Example : 0300 1234567" value="{{ old('phone') }}">
@@ -92,7 +92,7 @@
                       @enderror
                     </div>
                   </div>
-                  <div class="col-md-6">
+                  <div class="col-lg-4 col-md-6">
                     <div class="form-group">
                       <label for="">CNIC Number <span style="color: red">*</label>
                       <input type="text" class="form-control" id="cnic" name="cnic" placeholder="0000-0000000-0" value="{{ old('cnic') }}">
@@ -101,7 +101,7 @@
                       @enderror
                     </div>
                   </div>
-                  <div class="col-md-6">
+                  <div class="col-lg-4 col-md-6">
                     <div class="form-group">
                       <label for="department">Department <span style="color: red">*</span></label>
                       <select class="form-control" id="department" name="department">
@@ -117,7 +117,7 @@
                   <div class="col-md-12">
                     <div class="form-group">
                       <label for="">Address <span style="color: red">*</label>
-                      <textarea name="address" id="address" cols="30" rows="10" placeholder="Example : Clifton Karachi" class="form-control">{{ old('address') }}</textarea>
+                      <textarea name="address" id="address" cols="30" rows="5" placeholder="Example : Clifton Karachi" class="form-control">{{ old('address') }}</textarea>
                     </div>
                   </div>
                 </div>

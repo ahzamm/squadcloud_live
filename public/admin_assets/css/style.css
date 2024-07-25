@@ -12972,3 +12972,6 @@ font-size: 16px;
     flex-direction: column;
   }
 }
+.btn-success {
+  background-color: #343a40;
+}

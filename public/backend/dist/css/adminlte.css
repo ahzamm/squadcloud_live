@@ -31218,5 +31218,27 @@ a.text-muted:hover {
 [class*="accent-"] a.btn-dark {
   color: #ffffff;
 }
-
+.btn-success {
+  background-color: #343a40;
+  border-color: #343a40;
+}
+.btn-success:hover, 
+.btn-success:focus {
+  background-color: #000;
+}
+.switch {
+  width: 38px !important;
+  height: 20px !important
+}
+.slider:before {
+  height: 14px !important;
+  width: 12px !important;
+  left: 3px !important;
+  bottom: 3px !important;
+}
+input:checked+.slider:before {
+  -webkit-transform: translateX(21px) !important;
+  -ms-transform: translateX(21px) !important;
+  transform: translateX(21px) !important;
+}
 /*# sourceMappingURL=adminlte.css.map */

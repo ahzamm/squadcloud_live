@@ -63,26 +63,26 @@
               <div class="card-body pad">
                 @csrf
                 <div class="row">
-                  <div class="col-md-6">
+                  <div class="col-lg-4 col-md-6">
                     <div class="form-group">
                       <label for="">Job Title <span style="color: red">*</span></label>
                       <input type="text" class="form-control" name="job_title" value="{{ old('job_title') == null ? $job->job_title : old('job_title') }}">
                     </div>
                   </div>
-                  <div class="col-md-6">
+                  <div class="col-lg-4 col-md-6">
                     <div class="form-group">
                       <label for="">Company<span style="color: red">*</span></label>
                       <input type="text" class="form-control" name="company" value="{{ old('company') == null ? $job->company : old('company') }}">
                     </div>
                   </div>
 
-                  <div class="col-md-6">
+                  <div class="col-lg-4 col-md-6">
                     <div class="form-group">
                       <label for="">Location <span style="color: red">*</span></label>
                       <input type="text" class="form-control" name="location" value="{{ old('location') == null ? $job->location : old('location') }}">
                     </div>
                   </div>
-                  <div class="col-md-6">
+                  <div class="col-lg-4 col-md-6">
                     <div class="form-group">
                       <label for="employment_type">Employement Type <span style="color: red">*</span></label>
                       <select class="form-control" id="employment_type" name="employment_type">
@@ -93,13 +93,13 @@
                       </select>
                     </div>
                   </div>
-                  <div class="col-md-6">
+                  <div class="col-lg-4 col-md-6">
                     <div class="form-group">
                       <label for="">Salary Range <span style="color: red">*</span></label>
                       <input type="text" class="form-control" name="salary_range" value="{{ old('salary_range') == null ? $job->salary_range : old('salary_range') }}">
                     </div>
                   </div>
-                  <div class="col-md-6">
+                  <div class="col-lg-4 col-md-6">
                     <div class="form-group">
                       <label for="">Tag </label>
                       <div class="tag-container">
@@ -108,13 +108,13 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col-md-6">
+                  <div class="col-lg-4 col-md-6">
                     <div class="form-group">
                       <label for="">Image <span style="color: red">*</span></label>
                       @isset($job->image)
-                        <img src="{{ asset('frontend_assets/images/jobs/' . $job->image) }}" height="60" width="120" alt="" srcset="">
+                        <img src="{{ asset('frontend_assets/images/jobs/' . $job->image) }}" height="60" width="120" alt="" srcset="" style="float:right">
                       @endisset
-                      <br><br>
+                      <br>
                       <input type="file" value="{{ $job->image }}" name="image">
                     </div>
                   </div>

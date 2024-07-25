@@ -103,9 +103,9 @@
                     <thead>
                       <tr>
                         <th>Serial#</th>
+                        <th>Title</th>
                         <th>Client Logo</th>
                         <th>Link</th>
-                        <th>Title</th>
                         <th>Description</th>
                         <th>Status</th>
                         <th>Action</th>
@@ -115,11 +115,12 @@
                       @foreach ($clients as $key => $item)
                         <tr class="table-row">
                             <td class="serial-number">{{ $key + 1 }}<input type="hidden" class="order-id" value="{{ $item->id }}"></td>
+                            <td>{{ $item->title }}</td>
                           <td>
                             <img width="40px" height="40px" src="{{ asset('frontend_assets/images/clients/' . $item->logo) }}" alt="internet product provider in karachi/Clifton/pakistan" />
                           </td>
                           <td>{{ $item->link }}</td>
-                          <td>{{ $item->title }}</td>
+                          
                           <td>{!! $item->description !!}</td>
                           <td>
                             <label class="switch">
@@ -277,9 +278,10 @@
             $(response).each(function(index, value) {
               table += `<tr class="table-row">
                   <td>${index + 1}<input type="hidden" class="order-id" value="${value.id}"></td>
+                  <td>${value.title}</td>
                   <td><img width="40px" height="40px" src="{{ asset('frontend_assets/images/clients/') }}/${value.logo}" alt="client logo" /></td>
                   <td>${value.link}</td>
-                  <td>${value.title}</td>
+                  
                   <td>${value.description.length > 100 ? value.description.substring(0, 100) : value.description}</td>
                   <td>
                     <label class="switch">

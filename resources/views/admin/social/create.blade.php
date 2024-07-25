@@ -34,21 +34,21 @@
               <div class="card-body pad">
                 @csrf
                 <div class="row">
-                  <div class="col-md-6">
+                  <div class="col-lg-4 col-md-6">
                     <div class="form-group">
                       <label for="">Social Media Name <span style="color: red">*</span></label>
                       <input type="text" class="form-control" name="name" value="{{ $data['data']->name ?? '' }}" placeholder="Example : Facebook" required>
                     </div>
                   </div>
-                  <div class="col-md-6">
+                  <div class="col-lg-4 col-md-6">
                     <div class="form-group">
                       <label for="">Social Media Links (URL) <span style="color: red">*</span></label>
                       <input type="text" class="form-control" name="url" value="{{ $data['data']->url ?? '' }}" placeholder="Example : https://www.facebook.com/blink" required>
                     </div>
                   </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-6">
+                <!-- </div> -->
+                <!-- <div class="row"> -->
+                  <div class="col-lg-4 col-md-6">
                     <div class="form-group">
                       <label for="">Social Media Icon <span style="color: red">*</span></label>
                       <select class="form-control" name="icon" id="selectIcon">
@@ -59,15 +59,15 @@
                       </select>
                     </div>
                   </div>
-                  <div class="col-md-6">
+                  <div class="col-lg-4 col-md-6">
                     <div class="form-group">
                       <label for="">Color <span style="color: red">*</span></label>
                       <input type="color" class="form-control" name="color">
                     </div>
                   </div>
                 </div>
-                <div class="row">
-                  <div class="col-md-6">
+                <!-- <div class="row">
+                  <div class="col-lg-4 col-md-6">
                     <div class="form-group">
                       <div class="icheck-success d-inline">
                         <input type="checkbox" name="status" id="checkboxSuccess1">
@@ -77,7 +77,7 @@
                       </div>
                     </div>
                   </div>
-                </div>
+                </div> -->
               </div>
               <div class="card-footer">
                 <button type="submit" class="btn btn-outline-primary float-right">Submit</button>

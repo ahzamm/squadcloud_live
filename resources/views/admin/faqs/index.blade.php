@@ -95,10 +95,12 @@
           <div class="col-12">
             <div class="card mt-3 card-outline card-info">
               <div class="card-header">
-                <h3 class="card-title"><span><i class="fa-solid fa-box-open"></i></span> FAQs</h3>
+                <h3 class="card-title"><span><i class="fa fa-question-circle"></i></span> FAQs</h3>
+                
                 <a class="btn btn-success btn-sm float-right ml-1" href="{{ route('faq_categories.index') }}">FAQ Categories</a>
-                <a class="btn btn-success btn-sm float-right ml-1 btnAddImage"><i class="fa fa-plus"></i> Add Title Image</a>
+                
                 <a class="btn btn-success btn-sm float-right ml-1" href="{{ route('faqs.create') }}"><i class="fa fa-plus"></i> Add FAQ</a>
+                <a class="btn btn-success btn-sm float-right ml-1 btnAddImage text-white"><i class="fa fa-plus"></i> Add Title Image</a>
               </div>
 
               <div class="card-body">
@@ -106,7 +108,6 @@
                   <table class="table table-bordered table-striped" id="example1">
                     <thead>
                       <tr>
-                        <th>Sort</th>
                         <th>Serial#</th>
                         <th>Question</th>
                         <th>Answer</th>
@@ -118,7 +119,6 @@
                     <tbody id="sortfrontMenu" class="move">
                       @foreach ($faqs as $key => $item)
                         <tr class="table-row">
-                          <td><i class="fas fa-sort" id="sort-serial"></i></td>
                           <td class="serial-number">{{ $key + 1 }}<input type="hidden" class="order-id" value="{{ $item->id }}"></td>
                           <td>{!! $item->question !!}</td>
                           <td>{!! $item->answer !!}</td>
@@ -312,7 +312,6 @@
             let table = "";
             $(response).each(function(index, value) {
               table += ` <tr>
-                        <td><i class="fas fa-sort" id="sort-serial"></i></td>
             <td>${index + 1 }<input type="hidden" class="order-id" value="${value.id}"></td>
              <td>${value.question}</td>
              <td>${value.answer}</td>

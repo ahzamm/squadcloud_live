@@ -20,7 +20,7 @@
                   @method('PUT')
                   @csrf
                   <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-lg-4 col-md-6">
                       <div class="form-group">
                         <label for="">Heading <span style="color: red">*</span></label>
                         <input type="text" class="form-control" name="heading" value="{{ old('heading') == null ? $homeslider->heading : old('heading') }}">
@@ -29,7 +29,7 @@
                         @enderror
                       </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-lg-4 col-md-6">
                       <div class="form-group">
                         <label for="">Subheading <span style="color: red">*</span></label>
                         <input type="text" class="form-control" name="subheading" value="{{ old('subheading') == null ? $homeslider->subheading : old('subheading') }}">
@@ -38,7 +38,7 @@
                         @enderror
                       </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-lg-4 col-md-6">
                       <div class="form-group">
                         <label for="">Description <span style="color: red">*</span></label>
                         <input type="text" class="form-control" name="description" value="{{ old('description') == null ? $homeslider->description : old('description') }}">
@@ -47,7 +47,7 @@
                         @enderror
                       </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-lg-4 col-md-6">
                       <div class="form-group">
                         @php
                           $image = explode('","', $homeslider->images);

@@ -17,7 +17,7 @@
               <div class="card-body pad">
                 @csrf
                 <div class="row">
-                  <div class="col-md-6">
+                  <div class="col-lg-4 col-md-6">
                     <div class="form-group">
                       <label for="">Title <span style="color: red">*</span></label>
                       <input type="text" class="form-control" name="title" placeholder="Example : 15 Mbps" value="{{ old('title') }}">
@@ -27,7 +27,7 @@
                     </div>
                   </div>
 
-                  <div class="col-md-6">
+                  <div class="col-lg-4 col-md-6">
                     <div class="form-group">
                       <label for="">Link <span style="color: red">*</span></label>
                       <input type="text" class="form-control" name="link" placeholder="Example : 15 Mbps" value="{{ old('link') }}">
@@ -36,9 +36,9 @@
                       @enderror
                     </div>
                   </div>
-                  <div class="col-md-6">
+                  <div class="col-lg-4 col-md-6">
                     <div class="form-group">
-                      <label for="">Client Logo <span style="color: red">*</span></label>
+                      <label for="">Client Logo <span style="color: red">*</span></label><br>
                       <input type="file" name="logo">
                       @error('logo')
                         <p class="text-danger mt-2 mb-0 text-sm">{{ $message }}</p>

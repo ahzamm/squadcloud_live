@@ -104,14 +104,14 @@
                       <tr>
                         <th>Serial#</th>
                         <th>Title</th>
-                        <th>Description</th>
+                        <!-- <th>Description</th> -->
                         <th>Image</th>
                         <th>Link</th>
                         <th>Route</th>
                         <th>Rating</th>
                         <th>Rating Number</th>
                         <th>Price</th>
-                        <th>Price Description</th>
+                        <!-- <th>Price Description</th> -->
                         <th>Status</th>
                         <th>Action</th>
                       </tr>
@@ -122,7 +122,7 @@
                         <tr class="table-row">
                             <td class="serial-number">{{ $key + 1 }}<input type="hidden" class="order-id" value="{{ $item->id }}"></td>
                           <td>{{ $item->title }}</td>
-                          <td>{{ $item->description }}</td>
+                          <!-- <td>{{ $item->description }}</td> -->
                           <td>
                             <img width="40px" height="40px" src="{{ asset('frontend_assets/images/portfolio/' . $item->image) }}" alt="" />
                           </td>
@@ -131,7 +131,7 @@
                           <td>{{ $item->rating }}</td>
                           <td>{{ $item->rating_number }}</td>
                           <td>{{ $item->price }}</td>
-                          <td>{{ $item->price_description }}</td>
+                          <!-- <td>{{ $item->price_description }}</td> -->
                           <td>
                             <label class="switch">
                               <input type="checkbox" class="status_check" @if ($item->is_active == 1) checked @endif data-user-id="{{ $item->id }}">
@@ -302,14 +302,12 @@
           <input type="hidden" class="order-id" value="${value.id}">
           </td>
           <td>${value.title}</td>
-          <td>${value.description}</td>
           <td><img width="40px" height="40px" src="{{ asset('frontend_assets/images/portfolio/') }}/${value.image}" alt="portfolio image" /></td>
           <td>${value.link}</td>
           <td>${value.route}</td>
           <td>${value.rating}</td>
           <td>${value.rating_number}</td>
           <td>${value.price}</td>
-          <td>${value.price_description}</td>
           <td>
             <label class="switch">
               <input type="checkbox" class="status_check" ${value.is_active == 1 ? 'checked' : ''} data-user-id="${value.id}">

@@ -35,7 +35,7 @@
                   <div class="card-body pad">
                     @csrf
                     <div class="row">
-                      <div class="col-md-6">
+                      <div class="col-lg-4 col-md-6">
                         <div class="form-group">
                           <label for="">Heading <span style="color: red">*</span></label>
                           <input type="text" class="form-control" name="heading" placeholder="Example : Bitcoin" value="{{ old('heading') }}">
@@ -44,7 +44,7 @@
                           @enderror
                         </div>
                       </div>
-                      <div class="col-md-6">
+                      <div class="col-lg-4 col-md-6">
                         <div class="form-group">
                           <label for="">Subheading <span style="color: red">*</span></label>
                           <input type="text" class="form-control" name="subheading" placeholder="Example : Bitcoin" value="{{ old('subheading') }}">
@@ -53,7 +53,7 @@
                           @enderror
                         </div>
                       </div>
-                      <div class="col-md-6">
+                      <div class="col-lg-4 col-md-6">
                         <div class="form-group">
                           <label for="">Description <span style="color: red">*</span></label>
                           <input type="text" class="form-control" name="description" placeholder="Example : Bitcoin" value="{{ old('description') }}">
@@ -62,7 +62,7 @@
                           @enderror
                         </div>
                       </div>
-                      <div class="col-md-4">
+                      <div class="col-lg-4 col-md-6">
                         <div class="form-group">
                           <label for="">Upload Image <span style="color: red">*</span></label>
                           <table class="table table-bordered" id="dynamicTable">
@@ -93,7 +93,7 @@
                   <div class="card-body pad">
                     @csrf
                     <div class="row">
-                      <div class="col-md-6">
+                      <div class="col-lg-4 col-md-6">
                         <div class="form-group">
                           <label for="">Upload Video <span style="color: red">*</span></label> <br>
                           @if (isset($data))
@@ -113,7 +113,7 @@
                           @endif
                         </div>
                       </div>
-                      <div class="col-md-6">
+                      <!-- <div class="col-md-6">
                         <div class="form-group clearfix">
                           <label for="" style="visibility: hidden">A</label>
                           <div class="icheck-success d-block">
@@ -123,7 +123,7 @@
                             </label>
                           </div>
                         </div>
-                      </div>
+                      </div> -->
 
                     </div>
                   </div>

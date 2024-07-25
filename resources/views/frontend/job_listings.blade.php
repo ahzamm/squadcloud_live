@@ -127,7 +127,7 @@
   <li><a href="" class="filter-button" data-employment-type="Part Time">Part Time</a></li>
 </ul>
 @foreach ($jobs as $job)
-  <div class="single-post d-flex flex-row">
+  <div class="single-post d-flex">
     <div class="thumb">
       <ul class="tags">
         @foreach (explode(',', $job->tags) as $tag)
@@ -136,16 +136,17 @@
       </ul>
     </div>
     <div class="details">
-      <div class="title d-flex flex-row justify-content-between">
+      <div class="title d-flex flex-row justify-content-between align-items-center">
         <div class="titles">
           <a>
             <h4>{{ $job->job_title }}</h4>
           </a>
           <h6>{{ $job->company }}</h6>
         </div>
-        <ul class="btns">
+        <a href="javascript:void(0);" class="apply-button" data-job-id="{{ $job->id }}" onclick="showModal({{ $job->id }})"><i class="fa fa-paper-plane"></i> Apply Now</a>
+        <!-- <ul class="btns">
           <li><a href="javascript:void(0);" class="apply-button" data-job-id="{{ $job->id }}" onclick="showModal({{ $job->id }})"><i class="fa fa-paper-plane"></i> Apply Now</a></li>
-        </ul>
+        </ul> -->
       </div>
       <p>
         {!! $job->job_description !!}

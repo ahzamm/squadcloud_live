@@ -6,7 +6,7 @@
         <div class="col-md-12">
           <div class="card card-outline card-info">
             <div class="card-header d-flex justify-content-between align-items-center">
-              <h3 class="card-title mb-0"><span><i class="fa-solid fa-box-open"></i></span> Update Team Member</h3>
+              <h3 class="card-title mb-0"><span><i class="fa fa-people-group"></i></span> Update Team Member</h3>
               <div class="ml-auto">
                 <a class="btn btn-outline-secondary btn-sm" href="{{ route('teams.index') }}">
                   <i class="fa fa-arrow-left"></i> Back
@@ -18,7 +18,7 @@
               <div class="card-body pad">
                 @csrf
                 <div class="row">
-                  <div class="col-md-6">
+                  <div class="col-lg-4 col-md-6">
                     <div class="form-group">
                       <label for="">Name <span style="color: red">*</span></label>
                       <input type="text" class="form-control" name="name" value="{{ old('name') == null ? $team->name : old('name') }}">
@@ -27,20 +27,8 @@
                       @enderror
                     </div>
                   </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label for="">Photo <span style="color: red">*</span></label>
-                      @isset($team->image)
-                        <img src="{{ asset('frontend_assets/images/teams/' . $team->image) }}" height="60" width="120" alt="" srcset="">
-                      @endisset
-                      <br><br>
-                      <input type="file" value="{{ $team->image }}" name="image">
-                      @error('image')
-                        <p class="text-danger mt-2 mb-0 text-sm">{{ $message }}</p>
-                      @enderror
-                    </div>
-                  </div>
-                  <div class="col-md-6">
+                  
+                  <div class="col-lg-4 col-md-6">
                     <div class="form-group">
                       <label for="">Designation <span style="color: red">*</span></label>
                       <input type="text" class="form-control" name="designation" value="{{ old('designation') == null ? $team->designation : old('designation') }}">
@@ -49,7 +37,7 @@
                       @enderror
                     </div>
                   </div>
-                  <div class="col-md-6">
+                  <div class="col-lg-4 col-md-6">
                     <div class="form-group">
                       <label for="">Linkedin <span style="color: red">*</span></label>
                       <div class="input-group">
@@ -59,6 +47,19 @@
                         <input type="text" class="form-control" name="linkedin" value="{{ old('linkedin') == null ? $team->linkedin : old('linkedin') }}">
                       </div>
                       @error('linkedin')
+                        <p class="text-danger mt-2 mb-0 text-sm">{{ $message }}</p>
+                      @enderror
+                    </div>
+                  </div>
+                  <div class="col-lg-4 col-md-6">
+                    <div class="form-group">
+                      <label for="">Photo <span style="color: red">*</span></label>
+                      @isset($team->image)
+                        <img src="{{ asset('frontend_assets/images/teams/' . $team->image) }}" height="60" width="120" alt="" srcset="" style="float:right">
+                      @endisset
+                      <br>
+                      <input type="file" value="{{ $team->image }}" name="image">
+                      @error('image')
                         <p class="text-danger mt-2 mb-0 text-sm">{{ $message }}</p>
                       @enderror
                     </div>

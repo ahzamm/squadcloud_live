@@ -12,14 +12,14 @@
       padding-top: 100px;
       padding-bottom: 100px;
       background-color: #f4f4f4;
-      display: flex;
-      justify-content: center;
+
     }
 
     .policy-container {
       display: flex;
       max-width: 1200px;
       width: 100%;
+      margin: auto;
     }
 
     .sidebar {
@@ -98,17 +98,34 @@
       max-width: 100%;
       border-radius: 10px;
     }
+    @media (max-width: 768px) {
+      .sidebar {
+        display: none;
+      }
+      section#policy-section {
+        padding-bottom: 30px;
+      }
+      .policy-container .content {
+        margin: 0;
+        padding: 20px;
+      }
+    }
   </style>
 
   <section id="policy-section">
+    <div class="container">
+      <div class="title-img d-flex align-items-center justify-content-center flex-column mb-3 aos-init aos-animate" data-aos="zoom-in-down">
+      @if ($term->title_image)
+          <img src="frontend_assets/images/title/{{ $term->title_image }}" alt="Privacy Policy Image" style="width:50%">
+        @endif
+      </div>
+    </div>
     <div class="policy-container">
       <div class="sidebar" id="sidebar">
         <!-- Sidebar links will be dynamically added here -->
       </div>
       <div class="content" id="policy-content">
-        @if ($term->title_image)
-          <img src="frontend_assets/images/title/{{ $term->title_image }}" alt="Privacy Policy Image" style="height: 250px; width:500px">
-        @endif
+        
         {!! $term->terms !!}
       </div>
     </div>

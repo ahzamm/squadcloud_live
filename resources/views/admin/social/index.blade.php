@@ -106,8 +106,8 @@
                     <thead>
                       <tr>
                         <th>Serial#</th>
-                        <th>Social Media Names</th>
                         <th>Social Media Icons</th>
+                        <th>Social Media Names</th>
                         <th>Social Media Links</th>
                         <th>Icon Colors</th>
                         <th>Status</th>
@@ -120,8 +120,8 @@
                             <td class="serial-number">{{ $key + 1 }}<input type="hidden" class="order-id" value="{{ $item->id }}"></td>
                           <input type="hidden" class="order-id" value="{{ $item->id }}">
                           </td>
-                          <td>{{ $item->name }}</td>
                           <td><i class="{{ $item->icon }}"></i></td>
+                          <td>{{ $item->name }}</td>
                           <td>{{ $item->url }}</td>
                           <td>
                             <center><button class="rounded" disabled style="width: 50px; height:20px; background-color:{{ $item->color }};box-shadow:0 0 10px grey ; border:none"></button></center>
@@ -269,8 +269,8 @@
               $(response).each(function(index, value) {
                 table += `<tr>
                   <td>${index + 1}<input type="hidden" class="order-id" value="${value.id}"></td>
-                  <td>${value.name}</td>
                   <td><i class="${value.icon}"></i></td>
+                  <td>${value.name}</td>
                   <td>${value.url}</td>
                   <td><center><button class="rounded" disabled style="width: 50px; height:20px; background-color:${value.color};box-shadow:0 0 10px grey ; border:none"></button></center></td>
                   <td>

@@ -13,7 +13,7 @@
           <div class="col-12">
             <div class="card mt-3 card-outline card-info">
               <div class="card-header">
-                <h3 class="card-title"><span><i class="fa fa-bell"></i></span> Demo Requests</h3>
+                <h3 class="card-title"><span><i class="fa fa-address-card"></i></span> Demo Requests</h3>
               </div>
               <div class="card-body">
                 <div class="table-responsive">

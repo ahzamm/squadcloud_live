@@ -6,7 +6,7 @@
         <div class="col-md-12">
           <div class="card card-outline card-info">
             <div class="card-header d-flex justify-content-between align-items-center">
-              <h3 class="card-title mb-0"><span><i class="fa-solid fa-box-open"></i></span> Update About Page</h3>
+              <h3 class="card-title mb-0"><span><i class="fa fa-info-circle"></i></span> Update About Page</h3>
             </div>
             <form id="updateAboutUsForm" action="{{ route('about.update') }}" method="POST" enctype="multipart/form-data">
               @method('PUT')

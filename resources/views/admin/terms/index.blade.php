@@ -6,20 +6,19 @@
         <div class="col-md-12">
           <div class="card card-outline card-info">
             <div class="card-header d-flex justify-content-between align-items-center">
-              <h3 class="card-title mb-0"><span><i class="fa-solid fa-box-open"></i></span> Update About Page</h3>
+              <h3 class="card-title mb-0"><span><i class="fa fa-file-alt"></i></span> Update About Page</h3>
             </div>
             <form id="updateTermForm" action="{{ route('terms.update') }}" method="POST" enctype="multipart/form-data">
               @method('PUT')
               <div class="card-body pad">
                 @csrf
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-lg-4 col-md-6">
                         <div class="form-group">
-                          <label for="">Title Image <span style="color: red">*</span></label>
+                          <label for="">Title Image <span style="color: red">*</span></label><br>
                           @isset($term->title_image)
-                            <img src="{{ asset('frontend_assets/images/title/' . $term->title_image) }}" height="60" width="120" alt="" srcset="">
+                            <img src="{{ asset('frontend_assets/images/title/' . $term->title_image) }}" height="60" width="120" alt="" srcset="" style="float:right">
                           @endisset
-                          <br><br>
                           <input type="file" value="{{ $term->title_image }}" name="title_image">
                         </div>
                       </div>

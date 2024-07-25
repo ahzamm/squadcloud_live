@@ -6,7 +6,7 @@
         <div class="col-md-12">
           <div class="card card-outline card-info">
             <div class="card-header d-flex justify-content-between align-items-center">
-              <h3 class="card-title mb-0"><span><i class="fa-solid fa-box-open"></i></span> Update Vacancy</h3>
+              <h3 class="card-title mb-0"><span><i class="fa fa-question-circle"></i></span> Update FAQs</h3>
               <div class="ml-auto">
                 <a class="btn btn-outline-secondary btn-sm" href="{{ route('faqs.index') }}">
                   <i class="fa fa-arrow-left"></i> Back

@@ -13,7 +13,7 @@
           <div class="col-12">
             <div class="card mt-3 card-outline card-info">
               <div class="card-header">
-                <h3 class="card-title"><span><i class="fa-solid fa-box-open"></i></span> Job Applications</h3>
+                <h3 class="card-title"><span><i class="fa fa-file-arrow-down"></i></span> Job Applications</h3>
               </div>
               <div class="card-body">
                 <div class="table-responsive">
@@ -21,13 +21,13 @@
                     <thead>
                       <tr>
                         <th>Serial#</th>
+                        <th>Job Title</th>
                         <th>Name</th>
-                        <th>Email</th>
-                        <th>Phone</th>
+                        <th>Email Address</th>
+                        <th>Contact Number</th>
                         <th>Cover Letter</th>
                         <th>Submission Date</th>
                         <th>Resume</th>
-                        <th>Job Title</th>
                         <th>Action</th>
                       </tr>
                     </thead>
@@ -35,6 +35,7 @@
                       @foreach ($job_applications as $key => $item)
                         <tr class="table-row">
                             <td class="serial-number">{{ $key + 1 }}<input type="hidden" class="order-id" value="{{ $item->id }}"></td>
+                            <td>{{ $item->job->job_title }}</td>
                           <td>{{ $item->name }}</td>
                           <td>{{ $item->email }}</td>
                           <td>{{ $item->phone }}</td>
@@ -45,7 +46,7 @@
                               <i class="fa fa-download"></i> Download
                             </button>
                           </td>
-                          <td>{{ $item->job->job_title }}</td>
+                          
                           <td class="d-flex justify-content-center" style="gap: 5px;">
                             <button class="btn btn-danger btn-sm btnDeleteMenu" data-value="{{ $item->id }}"><i class="fa fa-trash"></i></button>
                           </td>
